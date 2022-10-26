@@ -197,7 +197,7 @@
             let tempArray = Object.values(item);
             if (
               tempArray.some(
-                (subitem:any) => subitem && subitem.toString().trim().indexOf(searchValue) !== -1,
+                (subitem: any) => subitem && subitem.toString().trim().indexOf(searchValue) !== -1,
               )
             ) {
               temp.push(item);

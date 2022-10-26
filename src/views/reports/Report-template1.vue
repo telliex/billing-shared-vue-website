@@ -159,7 +159,6 @@
       const pagination = ref<any>(false);
 
       const { createMessage } = useMessage();
-      const keyword = ref<string>('');
 
       function toggleCanResize() {
         canResize.value = !canResize.value;
