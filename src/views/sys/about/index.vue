@@ -21,7 +21,7 @@
 
   const { pkg, lastBuildTime } = __APP_INFO__;
 
-  const { dependencies, devDependencies, name, version } = pkg;
+  const { dependencies, devDependencies, version } = pkg;
 
   const schema: DescItem[] = [];
   const devSchema: DescItem[] = [];

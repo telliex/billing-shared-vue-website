@@ -9,5 +9,10 @@
       "webRoot": "${workspaceFolder}/src",
       "sourceMaps": true
     }
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true,
+    "source.fixAll.markdownlint": true
+  }
 }
