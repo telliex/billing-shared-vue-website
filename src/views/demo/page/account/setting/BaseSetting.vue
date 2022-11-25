@@ -1,16 +1,23 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:45:27
+-->
 <template>
-  <CollapseContainer title="基本设置" :canExpan="false">
+  <CollapseContainer title="基本設置" :canExpan="false">
     <a-row :gutter="24">
       <a-col :span="14">
         <BasicForm @register="register" />
       </a-col>
       <a-col :span="10">
         <div class="change-avatar">
-          <div class="mb-2">头像</div>
+          <div class="mb-2">頭像</div>
           <CropperAvatar
             :uploadApi="uploadApi"
             :value="avatar"
-            btnText="更换头像"
+            btnText="更換頭像"
             :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
             @change="updateAvatar"
             width="150"

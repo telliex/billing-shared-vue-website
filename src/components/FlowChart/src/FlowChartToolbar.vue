@@ -36,7 +36,7 @@
         {
           type: ToolbarTypeEnum.ZOOM_IN,
           icon: 'codicon:zoom-out',
-          tooltip: '缩小',
+          tooltip: '縮小',
         },
         {
           type: ToolbarTypeEnum.ZOOM_OUT,
@@ -52,25 +52,25 @@
         {
           type: ToolbarTypeEnum.UNDO,
           icon: 'ion:arrow-undo-outline',
-          tooltip: '后退',
+          tooltip: '後退',
           disabled: true,
         },
         {
           type: ToolbarTypeEnum.REDO,
           icon: 'ion:arrow-redo-outline',
-          tooltip: '前进',
+          tooltip: '前進',
           disabled: true,
         },
         { separate: true },
         {
           type: ToolbarTypeEnum.SNAPSHOT,
           icon: 'ion:download-outline',
-          tooltip: '下载',
+          tooltip: '下載',
         },
         {
           type: ToolbarTypeEnum.VIEW_DATA,
           icon: 'carbon:document-view',
-          tooltip: '查看数据',
+          tooltip: '查看數據',
         },
       ]);
 

@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:36:19
+-->
 <template>
-  <PageWrapper title="点内外部触发事件">
+  <PageWrapper title="點內外部觸發事件">
     <ClickOutSide @click-outside="handleClickOutside" class="flex justify-center">
       <div @click="innerClick" class="demo-box">
         {{ text }}

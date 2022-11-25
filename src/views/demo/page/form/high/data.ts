@@ -2,7 +2,7 @@ import { FormSchema } from '/@/components/Form';
 
 const basicOptions: LabelValueOptions = [
   {
-    label: '付晓晓',
+    label: '付曉曉',
     value: '1',
   },
   {
@@ -17,7 +17,7 @@ const storeTypeOptions: LabelValueOptions = [
     value: '1',
   },
   {
-    label: '公开',
+    label: '公開',
     value: '2',
   },
 ];
@@ -26,13 +26,13 @@ export const schemas: FormSchema[] = [
   {
     field: 'f1',
     component: 'Input',
-    label: '仓库名',
+    label: '倉庫名',
     required: true,
   },
   {
     field: 'f2',
     component: 'Input',
-    label: '仓库域名',
+    label: '倉庫域名',
     required: true,
     componentProps: {
       addonBefore: 'http://',
@@ -45,7 +45,7 @@ export const schemas: FormSchema[] = [
   {
     field: 'f3',
     component: 'Select',
-    label: '仓库管理员',
+    label: '倉庫管理員',
     componentProps: {
       options: basicOptions,
     },
@@ -57,7 +57,7 @@ export const schemas: FormSchema[] = [
   {
     field: 'f4',
     component: 'Select',
-    label: '审批人',
+    label: '審批人',
     componentProps: {
       options: basicOptions,
     },
@@ -75,7 +75,7 @@ export const schemas: FormSchema[] = [
   {
     field: 'f6',
     component: 'Select',
-    label: '仓库类型',
+    label: '倉庫類型',
     componentProps: {
       options: storeTypeOptions,
     },
@@ -89,13 +89,13 @@ export const taskSchemas: FormSchema[] = [
   {
     field: 't1',
     component: 'Input',
-    label: '任务名',
+    label: '任務名',
     required: true,
   },
   {
     field: 't2',
     component: 'Input',
-    label: '任务描述',
+    label: '任務描述',
     required: true,
     colProps: {
       offset: 2,
@@ -104,7 +104,7 @@ export const taskSchemas: FormSchema[] = [
   {
     field: 't3',
     component: 'Select',
-    label: '执行人',
+    label: '執行人',
     componentProps: {
       options: basicOptions,
     },
@@ -116,7 +116,7 @@ export const taskSchemas: FormSchema[] = [
   {
     field: 't4',
     component: 'Select',
-    label: '责任人',
+    label: '責任人',
     componentProps: {
       options: basicOptions,
     },
@@ -137,7 +137,7 @@ export const taskSchemas: FormSchema[] = [
   {
     field: 't6',
     component: 'Select',
-    label: '任务类型',
+    label: '任務類型',
     componentProps: {
       options: storeTypeOptions,
     },

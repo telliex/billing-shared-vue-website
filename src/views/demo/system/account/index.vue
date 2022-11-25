@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:51:28
+-->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
@@ -11,12 +18,12 @@
             :actions="[
               {
                 icon: 'clarity:info-standard-line',
-                tooltip: '查看用戶詳情',
+                tooltip: '查看用户詳情',
                 onClick: handleView.bind(null, record),
               },
               {
                 icon: 'clarity:note-edit-line',
-                tooltip: '編輯用戶資料',
+                tooltip: '編輯用户資料',
                 onClick: handleEdit.bind(null, record),
               },
               {

@@ -1,7 +1,14 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:28:52
+-->
 <template>
-  <PageWrapper title="详情组件示例">
+  <PageWrapper title="詳情組件示例">
     <Description
-      title="基础示例"
+      title="基礎示例"
       :collapseOptions="{ canExpand: true, helpMessage: 'help me' }"
       :column="3"
       :data="mockData"
@@ -33,7 +40,7 @@
     age: '123',
     phone: '15695909xxx',
     email: '190848757@qq.com',
-    addr: '厦门市思明区',
+    addr: '廈門市思明區',
     sex: '男',
     certy: '3504256199xxxxxxxxx',
     tag: 'orange',
@@ -45,18 +52,18 @@
     },
     {
       field: 'nickName',
-      label: '昵称',
+      label: '暱稱',
       render: (curVal, data) => {
         return `${data.username}-${curVal}`;
       },
     },
     {
       field: 'phone',
-      label: '联系电话',
+      label: '聯繫電話',
     },
     {
       field: 'email',
-      label: '邮箱',
+      label: '郵箱',
     },
     {
       field: 'addr',
@@ -73,7 +80,7 @@
       });
 
       const [register1] = useDescription({
-        title: '无边框',
+        title: '無邊框',
         bordered: false,
         data: mockData,
         schema: schema,

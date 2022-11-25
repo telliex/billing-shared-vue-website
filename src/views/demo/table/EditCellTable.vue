@@ -19,7 +19,7 @@
   import { Progress } from 'ant-design-vue';
   const columns: BasicColumn[] = [
     {
-      title: '输入框',
+      title: '輸入框',
       dataIndex: 'name',
       edit: true,
       editComponentProps: {
@@ -28,34 +28,34 @@
       width: 200,
     },
     {
-      title: '默认输入状态',
+      title: '默認輸入狀態',
       dataIndex: 'name7',
       edit: true,
       editable: true,
       width: 200,
     },
     {
-      title: '输入框校验',
+      title: '輸入框校驗',
       dataIndex: 'name1',
       edit: true,
-      // 默认必填校验
+      // 默認必填校驗
       editRule: true,
       width: 200,
     },
     {
-      title: '输入框函数校验',
+      title: '輸入框函數校驗',
       dataIndex: 'name2',
       edit: true,
       editRule: async (text) => {
         if (text === '2') {
-          return '不能输入该值';
+          return '不能輸入該值';
         }
         return '';
       },
       width: 200,
     },
     {
-      title: '数字输入框',
+      title: '數字輸入框',
       dataIndex: 'id',
       edit: true,
       editRule: true,
@@ -91,7 +91,7 @@
       width: 200,
     },
     {
-      title: '远程下拉',
+      title: '遠程下拉',
       dataIndex: 'name4',
       edit: true,
       editComponent: 'ApiSelect',
@@ -104,7 +104,7 @@
       width: 200,
     },
     {
-      title: '远程下拉树',
+      title: '遠程下拉樹',
       dataIndex: 'name71',
       edit: true,
       editComponent: 'ApiTreeSelect',
@@ -116,7 +116,7 @@
       width: 200,
     },
     {
-      title: '日期选择',
+      title: '日期選擇',
       dataIndex: 'date',
       edit: true,
       editComponent: 'DatePicker',
@@ -127,7 +127,7 @@
       width: 200,
     },
     {
-      title: '时间选择',
+      title: '時間選擇',
       dataIndex: 'time',
       edit: true,
       editComponent: 'TimePicker',
@@ -138,7 +138,7 @@
       width: 200,
     },
     {
-      title: '勾选框',
+      title: '勾選框',
       dataIndex: 'name5',
       edit: true,
       editComponent: 'Checkbox',
@@ -148,12 +148,12 @@
       width: 200,
     },
     {
-      title: '开关',
+      title: '開關',
       dataIndex: 'name6',
       edit: true,
       editComponent: 'Switch',
       editValueMap: (value) => {
-        return value ? '开' : '关';
+        return value ? '開' : '關';
       },
       width: 200,
     },
@@ -162,7 +162,7 @@
     components: { BasicTable },
     setup() {
       const [registerTable] = useTable({
-        title: '可编辑单元格示例',
+        title: '可編輯單元格示例',
         api: demoListApi,
         columns: columns,
         showIndexColumn: false,
@@ -176,10 +176,10 @@
         return false;
       }
 
-      // 模拟将指定数据保存
+      // 模擬將指定數據保存
       function feakSave({ value, key, id }) {
         createMessage.loading({
-          content: `正在模拟保存${key}`,
+          content: `正在模擬保存${key}`,
           key: '_save_fake_data',
           duration: 0,
         });
@@ -187,14 +187,14 @@
           setTimeout(() => {
             if (value === '') {
               createMessage.error({
-                content: '保存失败：不能为空',
+                content: '保存失敗：不能為空',
                 key: '_save_fake_data',
                 duration: 2,
               });
               resolve(false);
             } else {
               createMessage.success({
-                content: `记录${id}的${key}已保存`,
+                content: `記錄${id}的${key}已保存`,
                 key: '_save_fake_data',
                 duration: 2,
               });
@@ -205,7 +205,7 @@
       }
 
       async function beforeEditSubmit({ record, index, key, value }) {
-        console.log('单元格数据正在准备提交', { record, index, key, value });
+        console.log('單元格數據正在準備提交', { record, index, key, value });
         return await feakSave({ id: record.id, key, value });
       }
 

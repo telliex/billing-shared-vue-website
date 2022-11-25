@@ -1,13 +1,13 @@
 <template>
-  <PageWrapper title="表单校验示例">
+  <PageWrapper title="表單校驗示例">
     <div class="mb-4">
-      <a-button @click="validateForm" class="mr-2"> 手动校验表单 </a-button>
-      <a-button @click="resetValidate" class="mr-2"> 清空校验信息 </a-button>
-      <a-button @click="getFormValues" class="mr-2"> 获取表单值 </a-button>
-      <a-button @click="setFormValues" class="mr-2"> 设置表单值 </a-button>
+      <a-button @click="validateForm" class="mr-2"> 手動校驗表單 </a-button>
+      <a-button @click="resetValidate" class="mr-2"> 清空校驗信息 </a-button>
+      <a-button @click="getFormValues" class="mr-2"> 獲取表單值 </a-button>
+      <a-button @click="setFormValues" class="mr-2"> 設置表單值 </a-button>
       <a-button @click="resetFields" class="mr-2"> 重置 </a-button>
     </div>
-    <CollapseContainer title="表单校验">
+    <CollapseContainer title="表單校驗">
       <BasicForm @register="register" @submit="handleSubmit" />
     </CollapseContainer>
   </PageWrapper>
@@ -71,7 +71,7 @@
     {
       field: 'field44',
       component: 'InputCountDown',
-      label: '验证码',
+      label: '驗證碼',
       colProps: {
         span: 8,
       },
@@ -88,12 +88,12 @@
         mode: 'multiple',
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
             key: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
             key: '2',
           },
@@ -102,7 +102,7 @@
       rules: [
         {
           required: true,
-          message: '请输入aa',
+          message: '請輸入aa',
           type: 'array',
         },
       ],
@@ -110,7 +110,7 @@
     {
       field: 'field441',
       component: 'Input',
-      label: '自定义校验',
+      label: '自定義校驗',
       colProps: {
         span: 8,
       },
@@ -121,11 +121,11 @@
           validator: async (rule, value) => {
             if (!value) {
               /* eslint-disable-next-line */
-              return Promise.reject('值不能为空');
+              return Promise.reject('值不能為空');
             }
             if (value === '1') {
               /* eslint-disable-next-line */
-              return Promise.reject('值不能为1');
+              return Promise.reject('值不能為1');
             }
             return Promise.resolve();
           },
@@ -143,11 +143,11 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
           },
         ],
@@ -164,29 +164,29 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
           },
         ],
       },
-      rules: [{ required: true, message: '覆盖默认生成的校验信息' }],
+      rules: [{ required: true, message: '覆蓋默認生成的校驗信息' }],
     },
     {
       field: 'field8',
       component: 'Input',
-      label: '后端异步验证',
+      label: '後端異步驗證',
       colProps: {
         span: 8,
       },
-      helpMessage: ['本字段演示异步验证', '本地规则：必须填写', '后端规则：不能包含admin'],
+      helpMessage: ['本字段演示異步驗證', '本地規則：必須填寫', '後端規則：不能包含admin'],
       rules: [
         {
           required: true,
-          message: '请输入数据',
+          message: '請輸入數據',
         },
         {
           validator(_, value) {
@@ -194,7 +194,7 @@
               isAccountExist(value)
                 .then(() => resolve())
                 .catch((err) => {
-                  reject(err.message || '验证失败');
+                  reject(err.message || '驗證失敗');
                 });
             });
           },

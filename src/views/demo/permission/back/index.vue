@@ -1,6 +1,13 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:50:05
+-->
 <template>
   <PageWrapper
-    title="後臺權限示例"
+    title="後台權限示例"
     contentBackground
     contentClass="p-4"
     content="目前mock了兩組數據， id為1 和 2 具體返回的菜單可以在mock/sys/menu.ts內查看"
@@ -10,13 +17,13 @@
     <Alert class="mt-4" type="info" message="點擊後請查看左側菜單變化" show-icon />
 
     <div class="mt-4">
-      權限切換(請先切換權限模式為後臺權限模式):
+      權限切換(請先切換權限模式為後台權限模式):
       <Space>
         <a-button @click="switchToken(1)" :disabled="!isBackPermissionMode">
-          獲取用戶id為1的菜單
+          獲取用户id為1的菜單
         </a-button>
         <a-button @click="switchToken(2)" :disabled="!isBackPermissionMode">
-          獲取用戶id為2的菜單
+          獲取用户id為2的菜單
         </a-button>
       </Space>
     </div>
@@ -45,11 +52,11 @@
       );
 
       async function switchToken(userId: number) {
-        // 本函數切換用戶登錄Token的部分僅用於演示，實際生產時切換身份應當重新登錄
+        // 本函數切換用户登錄Token的部分僅用於演示，實際生產時切換身份應當重新登錄
         const token = 'fakeToken' + userId;
         userStore.setToken(token);
 
-        // 重新獲取用戶信息和菜單
+        // 重新獲取用户信息和菜單
         userStore.getUserInfoAction();
         refreshMenu();
       }

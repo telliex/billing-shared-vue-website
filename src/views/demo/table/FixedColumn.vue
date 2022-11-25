@@ -6,16 +6,16 @@
           <TableAction
             :actions="[
               {
-                label: '删除',
+                label: '刪除',
                 icon: 'ic:outline-delete-outline',
                 onClick: handleDelete.bind(null, record),
               },
             ]"
             :dropDownActions="[
               {
-                label: '启用',
+                label: '啓用',
                 popConfirm: {
-                  title: '是否启用？',
+                  title: '是否啓用？',
                   confirm: handleOpen.bind(null, record),
                 },
               },
@@ -48,17 +48,17 @@
       dataIndex: 'address',
     },
     {
-      title: '编号',
+      title: '編號',
       dataIndex: 'no',
       width: 300,
     },
     {
-      title: '开始时间',
+      title: '開始時間',
       width: 200,
       dataIndex: 'beginTime',
     },
     {
-      title: '结束时间',
+      title: '結束時間',
       dataIndex: 'endTime',
       width: 200,
     },
@@ -67,7 +67,7 @@
     components: { BasicTable, TableAction },
     setup() {
       const [registerTable] = useTable({
-        title: 'TableAction组件及固定列示例',
+        title: 'TableAction組件及固定列示例',
         api: demoListApi,
         columns: columns,
         rowSelection: { type: 'radio' },
@@ -80,10 +80,10 @@
         },
       });
       function handleDelete(record: Recordable) {
-        console.log('点击了删除', record);
+        console.log('點擊了刪除', record);
       }
       function handleOpen(record: Recordable) {
-        console.log('点击了启用', record);
+        console.log('點擊了啓用', record);
       }
       return {
         registerTable,

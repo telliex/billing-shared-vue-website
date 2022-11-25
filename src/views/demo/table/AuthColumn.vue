@@ -6,26 +6,26 @@
           <TableAction
             :actions="[
               {
-                label: '编辑',
+                label: '編輯',
                 onClick: handleEdit.bind(null, record),
-                auth: 'other', // 根据权限控制是否显示: 无权限，不显示
+                auth: 'other', // 根據權限控制是否顯示: 無權限，不顯示
               },
               {
-                label: '删除',
+                label: '刪除',
                 icon: 'ic:outline-delete-outline',
                 onClick: handleDelete.bind(null, record),
-                auth: 'super', // 根据权限控制是否显示: 有权限，会显示
+                auth: 'super', // 根據權限控制是否顯示: 有權限，會顯示
               },
             ]"
             :dropDownActions="[
               {
-                label: '启用',
+                label: '啓用',
                 popConfirm: {
-                  title: '是否启用？',
+                  title: '是否啓用？',
                   confirm: handleOpen.bind(null, record),
                 },
                 ifShow: (_action) => {
-                  return record.status !== 'enable'; // 根据业务控制是否显示: 非enable状态的不显示启用按钮
+                  return record.status !== 'enable'; // 根據業務控制是否顯示: 非enable狀態的不顯示啓用按鈕
                 },
               },
               {
@@ -35,16 +35,16 @@
                   confirm: handleOpen.bind(null, record),
                 },
                 ifShow: () => {
-                  return record.status === 'enable'; // 根据业务控制是否显示: enable状态的显示禁用按钮
+                  return record.status === 'enable'; // 根據業務控制是否顯示: enable狀態的顯示禁用按鈕
                 },
               },
               {
-                label: '同时控制',
+                label: '同時控制',
                 popConfirm: {
-                  title: '是否动态显示？',
+                  title: '是否動態顯示？',
                   confirm: handleOpen.bind(null, record),
                 },
-                auth: 'super', // 同时根据权限和业务控制是否显示
+                auth: 'super', // 同時根據權限和業務控制是否顯示
                 ifShow: () => {
                   return true;
                 },
@@ -63,7 +63,7 @@
   import { demoListApi } from '/@/api/demo/table';
   const columns: BasicColumn[] = [
     {
-      title: '编号',
+      title: '編號',
       dataIndex: 'no',
       width: 100,
     },
@@ -71,46 +71,46 @@
       title: '姓名',
       dataIndex: 'name',
       width: 200,
-      auth: 'test', // 根据权限控制是否显示: 无权限，不显示
+      auth: 'test', // 根據權限控制是否顯示: 無權限，不顯示
     },
     {
-      title: '状态',
+      title: '狀態',
       dataIndex: 'status',
     },
     {
-      title: '状态1',
+      title: '狀態1',
       dataIndex: 'status1',
     },
     {
-      title: '状态2',
+      title: '狀態2',
       dataIndex: 'status2',
     },
     {
-      title: '状态3',
+      title: '狀態3',
       dataIndex: 'status3',
     },
     {
-      title: '状态4',
+      title: '狀態4',
       dataIndex: 'status4',
     },
     {
-      title: '状态5',
+      title: '狀態5',
       dataIndex: 'status5',
     },
     {
       title: '地址',
       dataIndex: 'address',
-      auth: 'super', // 同时根据权限和业务控制是否显示
+      auth: 'super', // 同時根據權限和業務控制是否顯示
       ifShow: (_column) => {
         return true;
       },
     },
     {
-      title: '开始时间',
+      title: '開始時間',
       dataIndex: 'beginTime',
     },
     {
-      title: '结束时间',
+      title: '結束時間',
       dataIndex: 'endTime',
       width: 200,
     },
@@ -119,7 +119,7 @@
     components: { BasicTable, TableAction },
     setup() {
       const [registerTable] = useTable({
-        title: 'TableAction组件及固定列示例',
+        title: 'TableAction組件及固定列示例',
         api: demoListApi,
         columns: columns,
         bordered: true,
@@ -135,13 +135,13 @@
         },
       });
       function handleEdit(record: Recordable) {
-        console.log('点击了编辑', record);
+        console.log('點擊了編輯', record);
       }
       function handleDelete(record: Recordable) {
-        console.log('点击了删除', record);
+        console.log('點擊了刪除', record);
       }
       function handleOpen(record: Recordable) {
-        console.log('点击了启用', record);
+        console.log('點擊了啓用', record);
       }
       return {
         registerTable,

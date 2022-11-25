@@ -294,7 +294,7 @@ export function useDataSource(
       let resultItems: Recordable[] = isArrayResult ? res : get(res, listField);
       const resultTotal: number = isArrayResult ? res.length : get(res, totalField);
 
-      // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
+      // 假如數據變少，導致總頁數變少並小於當前選中頁碼，通過getPaginationRef獲取到的頁碼是不正確的，需獲取正確的頁碼再次執行
       if (resultTotal) {
         const currentTotalPage = Math.ceil(resultTotal / pageSize);
         if (current > currentTotalPage) {

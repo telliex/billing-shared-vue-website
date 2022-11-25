@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:52:39
+-->
 <template>
   <BasicDrawer
     v-bind="$attrs"
@@ -49,7 +56,7 @@
         });
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增菜单' : '编辑菜单'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增菜單' : '編輯菜單'));
 
       async function handleSubmit() {
         try {

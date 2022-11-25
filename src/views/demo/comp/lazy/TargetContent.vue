@@ -1,9 +1,16 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:30:22
+-->
 <template>
   <Card hoverable :style="{ width: '240px', background: '#fff' }">
     <template #cover>
       <img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
     </template>
-    <CardMeta title="懒加载组件" />
+    <CardMeta title="懶加載組件" />
   </Card>
 </template>
 <script lang="ts">

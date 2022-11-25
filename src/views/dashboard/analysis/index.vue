@@ -1,6 +1,6 @@
 <template>
   <div class="p-4">
-    <GrowCard :loading="loading" class="enter-y" />
+    <!-- <GrowCard :loading="loading" class="enter-y" /> -->
     <SiteAnalysis class="!my-4 enter-y" :loading="loading" />
     <div class="md:flex enter-y">
       <VisitRadar class="md:w-1/3 w-full" :loading="loading" />
@@ -11,7 +11,7 @@
 </template>
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import GrowCard from './components/GrowCard.vue';
+  // import GrowCard from './components/GrowCard.vue';
   import SiteAnalysis from './components/SiteAnalysis.vue';
   import VisitSource from './components/VisitSource.vue';
   import VisitRadar from './components/VisitRadar.vue';

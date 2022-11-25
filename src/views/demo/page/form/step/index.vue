@@ -1,14 +1,14 @@
 <template>
   <PageWrapper
-    title="分步表单"
+    title="分步表單"
     contentBackground
-    content=" 将一个冗长或用户不熟悉的表单任务分成多个步骤，指导用户完成。"
+    content=" 將一個冗長或用户不熟悉的表單任務分成多個步驟，指導用户完成。"
     contentClass="p-4"
   >
     <div class="step-form-form">
       <a-steps :current="current">
-        <a-step title="填写转账信息" />
-        <a-step title="确认转账信息" />
+        <a-step title="填寫轉賬信息" />
+        <a-step title="確認轉賬信息" />
         <a-step title="完成" />
       </a-steps>
     </div>

@@ -1,7 +1,3 @@
-<!--
- * @Author: Telliex
- * @Description: logo component
--->
 <template>
   <div class="anticon" :class="getAppLogoClass" @click="goHome">
     <img src="../../../assets/images/logo.png" class="logo-normal" />

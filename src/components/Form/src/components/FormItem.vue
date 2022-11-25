@@ -155,7 +155,7 @@
             // 空值
             return Promise.reject(msg);
           } else if (Array.isArray(value) && value.length === 0) {
-            // 数组类型
+            // 數組類型
             return Promise.reject(msg);
           } else if (typeof value === 'string' && value.trim() === '') {
             // 空字符串
@@ -169,7 +169,7 @@
             value.checked.length === 0 &&
             value.halfChecked.length === 0
           ) {
-            // 非关联选择的tree组件
+            // 非關聯選擇的tree組件
             return Promise.reject(msg);
           }
           return Promise.resolve();
@@ -178,9 +178,9 @@
         const getRequired = isFunction(required) ? required(unref(getValues)) : required;
 
         /*
-         * 1、若设置了required属性，又没有其他的rules，就创建一个验证规则；
-         * 2、若设置了required属性，又存在其他的rules，则只rules中不存在required属性时，才添加验证required的规则
-         *     也就是说rules中的required，优先级大于required
+         * 1、若設置了required屬性，又沒有其他的rules，就創建一個驗證規則；
+         * 2、若設置了required屬性，又存在其他的rules，則只rules中不存在required屬性時，才添加驗證required的規則
+         *     也就是説rules中的required，優先級大於required
          */
         if (getRequired) {
           if (!rules || rules.length === 0) {

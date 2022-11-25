@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:26:29
+-->
 <template>
-  <PageWrapper title="数字动画示例">
+  <PageWrapper title="數字動畫示例">
     <Card>
       <CardGrid class="count-to-demo-card">
         <CountTo prefix="$" :color="'#409EFF'" :startVal="1" :endVal="200000" :duration="8000" />

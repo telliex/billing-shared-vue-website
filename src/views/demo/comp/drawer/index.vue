@@ -1,17 +1,24 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:29:41
+-->
 <template>
-  <PageWrapper title="抽屉组件使用示例">
-    <Alert message="使用 useDrawer 进行抽屉操作" show-icon />
-    <a-button type="primary" class="my-4" @click="openDrawerLoading"> 打开Drawer </a-button>
+  <PageWrapper title="抽屜組件使用示例">
+    <Alert message="使用 useDrawer 進行抽屜操作" show-icon />
+    <a-button type="primary" class="my-4" @click="openDrawerLoading"> 打開Drawer </a-button>
 
-    <Alert message="内外同时控制显示隐藏" show-icon />
-    <a-button type="primary" class="my-4" @click="openDrawer2(true)"> 打开Drawer </a-button>
-    <Alert message="自适应高度/显示footer" show-icon />
-    <a-button type="primary" class="my-4" @click="openDrawer3(true)"> 打开Drawer </a-button>
+    <Alert message="內外同時控制顯示隱藏" show-icon />
+    <a-button type="primary" class="my-4" @click="openDrawer2(true)"> 打開Drawer </a-button>
+    <Alert message="自適應高度/顯示footer" show-icon />
+    <a-button type="primary" class="my-4" @click="openDrawer3(true)"> 打開Drawer </a-button>
 
-    <Alert message="内外数据交互" show-icon />
-    <a-button type="primary" class="my-4" @click="send"> 打开Drawer并传递数据 </a-button>
-    <Alert message="详情页模式" show-icon />
-    <a-button type="primary" class="my-4" @click="openDrawer5(true)"> 打开详情Drawer </a-button>
+    <Alert message="內外數據交互" show-icon />
+    <a-button type="primary" class="my-4" @click="send"> 打開Drawer並傳遞數據 </a-button>
+    <Alert message="詳情頁模式" show-icon />
+    <a-button type="primary" class="my-4" @click="openDrawer5(true)"> 打開詳情Drawer </a-button>
     <Drawer1 @register="register1" />
     <Drawer2 @register="register2" />
     <Drawer3 @register="register3" />

@@ -32,7 +32,7 @@
     components: { BasicTable, FormOutlined, BasicHelp, HeaderCell },
     setup() {
       const [registerTable] = useTable({
-        title: '定高/头部自定义',
+        title: '定高/頭部自定義',
         api: demoListApi,
         columns: getCustomHeaderColumns(),
         canResize: false,

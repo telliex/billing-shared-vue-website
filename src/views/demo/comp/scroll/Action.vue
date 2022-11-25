@@ -1,10 +1,17 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:31:53
+-->
 <template>
-  <PageWrapper title="滚动组件函数示例" content="基于el-scrollbar">
+  <PageWrapper title="滾動組件函數示例" content="基於el-scrollbar">
     <div class="my-4">
-      <a-button @click="scrollTo(100)" class="mr-2"> 滚动到100px位置 </a-button>
-      <a-button @click="scrollTo(800)" class="mr-2"> 滚动到800px位置 </a-button>
-      <a-button @click="scrollTo(0)" class="mr-2"> 滚动到顶部 </a-button>
-      <a-button @click="scrollBottom()" class="mr-2"> 滚动到底部 </a-button>
+      <a-button @click="scrollTo(100)" class="mr-2"> 滾動到100px位置 </a-button>
+      <a-button @click="scrollTo(800)" class="mr-2"> 滾動到800px位置 </a-button>
+      <a-button @click="scrollTo(0)" class="mr-2"> 滾動到頂部 </a-button>
+      <a-button @click="scrollBottom()" class="mr-2"> 滾動到底部 </a-button>
     </div>
     <div class="scroll-wrap">
       <ScrollContainer class="mt-4" ref="scrollRef">

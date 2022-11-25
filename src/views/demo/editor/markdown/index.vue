@@ -1,17 +1,24 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:33:53
+-->
 <template>
-  <PageWrapper title="MarkDown组件示例">
+  <PageWrapper title="MarkDown組件示例">
     <div>
-      <a-button @click="toggleTheme" class="mb-2" type="primary"> 黑暗主题 </a-button>
-      <a-button @click="clearValue" class="mb-2" type="default"> 清空内容 </a-button>
+      <a-button @click="toggleTheme" class="mb-2" type="primary"> 黑暗主題 </a-button>
+      <a-button @click="clearValue" class="mb-2" type="default"> 清空內容 </a-button>
       <MarkDown
         v-model:value="value"
         @change="handleChange"
         ref="markDownRef"
-        placeholder="这是占位文本"
+        placeholder="這是佔位文本"
       />
     </div>
     <div class="mt-2">
-      <a-card title="Markdown Viewer 组件演示">
+      <a-card title="Markdown Viewer 組件演示">
         <MarkdownViewer :value="value" />
       </a-card>
     </div>
@@ -28,32 +35,32 @@
     setup() {
       const markDownRef = ref<Nullable<MarkDownActionType>>(null);
       const valueRef = ref(`
-# 标题h1
+# 標題h1
 
-##### 标题h5
+##### 標題h5
 
 **加粗**
-*斜体*
-~~删除线~~
-[链接](https://github.com/vbenjs/vue-vben-admin)
-↓分割线↓
+*斜體*
+~~刪除線~~
+[鏈接](https://github.com/vbenjs/vue-vben-admin)
+↓分割線↓
 
 ---
 
 
-* 无序列表1
-  * 无序列表1.1
+* 無序列表1
+  * 無序列表1.1
 
 1. 有序列表1
 2. 有序列表2
 
-* [ ] 任务列表1
-* [x] 任务列表2
+* [ ] 任務列表1
+* [x] 任務列表2
 
 > 引用示例
 
 \`\`\`js
-// 代码块:
+// 代碼塊:
 (() => {
   var htmlRoot = document.getElementById('htmlRoot');
   var theme = window.localStorage.getItem('__APP__DARK__MODE__');

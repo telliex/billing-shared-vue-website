@@ -39,13 +39,13 @@
       // slots: { customRender: 'id' },
     },
     {
-      title: '头像',
+      title: '頭像',
       dataIndex: 'avatar',
       width: 100,
       // slots: { customRender: 'avatar' },
     },
     {
-      title: '分类',
+      title: '分類',
       dataIndex: 'category',
       width: 80,
       align: 'center',
@@ -58,9 +58,9 @@
       width: 120,
     },
     {
-      title: '图片列表1',
+      title: '圖片列表1',
       dataIndex: 'imgArr',
-      helpMessage: ['这是简单模式的图片列表', '只会显示一张在表格中', '但点击可预览多张图片'],
+      helpMessage: ['這是簡單模式的圖片列表', '只會顯示一張在表格中', '但點擊可預覽多張圖片'],
       width: 140,
       // slots: { customRender: 'img' },
     },
@@ -75,16 +75,16 @@
       dataIndex: 'address',
     },
     {
-      title: '编号',
+      title: '編號',
       dataIndex: 'no',
       // slots: { customRender: 'no' },
     },
     {
-      title: '开始时间',
+      title: '開始時間',
       dataIndex: 'beginTime',
     },
     {
-      title: '结束时间',
+      title: '結束時間',
       dataIndex: 'endTime',
     },
   ];
@@ -92,8 +92,8 @@
     components: { BasicTable, TableImg, Tag, Avatar },
     setup() {
       const [registerTable] = useTable({
-        title: '自定义列内容',
-        titleHelpMessage: '表格中所有头像、图片均为mock生成，仅用于演示图片占位',
+        title: '自定義列內容',
+        titleHelpMessage: '表格中所有頭像、圖片均為mock生成，僅用於演示圖片佔位',
         api: demoListApi,
         columns: columns,
         bordered: true,

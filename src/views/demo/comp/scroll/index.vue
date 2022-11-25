@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:32:13
+-->
 <template>
-  <PageWrapper title="滚动组件示例" content="基于el-scrollbar">
+  <PageWrapper title="滾動組件示例" content="基於el-scrollbar">
     <div class="scroll-wrap">
       <ScrollContainer class="mt-4">
         <ul class="p-3">

@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:37:11
+-->
 <template>
   <PageWrapper title="全屏示例">
     <CollapseContainer class="w-full h-32 bg-white rounded-md" title="Window Full Screen">

@@ -1,21 +1,21 @@
 <template>
-  <PageWrapper title="Tree函数操作示例">
+  <PageWrapper title="Tree函數操作示例">
     <Row :gutter="[16, 16]">
       <Col :span="8">
         <BasicTree
-          title="右侧操作按钮/自定义图标"
-          helpMessage="帮助信息"
+          title="右側操作按鈕/自定義圖標"
+          helpMessage="幫助信息"
           :treeData="treeData"
           :actionList="actionList"
           :renderIcon="createIcon"
         />
       </Col>
       <Col :span="8">
-        <BasicTree title="右键菜单" :treeData="treeData" :beforeRightClick="getRightMenuList" />
+        <BasicTree title="右鍵菜單" :treeData="treeData" :beforeRightClick="getRightMenuList" />
       </Col>
       <Col :span="8">
         <BasicTree
-          title="工具栏使用"
+          title="工具欄使用"
           toolbar
           checkable
           search
@@ -24,14 +24,14 @@
         />
       </Col>
       <Col :span="8">
-        <BasicTree title="没有fieldNames，插槽有效" helpMessage="正确的示例" :treeData="treeData3">
+        <BasicTree title="沒有fieldNames，插槽有效" helpMessage="正確的示例" :treeData="treeData3">
           <template #title="item"> 插槽：{{ item.name }} </template>
         </BasicTree>
       </Col>
       <Col :span="8">
         <BasicTree
-          title="有fieldNames后，插槽失效"
-          helpMessage="错误的示例, 应该显示插槽的内容才对"
+          title="有fieldNames後，插槽失效"
+          helpMessage="錯誤的示例, 應該顯示插槽的內容才對"
           :fieldNames="{ key: 'id', title: 'name' }"
           :treeData="treeData2"
         >
@@ -40,8 +40,8 @@
       </Col>
       <Col :span="8">
         <BasicTree
-          title="有fieldNames后，actionList失效"
-          helpMessage="错误的示例，应该在鼠标移上去时，显示新增和删除按钮才对"
+          title="有fieldNames後，actionList失效"
+          helpMessage="錯誤的示例，應該在鼠標移上去時，顯示新增和刪除按鈕才對"
           :treeData="treeData3"
           :actionList="actionList"
           :fieldNames="{ key: 'key', title: 'name' }"
@@ -70,14 +70,14 @@
           {
             label: '新增',
             handler: () => {
-              console.log('点击了新增', node);
+              console.log('點擊了新增', node);
             },
             icon: 'bi:plus',
           },
           {
-            label: '删除',
+            label: '刪除',
             handler: () => {
-              console.log('点击了删除', node);
+              console.log('點擊了刪除', node);
             },
             icon: 'bx:bxs-folder-open',
           },

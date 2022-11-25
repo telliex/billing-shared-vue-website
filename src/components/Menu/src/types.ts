@@ -1,25 +1,32 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 03:13:44
+ */
 // import { ComputedRef } from 'vue';
 // import { ThemeEnum } from '/@/enums/appEnum';
 // import { MenuModeEnum } from '/@/enums/menuEnum';
 export interface MenuState {
-  // 默认选中的列表
+  // 默認選中的列表
   defaultSelectedKeys: string[];
 
   // 模式
   // mode: MenuModeEnum;
 
-  // // 主题
+  // // 主題
   // theme: ComputedRef<ThemeEnum> | ThemeEnum;
 
-  // 缩进
+  // 縮進
   inlineIndent?: number;
 
-  // 展开数组
+  // 展開數組
   openKeys: string[];
 
-  // 当前选中的菜单项 key 数组
+  // 當前選中的菜單項 key 數組
   selectedKeys: string[];
 
-  // 收缩状态下展开的数组
+  // 收縮狀態下展開的數組
   collapsedOpenKeys: string[];
 }

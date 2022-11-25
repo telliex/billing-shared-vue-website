@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 03:11:17
+ */
 import type { ValidationRule } from 'ant-design-vue/lib/form/Form';
 import type { ComponentType } from './types/index';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -23,7 +30,7 @@ export function createPlaceholderMessage(component: ComponentType) {
     component.includes('Radio') ||
     component.includes('Switch')
   ) {
-    // return `请选择${label}`;
+    // return `請選擇${label}`;
     return t('common.chooseText');
   }
   return '';
@@ -67,7 +74,7 @@ export function handleInputNumberValue(component?: ComponentType, val?: any) {
 }
 
 /**
- * 时间字段
+ * 時間字段
  */
 export const dateItemType = genType();
 

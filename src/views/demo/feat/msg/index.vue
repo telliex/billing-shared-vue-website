@@ -28,7 +28,7 @@
 
     <CollapseContainer
       class="w-full h-32 mt-5 bg-white rounded-md"
-      title="Notification 用法与上面一致"
+      title="Notification 用法與上面一致"
     >
       <a-button @click="handleNotify" color="success" class="mr-2"> Success </a-button>
     </CollapseContainer>

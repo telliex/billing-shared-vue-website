@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:20:52
+-->
 <template>
-  <Card title="访问来源" :loading="loading">
+  <Card title="訪問來源" :loading="loading">
     <div ref="chartRef" :style="{ width, height }"></div>
   </Card>
 </template>
@@ -38,7 +45,7 @@
         series: [
           {
             color: ['#5ab1ef', '#b6a2de', '#67e0e3', '#2ec7c9'],
-            name: '访问来源',
+            name: '訪問來源',
             type: 'pie',
             radius: ['40%', '70%'],
             avoidLabelOverlap: false,
@@ -63,9 +70,9 @@
             },
             data: [
               { value: 1048, name: '搜索引擎' },
-              { value: 735, name: '直接访问' },
-              { value: 580, name: '邮件营销' },
-              { value: 484, name: '联盟广告' },
+              { value: 735, name: '直接訪問' },
+              { value: 580, name: '郵件營銷' },
+              { value: 484, name: '聯盟廣告' },
             ],
             animationType: 'scale',
             animationEasing: 'exponentialInOut',

@@ -1,11 +1,18 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 03:35:53
+ */
 import { AxiosError, AxiosInstance } from 'axios';
 /**
- *  请求重试机制
+ *  請求重試機制
  */
 
 export class AxiosRetry {
   /**
-   * 重试
+   * 重試
    */
   retry(AxiosInstance: AxiosInstance, error: AxiosError) {
     // @ts-ignore
@@ -20,7 +27,7 @@ export class AxiosRetry {
   }
 
   /**
-   * 延迟
+   * 延遲
    */
   private delay(waitTime: number) {
     return new Promise((resolve) => setTimeout(resolve, waitTime));

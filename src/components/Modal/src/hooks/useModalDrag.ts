@@ -23,27 +23,27 @@ export function useModalDragMove(context: UseModalDragMoveContext) {
 
     dialogHeaderEl.onmousedown = (e: any) => {
       if (!e) return;
-      // 鼠标按下，计算当前元素距离可视区的距离
+      // 鼠標按下，計算當前元素距離可視區的距離
       const disX = e.clientX;
       const disY = e.clientY;
-      const screenWidth = document.body.clientWidth; // body当前宽度
-      const screenHeight = document.documentElement.clientHeight; // 可见区域高度(应为body高度，可某些环境下无法获取)
+      const screenWidth = document.body.clientWidth; // body當前寬度
+      const screenHeight = document.documentElement.clientHeight; // 可見區域高度(應為body高度，可某些環境下無法獲取)
 
-      const dragDomWidth = dragDom.offsetWidth; // 对话框宽度
-      const dragDomheight = dragDom.offsetHeight; // 对话框高度
+      const dragDomWidth = dragDom.offsetWidth; // 對話框寬度
+      const dragDomheight = dragDom.offsetHeight; // 對話框高度
 
       const minDragDomLeft = dragDom.offsetLeft;
 
       const maxDragDomLeft = screenWidth - dragDom.offsetLeft - dragDomWidth;
       const minDragDomTop = dragDom.offsetTop;
       const maxDragDomTop = screenHeight - dragDom.offsetTop - dragDomheight;
-      // 获取到的值带px 正则匹配替换
+      // 獲取到的值帶px 正則匹配替換
       const domLeft = getStyle(dragDom, 'left');
       const domTop = getStyle(dragDom, 'top');
       let styL = +domLeft;
       let styT = +domTop;
 
-      // 注意在ie中 第一次获取到的值为组件自带50% 移动之后赋值为px
+      // 注意在ie中 第一次獲取到的值為組件自帶50% 移動之後賦值為px
       if (domLeft.includes('%')) {
         styL = +document.body.clientWidth * (+domLeft.replace(/%/g, '') / 100);
         styT = +document.body.clientHeight * (+domTop.replace(/%/g, '') / 100);
@@ -53,11 +53,11 @@ export function useModalDragMove(context: UseModalDragMoveContext) {
       }
 
       document.onmousemove = function (e) {
-        // 通过事件委托，计算移动的距离
+        // 通過事件委託，計算移動的距離
         let left = e.clientX - disX;
         let top = e.clientY - disY;
 
-        // 边界处理
+        // 邊界處理
         if (-left > minDragDomLeft) {
           left = -minDragDomLeft;
         } else if (left > maxDragDomLeft) {
@@ -70,7 +70,7 @@ export function useModalDragMove(context: UseModalDragMoveContext) {
           top = maxDragDomTop;
         }
 
-        // 移动当前元素
+        // 移動當前元素
         dragDom.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`;
       };
 

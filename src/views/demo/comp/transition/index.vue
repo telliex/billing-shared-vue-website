@@ -1,10 +1,17 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:33:01
+-->
 <template>
-  <PageWrapper title="动画组件示例">
+  <PageWrapper title="動畫組件示例">
     <div class="flex">
       <Select
         :options="options"
         v-model:value="value"
-        placeholder="选择动画"
+        placeholder="選擇動畫"
         :style="{ width: '150px' }"
       />
       <a-button type="primary" class="ml-4" @click="start"> start </a-button>

@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:44:05
+-->
 <template>
   <List :class="prefixCls">
     <a-row :gutter="16">
@@ -10,7 +17,7 @@
                 {{ item.title }}
               </div>
               <div :class="`${prefixCls}__card-num`">
-                活跃用户：<span>{{ item.active }}</span> 万
+                活躍用户：<span>{{ item.active }}</span> 萬
               </div>
               <div :class="`${prefixCls}__card-num`">
                 新增用户：<span>{{ item.new }}</span>

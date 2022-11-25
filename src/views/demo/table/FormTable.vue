@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:53
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-12 07:41:46
+ * @LastEditTime: 2022-11-25 02:54:41
 -->
 <template>
   <BasicTable @register="registerTable">
@@ -22,7 +22,7 @@
     setup() {
       const checkedKeys = ref<Array<string | number>>([]);
       const [registerTable] = useTable({
-        title: '开启搜索区域1',
+        title: '開啓搜索區域1',
         api: demoListApi,
         columns: getBasicColumns(),
         useSearchForm: true,

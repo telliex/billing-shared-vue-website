@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 03:24:37
+ */
 import { Ref, unref, computed } from 'vue';
 import { useI18n } from '/@/hooks/web/useI18n';
 const { t } = useI18n();
@@ -12,7 +19,7 @@ export function useUploadType({
   maxNumberRef: Ref<number>;
   maxSizeRef: Ref<number>;
 }) {
-  // 文件类型限制
+  // 文件類型限制
   const getAccept = computed(() => {
     const accept = unref(acceptRef);
     if (accept && accept.length > 0) {
@@ -32,7 +39,7 @@ export function useUploadType({
       .join(',');
   });
 
-  // 支持jpg、jpeg、png格式，不超过2M，最多可选择10张图片，。
+  // 支持jpg、jpeg、png格式，不超過2M，最多可選擇10張圖片，。
   const getHelpText = computed(() => {
     const helpText = unref(helpTextRef);
     if (helpText) {

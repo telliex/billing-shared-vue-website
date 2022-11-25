@@ -3,13 +3,13 @@
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:53
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-12 00:37:02
+ * @LastEditTime: 2022-11-25 02:50:44
 -->
 <template>
   <div class="mt-2">
     當前權限模式：
     <a-button type="link">
-      {{ permissionMode === PermissionModeEnum.BACK ? '後臺權限模式' : '前端角色權限模式' }}
+      {{ permissionMode === PermissionModeEnum.BACK ? '後台權限模式' : '前端角色權限模式' }}
     </a-button>
     <a-button class="ml-4" @click="togglePermissionMode" type="primary"> 切換權限模式 </a-button>
     <Divider />

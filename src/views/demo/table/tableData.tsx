@@ -23,20 +23,20 @@ export function getBasicColumns(): BasicColumn[] {
       dataIndex: 'address',
     },
     {
-      title: '编号',
+      title: '編號',
       dataIndex: 'no',
       width: 150,
       sorter: true,
       defaultHidden: true,
     },
     {
-      title: '开始时间',
+      title: '開始時間',
       width: 150,
       sorter: true,
       dataIndex: 'beginTime',
     },
     {
-      title: '结束时间',
+      title: '結束時間',
       width: 150,
       sorter: true,
       dataIndex: 'endTime',
@@ -63,7 +63,7 @@ export function getBasicShortColumns(): BasicColumn[] {
       dataIndex: 'address',
     },
     {
-      title: '编号',
+      title: '編號',
       dataIndex: 'no',
       width: 80,
     },
@@ -88,7 +88,7 @@ export function getMultipleHeaderColumns(): BasicColumn[] {
       sorter: true,
       children: [
         {
-          title: '编号',
+          title: '編號',
           dataIndex: 'no',
           width: 120,
           filters: [
@@ -98,12 +98,12 @@ export function getMultipleHeaderColumns(): BasicColumn[] {
         },
 
         {
-          title: '开始时间',
+          title: '開始時間',
           dataIndex: 'beginTime',
           width: 120,
         },
         {
-          title: '结束时间',
+          title: '結束時間',
           dataIndex: 'endTime',
           width: 120,
         },
@@ -135,7 +135,7 @@ export function getCustomHeaderColumns(): BasicColumn[] {
     },
 
     {
-      title: '编号',
+      title: '編號',
       dataIndex: 'no',
       width: 120,
       filters: [
@@ -144,12 +144,12 @@ export function getCustomHeaderColumns(): BasicColumn[] {
       ],
     },
     {
-      title: '开始时间',
+      title: '開始時間',
       dataIndex: 'beginTime',
       width: 120,
     },
     {
-      title: '结束时间',
+      title: '結束時間',
       dataIndex: 'endTime',
       width: 120,
     },
@@ -200,7 +200,7 @@ export function getMergeHeaderColumns(): BasicColumn[] {
       },
     },
     {
-      title: '编号',
+      title: '編號',
       dataIndex: 'no',
       colSpan: 0,
       filters: [
@@ -210,13 +210,13 @@ export function getMergeHeaderColumns(): BasicColumn[] {
       customRender: renderContent,
     },
     {
-      title: '开始时间',
+      title: '開始時間',
       dataIndex: 'beginTime',
       width: 200,
       customRender: renderContent,
     },
     {
-      title: '结束时间',
+      title: '結束時間',
       dataIndex: 'endTime',
       width: 200,
       customRender: renderContent,

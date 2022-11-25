@@ -1,10 +1,10 @@
 <template>
-  <PageWrapper title="可折叠表单示例">
-    <CollapseContainer title="基础收缩示例">
+  <PageWrapper title="可摺疊表單示例">
+    <CollapseContainer title="基礎收縮示例">
       <BasicForm @register="register" />
     </CollapseContainer>
 
-    <CollapseContainer title="超过3行自动收起，折叠时保留2行" class="mt-4">
+    <CollapseContainer title="超過3行自動收起，摺疊時保留2行" class="mt-4">
       <BasicForm @register="register1" />
     </CollapseContainer>
   </PageWrapper>
@@ -25,7 +25,7 @@
           span: 8,
         },
         componentProps: {
-          placeholder: '自定义placeholder',
+          placeholder: '自定義placeholder',
           onChange: (e: any) => {
             console.log(e);
           },
@@ -57,12 +57,12 @@
         componentProps: {
           options: [
             {
-              label: '选项1',
+              label: '選項1',
               value: '1',
               key: '1',
             },
             {
-              label: '选项2',
+              label: '選項2',
               value: '2',
               key: '2',
             },
@@ -79,11 +79,11 @@
         componentProps: {
           options: [
             {
-              label: '选项1',
+              label: '選項1',
               value: '1',
             },
             {
-              label: '选项2',
+              label: '選項2',
               value: '2',
             },
           ],
@@ -99,11 +99,11 @@
       //   componentProps: {
       //     options: [
       //       {
-      //         label: '选项1',
+      //         label: '選項1',
       //         value: '1',
       //       },
       //       {
-      //         label: '选项2',
+      //         label: '選項2',
       //         value: '2',
       //       },
       //     ],

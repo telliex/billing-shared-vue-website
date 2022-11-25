@@ -1,9 +1,16 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:26:15
+-->
 <template>
-  <PageWrapper title="卡片列表示例" content="基础封装">
+  <PageWrapper title="卡片列表示例" content="基礎封裝">
     <CardList :params="params" :api="demoListApi" @get-method="getMethod" @delete="handleDel">
       <template #header>
-        <Button type="primary" color="error"> 按钮1 </Button>
-        <Button type="primary" color="success"> 按钮2 </Button>
+        <Button type="primary" color="error"> 按鈕1 </Button>
+        <Button type="primary" color="success"> 按鈕2 </Button>
       </template>
     </CardList>
   </PageWrapper>
@@ -15,18 +22,18 @@
   import { demoListApi } from '/@/api/demo/table';
   import { useMessage } from '/@/hooks/web/useMessage';
   const { notification } = useMessage();
-  // 请求api时附带参数
+  // 請求api時附帶參數
   const params = {};
 
   let reload = () => {};
-  // 获取内部fetch方法;
+  // 獲取內部fetch方法;
   function getMethod(m: any) {
     reload = m;
   }
-  //删除按钮事件
+  //刪除按鈕事件
   function handleDel(id) {
     console.log(id);
-    notification.success({ message: `成功删除${id}` });
+    notification.success({ message: `成功刪除${id}` });
     reload();
   }
 </script>

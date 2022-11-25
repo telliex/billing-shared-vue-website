@@ -1,11 +1,11 @@
 <template>
-  <PageWrapper title="标签页+多级field表单" v-loading="loading">
+  <PageWrapper title="標籤頁+多級field表單" v-loading="loading">
     <div class="mb-4">
-      <a-button @click="handleReset" class="mr-2"> 重置表单 </a-button>
-      <a-button @click="handleSetValues" class="mr-2"> 设置默认值 </a-button>
-      <a-button @click="handleSubmit" class="mr-2" type="primary"> 提交表单 </a-button>
+      <a-button @click="handleReset" class="mr-2"> 重置表單 </a-button>
+      <a-button @click="handleSetValues" class="mr-2"> 設置默認值 </a-button>
+      <a-button @click="handleSubmit" class="mr-2" type="primary"> 提交表單 </a-button>
     </div>
-    <CollapseContainer title="标签页+多级field表单">
+    <CollapseContainer title="標籤頁+多級field表單">
       <Tabs v-model:activeKey="activeKey">
         <TabPane
           v-for="item in tabsFormSchema"
@@ -45,20 +45,20 @@
       const loading = ref(false);
       const tabsFormSchema: TabsFormType[] = [];
 
-      // 公共属性
+      // 公共屬性
       const baseFormConfig: Partial<FormProps> = {
         showActionButtonGroup: false,
         labelWidth: 100,
       };
 
-      // 为每个字段模拟默认值, { tabs1: { field1: '', field2: '' }, tabs2: { field1: '' }, ... }
+      // 為每個字段模擬默認值, { tabs1: { field1: '', field2: '' }, tabs2: { field1: '' }, ... }
       const mockDefaultValue: Recordable = {};
 
-      // 模拟5个标签页
+      // 模擬5個標籤頁
       for (let i = 1; i <= 5; ++i) {
         const tabsKey = `tabs${i}`;
 
-        // 每个标签页8个字段
+        // 每個標籤頁8個字段
         const schemas: FormSchema[] = [];
         const row: Recordable = {};
 
@@ -98,14 +98,14 @@
             lastKey = item.key;
             const { validate, getFieldsValue } = item.Form[1];
             await validate();
-            // 表单已支持多级key
+            // 表單已支持多級key
             deepMerge(values, getFieldsValue());
           }
 
           console.log('submit values: ', values);
-          createMessage.success('提交成功！请打开控制台查看');
+          createMessage.success('提交成功！請打開控制枱查看');
         } catch (e) {
-          // 验证失败或出错，切换到对应标签页
+          // 驗證失敗或出錯，切換到對應標籤頁
           activeKey.value = lastKey;
           console.log(e);
         } finally {
@@ -114,7 +114,7 @@
       }
 
       async function handleSetValues() {
-        console.log('默认值为: ', mockDefaultValue);
+        console.log('默認值為: ', mockDefaultValue);
         for (const item of tabsFormSchema) {
           const { setFieldsValue } = item.Form[1];
           await setFieldsValue(mockDefaultValue);

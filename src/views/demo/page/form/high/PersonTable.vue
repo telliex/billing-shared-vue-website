@@ -7,7 +7,7 @@
         </template>
       </template>
     </BasicTable>
-    <a-button block class="mt-5" type="dashed" @click="handleAdd"> 新增成员 </a-button>
+    <a-button block class="mt-5" type="dashed" @click="handleAdd"> 新增成員 </a-button>
   </div>
 </template>
 <script lang="ts">
@@ -23,17 +23,17 @@
 
   const columns: BasicColumn[] = [
     {
-      title: '成员姓名',
+      title: '成員姓名',
       dataIndex: 'name',
       editRow: true,
     },
     {
-      title: '工号',
+      title: '工號',
       dataIndex: 'no',
       editRow: true,
     },
     {
-      title: '所属部门',
+      title: '所屬部門',
       dataIndex: 'dept',
       editRow: true,
     },
@@ -110,11 +110,11 @@
         if (!record.editable) {
           return [
             {
-              label: '编辑',
+              label: '編輯',
               onClick: handleEdit.bind(null, record),
             },
             {
-              label: '删除',
+              label: '刪除',
             },
           ];
         }
@@ -126,7 +126,7 @@
           {
             label: '取消',
             popConfirm: {
-              title: '是否取消编辑',
+              title: '是否取消編輯',
               confirm: handleCancel.bind(null, record, column),
             },
           },

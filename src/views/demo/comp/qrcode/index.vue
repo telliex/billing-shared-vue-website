@@ -1,19 +1,19 @@
 <template>
-  <PageWrapper title="二维码组件使用示例">
+  <PageWrapper title="二維碼組件使用示例">
     <div class="flex flex-wrap">
       <CollapseContainer
-        title="基础示例"
+        title="基礎示例"
         :canExpan="true"
         class="text-center mb-6 qrcode-demo-item"
       >
         <QrCode :value="qrCodeUrl" />
       </CollapseContainer>
 
-      <CollapseContainer title="渲染成img标签示例" class="text-center mb-6 qrcode-demo-item">
+      <CollapseContainer title="渲染成img標籤示例" class="text-center mb-6 qrcode-demo-item">
         <QrCode :value="qrCodeUrl" tag="img" />
       </CollapseContainer>
 
-      <CollapseContainer title="配置样式示例" class="text-center mb-6 qrcode-demo-item">
+      <CollapseContainer title="配置樣式示例" class="text-center mb-6 qrcode-demo-item">
         <QrCode
           :value="qrCodeUrl"
           :options="{
@@ -26,7 +26,7 @@
         <QrCode :value="qrCodeUrl" :logo="LogoImg" />
       </CollapseContainer>
 
-      <CollapseContainer title="在线logo示例" class="text-center mb-6 qrcode-demo-item">
+      <CollapseContainer title="在線logo示例" class="text-center mb-6 qrcode-demo-item">
         <QrCode
           :value="qrCodeUrl"
           logo="https://vebn.oss-cn-beijing.aliyuncs.com/vben/logo.png"
@@ -49,17 +49,17 @@
         />
       </CollapseContainer>
 
-      <CollapseContainer title="下载示例" class="text-center qrcode-demo-item">
+      <CollapseContainer title="下載示例" class="text-center qrcode-demo-item">
         <QrCode :value="qrCodeUrl" ref="qrRef" :logo="LogoImg" />
-        <a-button class="mb-2" type="primary" @click="download"> 下载 </a-button>
-        <div class="msg">(在线logo会导致图片跨域，需要下载图片需要自行解决跨域问题)</div>
+        <a-button class="mb-2" type="primary" @click="download"> 下載 </a-button>
+        <div class="msg">(在線logo會導致圖片跨域，需要下載圖片需要自行解決跨域問題)</div>
       </CollapseContainer>
 
       <CollapseContainer title="配置大小示例" class="text-center qrcode-demo-item">
         <QrCode :value="qrCodeUrl" :width="300" />
       </CollapseContainer>
 
-      <CollapseContainer title="扩展绘制示例" class="text-center qrcode-demo-item">
+      <CollapseContainer title="擴展繪製示例" class="text-center qrcode-demo-item">
         <QrCode
           :value="qrCodeUrl"
           :width="200"
@@ -68,8 +68,8 @@
           :logo="LogoImg"
           @done="onQrcodeDone"
         />
-        <a-button class="mb-2" type="primary" @click="downloadDiy"> 下载 </a-button>
-        <div class="msg">要进行扩展绘制则不能将tag设为img</div>
+        <a-button class="mb-2" type="primary" @click="downloadDiy"> 下載 </a-button>
+        <div class="msg">要進行擴展繪製則不能將tag設為img</div>
       </CollapseContainer>
     </div>
   </PageWrapper>
@@ -100,12 +100,12 @@
 
       function onQrcodeDone({ ctx }: any) {
         if (ctx instanceof CanvasRenderingContext2D) {
-          // 额外绘制
+          // 額外繪製
           ctx.fillStyle = 'black';
-          ctx.font = '16px "微软雅黑"';
+          ctx.font = '16px "微軟雅黑"';
           ctx.textBaseline = 'bottom';
           ctx.textAlign = 'center';
-          ctx.fillText('你帅你先扫', 100, 195, 200);
+          ctx.fillText('你帥你先掃', 100, 195, 200);
         }
       }
       return {

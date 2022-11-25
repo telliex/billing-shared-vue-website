@@ -1,7 +1,14 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:53:36
+-->
 <template>
   <div class="p-4">
     <BasicTable
-      title="基础示例"
+      title="基礎示例"
       titleHelpMessage="温馨提醒"
       :columns="columns"
       :dataSource="data"
@@ -15,14 +22,14 @@
     >
       <template #toolbar>
         <a-button type="primary" @click="toggleCanResize">
-          {{ !canResize ? '自适应高度' : '取消自适应' }}
+          {{ !canResize ? '自適應高度' : '取消自適應' }}
         </a-button>
         <a-button type="primary" @click="toggleBorder">
-          {{ !border ? '显示边框' : '隐藏边框' }}
+          {{ !border ? '顯示邊框' : '隱藏邊框' }}
         </a-button>
-        <a-button type="primary" @click="toggleLoading"> 开启loading </a-button>
+        <a-button type="primary" @click="toggleLoading"> 開啓loading </a-button>
         <a-button type="primary" @click="toggleStriped">
-          {{ !striped ? '显示斑马纹' : '隐藏斑马纹' }}
+          {{ !striped ? '顯示斑馬紋' : '隱藏斑馬紋' }}
         </a-button>
       </template>
     </BasicTable>

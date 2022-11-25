@@ -11,12 +11,12 @@ export const basicProps = {
     type: Number as PropType<number>,
     default: 2,
   },
-  // 最大数量的文件，Infinity不限制
+  // 最大數量的文件，Infinity不限制
   maxNumber: {
     type: Number as PropType<number>,
     default: Infinity,
   },
-  // 根据后缀，或者其他
+  // 根據後綴，或者其他
   accept: {
     type: Array as PropType<string[]>,
     default: () => [],

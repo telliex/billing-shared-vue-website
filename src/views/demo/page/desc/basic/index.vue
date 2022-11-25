@@ -1,8 +1,15 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:46:36
+-->
 <template>
-  <PageWrapper title="基础详情页" contentBackground>
+  <PageWrapper title="基礎詳情頁" contentBackground>
     <Description
       size="middle"
-      title="退款申请"
+      title="退款申請"
       :bordered="false"
       :column="3"
       :data="refundData"
@@ -45,7 +52,7 @@
     components: { Description, BasicTable, PageWrapper, [Divider.name]: Divider },
     setup() {
       const [registerRefundTable] = useTable({
-        title: '退货商品',
+        title: '退貨商品',
         dataSource: refundTableData,
         columns: refundTableSchema,
         pagination: false,
@@ -56,7 +63,7 @@
       });
 
       const [registerTimeTable] = useTable({
-        title: '退货进度',
+        title: '退貨進度',
         columns: refundTimeTableSchema,
         pagination: false,
         dataSource: refundTimeTableData,
@@ -73,7 +80,7 @@
         });
         return [
           {
-            t1: '总计',
+            t1: '總計',
             t5: totalT5,
             t6: totalT6,
           },

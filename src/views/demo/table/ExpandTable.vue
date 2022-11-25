@@ -1,7 +1,14 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:54:03
+-->
 <template>
   <PageWrapper
-    title="可展开表格"
-    content="TableAction组件可配置stopButtonPropagation来阻止操作按钮的点击事件冒泡，以便配合Table组件的expandRowByClick"
+    title="可展開表格"
+    content="TableAction組件可配置stopButtonPropagation來阻止操作按鈕的點擊事件冒泡，以便配合Table組件的expandRowByClick"
   >
     <BasicTable @register="registerTable">
       <template #expandedRowRender="{ record }">
@@ -13,16 +20,16 @@
             stopButtonPropagation
             :actions="[
               {
-                label: '删除',
+                label: '刪除',
                 icon: 'ic:outline-delete-outline',
                 onClick: handleDelete.bind(null, record),
               },
             ]"
             :dropDownActions="[
               {
-                label: '启用',
+                label: '啓用',
                 popConfirm: {
-                  title: '是否启用？',
+                  title: '是否啓用？',
                   confirm: handleOpen.bind(null, record),
                 },
               },
@@ -46,8 +53,8 @@
     setup() {
       const [registerTable] = useTable({
         api: demoListApi,
-        title: '可展开表格演示',
-        titleHelpMessage: ['已启用expandRowByClick', '已启用stopButtonPropagation'],
+        title: '可展開表格演示',
+        titleHelpMessage: ['已啓用expandRowByClick', '已啓用stopButtonPropagation'],
         columns: getBasicColumns(),
         rowKey: 'id',
         canResize: false,
@@ -61,10 +68,10 @@
         },
       });
       function handleDelete(record: Recordable) {
-        console.log('点击了删除', record);
+        console.log('點擊了刪除', record);
       }
       function handleOpen(record: Recordable) {
-        console.log('点击了启用', record);
+        console.log('點擊了啓用', record);
       }
 
       return {

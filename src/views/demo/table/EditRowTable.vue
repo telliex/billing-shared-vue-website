@@ -28,7 +28,7 @@
 
   const columns: BasicColumn[] = [
     {
-      title: '输入框',
+      title: '輸入框',
       dataIndex: 'name',
       editRow: true,
       editComponentProps: {
@@ -37,34 +37,34 @@
       width: 150,
     },
     {
-      title: '默认输入状态',
+      title: '默認輸入狀態',
       dataIndex: 'name7',
       editRow: true,
       width: 150,
     },
     {
-      title: '输入框校验',
+      title: '輸入框校驗',
       dataIndex: 'name1',
       editRow: true,
       align: 'left',
-      // 默认必填校验
+      // 默認必填校驗
       editRule: true,
       width: 150,
     },
     {
-      title: '输入框函数校验',
+      title: '輸入框函數校驗',
       dataIndex: 'name2',
       editRow: true,
       align: 'right',
       editRule: async (text) => {
         if (text === '2') {
-          return '不能输入该值';
+          return '不能輸入該值';
         }
         return '';
       },
     },
     {
-      title: '数字输入框',
+      title: '數字輸入框',
       dataIndex: 'id',
       editRow: true,
       editRule: true,
@@ -95,7 +95,7 @@
       width: 200,
     },
     {
-      title: '远程下拉',
+      title: '遠程下拉',
       dataIndex: 'name4',
       editRow: true,
       editComponent: 'ApiSelect',
@@ -108,7 +108,7 @@
       width: 200,
     },
     {
-      title: '远程下拉树',
+      title: '遠程下拉樹',
       dataIndex: 'name8',
       editRow: true,
       editComponent: 'ApiTreeSelect',
@@ -120,7 +120,7 @@
       width: 200,
     },
     {
-      title: '日期选择',
+      title: '日期選擇',
       dataIndex: 'date',
       editRow: true,
       editComponent: 'DatePicker',
@@ -131,7 +131,7 @@
       width: 150,
     },
     {
-      title: '时间选择',
+      title: '時間選擇',
       dataIndex: 'time',
       editRow: true,
       editComponent: 'TimePicker',
@@ -142,7 +142,7 @@
       width: 100,
     },
     {
-      title: '勾选框',
+      title: '勾選框',
       dataIndex: 'name5',
       editRow: true,
 
@@ -153,12 +153,12 @@
       width: 100,
     },
     {
-      title: '开关',
+      title: '開關',
       dataIndex: 'name6',
       editRow: true,
       editComponent: 'Switch',
       editValueMap: (value) => {
-        return value ? '开' : '关';
+        return value ? '開' : '關';
       },
       width: 100,
     },
@@ -169,9 +169,9 @@
       const { createMessage: msg } = useMessage();
       const currentEditKeyRef = ref('');
       const [registerTable] = useTable({
-        title: '可编辑行示例',
+        title: '可編輯行示例',
         titleHelpMessage: [
-          '本例中修改[数字输入框]这一列时，同一行的[远程下拉]列的当前编辑数据也会同步发生改变',
+          '本例中修改[數字輸入框]這一列時，同一行的[遠程下拉]列的當前編輯數據也會同步發生改變',
         ],
         api: demoListApi,
         columns: columns,
@@ -197,26 +197,26 @@
       }
 
       async function handleSave(record: EditRecordRow) {
-        // 校验
+        // 校驗
         msg.loading({ content: '正在保存...', duration: 0, key: 'saving' });
         const valid = await record.onValid?.();
         if (valid) {
           try {
             const data = cloneDeep(record.editValueRefs);
             console.log(data);
-            //TODO 此处将数据提交给服务器保存
+            //TODO 此處將數據提交給服務器保存
             // ...
-            // 保存之后提交编辑状态
+            // 保存之後提交編輯狀態
             const pass = await record.onEdit?.(false, true);
             if (pass) {
               currentEditKeyRef.value = '';
             }
-            msg.success({ content: '数据已保存', key: 'saving' });
+            msg.success({ content: '數據已保存', key: 'saving' });
           } catch (error) {
-            msg.error({ content: '保存失败', key: 'saving' });
+            msg.error({ content: '保存失敗', key: 'saving' });
           }
         } else {
-          msg.error({ content: '请填写正确的数据', key: 'saving' });
+          msg.error({ content: '請填寫正確的數據', key: 'saving' });
         }
       }
 
@@ -224,7 +224,7 @@
         if (!record.editable) {
           return [
             {
-              label: '编辑',
+              label: '編輯',
               disabled: currentEditKeyRef.value ? currentEditKeyRef.value !== record.key : false,
               onClick: handleEdit.bind(null, record),
             },
@@ -238,7 +238,7 @@
           {
             label: '取消',
             popConfirm: {
-              title: '是否取消编辑',
+              title: '是否取消編輯',
               confirm: handleCancel.bind(null, record, column),
             },
           },

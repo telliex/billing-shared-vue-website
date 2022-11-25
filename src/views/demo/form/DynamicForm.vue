@@ -1,16 +1,16 @@
 <template>
-  <PageWrapper title="动态表单示例">
+  <PageWrapper title="動態表單示例">
     <div class="mb-4">
       <a-button @click="changeLabel3" class="mr-2"> 更改字段3label </a-button>
-      <a-button @click="changeLabel34" class="mr-2"> 同时更改字段3,4label </a-button>
-      <a-button @click="appendField" class="mr-2"> 往字段3后面插入字段10 </a-button>
-      <a-button @click="deleteField" class="mr-2"> 删除字段11 </a-button>
+      <a-button @click="changeLabel34" class="mr-2"> 同時更改字段3,4label </a-button>
+      <a-button @click="appendField" class="mr-2"> 往字段3後面插入字段10 </a-button>
+      <a-button @click="deleteField" class="mr-2"> 刪除字段11 </a-button>
     </div>
-    <CollapseContainer title="动态表单示例,动态根据表单内其他值改变">
+    <CollapseContainer title="動態表單示例,動態根據表單內其他值改變">
       <BasicForm @register="register" />
     </CollapseContainer>
 
-    <CollapseContainer class="mt-5" title="componentProps动态改变">
+    <CollapseContainer class="mt-5" title="componentProps動態改變">
       <BasicForm @register="register1" />
     </CollapseContainer>
   </PageWrapper>
@@ -68,12 +68,12 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
             key: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
             key: '2',
           },
@@ -91,7 +91,7 @@
     {
       field: 'field5',
       component: 'Switch',
-      label: '是否显示字段1(css控制)',
+      label: '是否顯示字段1(css控制)',
       colProps: {
         span: 8,
       },
@@ -100,7 +100,7 @@
     {
       field: 'field6',
       component: 'Switch',
-      label: '是否显示字段2(dom控制)',
+      label: '是否顯示字段2(dom控制)',
       colProps: {
         span: 8,
       },
@@ -137,7 +137,7 @@
       labelWidth: 200,
       componentProps: ({ formModel }) => {
         return {
-          placeholder: '同步f2的值为f1',
+          placeholder: '同步f2的值為f1',
           onChange: (e: ChangeEvent) => {
             formModel.f2 = e.target.value;
           },
@@ -165,10 +165,10 @@
       // @ts-ignore
       componentProps: ({ formActionType }) => {
         return {
-          placeholder: '值改变时执行查询,查看控制台',
+          placeholder: '值改變時執行查詢,查看控制枱',
           onChange: async () => {
             const { validate } = formActionType;
-            // tableAction只适用于在表格内开启表单的例子
+            // tableAction只適用於在表格內開啓表單的例子
             // const { reload } = tableAction;
             const res = await validate();
             console.log(res);

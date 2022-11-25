@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 03:20:02
+-->
 <template>
   <div
     :class="prefixCls"
@@ -44,13 +51,13 @@
     props: {
       imgList: propTypes.arrayOf(propTypes.string),
       size: propTypes.number.def(40),
-      // 是否简单显示（只显示第一张图片）
+      // 是否簡單顯示（只顯示第一張圖片）
       simpleShow: propTypes.bool,
-      // 简单模式下是否显示图片数量的badge
+      // 簡單模式下是否顯示圖片數量的badge
       showBadge: propTypes.bool.def(true),
-      // 图片间距
+      // 圖片間距
       margin: propTypes.number.def(4),
-      // src前缀，将会附加在imgList中每一项之前
+      // src前綴，將會附加在imgList中每一項之前
       srcPrefix: propTypes.string.def(''),
     },
     setup(props) {

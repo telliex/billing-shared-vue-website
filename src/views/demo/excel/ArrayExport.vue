@@ -3,13 +3,13 @@
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:53
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-11 07:27:07
+ * @LastEditTime: 2022-11-25 02:34:31
 -->
 <template>
-  <PageWrapper title="导出示例" content="根据数组格式的数据进行导出">
-    <BasicTable title="基础表格" :columns="columns" :dataSource="data">
+  <PageWrapper title="導出示例" content="根據數組格式的數據進行導出">
+    <BasicTable title="基礎表格" :columns="columns" :dataSource="data">
       <template #toolbar>
-        <a-button @click="aoaToExcel"> 导出 </a-button>
+        <a-button @click="aoaToExcel"> 導出 </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -26,11 +26,11 @@
     components: { BasicTable, PageWrapper },
     setup() {
       function aoaToExcel() {
-        // 保证data顺序与header一致
+        // 保證data順序與header一致
         aoaToSheetXlsx({
           data: arrData,
           header: arrHeader,
-          filename: '二维数组方式导出excel.xlsx',
+          filename: '二維數組方式導出excel.xlsx',
         });
       }
 

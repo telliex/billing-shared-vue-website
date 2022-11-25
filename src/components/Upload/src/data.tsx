@@ -11,7 +11,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 
 const { t } = useI18n();
 
-// 文件上传列表
+// 文件上傳列表
 export function createTableColumns(): BasicColumn[] {
   return [
     {
@@ -57,7 +57,7 @@ export function createTableColumns(): BasicColumn[] {
     },
     // {
     //   dataIndex: 'type',
-    //   title: '文件类型',
+    //   title: '文件類型',
     //   width: 100,
     // },
     {
@@ -102,7 +102,7 @@ export function createActionColumn(handleRemove: Function): BasicColumn {
     },
   };
 }
-// 文件预览列表
+// 文件預覽列表
 export function createPreviewColumns(): BasicColumn[] {
   return [
     {

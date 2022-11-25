@@ -2,30 +2,30 @@
   <PageWrapper title="UseForm操作示例">
     <div class="mb-4">
       <a-button @click="setProps({ labelWidth: 150 })" class="mr-2"> 更改labelWidth </a-button>
-      <a-button @click="setProps({ labelWidth: 120 })" class="mr-2"> 还原labelWidth </a-button>
+      <a-button @click="setProps({ labelWidth: 120 })" class="mr-2"> 還原labelWidth </a-button>
       <a-button @click="setProps({ size: 'large' })" class="mr-2"> 更改Size </a-button>
-      <a-button @click="setProps({ size: 'default' })" class="mr-2"> 还原Size </a-button>
-      <a-button @click="setProps({ disabled: true })" class="mr-2"> 禁用表单 </a-button>
+      <a-button @click="setProps({ size: 'default' })" class="mr-2"> 還原Size </a-button>
+      <a-button @click="setProps({ disabled: true })" class="mr-2"> 禁用表單 </a-button>
       <a-button @click="setProps({ disabled: false })" class="mr-2"> 解除禁用 </a-button>
-      <a-button @click="setProps({ compact: true })" class="mr-2"> 紧凑表单 </a-button>
-      <a-button @click="setProps({ compact: false })" class="mr-2"> 还原正常间距 </a-button>
+      <a-button @click="setProps({ compact: true })" class="mr-2"> 緊湊表單 </a-button>
+      <a-button @click="setProps({ compact: false })" class="mr-2"> 還原正常間距 </a-button>
       <a-button @click="setProps({ actionColOptions: { span: 8 } })" class="mr-2">
-        操作按钮位置
+        操作按鈕位置
       </a-button>
     </div>
     <div class="mb-4">
       <a-button @click="setProps({ showActionButtonGroup: false })" class="mr-2">
-        隐藏操作按钮
+        隱藏操作按鈕
       </a-button>
       <a-button @click="setProps({ showActionButtonGroup: true })" class="mr-2">
-        显示操作按钮
+        顯示操作按鈕
       </a-button>
-      <a-button @click="setProps({ showResetButton: false })" class="mr-2"> 隐藏重置按钮 </a-button>
-      <a-button @click="setProps({ showResetButton: true })" class="mr-2"> 显示重置按钮 </a-button>
+      <a-button @click="setProps({ showResetButton: false })" class="mr-2"> 隱藏重置按鈕 </a-button>
+      <a-button @click="setProps({ showResetButton: true })" class="mr-2"> 顯示重置按鈕 </a-button>
       <a-button @click="setProps({ showSubmitButton: false })" class="mr-2">
-        隐藏查询按钮
+        隱藏查詢按鈕
       </a-button>
-      <a-button @click="setProps({ showSubmitButton: true })" class="mr-2"> 显示查询按钮 </a-button>
+      <a-button @click="setProps({ showSubmitButton: true })" class="mr-2"> 顯示查詢按鈕 </a-button>
       <a-button
         @click="
           setProps({
@@ -37,7 +37,7 @@
         "
         class="mr-2"
       >
-        修改重置按钮
+        修改重置按鈕
       </a-button>
       <a-button
         @click="
@@ -50,9 +50,9 @@
         "
         class="mr-2"
       >
-        修改查询按钮
+        修改查詢按鈕
       </a-button>
-      <a-button @click="handleLoad" class="mr-2"> 联动回显 </a-button>
+      <a-button @click="handleLoad" class="mr-2"> 聯動回顯 </a-button>
     </div>
     <CollapseContainer title="useForm示例">
       <BasicForm @register="register" @submit="handleSubmit" />
@@ -76,7 +76,7 @@
         span: 8,
       },
       componentProps: {
-        placeholder: '自定义placeholder',
+        placeholder: '自定義placeholder',
         onChange: (e: any) => {
           console.log(e);
         },
@@ -101,7 +101,7 @@
     {
       field: 'fieldTime',
       component: 'RangePicker',
-      label: '时间字段',
+      label: '時間字段',
       colProps: {
         span: 8,
       },
@@ -116,12 +116,12 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
             key: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
             key: '2',
           },
@@ -138,11 +138,11 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
           },
         ],
@@ -158,11 +158,11 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
           },
         ],
@@ -171,7 +171,7 @@
     {
       field: 'field8',
       component: 'ApiCascader',
-      label: '联动',
+      label: '聯動',
       colProps: {
         span: 8,
       },
@@ -192,7 +192,7 @@
     {
       field: 'field9',
       component: 'ApiCascader',
-      label: '联动回显',
+      label: '聯動回顯',
       colProps: {
         span: 8,
       },
@@ -233,8 +233,8 @@
               resolve({
                 field9: ['430000', '430100', '430102'],
                 province: '湖南省',
-                city: '长沙市',
-                district: '岳麓区',
+                city: '長沙市',
+                district: '嶽麓區',
               });
             }, 1000);
           });

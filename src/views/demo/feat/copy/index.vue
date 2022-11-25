@@ -1,8 +1,15 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:36:46
+-->
 <template>
-  <PageWrapper title="文本复制示例">
+  <PageWrapper title="文本複製示例">
     <CollapseContainer class="w-full h-32 bg-white rounded-md" title="Copy Example">
       <div class="flex justify-center">
-        <a-input placeholder="请输入" v-model:value="value" />
+        <a-input placeholder="請輸入" v-model:value="value" />
         <a-button type="primary" @click="handleCopy"> Copy </a-button>
       </div>
     </CollapseContainer>
@@ -26,7 +33,7 @@
       function handleCopy() {
         const value = unref(valueRef);
         if (!value) {
-          createMessage.warning('请输入要拷贝的内容！');
+          createMessage.warning('請輸入要拷貝的內容！');
           return;
         }
         clipboardRef.value = value;

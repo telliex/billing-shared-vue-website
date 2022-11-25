@@ -1,15 +1,22 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:38:25
+-->
 <template>
-  <PageWrapper title="带参数菜单（路由）" content="支持多级参数">
-    当前参数：{{ params }}
+  <PageWrapper title="帶參數菜單（路由）" content="支持多級參數">
+    當前參數：{{ params }}
     <br />
-    输入参数切换路由：
-    <Input v-model:value="value" placeholder="建议为url标准字符，输入后点击切换" />
-    <a-button type="primary" @click="handleClickGo">切换路由</a-button>
+    輸入參數切換路由：
+    <Input v-model:value="value" placeholder="建議為url標準字符，輸入後點擊切換" />
+    <a-button type="primary" @click="handleClickGo">切換路由</a-button>
     <br />
-    切换路由后
+    切換路由後
     <ul>
-      <li>可刷新页面测试路由参数情况是否正常。</li>
-      <li>可于左侧菜单中展开子菜单，点击测试参数是否携带正常。</li>
+      <li>可刷新頁面測試路由參數情況是否正常。</li>
+      <li>可於左側菜單中展開子菜單，點擊測試參數是否攜帶正常。</li>
     </ul>
   </PageWrapper>
 </template>

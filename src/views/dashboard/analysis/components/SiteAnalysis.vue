@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:20:14
+-->
 <template>
   <Card
     :tab-list="tabListTitle"
@@ -24,11 +31,11 @@
   const tabListTitle = [
     {
       key: 'tab1',
-      tab: '流量趋势',
+      tab: '流量趨勢',
     },
     {
       key: 'tab2',
-      tab: '访问量',
+      tab: '訪問量',
     },
   ];
 

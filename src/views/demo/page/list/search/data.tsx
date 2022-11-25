@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:49:22
+ */
 import { FormSchema } from '/@/components/Form/index';
 
 export const searchList = (() => {
@@ -6,8 +13,8 @@ export const searchList = (() => {
     result.push({
       id: i,
       title: 'Data Platform Admin',
-      description: ['ECV', '设计语言', 'Typescript'],
-      content: '基于Vue Next, TypeScript, Ant Design实现的一套完整的企业级后台管理系统。',
+      description: ['ECV', '設計語言', 'Typescript'],
+      content: '基於Vue Next, TypeScript, Ant Design實現的一套完整的企業級後台管理系統。',
       time: '2020-11-14 11:20',
     });
   }
@@ -24,7 +31,7 @@ export const schemas: FormSchema[] = [
   {
     field: 'field1',
     component: 'InputSearch',
-    label: '项目名',
+    label: '項目名',
     colProps: {
       span: 8,
     },

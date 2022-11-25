@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:31:10
+-->
 <template>
   <BasicModal
     v-bind="$attrs"
@@ -8,14 +15,14 @@
     @visible-change="handleShow"
   >
     <template #insertFooter>
-      <a-button type="primary" danger @click="setLines" :disabled="loading">点我更新内容</a-button>
+      <a-button type="primary" danger @click="setLines" :disabled="loading">點我更新內容</a-button>
     </template>
     <template v-if="loading">
-      <div class="empty-tips">加载中，稍等3秒……</div>
+      <div class="empty-tips">加載中，稍等3秒……</div>
     </template>
     <template v-if="!loading">
       <ul>
-        <li v-for="index in lines" :key="index">加载完成{{ index }}！</li>
+        <li v-for="index in lines" :key="index">加載完成{{ index }}！</li>
       </ul>
     </template>
   </BasicModal>

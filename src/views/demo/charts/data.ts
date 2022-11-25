@@ -15,7 +15,7 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '重庆',
+    name: '重慶',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -30,17 +30,17 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '云南',
+    name: '雲南',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '辽宁',
+    name: '遼寧',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '黑龙江',
+    name: '黑龍江',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -55,7 +55,7 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '山东',
+    name: '山東',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -65,7 +65,7 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '江苏',
+    name: '江蘇',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -85,12 +85,12 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '广西',
+    name: '廣西',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '甘肃',
+    name: '甘肅',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -100,12 +100,12 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '内蒙古',
+    name: '內蒙古',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '陕西',
+    name: '陝西',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -120,12 +120,12 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '贵州',
+    name: '貴州',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '广东',
+    name: '廣東',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -145,7 +145,7 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '宁夏',
+    name: '寧夏',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -155,7 +155,7 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '台湾',
+    name: '台灣',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
@@ -165,7 +165,7 @@ export const mapData: any = [
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },
   {
-    name: '澳门',
+    name: '澳門',
     value: Math.round(Math.random() * 1000),
     tipData: [Math.round(Math.random() * 1000), Math.round(Math.random() * 1000)],
   },

@@ -1,7 +1,14 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:37:50
+-->
 <template>
-  <PageWrapper title="图片预览示例">
+  <PageWrapper title="圖片預覽示例">
     <ImagePreview :imageList="imgList" />
-    <a-button @click="openImg" type="primary">无预览图</a-button>
+    <a-button @click="openImg" type="primary">無預覽圖</a-button>
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -20,9 +27,9 @@
     setup() {
       function openImg() {
         const onImgLoad = ({ index, url, dom }) => {
-          console.log(`第${index + 1}张图片已加载，URL为：${url}`, dom);
+          console.log(`第${index + 1}張圖片已加載，URL為：${url}`, dom);
         };
-        // 可以使用createImgPreview返回的 PreviewActions 来控制预览逻辑，实现类似幻灯片、自动旋转之类的骚操作
+        // 可以使用createImgPreview返回的 PreviewActions 來控制預覽邏輯，實現類似幻燈片、自動旋轉之類的騷操作
         createImgPreview({ imageList: imgList, defaultWidth: 700, rememberState: true, onImgLoad });
       }
       return { imgList, openImg };

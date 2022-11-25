@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:24:25
+-->
 <template>
-  <Card title="项目" v-bind="$attrs">
+  <Card title="項目" v-bind="$attrs">
     <template #extra>
       <a-button type="link" size="small">更多</a-button>
     </template>

@@ -1,18 +1,18 @@
 <template>
-  <PageWrapper :class="prefixCls" title="标准列表">
+  <PageWrapper :class="prefixCls" title="標準列表">
     <div :class="`${prefixCls}__top`">
       <a-row :gutter="12">
         <a-col :span="8" :class="`${prefixCls}__top-col`">
-          <div>我的待办</div>
-          <p>8个任务</p>
+          <div>我的待辦</div>
+          <p>8個任務</p>
         </a-col>
         <a-col :span="8" :class="`${prefixCls}__top-col`">
-          <div>本周任务平均处理时间</div>
-          <p>32分钟</p>
+          <div>本週任務平均處理時間</div>
+          <p>32分鐘</p>
         </a-col>
         <a-col :span="8" :class="`${prefixCls}__top-col`">
-          <div>本周完成任务数</div>
-          <p>24个任务</p>
+          <div>本週完成任務數</div>
+          <p>24個任務</p>
         </a-col>
       </a-row>
     </div>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="info">
                   <div><span>Owner</span>{{ item.author }}</div>
-                  <div><span>开始时间</span>{{ item.datetime }}</div>
+                  <div><span>開始時間</span>{{ item.datetime }}</div>
                 </div>
                 <div class="progress">
                   <Progress :percent="item.percent" status="active" />

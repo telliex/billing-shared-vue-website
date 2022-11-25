@@ -1,6 +1,6 @@
 <template>
-  <PageWrapper title="表单增删示例">
-    <CollapseContainer title="表单增删">
+  <PageWrapper title="表單增刪示例">
+    <CollapseContainer title="表單增刪">
       <BasicForm @register="register" @submit="handleSubmit">
         <template #add="{ field }">
           <Button v-if="Number(field) === 0" @click="add">+</Button>

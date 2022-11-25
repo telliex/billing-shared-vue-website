@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:40:03
+-->
 <template>
   <PageWrapper title="水印示例">
     <CollapseContainer class="w-full h-32 bg-white rounded-md" title="Global WaterMark">

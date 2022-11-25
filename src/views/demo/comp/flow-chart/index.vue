@@ -1,7 +1,14 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:30:02
+-->
 <template>
   <PageWrapper
-    title="流程图"
-    content="简单流程图示例,具体功能需要自己完善"
+    title="流程圖"
+    content="簡單流程圖示例,具體功能需要自己完善"
     contentFullHeight
     fixedHeight
   >

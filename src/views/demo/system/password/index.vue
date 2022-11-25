@@ -3,10 +3,10 @@
  * @Anthor: Telliex
  * @Date: 2022-10-03 01:55:48
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-17 00:35:59
+ * @LastEditTime: 2022-11-25 02:52:47
 -->
 <template>
-  <PageWrapper title="修改用戶密碼" content="修改成功後會自動退出當前登錄,請再重新登錄！">
+  <PageWrapper title="修改用户密碼" content="修改成功後會自動退出當前登錄,請再重新登錄！">
     <div class="py-8 bg-white flex flex-col justify-center items-center">
       <BasicForm @register="register" />
       <div class="flex justify-center">

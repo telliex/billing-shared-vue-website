@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:39:28
+-->
 <template>
-  <PageWrapper title="带参数标签页" content="支持带参数多tab缓存">
+  <PageWrapper title="帶參數標籤頁" content="支持帶參數多tab緩存">
     Current Param : {{ params }}
     <br />
     Keep Alive

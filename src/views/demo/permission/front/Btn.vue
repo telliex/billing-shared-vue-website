@@ -3,14 +3,14 @@
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:53
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-17 09:38:48
+ * @LastEditTime: 2022-11-25 02:50:28
 -->
 <template>
   <PageWrapper
     title="前端權限按鈕示例"
     contentBackground
     contentClass="p-4"
-    content="由於刷新的時候會請求用戶信息接口，會根據接口重置角色信息，所以刷新後界面會恢復原樣，如果不需要，可以註釋 src/layout/default/index內的獲取用戶信息接口"
+    content="由於刷新的時候會請求用户信息接口，會根據接口重置角色信息，所以刷新後界面會恢復原樣，如果不需要，可以註釋 src/layout/default/index內的獲取用户信息接口"
   >
     <CurrentPermissionMode />
 

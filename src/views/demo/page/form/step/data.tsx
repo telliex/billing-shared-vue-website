@@ -1,10 +1,17 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:48:06
+ */
 import { FormSchema } from '/@/components/Form';
 
 export const step1Schemas: FormSchema[] = [
   {
     field: 'account',
     component: 'Select',
-    label: '付款账户',
+    label: '付款賬户',
     required: true,
     defaultValue: '1',
     componentProps: {
@@ -22,7 +29,7 @@ export const step1Schemas: FormSchema[] = [
   {
     field: 'fac',
     component: 'InputGroup',
-    label: '收款账户',
+    label: '收款賬户',
     required: true,
     defaultValue: 'test@example.com',
     slot: 'fac',
@@ -50,7 +57,7 @@ export const step1Schemas: FormSchema[] = [
   {
     field: 'money',
     component: 'Input',
-    label: '转账金额',
+    label: '轉賬金額',
     defaultValue: '500',
     required: true,
     renderComponentContent: () => {
@@ -68,7 +75,7 @@ export const step2Schemas: FormSchema[] = [
   {
     field: 'pwd',
     component: 'InputPassword',
-    label: '支付密码',
+    label: '支付密碼',
     required: true,
     defaultValue: '123456',
     colProps: {

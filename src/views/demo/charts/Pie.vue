@@ -38,7 +38,7 @@
           backgroundColor: '#0f375f',
           title: [
             {
-              text: '各渠道投诉占比',
+              text: '各渠道投訴佔比',
               left: '2%',
               top: '1%',
               textStyle: {
@@ -47,7 +47,7 @@
               },
             },
             {
-              text: '投诉原因TOP10',
+              text: '投訴原因TOP10',
               left: '40%',
               top: '1%',
               textStyle: {
@@ -56,7 +56,7 @@
               },
             },
             {
-              text: '各级别投诉占比',
+              text: '各級別投訴佔比',
               left: '2%',
               top: '50%',
               textStyle: {
@@ -91,15 +91,15 @@
           ],
           series: [
             {
-              name: '各渠道投诉占比',
+              name: '各渠道投訴佔比',
               type: 'pie',
               radius: '30%',
               center: ['22%', '25%'],
               data: [
-                { value: 335, name: '客服电话' },
-                { value: 310, name: '奥迪官网' },
-                { value: 234, name: '媒体曝光' },
-                { value: 135, name: '质检总局' },
+                { value: 335, name: '客服電話' },
+                { value: 310, name: '奧迪官網' },
+                { value: 234, name: '媒體曝光' },
+                { value: 135, name: '質檢總局' },
                 { value: 105, name: '其他' },
               ],
               labelLine: { show: false },
@@ -110,16 +110,16 @@
               },
             },
             {
-              name: '各级别投诉占比',
+              name: '各級別投訴佔比',
               type: 'pie',
               radius: '30%',
               center: ['22%', '75%'],
               labelLine: { show: false },
               data: [
-                { value: 335, name: 'A级' },
-                { value: 310, name: 'B级' },
-                { value: 234, name: 'C级' },
-                { value: 135, name: 'D级' },
+                { value: 335, name: 'A級' },
+                { value: 310, name: 'B級' },
+                { value: 234, name: 'C級' },
+                { value: 135, name: 'D級' },
               ],
               label: {
                 show: true,
@@ -128,7 +128,7 @@
               },
             },
             {
-              name: '投诉原因TOP10',
+              name: '投訴原因TOP10',
               type: 'bar',
               xAxisIndex: 0,
               yAxisIndex: 0,

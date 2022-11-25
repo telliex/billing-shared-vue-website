@@ -1,6 +1,13 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:50:53
+-->
 <template>
-  <PageWrapper title="引导页" content="用于给用户的指引操作">
-    <a-button type="primary" @click="handleStart">开始</a-button>
+  <PageWrapper title="引導頁" content="用於給用户的指引操作">
+    <a-button type="primary" @click="handleStart">開始</a-button>
   </PageWrapper>
 </template>
 <script lang="ts">

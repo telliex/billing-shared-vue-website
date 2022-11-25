@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:33:24
+-->
 <template>
-  <PageWrapper title="旋转校验示例">
+  <PageWrapper title="旋轉校驗示例">
     <div class="flex justify-center p-4 items-center bg-gray-700">
       <RotateDragVerify :src="img" ref="el" @success="handleSuccess" />
     </div>

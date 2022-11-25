@@ -1,6 +1,6 @@
 <template>
-  <PageWrapper title="表单基础示例" contentFullHeight>
-    <CollapseContainer title="基础示例">
+  <PageWrapper title="表單基礎示例" contentFullHeight>
+    <CollapseContainer title="基礎示例">
       <BasicForm
         autoFocusFirstItem
         :labelWidth="200"
@@ -71,7 +71,7 @@
   const valueSelectA = ref<string[]>([]);
   const valueSelectB = ref<string[]>([]);
   const options = ref<Recordable[]>([]);
-  for (let i = 1; i < 10; i++) options.value.push({ label: '选项' + i, value: `${i}` });
+  for (let i = 1; i < 10; i++) options.value.push({ label: '選項' + i, value: `${i}` });
 
   const optionsA = computed(() => {
     return cloneDeep(unref(options)).map((op) => {
@@ -89,13 +89,13 @@
   const provincesOptions = [
     {
       id: 'guangdong',
-      label: '广东省',
+      label: '廣東省',
       value: '1',
       key: '1',
     },
     {
       id: 'jiangsu',
-      label: '江苏省',
+      label: '江蘇省',
       value: '2',
       key: '2',
     },
@@ -113,7 +113,7 @@
         key: '2',
       },
       {
-        label: '广州市',
+        label: '廣州市',
         value: '3',
         key: '3',
       },
@@ -125,12 +125,12 @@
         key: '1',
       },
       {
-        label: '无锡市',
+        label: '無錫市',
         value: '2',
         key: '2',
       },
       {
-        label: '苏州市',
+        label: '蘇州市',
         value: '3',
         key: '3',
       },
@@ -141,7 +141,7 @@
     {
       field: 'divider-basic',
       component: 'Divider',
-      label: '基础字段',
+      label: '基礎字段',
       colProps: {
         span: 24,
       },
@@ -160,7 +160,7 @@
         console.log('form:', schema);
         console.log('formModel:', formModel);
         return {
-          placeholder: '自定义placeholder',
+          placeholder: '自定義placeholder',
           onChange: (e: any) => {
             console.log(e);
           },
@@ -176,7 +176,7 @@
     {
       field: 'field2',
       component: 'Input',
-      label: '带后缀',
+      label: '帶後綴',
       defaultValue: '111',
       colProps: {
         span: 8,
@@ -206,12 +206,12 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
             key: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
             key: '2',
           },
@@ -228,11 +228,11 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
           },
         ],
@@ -248,11 +248,11 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
           },
         ],
@@ -285,11 +285,11 @@
       componentProps: {
         options: [
           {
-            label: '选项1',
+            label: '選項1',
             value: '1',
           },
           {
-            label: '选项2',
+            label: '選項2',
             value: '2',
           },
         ],
@@ -342,7 +342,7 @@
     {
       field: 'divider-api-select',
       component: 'Divider',
-      label: '远程下拉演示',
+      label: '遠程下拉演示',
       colProps: {
         span: 24,
       },
@@ -350,7 +350,7 @@
     {
       field: 'field30',
       component: 'ApiSelect',
-      label: '懒加载远程下拉',
+      label: '懶加載遠程下拉',
       required: true,
       componentProps: {
         // more details see /src/components/Form/src/components/ApiSelect.vue
@@ -382,7 +382,7 @@
       field: 'field31',
       component: 'Input',
       label: '下拉本地搜索',
-      helpMessage: ['ApiSelect组件', '远程数据源本地搜索', '只发起一次请求获取所有选项'],
+      helpMessage: ['ApiSelect組件', '遠程數據源本地搜索', '只發起一次請求獲取所有選項'],
       required: true,
       slot: 'localSearch',
       colProps: {
@@ -393,8 +393,8 @@
     {
       field: 'field32',
       component: 'Input',
-      label: '下拉远程搜索',
-      helpMessage: ['ApiSelect组件', '将关键词发送到接口进行远程搜索'],
+      label: '下拉遠程搜索',
+      helpMessage: ['ApiSelect組件', '將關鍵詞發送到接口進行遠程搜索'],
       required: true,
       slot: 'remoteSearch',
       colProps: {
@@ -405,8 +405,8 @@
     {
       field: 'field33',
       component: 'ApiTreeSelect',
-      label: '远程下拉树',
-      helpMessage: ['ApiTreeSelect组件', '使用接口提供的数据生成选项'],
+      label: '遠程下拉樹',
+      helpMessage: ['ApiTreeSelect組件', '使用接口提供的數據生成選項'],
       required: true,
       componentProps: {
         api: treeOptionsListApi,
@@ -419,8 +419,8 @@
     {
       field: 'field34',
       component: 'ApiRadioGroup',
-      label: '远程Radio',
-      helpMessage: ['ApiRadioGroup组件', '使用接口提供的数据生成选项'],
+      label: '遠程Radio',
+      helpMessage: ['ApiRadioGroup組件', '使用接口提供的數據生成選項'],
       required: true,
       componentProps: {
         api: optionsListApi,
@@ -441,8 +441,8 @@
     {
       field: 'field35',
       component: 'ApiRadioGroup',
-      label: '远程Radio',
-      helpMessage: ['ApiRadioGroup组件', '使用接口提供的数据生成选项'],
+      label: '遠程Radio',
+      helpMessage: ['ApiRadioGroup組件', '使用接口提供的數據生成選項'],
       required: true,
       componentProps: {
         api: optionsListApi,
@@ -463,8 +463,8 @@
     {
       field: 'field36',
       component: 'ApiTree',
-      label: '远程Tree',
-      helpMessage: ['ApiTree组件', '使用接口提供的数据生成选项'],
+      label: '遠程Tree',
+      helpMessage: ['ApiTree組件', '使用接口提供的數據生成選項'],
       required: true,
       componentProps: {
         api: treeOptionsListApi,
@@ -484,7 +484,7 @@
     {
       field: 'divider-linked',
       component: 'Divider',
-      label: '字段联动',
+      label: '字段聯動',
       colProps: {
         span: 24,
       },
@@ -499,7 +499,7 @@
       componentProps: ({ formModel, formActionType }) => {
         return {
           options: provincesOptions,
-          placeholder: '省份与城市联动',
+          placeholder: '省份與城市聯動',
           onChange: (e: any) => {
             // console.log(e)
             let citiesOptions =
@@ -531,14 +531,14 @@
       },
       componentProps: {
         options: [], // defalut []
-        placeholder: '省份与城市联动',
+        placeholder: '省份與城市聯動',
       },
     },
     {
       field: 'divider-selects',
       component: 'Divider',
-      label: '互斥多选',
-      helpMessage: ['两个Select共用数据源', '但不可选择对方已选中的项目'],
+      label: '互斥多選',
+      helpMessage: ['兩個Select共用數據源', '但不可選擇對方已選中的項目'],
       colProps: {
         span: 24,
       },
@@ -566,19 +566,19 @@
     {
       field: 'divider-deconstruct',
       component: 'Divider',
-      label: '字段解构',
-      helpMessage: ['如果组件的值是 array 或者 object', '可以根据 ES6 的解构语法分别取值'],
+      label: '字段解構',
+      helpMessage: ['如果組件的值是 array 或者 object', '可以根據 ES6 的解構語法分別取值'],
       colProps: {
         span: 24,
       },
     },
     {
       field: '[startTime, endTime]',
-      label: '时间范围',
+      label: '時間範圍',
       component: 'RangePicker',
       componentProps: {
         format: 'YYYY-MM-DD HH:mm:ss',
-        placeholder: ['开始时间', '结束时间'],
+        placeholder: ['開始時間', '結束時間'],
         showTime: { format: 'HH:mm:ss' },
       },
     },

@@ -1,16 +1,23 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:47:29
+-->
 <template>
   <PageWrapper
     class="high-form"
-    title="高级表单"
-    content=" 高级表单常见于一次性输入和提交大批量数据的场景。"
+    title="高級表單"
+    content=" 高級表單常見於一次性輸入和提交大批量數據的場景。"
   >
-    <a-card title="仓库管理" :bordered="false">
+    <a-card title="倉庫管理" :bordered="false">
       <BasicForm @register="register" />
     </a-card>
-    <a-card title="任务管理" :bordered="false" class="!mt-5">
+    <a-card title="任務管理" :bordered="false" class="!mt-5">
       <BasicForm @register="registerTask" />
     </a-card>
-    <a-card title="成员管理" :bordered="false">
+    <a-card title="成員管理" :bordered="false">
       <PersonTable ref="tableRef" />
     </a-card>
 

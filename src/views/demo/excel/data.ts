@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:53
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-11 07:37:57
+ * @LastEditTime: 2022-11-25 02:34:44
  */
 import { BasicColumn } from '/@/components/Table';
 
@@ -19,12 +19,12 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '年龄',
+    title: '年齡',
     dataIndex: 'age',
     width: 80,
   },
   {
-    title: '编号',
+    title: '編號',
     dataIndex: 'no',
     width: 80,
   },
@@ -33,11 +33,11 @@ export const columns: BasicColumn[] = [
     dataIndex: 'address',
   },
   {
-    title: '开始时间',
+    title: '開始時間',
     dataIndex: 'beginTime',
   },
   {
-    title: '结束时间',
+    title: '結束時間',
     dataIndex: 'endTime',
   },
 ];
@@ -58,9 +58,9 @@ export const data: any[] = (() => {
   return arr;
 })();
 
-// ["ID", "姓名", "年龄", "编号", "地址", "开始时间", "结束时间"]
+// ["ID", "姓名", "年齡", "編號", "地址", "開始時間", "結束時間"]
 export const arrHeader = columns.map((column) => column.title);
-// [["ID", "姓名", "年龄", "编号", "地址", "开始时间", "结束时间"],["0", "0 John Brown", "10", "098678"]]
+// [["ID", "姓名", "年齡", "編號", "地址", "開始時間", "結束時間"],["0", "0 John Brown", "10", "098678"]]
 export const arrData = data.map((item) => {
   return Object.keys(item).map((key) => item[key]);
 });

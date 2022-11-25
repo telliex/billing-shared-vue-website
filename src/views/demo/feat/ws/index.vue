@@ -3,36 +3,36 @@
     <div class="flex">
       <div class="w-1/3 bg-white p-4">
         <div class="flex items-center">
-          <span class="text-lg font-medium mr-4"> 连接状态: </span>
+          <span class="text-lg font-medium mr-4"> 連接狀態: </span>
           <Tag :color="getTagColor">{{ status }}</Tag>
         </div>
         <hr class="my-4" />
 
         <div class="flex">
           <a-input v-model:value="server" disabled>
-            <template #addonBefore> 服务地址 </template>
+            <template #addonBefore> 服務地址 </template>
           </a-input>
           <a-button :type="getIsOpen ? 'danger' : 'primary'" @click="toggle">
-            {{ getIsOpen ? '关闭连接' : '开启连接' }}
+            {{ getIsOpen ? '關閉連接' : '開啓連接' }}
           </a-button>
         </div>
-        <p class="text-lg font-medium mt-4">设置</p>
+        <p class="text-lg font-medium mt-4">設置</p>
         <hr class="my-4" />
 
         <InputTextArea
-          placeholder="需要发送到服务器的内容"
+          placeholder="需要發送到服務器的內容"
           :disabled="!getIsOpen"
           v-model:value="sendValue"
           allowClear
         />
 
         <a-button type="primary" block class="mt-4" :disabled="!getIsOpen" @click="handlerSend">
-          发送
+          發送
         </a-button>
       </div>
 
       <div class="w-2/3 bg-white ml-4 p-4">
-        <span class="text-lg font-medium mr-4"> 消息记录: </span>
+        <span class="text-lg font-medium mr-4"> 消息記錄: </span>
         <hr class="my-4" />
 
         <div class="max-h-80 overflow-auto">

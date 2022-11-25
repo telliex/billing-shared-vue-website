@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:36:38
+-->
 <template>
-  <PageWrapper title="右键菜单示例">
+  <PageWrapper title="右鍵菜單示例">
     <CollapseContainer title="Simple">
       <a-button type="primary" @contextmenu="handleContext"> Right Click on me </a-button>
     </CollapseContainer>

@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:54:32
+-->
 <template>
   <div class="p-4">
     <BasicTable @register="registerTable" />
@@ -20,19 +27,19 @@
         }, 0);
         return [
           {
-            _row: '合计',
+            _row: '合計',
             _index: '平均值',
             no: totalNo,
           },
           {
-            _row: '合计',
+            _row: '合計',
             _index: '平均值',
             no: totalNo,
           },
         ];
       }
       const [registerTable] = useTable({
-        title: '表尾行合计示例',
+        title: '表尾行合計示例',
         api: demoListApi,
         rowSelection: { type: 'checkbox' },
         columns: getBasicColumns(),

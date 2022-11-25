@@ -1,5 +1,12 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:46:01
+-->
 <template>
-  <CollapseContainer title="安全设置" :canExpan="false">
+  <CollapseContainer title="安全設置" :canExpan="false">
     <List>
       <template v-for="item in list" :key="item.key">
         <ListItem>

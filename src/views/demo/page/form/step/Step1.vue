@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:48:16
+-->
 <template>
   <div class="step1">
     <div class="step1-form">
@@ -5,8 +12,8 @@
         <template #fac="{ model, field }">
           <a-input-group compact>
             <a-select v-model:value="model['pay']" class="pay-select">
-              <a-select-option value="zfb"> 支付宝 </a-select-option>
-              <a-select-option value="yl"> 银联 </a-select-option>
+              <a-select-option value="zfb"> 支付寶 </a-select-option>
+              <a-select-option value="yl"> 銀聯 </a-select-option>
             </a-select>
             <a-input class="pay-input" v-model:value="model[field]" />
           </a-input-group>
@@ -14,15 +21,15 @@
       </BasicForm>
     </div>
     <a-divider />
-    <h3>说明</h3>
-    <h4>转账到支付宝账户</h4>
+    <h3>説明</h3>
+    <h4>轉賬到支付寶賬户</h4>
     <p>
-      如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。
+      如果需要，這裏可以放一些關於產品的常見問題説明。如果需要，這裏可以放一些關於產品的常見問題説明。如果需要，這裏可以放一些關於產品的常見問題説明。
     </p>
 
-    <h4>转账到银行卡</h4>
+    <h4>轉賬到銀行卡</h4>
     <p>
-      如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。如果需要，这里可以放一些关于产品的常见问题说明。
+      如果需要，這裏可以放一些關於產品的常見問題説明。如果需要，這裏可以放一些關於產品的常見問題説明。如果需要，這裏可以放一些關於產品的常見問題説明。
     </p>
   </div>
 </template>

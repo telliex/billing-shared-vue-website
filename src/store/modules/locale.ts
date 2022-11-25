@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 03:34:20
+ */
 import type { LocaleSetting, LocaleType } from '/#/config';
 
 import { defineStore } from 'pinia';

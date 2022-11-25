@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:45:52
+-->
 <template>
   <CollapseContainer title="新消息通知" :canExpan="false">
     <List>
@@ -8,8 +15,8 @@
               {{ item.title }}
               <Switch
                 class="extra"
-                checked-children="开"
-                un-checked-children="关"
+                checked-children="開"
+                un-checked-children="關"
                 default-checked
               />
             </template>

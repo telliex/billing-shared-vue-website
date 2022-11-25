@@ -3,12 +3,12 @@
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:53
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-11 10:39:45
+ * @LastEditTime: 2022-11-25 02:34:50
 -->
 <template>
-  <PageWrapper title="excel数据导入示例">
+  <PageWrapper title="excel數據導入示例">
     <ImpExcel @success="loadDataSuccess" dateFormat="YYYY-MM-DD">
-      <a-button class="m-3"> 导入Excel </a-button>
+      <a-button class="m-3"> 導入Excel </a-button>
     </ImpExcel>
     <BasicTable
       v-for="(table, index) in tableListRef"

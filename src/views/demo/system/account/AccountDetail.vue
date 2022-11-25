@@ -1,7 +1,7 @@
 <template>
   <PageWrapper
-    :title="`用戶` + userId + `的資料`"
-    content="這是用戶資料詳情頁面。本頁面僅用於演示相同路由在tab中打開多個頁面並且顯示不同的數據"
+    :title="`用户` + userId + `的資料`"
+    content="這是用户資料詳情頁面。本頁面僅用於演示相同路由在tab中打開多個頁面並且顯示不同的數據"
     contentBackground
     @back="goBack"
   >
@@ -11,16 +11,16 @@
     </template>
     <template #footer>
       <a-tabs default-active-key="detail" v-model:activeKey="currentKey">
-        <a-tab-pane key="detail" tab="用戶資料" />
+        <a-tab-pane key="detail" tab="用户資料" />
         <a-tab-pane key="logs" tab="操作日誌" />
       </a-tabs>
     </template>
     <div class="pt-4 m-4 desc-wrap">
       <template v-if="currentKey == 'detail'">
-        <div v-for="i in 10" :key="i">這是用戶{{ userId }}資料Tab</div>
+        <div v-for="i in 10" :key="i">這是用户{{ userId }}資料Tab</div>
       </template>
       <template v-if="currentKey == 'logs'">
-        <div v-for="i in 10" :key="i">這是用戶{{ userId }}操作日誌Tab</div>
+        <div v-for="i in 10" :key="i">這是用户{{ userId }}操作日誌Tab</div>
       </template>
     </div>
   </PageWrapper>
@@ -39,15 +39,15 @@
     setup() {
       const route = useRoute();
       const go = useGo();
-      // 此處可以得到用戶ID
+      // 此處可以得到用户ID
       const userId = ref(route.params?.id);
       const currentKey = ref('detail');
       const { setTitle } = useTabs();
       // TODO
-      // 本頁代碼僅作演示，實際應當通過userId從接口獲得用戶的相關資料
+      // 本頁代碼僅作演示，實際應當通過userId從接口獲得用户的相關資料
 
       // 設置Tab的標題（不會影響頁面標題）
-      setTitle('詳情：用戶' + userId.value);
+      setTitle('詳情：用户' + userId.value);
 
       // 頁面左側點擊返回鏈接時的操作
       function goBack() {

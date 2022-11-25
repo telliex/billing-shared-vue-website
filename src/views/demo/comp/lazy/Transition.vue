@@ -1,7 +1,14 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:30:28
+-->
 <template>
-  <PageWrapper title="懒加载自定义动画示例" content="懒加载组件显示动画">
+  <PageWrapper title="懶加載自定義動畫示例" content="懶加載組件顯示動畫">
     <div class="lazy-base-demo-wrap">
-      <h1>向下滚动</h1>
+      <h1>向下滾動</h1>
 
       <div class="lazy-base-demo-box">
         <LazyContainer transitionName="custom">

@@ -1,11 +1,11 @@
 <template>
-  <PageWrapper v-loading="loadingRef" loading-tip="加载中..." title="Loading组件示例">
+  <PageWrapper v-loading="loadingRef" loading-tip="加載中..." title="Loading組件示例">
     <div ref="wrapEl">
-      <a-alert message="组件方式" />
+      <a-alert message="組件方式" />
       <a-button class="my-4 mr-4" type="primary" @click="openCompFullLoading">
         全屏 Loading
       </a-button>
-      <a-button class="my-4" type="primary" @click="openCompAbsolute"> 容器内 Loading </a-button>
+      <a-button class="my-4" type="primary" @click="openCompAbsolute"> 容器內 Loading </a-button>
       <Loading
         :loading="loading"
         :absolute="absolute"
@@ -14,16 +14,16 @@
         :tip="tip"
       />
 
-      <a-alert message="函数方式" />
+      <a-alert message="函數方式" />
 
       <a-button class="my-4 mr-4" type="primary" @click="openFnFullLoading">
         全屏 Loading
       </a-button>
-      <a-button class="my-4" type="primary" @click="openFnWrapLoading"> 容器内 Loading </a-button>
+      <a-button class="my-4" type="primary" @click="openFnWrapLoading"> 容器內 Loading </a-button>
 
       <a-alert message="指令方式" />
       <a-button class="my-4 mr-4" type="primary" @click="openDirectiveLoading">
-        打开指令Loading
+        打開指令Loading
       </a-button>
     </div>
   </PageWrapper>
@@ -45,16 +45,16 @@
         loading: false,
         theme: 'dark',
         background: 'rgba(111,111,111,.7)',
-        tip: '加载中...',
+        tip: '加載中...',
       });
       const [openFullLoading, closeFullLoading] = useLoading({
-        tip: '加载中...',
+        tip: '加載中...',
       });
 
       const [openWrapLoading, closeWrapLoading] = useLoading({
         target: wrapEl,
         props: {
-          tip: '加载中...',
+          tip: '加載中...',
           absolute: true,
         },
       });

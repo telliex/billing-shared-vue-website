@@ -1,14 +1,14 @@
 <template>
-  <PageWrapper title="Tree基础示例">
+  <PageWrapper title="Tree基礎示例">
     <Row :gutter="[16, 16]">
       <Col :span="8">
-        <BasicTree title="基础示例，默认展开第一层" :treeData="treeData" defaultExpandLevel="1">
+        <BasicTree title="基礎示例，默認展開第一層" :treeData="treeData" defaultExpandLevel="1">
           <template #title> 123123 </template>
         </BasicTree>
       </Col>
       <Col :span="8">
         <BasicTree
-          title="可勾选，默认全部展开"
+          title="可勾選，默認全部展開"
           :treeData="treeData"
           :checkable="true"
           defaultExpandAll
@@ -17,7 +17,7 @@
       </Col>
       <Col :span="8">
         <BasicTree
-          title="指定默认展开/勾选示例"
+          title="指定默認展開/勾選示例"
           :treeData="treeData"
           :checkable="true"
           :expandedKeys="['0-0']"
@@ -26,16 +26,16 @@
       </Col>
       <Col :span="8">
         <BasicTree
-          title="懒加载异步树"
+          title="懶加載異步樹"
           ref="asyncTreeRef"
           :treeData="tree"
           :load-data="onLoadData"
         />
       </Col>
       <Col :span="8">
-        <Card title="异步数据，默认展开">
+        <Card title="異步數據，默認展開">
           <template #extra>
-            <a-button @click="loadTreeData" :loading="treeLoading">加载数据</a-button>
+            <a-button @click="loadTreeData" :loading="treeLoading">加載數據</a-button>
           </template>
           <Spin :spinning="treeLoading">
             <BasicTree ref="asyncExpandTreeRef" :treeData="tree2" />
@@ -43,9 +43,9 @@
         </Card>
       </Col>
       <Col :span="8">
-        <Card title="BasicTree内置加载">
+        <Card title="BasicTree內置加載">
           <template #extra>
-            <a-button @click="loadTreeData2" :loading="treeLoading">请求数据</a-button>
+            <a-button @click="loadTreeData2" :loading="treeLoading">請求數據</a-button>
           </template>
           <BasicTree ref="loadTreeRef" :treeData="tree2" :loading="treeLoading" />
         </Card>
@@ -77,12 +77,12 @@
 
       function loadTreeData() {
         treeLoading.value = true;
-        // 以下是模拟异步获取数据
+        // 以下是模擬異步獲取數據
         setTimeout(() => {
-          // 设置数据源
+          // 設置數據源
           tree2.value = cloneDeep(treeData);
           treeLoading.value = false;
-          // 展开全部
+          // 展開全部
           nextTick(() => {
             console.log(unref(asyncExpandTreeRef));
             unref(asyncExpandTreeRef)?.expandAll(true);
@@ -91,9 +91,9 @@
       }
       function loadTreeData2() {
         treeLoading.value = true;
-        // 以下是模拟异步获取数据
+        // 以下是模擬異步獲取數據
         setTimeout(() => {
-          // 设置数据源
+          // 設置數據源
           tree2.value = cloneDeep(treeData);
           treeLoading.value = false;
         }, 2000);

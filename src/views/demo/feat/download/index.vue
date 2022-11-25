@@ -1,17 +1,24 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:37:00
+-->
 <template>
-  <PageWrapper title="文件下载示例">
-    <a-alert message="根据后台接口文件流下载" />
-    <a-button type="primary" class="my-4" @click="handleDownByData"> 文件流下载 </a-button>
+  <PageWrapper title="文件下載示例">
+    <a-alert message="根據後台接口文件流下載" />
+    <a-button type="primary" class="my-4" @click="handleDownByData"> 文件流下載 </a-button>
 
-    <a-alert message="根据文件地址下载文件" />
-    <a-button type="primary" class="my-4" @click="handleDownloadByUrl"> 文件地址下载 </a-button>
+    <a-alert message="根據文件地址下載文件" />
+    <a-button type="primary" class="my-4" @click="handleDownloadByUrl"> 文件地址下載 </a-button>
 
-    <a-alert message="base64流下载" />
-    <a-button type="primary" class="my-4" @click="handleDownloadByBase64"> base64流下载 </a-button>
+    <a-alert message="base64流下載" />
+    <a-button type="primary" class="my-4" @click="handleDownloadByBase64"> base64流下載 </a-button>
 
-    <a-alert message="图片Url下载,如果有跨域问题，需要处理图片跨域" />
+    <a-alert message="圖片Url下載,如果有跨域問題，需要處理圖片跨域" />
     <a-button type="primary" class="my-4" @click="handleDownloadByOnlineUrl">
-      图片Url下载
+      圖片Url下載
     </a-button>
   </PageWrapper>
 </template>

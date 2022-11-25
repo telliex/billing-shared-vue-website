@@ -5,8 +5,8 @@
     :helpMessage="['提示1', '提示2']"
     :okButtonProps="{ disabled: true }"
   >
-    <a-button type="primary" @click="closeModal" class="mr-2"> 从内部关闭弹窗 </a-button>
-    <a-button type="primary" @click="setModalProps"> 从内部修改title </a-button>
+    <a-button type="primary" @click="closeModal" class="mr-2"> 從內部關閉彈窗 </a-button>
+    <a-button type="primary" @click="setModalProps"> 從內部修改title </a-button>
   </BasicModal>
 </template>
 <script lang="ts">

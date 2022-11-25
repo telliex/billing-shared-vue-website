@@ -8,15 +8,15 @@
     <Alert
       class="mt-4"
       type="info"
-      message="點擊後請查看按鈕變化(必須處於後臺權限模式才可測試此頁面所展示的功能)"
+      message="點擊後請查看按鈕變化(必須處於後台權限模式才可測試此頁面所展示的功能)"
       show-icon
     />
     <Divider />
     <a-button type="primary" class="mr-2" @click="switchToken(2)" :disabled="!isBackPermissionMode">
-      點擊切換按鈕權限(用戶id為2)
+      點擊切換按鈕權限(用户id為2)
     </a-button>
     <a-button type="primary" @click="switchToken(1)" :disabled="!isBackPermissionMode">
-      點擊切換按鈕權限(用戶id為1,默認)
+      點擊切換按鈕權限(用户id為1,默認)
     </a-button>
 
     <template v-if="isBackPermissionMode">
@@ -82,11 +82,11 @@
       );
 
       async function switchToken(userId: number) {
-        // 本函數切換用戶登錄Token的部分僅用於演示，實際生產時切換身份應當重新登錄
+        // 本函數切換用户登錄Token的部分僅用於演示，實際生產時切換身份應當重新登錄
         const token = 'fakeToken' + userId;
         userStore.setToken(token);
 
-        // 重新獲取用戶信息和菜單
+        // 重新獲取用户信息和菜單
         userStore.getUserInfoAction();
         permissionStore.changePermissionCode();
       }

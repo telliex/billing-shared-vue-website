@@ -1,9 +1,16 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:34:57
+-->
 <template>
-  <PageWrapper title="导出示例" content="根据JSON格式的数据进行导出">
-    <BasicTable title="基础表格" :columns="columns" :dataSource="data">
+  <PageWrapper title="導出示例" content="根據JSON格式的數據進行導出">
+    <BasicTable title="基礎表格" :columns="columns" :dataSource="data">
       <template #toolbar>
-        <a-button @click="defaultHeader"> 导出：默认头部 </a-button>
-        <a-button @click="customHeader"> 导出：自定义头部 </a-button>
+        <a-button @click="defaultHeader"> 導出：默認頭部 </a-button>
+        <a-button @click="customHeader"> 導出：自定義頭部 </a-button>
       </template>
     </BasicTable>
   </PageWrapper>
@@ -20,10 +27,10 @@
     components: { BasicTable, PageWrapper },
     setup() {
       function defaultHeader() {
-        // 默认Object.keys(data[0])作为header
+        // 默認Object.keys(data[0])作為header
         jsonToSheetXlsx({
           data,
-          filename: '使用key作为默认头部.xlsx',
+          filename: '使用key作為默認頭部.xlsx',
         });
       }
 
@@ -33,15 +40,15 @@
           header: {
             id: 'ID',
             name: '姓名',
-            age: '年龄',
-            no: '编号',
+            age: '年齡',
+            no: '編號',
             address: '地址',
-            beginTime: '开始时间',
-            endTime: '结束时间',
+            beginTime: '開始時間',
+            endTime: '結束時間',
           },
-          filename: '自定义头部.xlsx',
+          filename: '自定義頭部.xlsx',
           json2sheetOpts: {
-            // 指定顺序
+            // 指定順序
             header: ['name', 'id'],
           },
         });

@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:52:55
+ */
 import { FormSchema } from '/@/components/Form';
 
 export const formSchema: FormSchema[] = [

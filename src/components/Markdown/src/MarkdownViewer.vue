@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 03:13:03
+-->
 <template>
   <div ref="viewerRef" id="markdownViewer" :class="$props.class"></div>
 </template>
@@ -21,11 +28,11 @@
     vditorPreviewRef.value = VditorPreview.preview(viewerEl, props.value, {
       mode: getTheme(getDarkMode.value, 'content'),
       theme: {
-        // 设置内容主题
+        // 設置內容主題
         current: getTheme(getDarkMode.value, 'content'),
       },
       hljs: {
-        // 设置代码块主题
+        // 設置代碼塊主題
         style: getTheme(getDarkMode.value, 'code'),
       },
     });

@@ -1,21 +1,28 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:49:41
+-->
 <template>
   <div class="m-5 result-error">
-    <Result status="error" title="提交失败" sub-title="请核对并修改以下信息后，再重新提交。">
+    <Result status="error" title="提交失敗" sub-title="請核對並修改以下信息後，再重新提交。">
       <template #extra>
         <a-button key="console" type="primary"> 返回修改 </a-button>
       </template>
     </Result>
     <div class="result-error__content">
-      <div class="result-error__content-title">您提交的内容有如下错误：</div>
+      <div class="result-error__content-title">您提交的內容有如下錯誤：</div>
       <div class="mb-4">
         <CloseCircleOutlined class="mr-2 result-error__content-icon" />
-        您的账户已被冻结
-        <a class="ml-4">立即解冻 ></a>
+        您的賬户已被凍結
+        <a class="ml-4">立即解凍 ></a>
       </div>
       <div class="mb-4">
         <CloseCircleOutlined class="mr-2 result-error__content-icon" />
-        您的账户还不具备申请资格
-        <a class="ml-4">立即解冻 ></a>
+        您的賬户還不具備申請資格
+        <a class="ml-4">立即解凍 ></a>
       </div>
     </div>
   </div>

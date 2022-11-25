@@ -1,25 +1,32 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:39:42
+-->
 <template>
-  <PageWrapper title="标签页操作示例">
-    <CollapseContainer title="在下面输入框输入文本,切换后回来内容会保存">
-      <a-alert banner message="该操作不会影响页面标题，仅修改Tab标题" />
+  <PageWrapper title="標籤頁操作示例">
+    <CollapseContainer title="在下面輸入框輸入文本,切換後回來內容會保存">
+      <a-alert banner message="該操作不會影響頁面標題，僅修改Tab標題" />
       <div class="mt-2 flex flex-grow-0">
-        <a-button class="mr-2" @click="setTabTitle" type="primary"> 设置Tab标题 </a-button>
-        <a-input placeholder="请输入" v-model:value="title" class="mr-4 w-12" />
+        <a-button class="mr-2" @click="setTabTitle" type="primary"> 設置Tab標題 </a-button>
+        <a-input placeholder="請輸入" v-model:value="title" class="mr-4 w-12" />
       </div>
     </CollapseContainer>
 
-    <CollapseContainer class="mt-4" title="标签页操作">
-      <a-button class="mr-2" @click="closeAll"> 关闭所有 </a-button>
-      <a-button class="mr-2" @click="closeLeft"> 关闭左侧 </a-button>
-      <a-button class="mr-2" @click="closeRight"> 关闭右侧 </a-button>
-      <a-button class="mr-2" @click="closeOther"> 关闭其他 </a-button>
-      <a-button class="mr-2" @click="closeCurrent"> 关闭当前 </a-button>
-      <a-button class="mr-2" @click="refreshPage"> 刷新当前 </a-button>
+    <CollapseContainer class="mt-4" title="標籤頁操作">
+      <a-button class="mr-2" @click="closeAll"> 關閉所有 </a-button>
+      <a-button class="mr-2" @click="closeLeft"> 關閉左側 </a-button>
+      <a-button class="mr-2" @click="closeRight"> 關閉右側 </a-button>
+      <a-button class="mr-2" @click="closeOther"> 關閉其他 </a-button>
+      <a-button class="mr-2" @click="closeCurrent"> 關閉當前 </a-button>
+      <a-button class="mr-2" @click="refreshPage"> 刷新當前 </a-button>
     </CollapseContainer>
 
-    <CollapseContainer class="mt-4" title="标签页复用超出限制自动关闭(使用场景: 动态路由)">
+    <CollapseContainer class="mt-4" title="標籤頁複用超出限制自動關閉(使用場景: 動態路由)">
       <a-button v-for="index in 6" :key="index" class="mr-2" @click="toDetail(index)">
-        打开{{ index }}详情页
+        打開{{ index }}詳情頁
       </a-button>
     </CollapseContainer>
   </PageWrapper>
@@ -46,7 +53,7 @@
         if (title.value) {
           setTitle(title.value);
         } else {
-          createMessage.error('请输入要设置的Tab标题！');
+          createMessage.error('請輸入要設置的Tab標題！');
         }
       }
 

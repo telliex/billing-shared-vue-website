@@ -14,7 +14,7 @@
     components: { BasicTable },
     setup() {
       const [registerTable] = useTable({
-        title: '多级表头示例',
+        title: '多級表頭示例',
         api: demoListApi,
         columns: getMergeHeaderColumns(),
       });

@@ -1,7 +1,14 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:30:15
+-->
 <template>
-  <PageWrapper title="懒加载基础示例" content="向下滚动到可见区域才会加载组件">
+  <PageWrapper title="懶加載基礎示例" content="向下滾動到可見區域才會加載組件">
     <div class="lazy-base-demo-wrap">
-      <h1>向下滚动</h1>
+      <h1>向下滾動</h1>
 
       <div class="lazy-base-demo-box">
         <LazyContainer>

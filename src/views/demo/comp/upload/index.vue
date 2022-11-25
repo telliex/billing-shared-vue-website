@@ -1,6 +1,13 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:33:07
+-->
 <template>
-  <PageWrapper title="上传组件示例">
-    <a-alert message="基础示例" />
+  <PageWrapper title="上傳組件示例">
+    <a-alert message="基礎示例" />
     <BasicUpload
       :maxSize="20"
       :maxNumber="10"
@@ -10,7 +17,7 @@
       :accept="['image/*']"
     />
 
-    <a-alert message="嵌入表单,加入表单校验" />
+    <a-alert message="嵌入表單,加入表單校驗" />
 
     <BasicForm @register="register" class="my-5" />
   </PageWrapper>
@@ -32,7 +39,7 @@
       colProps: {
         span: 8,
       },
-      rules: [{ required: true, message: '请选择上传文件' }],
+      rules: [{ required: true, message: '請選擇上傳文件' }],
       componentProps: {
         api: uploadApi,
       },
@@ -51,7 +58,7 @@
       });
       return {
         handleChange: (list: string[]) => {
-          createMessage.info(`已上传文件${JSON.stringify(list)}`);
+          createMessage.info(`已上傳文件${JSON.stringify(list)}`);
         },
         uploadApi,
         register,

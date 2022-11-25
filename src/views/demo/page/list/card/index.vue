@@ -1,11 +1,11 @@
 <template>
   <PageWrapper :class="prefixCls" title="卡片列表">
     <template #headerContent>
-      基于Vue Next, TypeScript, Ant Design Vue实现的一套完整的企业级后台管理系统。
+      基於Vue Next, TypeScript, Ant Design Vue實現的一套完整的企業級後台管理系統。
       <div :class="`${prefixCls}__link`">
-        <a><Icon icon="bx:bx-paper-plane" color="#1890ff" /><span>开始</span></a>
-        <a><Icon icon="carbon:warning" color="#1890ff" /><span>简介</span></a>
-        <a><Icon icon="ion:document-text-outline" color="#1890ff" /><span>文档</span></a>
+        <a><Icon icon="bx:bx-paper-plane" color="#1890ff" /><span>開始</span></a>
+        <a><Icon icon="carbon:warning" color="#1890ff" /><span>簡介</span></a>
+        <a><Icon icon="ion:document-text-outline" color="#1890ff" /><span>文檔</span></a>
       </div>
     </template>
 
@@ -21,7 +21,7 @@
                     {{ item.title }}
                   </div>
                   <div :class="`${prefixCls}__card-detail`">
-                    基于Vue Next, TypeScript, Ant Design Vue实现的一套完整的企业级后台管理系统
+                    基於Vue Next, TypeScript, Ant Design Vue實現的一套完整的企業級後台管理系統
                   </div>
                 </a-card>
               </a-list-item>

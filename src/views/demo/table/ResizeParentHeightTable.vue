@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:55:18
+-->
 <template>
   <div class="h-full flex p-4">
     <div class="flex flex-col pr-4 w-1/2">

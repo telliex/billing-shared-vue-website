@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:00
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 03:26:46
+ */
 /**
  * @description: menu type
  */
@@ -12,13 +19,13 @@ export enum MenuTypeEnum {
   TOP_MENU = 'top-menu',
 }
 
-// 折叠触发器位置
+// 摺疊觸發器位置
 export enum TriggerEnum {
-  // 不显示
+  // 不顯示
   NONE = 'NONE',
-  // 菜单底部
+  // 菜單底部
   FOOTER = 'FOOTER',
-  // 头部
+  // 頭部
   HEADER = 'HEADER',
 }
 

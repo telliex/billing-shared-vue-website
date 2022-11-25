@@ -1,11 +1,18 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:32:44
+-->
 <template>
-  <PageWrapper title="密码强度校验组件">
+  <PageWrapper title="密碼強度校驗組件">
     <div class="flex justify-center">
       <div class="demo-wrap p-10">
-        <StrengthMeter placeholder="默认" />
+        <StrengthMeter placeholder="默認" />
         <StrengthMeter placeholder="禁用" disabled />
         <br />
-        <StrengthMeter placeholder="隐藏input" :show-input="false" value="!@#qwe12345" />
+        <StrengthMeter placeholder="隱藏input" :show-input="false" value="!@#qwe12345" />
       </div>
     </div>
   </PageWrapper>

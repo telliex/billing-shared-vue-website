@@ -89,7 +89,7 @@
         if (!wrapEl) return;
         const bindValue = { ...attrs, ...props };
         const insEditor = new Vditor(wrapEl, {
-          // 设置外观主题
+          // 設置外觀主題
           theme: getTheme(getDarkMode.value) as any,
           lang: unref(getCurrentLang),
           mode: 'sv',
@@ -98,11 +98,11 @@
           },
           preview: {
             theme: {
-              // 设置内容主题
+              // 設置內容主題
               current: getTheme(getDarkMode.value, 'content'),
             },
             hljs: {
-              // 设置代码块主题
+              // 設置代碼塊主題
               style: getTheme(getDarkMode.value, 'code'),
             },
             actions: [],

@@ -1,18 +1,25 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2022-11-14 06:35:01
+ * @LastEditors: Telliex
+ * @LastEditTime: 2022-11-25 02:32:53
+-->
 <template>
-  <PageWrapper title="时间组件示例">
-    <CollapseContainer title="基础示例">
+  <PageWrapper title="時間組件示例">
+    <CollapseContainer title="基礎示例">
       <Time :value="time1" />
       <br />
       <Time :value="time2" />
     </CollapseContainer>
 
-    <CollapseContainer title="定时更新" class="my-4">
+    <CollapseContainer title="定時更新" class="my-4">
       <Time :value="now" :step="1" />
       <br />
       <Time :value="now" :step="5" />
     </CollapseContainer>
 
-    <CollapseContainer title="定时更新">
+    <CollapseContainer title="定時更新">
       <Time :value="now" mode="date" />
       <br />
       <Time :value="now" mode="datetime" />
