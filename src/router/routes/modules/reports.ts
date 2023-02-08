@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-10-06 08:36:18
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-17 09:24:01
+ * @LastEditTime: 2023-02-08 02:37:38
  */
 import type { AppRouteModule } from '/@/router/types';
 import { RoleEnum } from '/@/enums/roleEnum';
@@ -46,9 +46,9 @@ const reports: AppRouteModule = {
       name: 'reportCatogery1',
       component: () => import('/@/views/reports/Report1.vue'),
       meta: {
+        hideMenu: true,
         title: t('routes.reports.report1'),
         icon: 'ri:article-line',
-        hideMenu: false,
         roles: [RoleEnum.TEST, RoleEnum.SUPER],
       },
     },
@@ -57,9 +57,9 @@ const reports: AppRouteModule = {
       name: 'reportCatogery2',
       component: () => import('/@/views/reports/Report2.vue'),
       meta: {
+        hideMenu: true,
         title: t('routes.reports.report2'),
         icon: 'ri:article-line',
-        hideMenu: false,
         roles: [RoleEnum.DEVELOP, RoleEnum.SUPER],
       },
     },
@@ -68,9 +68,9 @@ const reports: AppRouteModule = {
       name: 'reportCatogery3',
       component: () => import('/@/views/reports/Report3.vue'),
       meta: {
+        hideMenu: true,
         title: t('routes.reports.report3'),
         icon: 'ri:article-line',
-        hideMenu: false,
         roles: [RoleEnum.TEST, RoleEnum.SUPER],
       },
     },
@@ -79,9 +79,9 @@ const reports: AppRouteModule = {
       name: 'reportCatogery4',
       component: () => import('/@/views/reports/Report4.vue'),
       meta: {
+        hideMenu: true,
         title: t('routes.reports.report4'),
         icon: 'ri:article-line',
-        hideMenu: false,
         roles: [RoleEnum.DEVELOP, RoleEnum.SUPER],
       },
     },
@@ -90,9 +90,9 @@ const reports: AppRouteModule = {
       name: 'reportCatogery5',
       component: () => import('/@/views/reports/Report5.vue'),
       meta: {
+        hideMenu: true,
         title: t('routes.reports.report5'),
         icon: 'ri:article-line',
-        hideMenu: false,
         roles: [RoleEnum.TEST, RoleEnum.SUPER],
       },
     },
@@ -101,9 +101,9 @@ const reports: AppRouteModule = {
       name: 'reportCatogery6',
       component: () => import('/@/views/reports/Report6.vue'),
       meta: {
+        hideMenu: true,
         title: t('routes.reports.report6'),
         icon: 'ri:article-line',
-        hideMenu: false,
         roles: [RoleEnum.DEVELOP, RoleEnum.SUPER],
       },
     },
@@ -112,9 +112,9 @@ const reports: AppRouteModule = {
       name: 'reportCatogery7',
       component: () => import('/@/views/reports/Report7.vue'),
       meta: {
+        hideMenu: true,
         title: t('routes.reports.report7'),
         icon: 'ri:article-line',
-        hideMenu: false,
         roles: [RoleEnum.TEST, RoleEnum.SUPER],
       },
     },

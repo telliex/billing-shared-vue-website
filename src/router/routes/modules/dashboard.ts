@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-11-14 06:35:00
  * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:12:45
+ * @LastEditTime: 2023-02-08 02:56:12
  */
 import type { AppRouteModule } from '/@/router/types';
 
@@ -36,6 +36,7 @@ const dashboard: AppRouteModule = {
       name: 'Workbench',
       component: () => import('/@/views/dashboard/workbench/index.vue'),
       meta: {
+        hideMenu: true,
         title: t('routes.dashboard.workbench'),
       },
     },
