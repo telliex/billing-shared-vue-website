@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-10-06 08:36:18
  * @LastEditors: Telliex
- * @LastEditTime: 2023-02-08 02:37:38
+ * @LastEditTime: 2023-02-09 06:26:25
  */
 import type { AppRouteModule } from '/@/router/types';
 import { RoleEnum } from '/@/enums/roleEnum';
@@ -46,7 +46,6 @@ const reports: AppRouteModule = {
       name: 'reportCatogery1',
       component: () => import('/@/views/reports/Report1.vue'),
       meta: {
-        hideMenu: true,
         title: t('routes.reports.report1'),
         icon: 'ri:article-line',
         roles: [RoleEnum.TEST, RoleEnum.SUPER],
@@ -57,7 +56,6 @@ const reports: AppRouteModule = {
       name: 'reportCatogery2',
       component: () => import('/@/views/reports/Report2.vue'),
       meta: {
-        hideMenu: true,
         title: t('routes.reports.report2'),
         icon: 'ri:article-line',
         roles: [RoleEnum.DEVELOP, RoleEnum.SUPER],

@@ -3,66 +3,74 @@
  * @Anthor: Telliex
  * @Date: 2022-10-06 10:24:56
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-17 00:44:23
+ * @LastEditTime: 2023-02-09 06:23:43
+
+ reference : https://www.nightprogrammer.com/vue-js/how-to-integrate-microsoft-power-bi-client-in-vue-js-example/
 -->
 <template>
-  <div class="p-4">
-    <BasicTable
-      title="表2"
-      titleHelpMessage=""
-      :columns="columns"
-      :dataSource="data"
-      :canResize="canResize"
-      :loading="loading"
-      showTableSetting
-      :pagination="pagination"
-      @columns-change="handleColumnChange"
-    >
-      <template #toolbar>
-        <a-button type="primary" @click="toggleCanResize">
-          {{ !canResize ? '自適應高度' : '取消自適應' }}
-        </a-button>
-      </template>
-    </BasicTable>
+  <div>
+    <section id="container" style="height: 750px"></section>
   </div>
 </template>
-<script lang="ts">
-  import { defineComponent, ref } from 'vue';
-  import { BasicTable, ColumnChangeParam } from '/@/components/Table';
-  import { getBasicColumns, getBasicData } from './tableData';
+<script>
+  import * as pbi from 'powerbi-client';
 
-  export default defineComponent({
-    components: { BasicTable },
-    setup() {
-      const canResize = ref(false);
-      const loading = ref(false);
-
-      const pagination = ref<any>(false);
-      function toggleCanResize() {
-        canResize.value = !canResize.value;
-      }
-
-      function toggleLoading() {
-        loading.value = true;
-        setTimeout(() => {
-          loading.value = false;
-          pagination.value = { pageSize: 20 };
-        }, 3000);
-      }
-
-      function handleColumnChange(data: ColumnChangeParam[]) {
-        console.log('ColumnChanged', data);
-      }
+  export default {
+    data() {
       return {
-        columns: getBasicColumns(),
-        data: getBasicData(),
-        canResize,
-        loading,
-        toggleCanResize,
-        toggleLoading,
-        pagination,
-        handleColumnChange,
+        embedUrl: null,
+        accessToken: null,
+        sampleReportUrl: 'https://playgroundbe-bck-1.azurewebsites.net/Reports/SampleReport',
       };
     },
-  });
+    mounted() {
+      this.initializePowerBI().then(() => {
+        const permissions = pbi.models.Permissions.All;
+
+        const config = {
+          type: 'report',
+          tokenType: pbi.models.TokenType.Embed,
+          accessToken: this.accessToken,
+          embedUrl: this.embedUrl,
+          pageView: 'fitToWidth',
+          permissions: permissions,
+        };
+
+        let powerbi = new pbi.service.Service(
+          pbi.factories.hpmFactory,
+          pbi.factories.wpmpFactory,
+          pbi.factories.routerFactory,
+        );
+
+        const dashboardContainer = document.getElementById('container');
+        const dashboard = powerbi.embed(dashboardContainer, config);
+
+        dashboard.off('loaded');
+        dashboard.off('rendered');
+        dashboard.on('error', function () {
+          this.dashboard.off('error');
+        });
+      });
+    },
+    methods: {
+      async initializePowerBI() {
+        const sampleReportUrl = this.sampleReportUrl;
+
+        const reportConfigResponse = await fetch(sampleReportUrl);
+
+        if (!reportConfigResponse.ok) {
+          console.error('Failed to fetch config for report.');
+          console.error('Status:', reportConfigResponse.status, reportConfigResponse.statusText);
+          return;
+        }
+
+        const reportConfig = await reportConfigResponse.json();
+
+        console.log('The access token is set. Loading the Power BI report');
+
+        this.embedUrl = reportConfig.EmbedUrl;
+        this.accessToken = reportConfig.EmbedToken.Token;
+      },
+    },
+  };
 </script>
