@@ -1,0 +1,37 @@
+{
+  "ecs_website": {
+      "ecs_billing_task_role": "billing-ecs-task-role",
+      "ecs_billing_task_role_arn": "billing-ecs-task-role",
+      "ecs_taskexecution_role": "ecsTaskExecutionRole",
+      "ecs_taskexecution_role_arn": "ecsTaskExecutionRole",
+      "ecs_security_group": "billing-envval-mgt-sg",
+      "ecs_cluster": "billing_ecs_envval_website_cluster",
+      "vpc_subnet_type": "public",
+      "internet_facing": true,
+      "idleTimeout":4000 
+  },
+  "ecs_website_list": {
+      "alb_name": "billing-envval-website-alb",
+      "container_lists": [
+          {
+              "name": "billing-envval-dataplatform",
+              "ecr_arn": "863203846708.dkr.ecr.us-west-2.amazonaws.com/billing-dataplatform",
+              "version": "v1.0.0.0",
+              "memory": 8192,
+              "cpu": 2048,
+              "port": 80,
+              "container_port": 80,
+              "healthCheck_path": "/index.html",
+              "timeout":120,
+              "interval":300,
+              "ssm": "/Billing/WebSite/dataplatform",
+              "endpoint": "",
+              "storage":0,
+              "env_capitalize_bool": false,
+              "env": {
+                  "ENV": ""
+              }
+          }
+      ]
+  }
+}
