@@ -1,12 +1,14 @@
-FROM node:latest  as build-stage
-ENV NODE_ENV develop
-WORKDIR /usr/src/app
-COPY package*.json .
-RUN npm install
+# build stage
+FROM node:18 as build-stage
+RUN npm install -g pnpm
+WORKDIR /app
+COPY package*.json ./
+RUN pnpm install
 COPY . .
-RUN npm run build
+RUN pnpm build
 
-FROM httpd:2.4 as production-stage
-COPY --from=build-stage /usr/src/app/dist /usr/local/apache2/htdocs/
+# production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 80
-CMD ["httpd-foreground"]
+CMD ["nginx", "-g", "daemon off;"]
