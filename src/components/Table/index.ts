@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-09-30 08:02:54
- * @LastEditors: Telliex
- * @LastEditTime: 2022-10-18 11:36:24
- */
 export { default as BasicTable } from './src/BasicTable.vue';
 export { default as TableAction } from './src/components/TableAction.vue';
 export { default as EditTableHeaderIcon } from './src/components/EditTableHeaderIcon.vue';

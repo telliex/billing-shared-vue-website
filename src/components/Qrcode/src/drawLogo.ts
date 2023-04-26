@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:16:23
- */
 import { isString } from '/@/utils/is';
 import { RenderQrCodeParams, LogoType } from './typing';
 export const drawLogo = ({ canvas, logo }: RenderQrCodeParams) => {
@@ -44,12 +37,12 @@ export const drawLogo = ({ canvas, logo }: RenderQrCodeParams) => {
   }
   image.src = logoSrc;
 
-  // 使用image繪製可以避免某些跨域情況
+  // 使用image绘制可以避免某些跨域情况
   const drawLogoWithImage = (image: CanvasImageSource) => {
     ctx.drawImage(image, logoXY, logoXY, logoWidth, logoWidth);
   };
 
-  // 使用canvas繪製以獲得更多的功能
+  // 使用canvas绘制以获得更多的功能
   const drawLogoWithCanvas = (image: HTMLImageElement) => {
     const canvasImage = document.createElement('canvas');
     canvasImage.width = logoXY + logoWidth;
@@ -67,7 +60,7 @@ export const drawLogo = ({ canvas, logo }: RenderQrCodeParams) => {
     }
   };
 
-  // 將 logo繪製到 canvas上
+  // 将 logo绘制到 canvas上
   return new Promise((resolve) => {
     image.onload = () => {
       logoRadius ? drawLogoWithCanvas(image) : drawLogoWithImage(image);
@@ -76,7 +69,7 @@ export const drawLogo = ({ canvas, logo }: RenderQrCodeParams) => {
   });
 };
 
-// copy來的方法，用於繪製圓角
+// copy来的方法，用于绘制圆角
 function canvasRoundRect(ctx: CanvasRenderingContext2D) {
   return (x: number, y: number, w: number, h: number, r: number) => {
     const minSize = Math.min(w, h);

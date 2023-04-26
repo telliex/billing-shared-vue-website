@@ -25,8 +25,4 @@ export interface DemoListItem {
  * @description: Request list return value
  */
 
-interface BasicFetchResult<T> {
-  items: T[];
-  total: number;
-}
 export type DemoListGetResultModel = BasicFetchResult<DemoListItem>;

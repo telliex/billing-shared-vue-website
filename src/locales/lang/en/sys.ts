@@ -71,7 +71,7 @@ export default {
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',
 
-    signInTitle: 'Backstage management system',
+    signInTitle: 'Cloudy Billing management system',
     signInDesc: 'Enter your personal details and get started!',
     policy: 'I agree to the xxx Privacy Policy',
     scanSign: `scanning the code to complete the login`,
@@ -94,6 +94,7 @@ export default {
     policyPlaceholder: 'Register after checking',
     diffPwd: 'The two passwords are inconsistent',
 
+    company: 'Company',
     userName: 'Username',
     password: 'Password',
     confirmPassword: 'Confirm Password',

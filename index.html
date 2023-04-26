@@ -80,7 +80,7 @@
           margin-bottom: 20px;
         }
 
-        .dot {
+        .app-loading-dots__item {
           position: relative;
           display: inline-block;
           width: 48px;
@@ -92,7 +92,7 @@
           animation: antRotate 1.2s infinite linear;
         }
 
-        .dot i {
+        .app-loading-dots__item i {
           position: absolute;
           display: block;
           width: 20px;
@@ -105,24 +105,24 @@
           transform-origin: 50% 50%;
         }
 
-        .dot i:nth-child(1) {
+        .app-loading-dots__item i:nth-child(1) {
           top: 0;
           left: 0;
         }
 
-        .dot i:nth-child(2) {
+        .app-loading-dots__item i:nth-child(2) {
           top: 0;
           right: 0;
           animation-delay: 0.4s;
         }
 
-        .dot i:nth-child(3) {
+        .app-loading-dots__item i:nth-child(3) {
           right: 0;
           bottom: 0;
           animation-delay: 0.8s;
         }
 
-        .dot i:nth-child(4) {
+        .app-loading-dots__item i:nth-child(4) {
           bottom: 0;
           left: 0;
           animation-delay: 1.2s;
@@ -151,7 +151,9 @@
       <div class="app-loading">
         <div class="app-loading-wrap">
           <div class="app-loading-dots">
-            <span class="dot dot-spin"><i></i><i></i><i></i><i></i></span>
+            <span class="app-loading-dots__item app-loading-dots__item-spin"
+              ><i></i><i></i><i></i><i></i
+            ></span>
           </div>
         </div>
       </div>

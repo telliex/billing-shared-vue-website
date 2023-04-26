@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-10-11 06:25:45
  * @LastEditors: Telliex
- * @LastEditTime: 2022-10-17 10:37:02
+ * @LastEditTime: 2023-01-06 03:10:54
 -->
 <template>
   <div class="p-4">
@@ -31,7 +31,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, reactive, computed, onMounted } from 'vue';
+  import { defineComponent, ref, computed, onMounted } from 'vue';
   import {
     jsonToSheetXlsx,
     ExpExcelModal,
@@ -40,79 +40,79 @@
     ExcelData,
   } from '/@/components/Excel';
   import axios from 'axios';
-  import { BasicTable, BasicColumn, useTable, FormSchema } from '/@/components/Table';
+  import { BasicTable, BasicColumn, useTable } from '/@/components/Table';
   import { useModal } from '/@/components/Modal';
   import { RoleEnum } from '/@/enums/roleEnum';
   import { Authority } from '/@/components/Authority';
   import { usePermission } from '/@/hooks/web/usePermission';
   // import { demoListApi } from '/@/api/demo/table';
   // import { defHttp } from '/@/utils/http/axios';
-  const formData = reactive<{
-    type: string;
-    month?: string;
-    day?: string;
-  }>({
-    type: '',
-    month: '',
-    day: '',
-  });
-  const schemas: FormSchema[] = [
-    {
-      field: 'reportType',
-      component: 'Select',
-      label: '報表類型:',
-      colProps: {
-        span: 6,
-      },
-      componentProps: {
-        options: [
-          {
-            label: '月報表',
-            value: 'month',
-            key: 'month',
-          },
-          {
-            label: '日報表',
-            value: 'day',
-            key: 'day',
-          },
-        ],
-        onChange: (e: any) => {
-          console.log(e);
-          formData.type = e;
-        },
-      },
-    },
-    {
-      field: 'month',
-      component: 'DatePicker',
-      label: '月份:',
-      ifShow: () => formData.type === 'month',
-      componentProps: {
-        picker: 'month',
-        onChange: (e: any) => {
-          console.log(e);
-        },
-      },
-      colProps: {
-        span: 6,
-      },
-    },
-    {
-      field: 'day',
-      ifShow: () => formData.type === 'day',
-      component: 'DatePicker',
-      label: '日期:',
-      componentProps: {
-        onChange: (e: any) => {
-          console.log(e);
-        },
-      },
-      colProps: {
-        span: 6,
-      },
-    },
-  ];
+  // const formData = reactive<{
+  //   type: string;
+  //   month?: string;
+  //   day?: string;
+  // }>({
+  //   type: '',
+  //   month: '',
+  //   day: '',
+  // });
+  // const schemas: FormSchema[] = [
+  //   {
+  //     field: 'reportType',
+  //     component: 'Select',
+  //     label: '報表類型:',
+  //     colProps: {
+  //       span: 6,
+  //     },
+  //     componentProps: {
+  //       options: [
+  //         {
+  //           label: '月報表',
+  //           value: 'month',
+  //           key: 'month',
+  //         },
+  //         {
+  //           label: '日報表',
+  //           value: 'day',
+  //           key: 'day',
+  //         },
+  //       ],
+  //       onChange: (e: any) => {
+  //         console.log(e);
+  //         formData.type = e;
+  //       },
+  //     },
+  //   },
+  //   {
+  //     field: 'month',
+  //     component: 'DatePicker',
+  //     label: '月份:',
+  //     ifShow: () => formData.type === 'month',
+  //     componentProps: {
+  //       picker: 'month',
+  //       onChange: (e: any) => {
+  //         console.log(e);
+  //       },
+  //     },
+  //     colProps: {
+  //       span: 6,
+  //     },
+  //   },
+  //   {
+  //     field: 'day',
+  //     ifShow: () => formData.type === 'day',
+  //     component: 'DatePicker',
+  //     label: '日期:',
+  //     componentProps: {
+  //       onChange: (e: any) => {
+  //         console.log(e);
+  //       },
+  //     },
+  //     colProps: {
+  //       span: 6,
+  //     },
+  //   },
+  // ];
 
   export default defineComponent({
     components: { BasicTable, ExpExcelModal, ImpExcel },
@@ -216,7 +216,6 @@
       };
 
       const getFetch = () => {
-        console.log('99999999');
         return axios.get(
           'http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3006/aws/v1.0/get-download-url',
           {
@@ -239,11 +238,11 @@
         // api: demoListApi,
         columns: tableColumns,
         dataSource: tableData,
-        useSearchForm: true,
-        formConfig: {
-          labelWidth: 100,
-          schemas: [...schemas],
-        },
+        // useSearchForm: false,
+        // formConfig: {
+        //   labelWidth: 100,
+        //   schemas: [...schemas],
+        // },
         showTableSetting: tableTools,
         tableSetting: { fullScreen: true },
         showIndexColumn: true,
@@ -251,9 +250,9 @@
       });
 
       onMounted(() => {
-        getFetch().then((res) => {
-          console.log(res);
-        });
+        // getFetch().then((res) => {
+        //   console.log(res);
+        // });
       });
 
       return {

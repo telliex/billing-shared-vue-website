@@ -21,17 +21,17 @@
   export default defineComponent({
     name: 'ImportExcel',
     props: {
-      // 日期時間格式。如果不提供或者提供空值，將返回原始Date對象
+      // 日期时间格式。如果不提供或者提供空值，将返回原始Date对象
       dateFormat: {
         type: String,
       },
-      // 時區調整。實驗性功能，僅為了解決讀取日期時間值有偏差的問題。目前僅提供了+08:00時區的偏差修正值
+      // 时区调整。实验性功能，仅为了解决读取日期时间值有偏差的问题。目前仅提供了+08:00时区的偏差修正值
       // https://github.com/SheetJS/sheetjs/issues/1470#issuecomment-501108554
       timeZone: {
         type: Number,
         default: 8,
       },
-      // 是否直接返回選中文件
+      // 是否直接返回选中文件
       isReturnFile: {
         type: Boolean,
         default: false,
@@ -43,7 +43,7 @@
       const loadingRef = ref<Boolean>(false);
 
       /**
-       * @description: 第一行作為頭部
+       * @description: 第一行作为头部
        */
       function getHeaderRow(sheet: XLSX.WorkSheet) {
         if (!sheet || !sheet['!ref']) return [];
@@ -65,7 +65,7 @@
       }
 
       /**
-       * @description: 獲得excel數據
+       * @description: 获得excel数据
        */
       function getExcelData(workbook: XLSX.WorkBook) {
         const excelData: ExcelData[] = [];
@@ -103,7 +103,7 @@
       }
 
       /**
-       * @description: 讀取excel數據
+       * @description: 读取excel数据
        */
       function readerData(rawFile: File) {
         loadingRef.value = true;
@@ -139,12 +139,17 @@
       }
 
       /**
-       * @description: 觸發選擇文件管理器
+       * @description: 触发选择文件管理器
        */
       function handleInputClick(e: Event) {
-        const files = e && (e.target as HTMLInputElement).files;
+        const target = e && (e.target as HTMLInputElement);
+        const files = target?.files;
         const rawFile = files && files[0]; // only setting files[0]
+
+        target.value = '';
+
         if (!rawFile) return;
+
         if (props.isReturnFile) {
           emit('success', rawFile);
           return;
@@ -153,7 +158,7 @@
       }
 
       /**
-       * @description: 點擊上傳按鈕
+       * @description: 点击上传按钮
        */
       function handleUpload() {
         const inputRefDom = unref(inputRef);

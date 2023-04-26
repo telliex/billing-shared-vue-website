@@ -3,12 +3,12 @@
  * @Anthor: Telliex
  * @Date: 2022-11-14 06:35:00
  * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:24:25
+ * @LastEditTime: 2023-02-16 05:44:07
 -->
 <template>
-  <Card title="項目" v-bind="$attrs">
+  <Card title="專案" v-bind="$attrs">
     <template #extra>
-      <a-button type="link" size="small">更多</a-button>
+      <a-button type="link" size="small">more</a-button>
     </template>
 
     <CardGrid v-for="item in items" :key="item" class="!md:w-1/3 !w-full">

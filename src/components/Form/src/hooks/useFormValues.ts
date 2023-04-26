@@ -79,7 +79,7 @@ export function useFormValues({
         value = value.trim();
       }
       if (!tryDeconstructArray(key, value, res) && !tryDeconstructObject(key, value, res)) {
-        // 沒有解構成功的，按原樣賦值
+        // 没有解构成功的，按原样赋值
         set(res, key, value);
       }
     }
@@ -97,14 +97,21 @@ export function useFormValues({
     }
 
     for (const [field, [startTimeKey, endTimeKey], format = 'YYYY-MM-DD'] of fieldMapToTime) {
-      if (!field || !startTimeKey || !endTimeKey || !values[field]) {
+      if (!field || !startTimeKey || !endTimeKey) {
+        continue;
+      }
+      // If the value to be converted is empty, remove the field
+      if (!values[field]) {
+        Reflect.deleteProperty(values, field);
         continue;
       }
 
       const [startTime, endTime]: string[] = values[field];
 
-      values[startTimeKey] = dateUtil(startTime).format(format);
-      values[endTimeKey] = dateUtil(endTime).format(format);
+      const [startTimeFormat, endTimeFormat] = Array.isArray(format) ? format : [format, format];
+
+      values[startTimeKey] = dateUtil(startTime).format(startTimeFormat);
+      values[endTimeKey] = dateUtil(endTime).format(endTimeFormat);
       Reflect.deleteProperty(values, field);
     }
 

@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-11-14 06:35:00
  * @LastEditors: Telliex
- * @LastEditTime: 2023-02-08 02:56:12
+ * @LastEditTime: 2023-03-07 03:41:32
  */
 import type { AppRouteModule } from '/@/router/types';
 
@@ -14,29 +14,19 @@ const dashboard: AppRouteModule = {
   path: '/dashboard',
   name: 'Dashboard',
   component: LAYOUT,
-  redirect: '/dashboard/analysis',
+  redirect: '/dashboard/workbench',
   meta: {
-    hideMenu: false,
+    hideMenu: true,
     orderNo: 10,
     icon: 'ion:grid-outline',
     title: t('routes.dashboard.dashboard'),
   },
   children: [
     {
-      path: 'analysis',
-      name: 'Analysis',
-      component: () => import('/@/views/dashboard/analysis/index.vue'),
-      meta: {
-        // affix: true,
-        title: t('routes.dashboard.analysis'),
-      },
-    },
-    {
       path: 'workbench',
       name: 'Workbench',
       component: () => import('/@/views/dashboard/workbench/index.vue'),
       meta: {
-        hideMenu: true,
         title: t('routes.dashboard.workbench'),
       },
     },

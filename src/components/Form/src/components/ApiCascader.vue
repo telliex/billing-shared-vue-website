@@ -60,7 +60,7 @@
         type: Object as PropType<Recordable>,
         default: () => ({}),
       },
-      // 是否有下級，默認是
+      // 是否有下级，默认是
       isLeaf: {
         type: Function as PropType<(arg: Recordable) => boolean>,
         default: null,
@@ -170,7 +170,7 @@
       );
 
       function handleChange(keys, args) {
-        emitData.value = keys;
+        emitData.value = args;
         emit('defaultChange', keys, args);
       }
 

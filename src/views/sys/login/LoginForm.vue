@@ -8,8 +8,17 @@
     v-show="getShow"
     @keypress.enter="handleLogin"
   >
+    <!-- <FormItem name="company" class="enter-x">
+      <Select
+        size="large"
+        v-model:value="formData.company"
+        :placeholder="t('sys.login.company')"
+        class="fix-auto-fill"
+        :options="options"
+      />
+    </FormItem> -->
     <FormItem name="account" class="enter-x">
-      <Input
+      <InputPassword
         size="large"
         v-model:value="formData.account"
         :placeholder="t('sys.login.userName')"
@@ -75,8 +84,8 @@
   </Form>
 </template>
 <script lang="ts" setup>
-  import { reactive, ref, unref, computed } from 'vue';
-
+  import { reactive, ref, unref, computed, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
   import { Checkbox, Form, Input, Row, Col, Button } from 'ant-design-vue';
 
   import LoginFormTitle from './LoginFormTitle.vue';
@@ -87,6 +96,7 @@
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
+
   //import { onKeyStroke } from '@vueuse/core';
 
   const ACol = Col;
@@ -94,27 +104,57 @@
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
-  const { notification, createErrorModal } = useMessage();
+  const { notification, createErrorModal, createMessage } = useMessage();
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
-
+  const router = useRouter();
   const { getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
-
   const formRef = ref();
   const loading = ref(false);
   const rememberMe = ref(false);
-
+  let redirectUrl = ref<string | null>('');
+  const fromURL = import.meta.env.VITE_GLOB_OLD_MGT_URL;
+  // const fromURL = 'http://localhost:3131/';
   const formData = reactive({
-    account: 'billing',
-    password: '123456',
+    company: 'ECV',
+    account: '',
+    password: '',
   });
+
+  // const options = reactive([
+  //   {
+  //     label: 'ECV',
+  //     value: 'ECV',
+  //   },
+  //   {
+  //     label: 'ECR',
+  //     value: 'ECR',
+  //   },
+  //   {
+  //     label: 'CN',
+  //     value: 'CN',
+  //   },
+  // ]);
 
   const { validForm } = useFormValid(formRef);
 
   //onKeyStroke('Enter', handleLogin);
 
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
+
+  // function handleChange(e: ChangeEvent) {
+  //   console.log(e);
+  //   // userStore.setCompany(e);
+  // }
+
+  // function handleConfirm(type: 'warning' | 'error' | 'success' | 'info') {
+  //   createConfirm({
+  //     iconType: type,
+  //     title: 'Tip',
+  //     content: 'content message...',
+  //   });
+  // }
 
   async function handleLogin() {
     const data = await validForm();
@@ -126,21 +166,98 @@
         username: data.account,
         mode: 'none', //不要默认的错误提示
       });
+      // const userInfo = await userStore.login({
+      //   password: '123456',
+      //   username: 'billing',
+      //   mode: 'none', //不要默认的错误提示
+      // });
+
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
           description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
           duration: 3,
         });
+
+        setTimeout(() => {
+          if (redirectUrl.value) {
+            console.log(`${window.location.host}/#${redirectUrl.value}`);
+            router.push({ name: 'contractList' });
+          }
+        }, 2000);
       }
     } catch (error) {
       createErrorModal({
         title: t('sys.api.errorTip'),
         content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
         getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
+        onOk: () => {
+          setTimeout(() => {
+            window.location.href = fromURL;
+          }, 3000);
+        },
       });
     } finally {
       loading.value = false;
     }
   }
+  onMounted(() => {
+    console.log('elu:', import.meta.env.VITE_GLOB_ELU_API_URL);
+    console.log('contract:', import.meta.env.VITE_GLOB_CONTRACT_API_URL);
+    // http://localhost:5151/?user=admin/#/login?redirect=/home
+    console.log('window.location.pathname:', window.location.pathname);
+    console.log('window.location.search:', window.location.search);
+    console.log('window.location.hash:', window.location.hash);
+    console.log('fromURL:', fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''));
+    console.log(
+      'document.referrer:',
+      document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''),
+    );
+    if (window.location.search) {
+      try {
+        let parameterList = window.location.search.slice(1).split('&');
+        let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
+
+        console.log('userId:', userId);
+
+        if (userId === 'admin') {
+          formData.account = 'billing';
+          formData.password = '123456';
+        } else {
+          redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
+          console.log('redirectUrl:', redirectUrl);
+
+          if (
+            document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
+            fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
+          ) {
+            createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
+            setTimeout(() => {
+              window.location.href = document.referrer;
+            }, 50000);
+            return;
+          }
+
+          // http://localhost:3100/?user=157&url=/eterne/contract_list&role=op
+          if (userId && redirectUrl) {
+            formData.account = userId;
+            formData.password = '123456';
+            handleLogin();
+          } else {
+            createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
+          }
+        }
+      } catch (e) {
+        createMessage.error('redirect 錯誤，請重新登入 MGT 平台 !!');
+        setTimeout(() => {
+          window.location.href = fromURL;
+        }, 5000);
+      }
+    } else {
+      createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
+      setTimeout(() => {
+        window.location.href = fromURL;
+      }, 5000);
+    }
+  });
 </script>

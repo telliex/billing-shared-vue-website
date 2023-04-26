@@ -14,8 +14,8 @@
       "alb_name": "billing-envval-website-alb",
       "container_lists": [
           {
-              "name": "billing-envval-dataplatform",
-              "ecr_arn": "863203846708.dkr.ecr.us-west-2.amazonaws.com/billing-dataplatform",
+              "name": "billing-envval-mgt-v2",
+              "ecr_arn": "863203846708.dkr.ecr.us-west-2.amazonaws.com/billing-mgt-v2",
               "version": "v1.0.0.0",
               "memory": 8192,
               "cpu": 2048,
@@ -24,7 +24,7 @@
               "healthCheck_path": "/index.html",
               "timeout":120,
               "interval":300,
-              "ssm": "/Billing/WebSite/dataplatform",
+              "ssm": "/Billing/WebSite/mgt-v2",
               "endpoint": "",
               "storage":0,
               "env_capitalize_bool": false,

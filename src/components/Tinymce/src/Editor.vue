@@ -76,7 +76,7 @@
   const tinymceProps = {
     options: {
       type: Object as PropType<Partial<RawEditorSettings>>,
-      default: {},
+      default: () => ({}),
     },
     value: {
       type: String,
@@ -141,7 +141,7 @@
 
       const langName = computed(() => {
         const lang = useLocale().getLocale.value;
-        return ['zh_TW', 'en'].includes(lang) ? lang : 'zh_TW';
+        return ['zh_CN', 'en'].includes(lang) ? lang : 'zh_CN';
       });
 
       const initOptions = computed((): RawEditorSettings => {

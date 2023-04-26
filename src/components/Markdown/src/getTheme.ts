@@ -1,14 +1,7 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:12:34
- */
 /**
- * 獲取主題類型 深色淺色模式 對應的值
+ * 获取主题类型 深色浅色模式 对应的值
  * @param darkModeVal 深色模式值
- * @param themeMode 主題類型——外觀(默認), 內容, 代碼塊
+ * @param themeMode 主题类型——外观(默认), 内容, 代码块
  */
 export const getTheme = (
   darkModeVal: 'light' | 'dark' | string,

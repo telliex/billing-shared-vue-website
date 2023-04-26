@@ -21,7 +21,7 @@
   import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
   import { getTheme } from './getTheme';
 
-  type Lang = 'zh_TW' | 'en_US' | 'ja_JP' | 'ko_KR' | undefined;
+  type Lang = 'zh_CN' | 'en_US' | 'ja_JP' | 'ko_KR' | undefined;
 
   export default defineComponent({
     inheritAttrs: false,
@@ -67,7 +67,7 @@
         },
       );
 
-      const getCurrentLang = computed((): 'zh_TW' | 'en_US' | 'ja_JP' | 'ko_KR' => {
+      const getCurrentLang = computed((): 'zh_CN' | 'en_US' | 'ja_JP' | 'ko_KR' => {
         let lang: Lang;
         switch (unref(getLocale)) {
           case 'en':
@@ -80,7 +80,7 @@
             lang = 'ko_KR';
             break;
           default:
-            lang = 'zh_TW';
+            lang = 'zh_CN';
         }
         return lang;
       });
@@ -89,7 +89,7 @@
         if (!wrapEl) return;
         const bindValue = { ...attrs, ...props };
         const insEditor = new Vditor(wrapEl, {
-          // 設置外觀主題
+          // 设置外观主题
           theme: getTheme(getDarkMode.value) as any,
           lang: unref(getCurrentLang),
           mode: 'sv',
@@ -98,11 +98,11 @@
           },
           preview: {
             theme: {
-              // 設置內容主題
+              // 设置内容主题
               current: getTheme(getDarkMode.value, 'content'),
             },
             hljs: {
-              // 設置代碼塊主題
+              // 设置代码块主题
               style: getTheme(getDarkMode.value, 'code'),
             },
             actions: [],

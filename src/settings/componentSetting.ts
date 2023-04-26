@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2023-03-06 08:31:15
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-03-08 13:18:10
+ */
 // Used to configure the general configuration of some components without modifying the components
 
 import type { SorterResult } from '../components/Table';

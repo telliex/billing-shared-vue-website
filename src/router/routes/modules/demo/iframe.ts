@@ -1,9 +1,9 @@
 /*
  * @Description:
  * @Anthor: Telliex
- * @Date: 2023-02-08 01:59:18
+ * @Date: 2022-11-14 06:35:00
  * @LastEditors: Telliex
- * @LastEditTime: 2023-02-08 08:13:31
+ * @LastEditTime: 2022-12-06 01:27:46
  */
 import type { AppRouteModule } from '/@/router/types';
 
@@ -17,6 +17,7 @@ const iframe: AppRouteModule = {
   component: LAYOUT,
   redirect: '/frame/doc',
   meta: {
+    hideMenu: true,
     orderNo: 1000,
     icon: 'ion:tv-outline',
     title: t('routes.demo.iframe.frame'),
@@ -24,13 +25,29 @@ const iframe: AppRouteModule = {
 
   children: [
     {
+      path: 'doc',
+      name: 'Doc',
+      component: IFrame,
+      meta: {
+        frameSrc: 'https://vvbin.cn/doc-next/',
+        title: t('routes.demo.iframe.doc'),
+      },
+    },
+    {
       path: 'antv',
       name: 'Antv',
       component: IFrame,
       meta: {
-        frameSrc:
-          'https://app.powerbi.com/view?r=eyJrIjoiOTYzYThmMDItM2I1OC00NTc1LTkyMWUtZWY0YTE0Njc2M2VhIiwidCI6IjI0ZGI0MDhjLWE3YzgtNGYzYS04ZmY5LTEwODYwYTQ4ZDIzNSIsImMiOjEwfQ%3D%3D',
-        title: 'POWER BI',
+        frameSrc: 'http://localhost:3131/',
+        title: t('routes.demo.iframe.antv'),
+      },
+    },
+    {
+      path: 'http://localhost:3131/bill_cdn_new.php',
+      name: 'DocExternal',
+      component: IFrame,
+      meta: {
+        title: t('routes.demo.iframe.docExternal'),
       },
     },
   ],

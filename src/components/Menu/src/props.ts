@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:13:35
- */
 import type { Menu } from '/@/router/types';
 import type { PropType } from 'vue';
 
@@ -19,9 +12,9 @@ export const basicProps = {
     default: () => [],
   },
   collapsedShowTitle: propTypes.bool,
-  // 最好是4 倍數
+  // 最好是4 倍数
   inlineIndent: propTypes.number.def(20),
-  // 菜單組件的mode屬性
+  // 菜单组件的mode属性
   mode: {
     type: String as PropType<MenuMode>,
     default: MenuModeEnum.INLINE,
@@ -48,7 +41,7 @@ export const basicProps = {
 export const itemProps = {
   item: {
     type: Object as PropType<Menu>,
-    default: {},
+    default: () => ({}),
   },
   level: propTypes.number,
   theme: propTypes.oneOf(['dark', 'light']),

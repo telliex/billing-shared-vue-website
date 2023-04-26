@@ -460,27 +460,27 @@
         span: 8,
       },
     },
-    {
-      field: 'field36',
-      component: 'ApiTree',
-      label: '遠程Tree',
-      helpMessage: ['ApiTree組件', '使用接口提供的數據生成選項'],
-      required: true,
-      componentProps: {
-        api: treeOptionsListApi,
-        params: {
-          count: 2,
-        },
-        afterFetch: (v) => {
-          //do something
-          return v;
-        },
-        resultField: 'list',
-      },
-      colProps: {
-        span: 8,
-      },
-    },
+    // {
+    //   field: 'field36',
+    //   component: 'ApiTree',
+    //   label: '遠程Tree',
+    //   helpMessage: ['ApiTree組件', '使用接口提供的數據生成選項'],
+    //   required: true,
+    //   componentProps: {
+    //     api: treeOptionsListApi,
+    //     params: {
+    //       count: 2,
+    //     },
+    //     afterFetch: (v) => {
+    //       //do something
+    //       return v;
+    //     },
+    //     resultField: 'list',
+    //   },
+    //   colProps: {
+    //     span: 8,
+    //   },
+    // },
     {
       field: 'divider-linked',
       component: 'Divider',

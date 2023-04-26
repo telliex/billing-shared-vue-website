@@ -18,20 +18,94 @@ const accountList = (() => {
   return result;
 })();
 
+// 角色 list
 const roleList = (() => {
-  const result: any[] = [];
-  for (let index = 0; index < 4; index++) {
-    result.push({
-      id: index + 1,
-      orderNo: `${index + 1}`,
-      roleName: ['超級管理員', '管理員', '文章管理員', '普通用戶'][index],
-      roleValue: '@first',
-      createTime: '@datetime',
-      remark: '@word(10,20)',
-      menu: [['0', '1', '2'], ['0', '1'], ['0', '2'], ['2']][index],
-      'status|1': ['0', '1'],
-    });
-  }
+  let result: any[] = [];
+  result = [
+    {
+      id: 1,
+      orderNo: 1,
+      roleName: 'Admin',
+      roleValue: 'super',
+      createTime: '2022-12-31 00:00:00',
+      remark: 'Admin',
+      menu: ['0', '1', '2'],
+      status: '1',
+    },
+    {
+      id: 2,
+      orderNo: 2,
+      roleName: 'operation',
+      roleValue: 'operation',
+      createTime: '2022-12-31 00:00:00',
+      remark: 'OP',
+      menu: ['0', '1', '2'],
+      status: '1',
+    },
+    {
+      id: 3,
+      orderNo: 3,
+      roleName: 'tester',
+      roleValue: 'tester',
+      createTime: '2022-12-31 00:00:00',
+      remark: 'Tester',
+      menu: ['0', '1', '2'],
+      status: '1',
+    },
+
+    {
+      id: 4,
+      orderNo: 4,
+      roleName: 'develop',
+      roleValue: 'develop',
+      createTime: '2022-12-31 00:00:00',
+      remark: 'Develop',
+      menu: ['0', '1', '2'],
+      status: '1',
+    },
+    {
+      id: 5,
+      orderNo: 5,
+      roleName: 'sales',
+      roleValue: 'sales',
+      createTime: '2022-12-31 00:00:00',
+      remark: 'Sales',
+      menu: ['0', '1', '2'],
+      status: '1',
+    },
+    {
+      id: 6,
+      orderNo: 6,
+      roleName: 'accountant',
+      roleValue: 'accountant',
+      createTime: '2022-12-31 00:00:00',
+      remark: 'Accountant',
+      menu: ['1', '2'],
+      status: '1',
+    },
+    {
+      id: 7,
+      orderNo: 7,
+      roleName: 'bu',
+      roleValue: 'bu',
+      createTime: '2022-12-31 00:00:00',
+      remark: 'BU',
+      menu: ['1', '2'],
+      status: '1',
+    },
+  ];
+  // for (let index = 0; index < 4; index++) {
+  //   result.push({
+  //     id: index + 1,
+  //     orderNo: `${index + 1}`,
+  //     roleName: ['超級管理員', '管理員', '文章管理員', '普通用戶'][index],
+  //     roleValue: '@first',
+  //     createTime: '@datetime',
+  //     remark: '@word(10,20)',
+  //     menu: [['0', '1', '2'], ['0', '1'], ['0', '2'], ['2']][index],
+  //     'status|1': ['0', '1'],
+  //   });
+  // }
   return result;
 })();
 
@@ -40,7 +114,7 @@ const deptList = (() => {
   for (let index = 0; index < 3; index++) {
     result.push({
       id: `${index}`,
-      deptName: ['臺北分公司', '臺中分公司', '臺南分公司'][index],
+      deptName: ['ECV', 'ECR', 'CN'][index],
       orderNo: index + 1,
       createTime: '@datetime',
       remark: '@word(10,20)',

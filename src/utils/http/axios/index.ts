@@ -50,12 +50,13 @@ const transform: AxiosTransform = {
       throw new Error(t('sys.api.apiRequestFailed'));
     }
     //  這裏 code，result，message為 後台統一的字段，需要在 types.ts內修改為項目自己的接口返回格式
-    const { code, result, message } = data;
+    const { code, results, msg, status } = data;
 
     // 這裏邏輯可以根據項目進行修改
-    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    // const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    const hasSuccess = data && Reflect.has(data, 'status') && (status === 1000 || status === 1001);
     if (hasSuccess) {
-      return result;
+      return results;
     }
 
     // 在此處根據自己項目的實際情況對不同的code執行不同的操作
@@ -69,8 +70,8 @@ const transform: AxiosTransform = {
         userStore.logout(true);
         break;
       default:
-        if (message) {
-          timeoutMsg = message;
+        if (msg) {
+          timeoutMsg = msg;
         }
     }
 

@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2023-02-08 02:03:09
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-02-20 07:19:56
+ */
 import { defHttp } from '/@/utils/http/axios';
 import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
 

@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:24:29
--->
 <template>
   <BasicModal
     width="800px"
@@ -55,7 +48,7 @@
         { immediate: true },
       );
 
-      // 刪除
+      // 删除
       function handleRemove(record: PreviewFileItem) {
         const index = fileListRef.value.findIndex((item) => item.url === record.url);
         if (index !== -1) {
@@ -68,7 +61,7 @@
         }
       }
 
-      // // 預覽
+      // // 预览
       // function handlePreview(record: PreviewFileItem) {
       //   const { url = '' } = record;
       //   createImgPreview({
@@ -76,7 +69,7 @@
       //   });
       // }
 
-      // 下載
+      // 下载
       function handleDownload(record: PreviewFileItem) {
         const { url = '' } = record;
         downloadByUrl({ url });

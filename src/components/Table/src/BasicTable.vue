@@ -28,7 +28,7 @@
       <template #headerCell="{ column }">
         <HeaderCell :column="column" />
       </template>
-      <!-- 增加對antdv3.x兼容 -->
+      <!-- 增加对antdv3.x兼容 -->
       <template #bodyCell="data">
         <slot name="bodyCell" v-bind="data || {}"></slot>
       </template>
@@ -75,6 +75,7 @@
   import { warn } from '/@/utils/log';
 
   export default defineComponent({
+    name: 'BasicTable',
     components: {
       Table,
       BasicForm,
@@ -136,6 +137,7 @@
         getRowSelection,
         getRowSelectionRef,
         getSelectRows,
+        setSelectedRows,
         clearSelectedRowKeys,
         getSelectRowKeys,
         deleteSelectRowByKey,
@@ -173,7 +175,7 @@
       function handleTableChange(...args) {
         onTableChange.call(undefined, ...args);
         emit('change', ...args);
-        // 解決通過useTable註冊onChange時不起作用的問題
+        // 解决通过useTable注册onChange时不起作用的问题
         const { onChange } = unref(getProps);
         onChange && isFunction(onChange) && onChange.call(undefined, ...args);
       }
@@ -288,6 +290,7 @@
       const tableAction: TableActionType = {
         reload,
         getSelectRows,
+        setSelectedRows,
         clearSelectedRowKeys,
         getSelectRowKeys,
         deleteSelectRowByKey,
@@ -375,6 +378,7 @@
       padding: 16px;
 
       .ant-form {
+        width: 100%;
         padding: 12px 10px 6px;
         margin-bottom: 16px;
         background-color: @component-background;

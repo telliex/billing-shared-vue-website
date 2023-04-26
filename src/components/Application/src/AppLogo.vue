@@ -1,7 +1,10 @@
+<!--
+ * @Author: Vben
+ * @Description: logo component
+-->
 <template>
   <div class="anticon" :class="getAppLogoClass" @click="goHome">
-    <img src="../../../assets/images/logo.png" class="logo-normal" />
-    <img src="../../../assets/images/logo-s.png" class="logo-icon" />
+    <img src="../../../assets/images/logo.png" />
     <div class="ml-2 truncate md:opacity-100" :class="getTitleClass" v-show="showTitle">
       {{ title }}
     </div>
@@ -63,7 +66,6 @@
     padding-left: 7px;
     cursor: pointer;
     transition: all 0.2s ease;
-    flex-direction: column;
 
     &.light {
       border-bottom: 1px solid @border-color-base;
@@ -87,29 +89,5 @@
       transition: all 0.5s;
       line-height: normal;
     }
-  }
-
-  .logo-icon {
-    width: 30px;
-    display: none;
-  }
-
-  .ant-layout-sider-collapsed {
-    .logo-icon {
-      display: block;
-    }
-
-    .logo-normal {
-      display: none;
-    }
-  }
-
-  .gather-login .container .gather-app-logo {
-    flex-direction: row;
-  }
-
-  .ant-layout .gather-app-logo {
-    height: 85px;
-    flex-direction: column;
   }
 </style>

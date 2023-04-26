@@ -11,12 +11,12 @@ export const basicProps = {
     type: Number as PropType<number>,
     default: 2,
   },
-  // 最大數量的文件，Infinity不限制
+  // 最大数量的文件，Infinity不限制
   maxNumber: {
     type: Number as PropType<number>,
     default: Infinity,
   },
-  // 根據後綴，或者其他
+  // 根据后缀，或者其他
   accept: {
     type: Array as PropType<string[]>,
     default: () => [],
@@ -27,7 +27,7 @@ export const basicProps = {
   },
   uploadParams: {
     type: Object as PropType<any>,
-    default: {},
+    default: () => ({}),
   },
   api: {
     type: Function as PropType<PromiseFn>,
@@ -69,7 +69,7 @@ export const previewProps = {
 
 export const fileListProps = {
   columns: {
-    type: [Array] as PropType<FileBasicColumn[]>,
+    type: Array as PropType<FileBasicColumn[]>,
     default: null,
   },
   actionColumn: {

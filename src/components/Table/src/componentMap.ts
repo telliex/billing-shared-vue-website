@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:21:46
- */
 import type { Component } from 'vue';
 import {
   Input,
@@ -15,9 +8,10 @@ import {
   DatePicker,
   TimePicker,
   AutoComplete,
+  Radio,
 } from 'ant-design-vue';
 import type { ComponentType } from './types/componentType';
-import { ApiSelect, ApiTreeSelect } from '/@/components/Form';
+import { ApiSelect, ApiTreeSelect, RadioButtonGroup, ApiRadioGroup } from '/@/components/Form';
 
 const componentMap = new Map<ComponentType, Component>();
 
@@ -31,6 +25,9 @@ componentMap.set('Switch', Switch);
 componentMap.set('Checkbox', Checkbox);
 componentMap.set('DatePicker', DatePicker);
 componentMap.set('TimePicker', TimePicker);
+componentMap.set('RadioGroup', Radio.Group);
+componentMap.set('RadioButtonGroup', RadioButtonGroup);
+componentMap.set('ApiRadioGroup', ApiRadioGroup);
 
 export function add(compName: ComponentType, component: Component) {
   componentMap.set(compName, component);

@@ -1,9 +1,9 @@
 import { ref } from 'vue';
-// 每行個數
+// 每行个数
 export const grid = ref(12);
-// slider屬性
+// slider属性
 export const useSlider = (min = 6, max = 12) => {
-  // 每行顯示個數滑動條
+  // 每行显示个数滑动条
   const getMarks = () => {
     const l = {};
     for (let i = min; i < max + 1; i++) {

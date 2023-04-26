@@ -1,12 +1,33 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2023-02-08 02:03:21
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-02-27 11:42:40
+ */
 // Interface data format used to return a unified format
 import { ResultEnum } from '/@/enums/httpEnum';
+import { Guid } from 'js-guid';
 
-export function resultSuccess<T = Recordable>(result: T, { message = 'ok' } = {}) {
+// export function resultSuccess<T = Recordable>(result: T, { message = 'ok' } = {}) {
+//   return {
+//     code: ResultEnum.SUCCESS,
+//     result,
+//     message,
+//     type: 'success',
+//   };
+// }
+
+export function resultSuccess<T = Recordable>(results: T, { msg = 'ok' } = {}) {
   return {
+    trace_id: Guid.newGuid().toString(), // add by Telliex
+    total_pages: 1, // add by Telliex
+    current_page: 1, // add by Telliex
     code: ResultEnum.SUCCESS,
-    result,
-    message,
+    results,
+    msg, // add by Telliex
     type: 'success',
+    status: 1000, // add by Telliex
   };
 }
 
@@ -14,7 +35,7 @@ export function resultPageSuccess<T = any>(
   page: number,
   pageSize: number,
   list: T[],
-  { message = 'ok' } = {},
+  { msg = 'ok' } = {},
 ) {
   const pageData = pagination(page, pageSize, list);
 
@@ -23,18 +44,18 @@ export function resultPageSuccess<T = any>(
       items: pageData,
       total: list.length,
     }),
-    message,
+    msg,
   };
 }
 
 export function resultError(
-  message = 'Request failed',
-  { code = ResultEnum.ERROR, result = null } = {},
+  msg = 'Request failed',
+  { code = ResultEnum.ERROR, results = null } = {},
 ) {
   return {
     code,
-    result,
-    message,
+    results,
+    msg,
     type: 'error',
   };
 }
