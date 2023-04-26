@@ -1,9 +1,11 @@
 /*
  * @Description:
+
+
  * @Anthor: Telliex
  * @Date: 2023-02-08 02:03:09
  * @LastEditors: Telliex
- * @LastEditTime: 2023-03-16 05:39:08
+ * @LastEditTime: 2023-04-26 04:56:14
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useUserStore } from '/@/store/modules/user';
@@ -25,6 +27,7 @@ enum Api {
   GetParameterStoreFromAWS = '/get-parameter-store',
   GetBillCodeValue = '/get-billcode-list',
   GetDictionary = '/get-dict-value', // get dictionary
+  GetUserInfoListValue = '/get-download-url',
 }
 
 const version = '/v1.0';
@@ -93,6 +96,14 @@ export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
         'Time-Zone': timeZon,
       },
     },
+    {
+      apiUrl: '/elu-api',
+    },
+  );
+
+export const GetUserInfoList = (params: any) =>
+  defHttp.post(
+    { url: '/aws' + version + Api.GetUserInfoListValue, data: params },
     {
       apiUrl: '/elu-api',
     },

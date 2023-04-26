@@ -1,11 +1,10 @@
-<h1>ECV Dataplatform Admin</h1>
-</div>
+# ECV management Admin
 
-**English** | [中文](./README.zh-TW.md)
+**English** | [繁體](./README.zh-TW.md) | [简体](./README.zh-CN.md)
 
 ## Introduction
 
-ECV Dataplatform Admin is a data platform. Using the latest `vue3`, `vite2`, `TypeScript` and other mainstream technology development.
+ECV management Admin is a data platform. Using the latest `vue3`, `vite2`, `TypeScript` and other mainstream technology development. The CBMS & CRS use it.
 
 ## Feature
 
@@ -43,14 +42,23 @@ Test account: billing /123456
 - Get the project code
 
 ```bash
+// CBMS
+git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
+
+// CRS
 git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
+
 ```
 
 - Installation dependencies
 
 ```bash
-cd vue-vben-admin
+// CBMS
+cd billing-mgt-eterne
+yarn install
 
+// CRS
+cd data-platform-front-end
 yarn install
 
 ```
@@ -65,6 +73,13 @@ yarn serve
 
 ```bash
 yarn build
+```
+
+- push docker image
+
+```bash
+// dev | uat | vX.X.X.X
+bash entrypoint.sh dev
 ```
 
 ## Change Log

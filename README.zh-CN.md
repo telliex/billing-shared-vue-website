@@ -1,15 +1,10 @@
-<div align="center"> <a href="https://github.com/anncwb/vue-vben-admin"> <img alt="VbenAdmin Logo" width="200" height="200" src="https://anncwb.github.io/anncwb/images/logo.png"> </a> <br> <br>
+# ECV Dadaplatform Admin
 
-[![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
-
-<h1>Vue vben admin</h1>
-</div>
-
-**中文** | [English](./README.md)
+**简体** | [English](./README.md) | [繁體](./README.zh-TW.md)
 
 ## 简介
 
-Vue Vben Admin 是一个免费开源的中后台模版。使用了最新的`vue3`,`vite2`,`TypeScript`等主流技术开发，开箱即用的中后台前端解决方案，也可用于学习参考。
+ECV Dadaplatform Admin 是一个数据平台。使用了最新的`vue3`,`vite2`,`TypeScript`等主流技术开发。
 
 ## 特性
 
@@ -19,32 +14,17 @@ Vue Vben Admin 是一个免费开源的中后台模版。使用了最新的`vue3
 - **国际化**：内置完善的国际化方案
 - **Mock 数据** 内置 Mock 数据方案
 - **权限** 内置完善的动态路由权限生成方案
-- **组件** 二次封装了多个常用的组件
+- **组件** 二次封装常用的组件
 
 ## 预览
 
-- [vue-vben-admin](https://vvbin.cn/next/) - 完整版中文站点
-- [vue-vben-admin-gh-pages](https://anncwb.github.io/vue-vben-admin/) - 完整版 github 站点
-- [vben-admin-thin-next](https://vvbin.cn/thin/next/) - 简化版中文站点
-- [vben-admin-thin-gh-pages](https://anncwb.github.io/vben-admin-thin-next/) - 简化版 github 站点
+- [ECV-DataPlatform-admin](http://gather-demo.s3-website-us-west-2.amazonaws.com)
 
-测试账号: vben/123456
-
-<p align="center">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview1.png">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview2.png">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview3.png">
-</p>
-
-### 使用 Gitpod
-
-在 Gitpod（适用于 GitHub 的免费在线开发环境）中打开项目，并立即开始编码.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/anncwb/vue-vben-admin)
+测试帐号: billing/123456
 
 ## 文档
 
-[文档地址](https://vvbin.cn/doc-next/)
+[文档地址](https://ecv-atlas.atlassian.net/wiki/spaces/ActivoIntership/pages/1331593279/Gatherer)
 
 ## 准备
 
@@ -62,68 +42,50 @@ Vue Vben Admin 是一个免费开源的中后台模版。使用了最新的`vue3
 - 获取项目代码
 
 ```bash
-git clone https://github.com/anncwb/vue-vben-admin.git
+// CBMS
+git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
+
+// CRS
+git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
 ```
 
 - 安装依赖
 
 ```bash
-cd vue-vben-admin
+// CBMS
+cd billing-mgt-eterne
+yarn install
 
-pnpm install
+// CRS
+cd data-platform-front-end
+yarn install
 
 ```
 
 - 运行
 
 ```bash
-pnpm serve
+yarn serve
 ```
 
 - 打包
 
 ```bash
-pnpm build
+yarn build
+```
+
+- 推 docker image
+
+```bash
+// dev | uat | vX.X.X.X
+bash entrypoint.sh dev
 ```
 
 ## 更新日志
 
-[CHANGELOG](./CHANGELOG.zh_CN.md)
-
-## 项目地址
-
-- [vue-vben-admin](https://github.com/anncwb/vue-vben-admin) - 完整版
-- [vue-vben-admin-thin-next](https://github.com/anncwb/vben-admin-thin-next) - 简化版
+[CHANGELOG](./CHANGELOG.zh_TW.md)
 
 ## 如何贡献
-
-非常欢迎你的加入！[提一个 Issue](https://github.com/anncwb/vue-vben-admin/issues/new/choose) 或者提交一个 Pull Request。
-
-**Pull Request:**
-
-1. Fork 代码!
-2. 创建自己的分支: `git checkout -b feat/xxxx`
-3. 提交你的修改: `git commit -am 'feat(function): add xxxxx'`
-4. 推送您的分支: `git push origin feat/xxxx`
-5. 提交`pull request`
-
-## Git 贡献提交规范
-
-- 参考 [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) 规范 ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
-
-  - `feat` 增加新功能
-  - `fix` 修复问题/BUG
-  - `style` 代码风格相关无影响运行结果的
-  - `perf` 优化/性能提升
-  - `refactor` 重构
-  - `revert` 撤销修改
-  - `test` 测试相关
-  - `docs` 文档/注释
-  - `chore` 依赖更新/脚手架配置修改等
-  - `workflow` 工作流改进
-  - `ci` 持续集成
-  - `types` 类型定义文件更改
-  - `wip` 开发中
 
 ## 浏览器支持
 
@@ -137,8 +99,6 @@ pnpm build
 
 ## 相关仓库
 
-如果这些插件对你有帮助，可以给一个 star 支持下
-
 - [vite-plugin-mock](https://github.com/anncwb/vite-plugin-mock) - 用于本地及开发环境数据 mock
 - [vite-plugin-html](https://github.com/anncwb/vite-plugin-html) - 用于 html 模版转换及压缩
 - [vite-plugin-style-import](https://github.com/anncwb/vite-plugin-style-import) - 用于组件库样式按需引入
@@ -147,29 +107,8 @@ pnpm build
 - [vite-plugin-compression](https://github.com/anncwb/vite-plugin-compression) - 用于打包输出.gz|.brotil 文件
 - [vite-plugin-svg-icons](https://github.com/anncwb/vite-plugin-svg-icons) - 用于快速生成 svg 雪碧图
 
-## 后台整合示例
-
-- [lamp-cloud](https://github.com/zuihou/lamp-cloud) - 基于 SpringCloud Alibaba 的微服务中后台快速开发平台
-- [matecloud](https://github.com/matevip/matecloud) - MateCloud 微服务脚手架，基于 Spring Cloud 2020.0.3、SpringBoot 2.5.3 的全开源平台
-
 ## 维护者
-
-[@Vben](https://github.com/anncwb)
-
-## 捐赠
-
-如果你觉得这个项目对你有帮助，你可以帮作者买一杯咖啡表示支持!
-
-![donate](https://anncwb.github.io/anncwb/images/sponsor.png)
-
-<a style="display: block;width: 100px;height: 50px;line-height: 50px; color: #fff;text-align: center; background: #408aed;border-radius: 4px;" href="https://www.paypal.com/paypalme/cvvben">Paypal Me</a>
 
 ## 交流
 
-`Vue-vben-Admin` 是完全开源免费的项目，在帮助开发者更方便地进行中大型管理系统开发，同时也提供 QQ 交流群使用问题欢迎在群内提问。
-
-- QQ 群 `569291866`
-
 ## License
-
-[MIT © Vben-2020](./LICENSE)

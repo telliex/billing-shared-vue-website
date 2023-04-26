@@ -1,11 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-24 07:02:18
- */
-
 export default {
   labelChangeTime: 'Last Updated Time',
   labelChangeMaster: 'Last User To Update',

@@ -1,7 +1,6 @@
-<h1>ECV Dadaplatform Admin</h1>
-</div>
+# ECV Dadaplatform Admin
 
-**中文** | [English](./README.md)
+**繁體** | [English](./README.md) | [简体](./README.zh-CN.md)
 
 ## 簡介
 
@@ -43,14 +42,22 @@ ECV Dadaplatform Admin 是一個數據平臺。使用了最新的`vue3`,`vite2`,
 - 獲取項目代碼
 
 ```bash
+// CBMS
+git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
+
+// CRS
 git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
 ```
 
 - 安裝依賴
 
 ```bash
-cd data-platform-front-end
+// CBMS
+cd billing-mgt-eterne
+yarn install
 
+// CRS
+cd data-platform-front-end
 yarn install
 
 ```
@@ -65,6 +72,13 @@ yarn serve
 
 ```bash
 yarn build
+```
+
+- 推 docker image
+
+```bash
+// dev | uat | vX.X.X.X
+bash entrypoint.sh dev
 ```
 
 ## 更新日志

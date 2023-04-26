@@ -90,14 +90,21 @@
 
   import LoginFormTitle from './LoginFormTitle.vue';
 
+  import axios from 'axios';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
-
+  import { Guid } from 'js-guid';
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
 
-  //import { onKeyStroke } from '@vueuse/core';
+  // this imports a bare-bones version of S3 that exposes the .send operation
+  // import { S3, S3Client, AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
+
+  // this imports just the getObject operation from S3
+  // import { GetObjectCommand } from '@aws-sdk/client-s3';
+
+  import { GetUserInfoList } from '/@/api/sys/system';
 
   const ACol = Col;
   const ARow = Row;
@@ -122,6 +129,7 @@
     password: '',
   });
 
+  let userList: any[] = reactive([]);
   // const options = reactive([
   //   {
   //     label: 'ECV',
@@ -201,9 +209,9 @@
       loading.value = false;
     }
   }
-  onMounted(() => {
+  onMounted(async () => {
     console.log('elu:', import.meta.env.VITE_GLOB_ELU_API_URL);
-    console.log('contract:', import.meta.env.VITE_GLOB_CONTRACT_API_URL);
+    console.log('contract:', import.meta.env.VITE_GLOB_REPORT_API_URL);
     // http://localhost:5151/?user=admin/#/login?redirect=/home
     console.log('window.location.pathname:', window.location.pathname);
     console.log('window.location.search:', window.location.search);
@@ -213,32 +221,64 @@
       'document.referrer:',
       document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''),
     );
+
     if (window.location.search) {
       try {
         let parameterList = window.location.search.slice(1).split('&');
-        let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
+        console.log(parameterList[0].split('=')[1]);
+        // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
+        let userId = parameterList[0].split('=')[1] || null;
 
         console.log('userId:', userId);
 
+        // 0. admin user 校驗
         if (userId === 'admin') {
           formData.account = 'billing';
           formData.password = '123456';
         } else {
+          let userListURL = await GetUserInfoList({
+            trace_id: Guid.newGuid().toString(),
+            bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
+            bucket_name: import.meta.env.VITE_GLOB_S3_JSON,
+            object_key: 'user.json',
+            duration: '10',
+          });
+
+          console.log('99999');
+          console.log(userListURL);
+
+          if (userListURL) {
+            userList = [];
+            let temp = await axios.get(userListURL);
+            userList = [...temp.data];
+          }
+
+          console.log('JSON UserList');
+          console.log(userList);
+
+          let checkUser = userList.find((item) => item.userId === userId?.toString());
+
+          // 1.校驗使用者
+          if (!checkUser) {
+            return createMessage.error('Incorrect account or password！');
+          }
+
           redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
           console.log('redirectUrl:', redirectUrl);
 
+          // 2.跳轉校驗
           if (
             document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
             fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
           ) {
-            createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
-            setTimeout(() => {
-              window.location.href = document.referrer;
-            }, 50000);
+            createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
+            // setTimeout(() => {
+            //   window.location.href = document.referrer;
+            // }, 50000);
             return;
           }
 
-          // http://localhost:3100/?user=157&url=/eterne/contract_list&role=op
+          // 3.登入 password give
           if (userId && redirectUrl) {
             formData.account = userId;
             formData.password = '123456';
@@ -249,15 +289,15 @@
         }
       } catch (e) {
         createMessage.error('redirect 錯誤，請重新登入 MGT 平台 !!');
-        setTimeout(() => {
-          window.location.href = fromURL;
-        }, 5000);
+        // setTimeout(() => {
+        //   window.location.href = fromURL;
+        // }, 5000);
       }
     } else {
-      createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
-      setTimeout(() => {
-        window.location.href = fromURL;
-      }, 5000);
+      createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!!');
+      // setTimeout(() => {
+      //   window.location.href = fromURL;
+      // }, 5000);
     }
   });
 </script>

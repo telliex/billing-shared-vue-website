@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-11-14 06:35:00
  * @LastEditors: Telliex
- * @LastEditTime: 2023-03-07 09:54:28
+ * @LastEditTime: 2023-04-26 06:06:07
  */
 import type { AppRouteModule } from '/@/router/types';
 import { RoleEnum } from '/@/enums/roleEnum';
@@ -72,7 +72,7 @@ const iframe: AppRouteModule[] = [
       orderNo: 1004,
       icon: 'ion:disc-outline',
       title: t('routes.demo.mgt.billContract'),
-      hideMenu: false,
+      hideMenu: true,
       hideChildrenInMenu: true,
     },
     children: [

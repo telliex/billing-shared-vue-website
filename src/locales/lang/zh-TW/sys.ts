@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-10-03 02:49:24
  * @LastEditors: Telliex
- * @LastEditTime: 2023-03-25 06:56:42
+ * @LastEditTime: 2023-04-26 05:36:28
  */
 export default {
   api: {
@@ -72,7 +72,7 @@ export default {
     signUpFormTitle: '注冊',
     forgetFormTitle: '重置密碼',
 
-    signInTitle: '雲端帳務管理系統',
+    signInTitle: '雲端報表管理系統',
     signInDesc: '登入開始使用！',
     policy: '我同意xxx隱私政策',
     scanSign: `掃碼後點擊"確認"，即可完成登錄`,

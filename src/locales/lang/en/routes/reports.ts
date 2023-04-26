@@ -1,7 +1,7 @@
 export default {
   report: 'Report',
-  report1: 'Report1',
-  report2: 'Report2',
+  report1: 'POWER BI- powerbi-client-vue-js',
+  report2: 'POWER BI-powerbi-client',
   report3: 'Report3',
   report4: 'Report4',
   report5: 'Report5',
