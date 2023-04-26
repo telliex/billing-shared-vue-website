@@ -1,10 +1,10 @@
 {
-  "name": "billing-mgt-eterne",
-  "version": "1.0.0.4",
+  "name": "billing-dataplatform",
+  "version": "1.0.0.0",
   "author": {
-    "name": "eterne",
+    "name": "gatherer",
     "email": "telliex.chiu@ecloudvalley.com",
-    "url": "https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne"
+    "url": "https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-data-platform-front-end"
   },
   "scripts": {
     "commit": "czg",

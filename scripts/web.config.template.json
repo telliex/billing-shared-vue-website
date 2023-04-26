@@ -24,6 +24,7 @@
       "API_MGT_TAX": "/{{ENV}}/Billing/API/tax",
       "API_MGT_ELU": "/{{ENV}}/Billing/API/elu",
       "API_MGT_CONTRACT": "/{{ENV}}/Billing/API/contract",
+      "API_MGT_REPORT": "/{{ENV}}/Billing/API/report",
       "SES_Ecloudrover_SENDER": "/{{ENV}}/Billing/SES/Ecloudrover/sender",
       "SES_Ecloudrover_HOST": "/{{ENV}}/Billing/SES/Ecloudrover/host",
       "SES_Ecloudrover_USER_NAME": "/{{ENV}}/Billing/SES/Ecloudrover/user",
@@ -46,6 +47,7 @@
       "COMPANY": "/{{ENV}}/Billing/Company",
       "NEW_MGT": "/{{ENV}}/Billing/WebSite/mbs/domain",
       "OLD_MGT":"/{{ENV}}/Billing/WebSite/mgt/domain",
-      "DATAPLATFORM": "/{{ENV}}/Billing/WebSite/dataplatform"
+      "DATAPLATFORM": "/{{ENV}}/Billing/WebSite/dataplatform/domain",
+      "CBMS": "/{{ENV}}/Billing/WebSite/cbms/domain"
   }
 }
