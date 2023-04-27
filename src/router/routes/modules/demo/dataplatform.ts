@@ -11,7 +11,7 @@ import { LAYOUT } from '/@/router/constant';
 const IFrame = () => import('/@/views/sys/iframe/FrameBlank.vue');
 // import { t } from '/@/hooks/web/useI18n';
 
-const host = import.meta.env.VITE_GLOB_DATAPLATFORM_URL;
+const host = import.meta.env.VITE_GLOB_CRS_URL;
 //const host = 'http://localhost:4141/';
 const targetObj = [
   {

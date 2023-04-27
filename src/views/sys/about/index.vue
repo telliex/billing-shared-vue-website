@@ -3,13 +3,13 @@
  * @Anthor: Telliex
  * @Date: 2023-03-16 16:11:53
  * @LastEditors: Telliex
- * @LastEditTime: 2023-03-16 16:22:22
+ * @LastEditTime: 2023-04-26 23:04:17
 -->
 <template>
   <PageWrapper title="關於">
     <template #headerContent>
       <div class="flex justify-between items-center">
-        <span class="flex-1"> New MGT 是基於......的平台。 </span>
+        <span class="flex-1"> CRS 是基於......的平台。 </span>
       </div>
     </template>
     <Description @register="infoRegister" class="enter-y" />
