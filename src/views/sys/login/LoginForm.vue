@@ -224,12 +224,13 @@
 
     if (window.location.search) {
       try {
-        let parameterList = window.location.search.slice(1).split('&');
+        let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
         console.log(parameterList[0].split('=')[1]);
         // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
         let userId = parameterList[0].split('=')[1] || null;
-
+        let queryData = parameterList[1].split('=')[1] || null;
         console.log('userId:', userId);
+        console.log('data:', queryData);
 
         // 0. admin user 校驗
         if (userId === 'admin') {
@@ -251,10 +252,9 @@
             userList = [];
             let temp = await axios.get(userListURL);
             userList = [...temp.data];
+            console.log('JSON UserList');
+            console.log(userList);
           }
-
-          console.log('JSON UserList');
-          console.log(userList);
 
           let checkUser = userList.find((item) => item.userId === userId?.toString());
 
@@ -262,6 +262,7 @@
           if (!checkUser) {
             return createMessage.error('Incorrect account or password！');
           }
+          console.log('User Login Pass !!');
 
           redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
           console.log('redirectUrl:', redirectUrl);
