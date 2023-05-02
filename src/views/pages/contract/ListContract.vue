@@ -49,7 +49,7 @@
               {
                 label: t('contract.btnTerminatedContract'),
                 icon: 'grommet-icons:clear',
-                tooltip: '查看用户詳情',
+                tooltip: '查看用戶詳情',
                 onClick: handleTableActionStop.bind(null, record),
                 disabled: record.status === '0' || record.status === '4',
               },
@@ -298,18 +298,18 @@
         },
         rowKey: 'id',
         fetchSetting: {
-          // 传给后台的当前页字段
+          // 傳給後台的當前頁字段
           pageField: 'page',
-          // 传给后台的每页显示多少条的字段
+          // 傳給後台的每頁顯示多少條的字段
           sizeField: 'page_Size',
-          // 接口返回表格数据的字段
+          // 接口返回表格數據的字段
           listField: 'items',
-          // 接口返回表格总数的字段
+          // 接口返回表格總數的字段
           totalField: 'total',
         },
         columns: getBasicColumns(),
         formConfig: {
-          // 表单配置
+          // 表單配置
           schemas: filterSchemas,
           showAdvancedButton: false, // 展開按鈕
           autoFocusFirstItem: true,
@@ -361,7 +361,7 @@
         immediate: false,
         canResize: false,
         expandRowByClick: true,
-        useSearchForm: true, // 使用搜索表单
+        useSearchForm: true, // 使用搜索表單
         showTableSetting: false, // show the table setting
         bordered: true,
         showIndexColumn: false,

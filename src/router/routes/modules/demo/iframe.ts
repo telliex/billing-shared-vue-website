@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-12-06 01:27:46
- */
 import type { AppRouteModule } from '/@/router/types';
 
 import { LAYOUT } from '/@/router/constant';
@@ -17,7 +10,6 @@ const iframe: AppRouteModule = {
   component: LAYOUT,
   redirect: '/frame/doc',
   meta: {
-    hideMenu: true,
     orderNo: 1000,
     icon: 'ion:tv-outline',
     title: t('routes.demo.iframe.frame'),
@@ -29,7 +21,7 @@ const iframe: AppRouteModule = {
       name: 'Doc',
       component: IFrame,
       meta: {
-        frameSrc: 'https://vvbin.cn/doc-next/',
+        frameSrc: 'https://doc.vvbin.cn/',
         title: t('routes.demo.iframe.doc'),
       },
     },
@@ -38,12 +30,12 @@ const iframe: AppRouteModule = {
       name: 'Antv',
       component: IFrame,
       meta: {
-        frameSrc: 'http://localhost:3131/',
+        frameSrc: 'https://www.antdv.com/docs/vue/introduce-cn/',
         title: t('routes.demo.iframe.antv'),
       },
     },
     {
-      path: 'http://localhost:3131/bill_cdn_new.php',
+      path: 'https://doc.vvbin.cn/',
       name: 'DocExternal',
       component: IFrame,
       meta: {

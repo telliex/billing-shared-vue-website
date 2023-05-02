@@ -1,12 +1,5 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-09-30 08:02:54
- * @LastEditors: Telliex
- * @LastEditTime: 2022-12-20 02:52:03
- */
 import type { AppRouteModule } from '/@/router/types';
-import { RoleEnum } from '/@/enums/roleEnum';
+
 import { LAYOUT } from '/@/router/constant';
 import { t } from '/@/hooks/web/useI18n';
 
@@ -16,10 +9,9 @@ const system: AppRouteModule = {
   component: LAYOUT,
   redirect: '/system/account',
   meta: {
-    orderNo: 80,
+    orderNo: 2000,
     icon: 'ion:settings-outline',
     title: t('routes.demo.system.moduleName'),
-    roles: [RoleEnum.SUPER],
   },
   children: [
     {
@@ -35,6 +27,7 @@ const system: AppRouteModule = {
       path: 'account_detail/:id',
       name: 'AccountDetail',
       meta: {
+        hideMenu: true,
         title: t('routes.demo.system.account_detail'),
         ignoreKeepAlive: true,
         showMenu: false,

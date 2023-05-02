@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper title="圖片裁剪示例" content="需要開啓測試接口服務才能進行上傳測試！">
+  <PageWrapper title="圖片裁剪示例" content="需要開啟測試接口服務才能進行上傳測試！">
     <CollapseContainer title="頭像裁剪">
       <CropperAvatar :uploadApi="uploadApi" :value="avatar" />
     </CollapseContainer>

@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:46:36
--->
 <template>
   <PageWrapper title="基礎詳情頁" contentBackground>
     <Description
@@ -18,7 +11,7 @@
     <a-divider />
     <Description
       size="middle"
-      title="用户信息"
+      title="用戶信息"
       :bordered="false"
       :column="3"
       :data="personData"

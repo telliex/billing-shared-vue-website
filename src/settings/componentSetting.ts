@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2023-03-06 08:31:15
- * @LastEditors: Telliex
- * @LastEditTime: 2023-03-08 13:18:10
- */
 // Used to configure the general configuration of some components without modifying the components
 
 import type { SorterResult } from '../components/Table';
@@ -47,6 +40,52 @@ export default {
     // Custom general filter function
     defaultFilterFn: (data: Partial<Recordable<string[]>>) => {
       return data;
+    },
+  },
+  vxeTable: {
+    table: {
+      border: true,
+      stripe: true,
+      columnConfig: {
+        resizable: true,
+        isCurrent: true,
+        isHover: true,
+      },
+      rowConfig: {
+        isCurrent: true,
+        isHover: true,
+      },
+      emptyRender: {
+        name: 'AEmpty',
+      },
+      printConfig: {},
+      exportConfig: {},
+      customConfig: {
+        storage: true,
+      },
+    },
+    grid: {
+      toolbarConfig: {
+        enabled: true,
+        export: true,
+        zoom: true,
+        print: true,
+        refresh: true,
+        custom: true,
+      },
+      pagerConfig: {
+        pageSizes: [20, 50, 100, 500],
+        pageSize: 20,
+        autoHidden: true,
+      },
+      proxyConfig: {
+        form: true,
+        props: {
+          result: 'items',
+          total: 'total',
+        },
+      },
+      zoomConfig: {},
     },
   },
   // scrollbar setting

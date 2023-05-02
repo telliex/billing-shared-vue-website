@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:45:07
--->
 <template>
   <List :class="prefixCls">
     <a-row :gutter="16">

@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper contentBackground title="按鈕權限控製" contentClass="p-4">
+  <PageWrapper contentBackground title="按鈕權限控制" contentClass="p-4">
     <CurrentPermissionMode />
     <p>
       當前擁有的code列表: <a> {{ permissionStore.getPermCodeList }} </a>
@@ -13,10 +13,10 @@
     />
     <Divider />
     <a-button type="primary" class="mr-2" @click="switchToken(2)" :disabled="!isBackPermissionMode">
-      點擊切換按鈕權限(用户id為2)
+      點擊切換按鈕權限(用戶id為2)
     </a-button>
     <a-button type="primary" @click="switchToken(1)" :disabled="!isBackPermissionMode">
-      點擊切換按鈕權限(用户id為1,默認)
+      點擊切換按鈕權限(用戶id為1,默認)
     </a-button>
 
     <template v-if="isBackPermissionMode">
@@ -82,11 +82,11 @@
       );
 
       async function switchToken(userId: number) {
-        // 本函數切換用户登錄Token的部分僅用於演示，實際生產時切換身份應當重新登錄
+        // 本函數切換用戶登錄Token的部分僅用於演示，實際生產時切換身份應當重新登錄
         const token = 'fakeToken' + userId;
         userStore.setToken(token);
 
-        // 重新獲取用户信息和菜單
+        // 重新獲取用戶信息和菜單
         userStore.getUserInfoAction();
         permissionStore.changePermissionCode();
       }

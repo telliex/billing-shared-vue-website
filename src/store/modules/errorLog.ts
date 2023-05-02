@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:34:10
- */
 import type { ErrorLogInfo } from '/#/store';
 
 import { defineStore } from 'pinia';
@@ -27,11 +20,11 @@ export const useErrorLogStore = defineStore({
     errorLogListCount: 0,
   }),
   getters: {
-    getErrorLogInfoList(): ErrorLogInfo[] {
-      return this.errorLogInfoList || [];
+    getErrorLogInfoList(state): ErrorLogInfo[] {
+      return state.errorLogInfoList || [];
     },
-    getErrorLogListCount(): number {
-      return this.errorLogListCount;
+    getErrorLogListCount(state): number {
+      return state.errorLogListCount;
     },
   },
   actions: {

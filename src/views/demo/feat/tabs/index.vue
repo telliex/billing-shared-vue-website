@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:39:42
--->
 <template>
   <PageWrapper title="標籤頁操作示例">
     <CollapseContainer title="在下面輸入框輸入文本,切換後回來內容會保存">
@@ -24,7 +17,7 @@
       <a-button class="mr-2" @click="refreshPage"> 刷新當前 </a-button>
     </CollapseContainer>
 
-    <CollapseContainer class="mt-4" title="標籤頁複用超出限制自動關閉(使用場景: 動態路由)">
+    <CollapseContainer class="mt-4" title="標籤頁復用超出限制自動關閉(使用場景: 動態路由)">
       <a-button v-for="index in 6" :key="index" class="mr-2" @click="toDetail(index)">
         打開{{ index }}詳情頁
       </a-button>

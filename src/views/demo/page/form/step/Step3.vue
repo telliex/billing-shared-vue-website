@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:48:33
--->
 <template>
   <div class="step3">
     <a-result status="success" title="操作成功" sub-title="預計兩小時內到賬">
@@ -15,9 +8,9 @@
     </a-result>
     <div class="desc-wrap">
       <a-descriptions :column="1" class="mt-5">
-        <a-descriptions-item label="付款賬户"> ant-design@alipay.com </a-descriptions-item>
-        <a-descriptions-item label="收款賬户"> test@example.com </a-descriptions-item>
-        <a-descriptions-item label="收款人姓名"> ECV </a-descriptions-item>
+        <a-descriptions-item label="付款賬戶"> ant-design@alipay.com </a-descriptions-item>
+        <a-descriptions-item label="收款賬戶"> test@example.com </a-descriptions-item>
+        <a-descriptions-item label="收款人姓名"> Vben </a-descriptions-item>
         <a-descriptions-item label="轉賬金額"> 500元 </a-descriptions-item>
       </a-descriptions>
     </div>

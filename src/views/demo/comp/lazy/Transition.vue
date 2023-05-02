@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:30:28
--->
 <template>
   <PageWrapper title="懶加載自定義動畫示例" content="懶加載組件顯示動畫">
     <div class="lazy-base-demo-wrap">

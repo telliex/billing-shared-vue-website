@@ -68,13 +68,13 @@
       "properties": {
         "a": "efrwe",
         "b": "wewe",
-        "name": "用户",
+        "name": "用戶",
         "x": 420,
         "y": 200,
         "text": {
           "x": 420,
           "y": 200,
-          "value": "用户"
+          "value": "用戶"
         },
         "logicFlowType": "bpmn:userTask"
       },

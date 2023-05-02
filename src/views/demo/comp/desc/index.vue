@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:28:52
--->
 <template>
   <PageWrapper title="詳情組件示例">
     <Description
@@ -48,7 +41,7 @@
   const schema: DescItem[] = [
     {
       field: 'username',
-      label: '用户名',
+      label: '用戶名',
     },
     {
       field: 'nickName',

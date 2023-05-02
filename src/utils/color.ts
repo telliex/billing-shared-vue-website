@@ -1,20 +1,20 @@
 /**
- * 判斷是否 十六進制顏色值.
- * 輸入形式可為 #fff000 #f00
+ * 判断是否 十六进制颜色值.
+ * 输入形式可为 #fff000 #f00
  *
- * @param   String  color   十六進制顏色值
+ * @param   String  color   十六进制颜色值
  * @return  Boolean
  */
 export function isHexColor(color: string) {
-  const reg = /^#([0-9a-fA-F]{3}|[0-9a-fA-f]{6})$/;
+  const reg = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
   return reg.test(color);
 }
 
 /**
- * RGB 顏色值轉換為 十六進制顏色值.
- * r, g, 和 b 需要在 [0, 255] 範圍內
+ * RGB 颜色值转换为 十六进制颜色值.
+ * r, g, 和 b 需要在 [0, 255] 范围内
  *
- * @return  String          類似#ff00ff
+ * @return  String          类似#ff00ff
  * @param r
  * @param g
  * @param b

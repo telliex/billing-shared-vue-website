@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-11-14 06:35:00
  * @LastEditors: Telliex
- * @LastEditTime: 2023-02-16 05:45:11
+ * @LastEditTime: 2023-05-02 02:10:47
 -->
 <template>
   <Card title="最新消息" v-bind="$attrs">

@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:47:29
--->
 <template>
   <PageWrapper
     class="high-form"
@@ -17,7 +10,7 @@
     <a-card title="任務管理" :bordered="false" class="!mt-5">
       <BasicForm @register="registerTask" />
     </a-card>
-    <a-card title="成員管理" :bordered="false">
+    <a-card title="成員管理" :bordered="false" class="!mt-5">
       <PersonTable ref="tableRef" />
     </a-card>
 

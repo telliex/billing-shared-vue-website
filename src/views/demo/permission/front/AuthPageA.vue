@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-09-30 08:02:53
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:50:14
--->
 <template>
   <div class="m-10 auth-page">Super 角色可見</div>
 </template>

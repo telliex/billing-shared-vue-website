@@ -39,7 +39,7 @@ export const refundSchema: DescItem[] = [
 export const personSchema: DescItem[] = [
   {
     field: 'b1',
-    label: '用户姓名',
+    label: '用戶姓名',
   },
   {
     field: 'b2',
@@ -167,7 +167,7 @@ export const refundTableData: any[] = [
 export const refundTimeTableData: any[] = [
   {
     t1: '2017-10-01 14:10',
-    t2: '聯繫客户',
+    t2: '聯繫客戶',
     t3: '進行中',
     t4: '取貨員 ID1234',
     t5: '5mins',
@@ -190,7 +190,7 @@ export const refundTimeTableData: any[] = [
     t1: '2017-10-01 14:10',
     t2: '申請審批通過',
     t3: '成功',
-    t4: '用户',
+    t4: '用戶',
     t5: '1h',
   },
 ];

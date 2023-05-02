@@ -6,7 +6,7 @@ import { Icon } from '/@/components/Icon';
 
 export const columns: BasicColumn[] = [
   {
-    title: '選單名稱',
+    title: '菜單名稱',
     dataIndex: 'menuName',
     width: 200,
     align: 'left',
@@ -59,7 +59,7 @@ const isButton = (type: string) => type === '2';
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'menuName',
-    label: '選單名稱',
+    label: '菜單名稱',
     component: 'Input',
     colProps: { span: 8 },
   },
@@ -80,13 +80,13 @@ export const searchFormSchema: FormSchema[] = [
 export const formSchema: FormSchema[] = [
   {
     field: 'type',
-    label: '選單類型',
+    label: '菜單類型',
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
       options: [
         { label: '目錄', value: '0' },
-        { label: '選單', value: '1' },
+        { label: '菜單', value: '1' },
         { label: '按鈕', value: '2' },
       ],
     },
@@ -94,14 +94,14 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'menuName',
-    label: '選單名稱',
+    label: '菜單名稱',
     component: 'Input',
     required: true,
   },
 
   {
     field: 'parentMenu',
-    label: '上級選單',
+    label: '上級菜單',
     component: 'TreeSelect',
     componentProps: {
       fieldNames: {

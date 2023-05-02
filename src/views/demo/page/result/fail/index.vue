@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:49:41
--->
 <template>
   <div class="m-5 result-error">
     <Result status="error" title="提交失敗" sub-title="請核對並修改以下信息後，再重新提交。">
@@ -16,12 +9,12 @@
       <div class="result-error__content-title">您提交的內容有如下錯誤：</div>
       <div class="mb-4">
         <CloseCircleOutlined class="mr-2 result-error__content-icon" />
-        您的賬户已被凍結
+        您的賬戶已被凍結
         <a class="ml-4">立即解凍 ></a>
       </div>
       <div class="mb-4">
         <CloseCircleOutlined class="mr-2 result-error__content-icon" />
-        您的賬户還不具備申請資格
+        您的賬戶還不具備申請資格
         <a class="ml-4">立即解凍 ></a>
       </div>
     </div>

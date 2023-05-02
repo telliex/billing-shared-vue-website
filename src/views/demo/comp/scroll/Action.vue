@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:31:53
--->
 <template>
   <PageWrapper title="滾動組件函數示例" content="基於el-scrollbar">
     <div class="my-4">

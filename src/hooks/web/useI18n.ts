@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:28:22
- */
 import { i18n } from '/@/locales/setupI18n';
 
 type I18nGlobalTranslation = {
@@ -57,6 +50,6 @@ export function useI18n(namespace?: string): {
 // Why write this function？
 // Mainly to configure the vscode i18nn ally plugin. This function is only used for routing and menus. Please use useI18n for other places
 
-// 為什麼要編寫此函數？
-// 主要用於配合vscode i18nn ally插件。此功能僅用於路由和菜單。請在其他地方使用useI18n
+// 为什么要编写此函数？
+// 主要用于配合vscode i18nn ally插件。此功能仅用于路由和菜单。请在其他地方使用useI18n
 export const t = (key: string) => key;

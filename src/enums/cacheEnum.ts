@@ -1,17 +1,7 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-12-26 03:40:25
- */
 // token key
 export const TOKEN_KEY = 'TOKEN__';
 
 export const LOCALE_KEY = 'LOCALE__';
-
-// user company key
-export const COMPANY_KEY = 'COMPANY__';
 
 // user info key
 export const USER_INFO_KEY = 'USER__INFO__';

@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:29:41
--->
 <template>
   <PageWrapper title="抽屜組件使用示例">
     <Alert message="使用 useDrawer 進行抽屜操作" show-icon />

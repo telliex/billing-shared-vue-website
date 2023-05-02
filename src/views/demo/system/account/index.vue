@@ -1,16 +1,9 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:51:28
--->
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增帳號</a-button>
+        <a-button type="primary" @click="handleCreate">新增賬號</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -18,18 +11,18 @@
             :actions="[
               {
                 icon: 'clarity:info-standard-line',
-                tooltip: '查看用户詳情',
+                tooltip: '查看用戶詳情',
                 onClick: handleView.bind(null, record),
               },
               {
                 icon: 'clarity:note-edit-line',
-                tooltip: '編輯用户資料',
+                tooltip: '編輯用戶資料',
                 onClick: handleEdit.bind(null, record),
               },
               {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
-                tooltip: '刪除此帳號',
+                tooltip: '刪除此賬號',
                 popConfirm: {
                   title: '是否確認刪除',
                   placement: 'left',
@@ -66,7 +59,7 @@
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
-        title: '帳號列表',
+        title: '賬號列表',
         api: getAccountList,
         rowKey: 'id',
         columns,
@@ -111,7 +104,7 @@
       function handleSuccess({ isUpdate, values }) {
         if (isUpdate) {
           // 演示不刷新表格直接更新內部數據。
-          // 註意：updateTableDataRecord要求表格的rowKey屬性為string並且存在於每一行的record的keys中
+          // 注意：updateTableDataRecord要求表格的rowKey屬性為string並且存在於每一行的record的keys中
           const result = updateTableDataRecord(values.id, values);
           console.log(result);
         } else {

@@ -1,6 +1,6 @@
 import { ThemeEnum } from '../enums/appEnum';
 
-export const prefixCls = 'gather';
+export const prefixCls = 'vben';
 
 export const darkMode = ThemeEnum.LIGHT;
 
@@ -28,13 +28,13 @@ export const HEADER_PRESET_BG_COLOR_LIST: string[] = [
   '#e74c3c',
   '#24292e',
   '#394664',
-  '#2C3333',
+  '#001529',
   '#383f45',
 ];
 
 // sider preset color
 export const SIDE_BAR_BG_COLOR_LIST: string[] = [
-  '#2C3333',
+  '#001529',
   '#212121',
   '#273352',
   '#ffffff',

@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:46:45
- */
 import { BasicColumn } from '/@/components/Table/src/types/table';
 
 import { Badge } from 'ant-design-vue';
@@ -43,7 +36,7 @@ export const refundTimeTableSchema: BasicColumn[] = [
 export const refundTimeTableData: any[] = [
   {
     t1: '2017-10-01 14:10',
-    t2: '聯繫客户',
+    t2: '聯繫客戶',
     t3: '進行中',
     t4: '取貨員 ID1234',
     t5: '5mins',
@@ -66,7 +59,7 @@ export const refundTimeTableData: any[] = [
     t1: '2017-10-01 14:10',
     t2: '申請審批通過',
     t3: '成功',
-    t4: '用户',
+    t4: '用戶',
     t5: '1h',
   },
 ];

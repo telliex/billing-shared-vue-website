@@ -1,4 +1,4 @@
-// axios配置  可自行根據項目進行更改，只需更改該文件即可，其他文件可以不動
+// axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
 // The axios configuration can be changed according to the project, just change the file, other files can be left unchanged
 
 import type { AxiosResponse } from 'axios';
@@ -10,7 +10,7 @@ import { checkStatus } from './checkStatus';
 import { useGlobSetting } from '/@/hooks/setting';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum';
-import { isString } from '/@/utils/is';
+import { isString, isUnDef, isNull, isEmpty } from '/@/utils/is';
 import { getToken } from '/@/utils/auth';
 import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
@@ -18,49 +18,60 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
 import { useUserStoreWithOut } from '/@/store/modules/user';
 import { AxiosRetry } from '/@/utils/http/axios/axiosRetry';
+import axios from 'axios';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
-const { createMessage, createErrorModal } = useMessage();
+const { createMessage, createErrorModal, createSuccessModal } = useMessage();
 
 /**
- * @description: 數據處理，方便區分多種處理方式
+ * @description: 数据处理，方便区分多种处理方式
  */
 const transform: AxiosTransform = {
   /**
-   * @description: 處理響應數據。如果數據不是預期格式，可直接拋出錯誤
+   * @description: 处理响应数据。如果数据不是预期格式，可直接抛出错误
    */
   transformResponseHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const { t } = useI18n();
     const { isTransformResponse, isReturnNativeResponse } = options;
-    // 是否返回原生響應頭 比如：需要獲取響應頭時使用該屬性
+    // 是否返回原生响应头 比如：需要获取响应头时使用该属性
     if (isReturnNativeResponse) {
       return res;
     }
-    // 不進行任何處理，直接返回
-    // 用於頁面代碼可能需要直接獲取code，data，message這些信息時開啓
+    // 不进行任何处理，直接返回
+    // 用于页面代码可能需要直接获取code，data，message这些信息时开启
     if (!isTransformResponse) {
       return res.data;
     }
-    // 錯誤的時候返回
+    // 错误的时候返回
 
     const { data } = res;
     if (!data) {
       // return '[HTTP] Request has no return value';
       throw new Error(t('sys.api.apiRequestFailed'));
     }
-    //  這裏 code，result，message為 後台統一的字段，需要在 types.ts內修改為項目自己的接口返回格式
-    const { code, results, msg, status } = data;
+    //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+    const { code, result, message } = data;
 
-    // 這裏邏輯可以根據項目進行修改
-    // const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
-    const hasSuccess = data && Reflect.has(data, 'status') && (status === 1000 || status === 1001);
+    // 这里逻辑可以根据项目进行修改
+    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
     if (hasSuccess) {
-      return results;
+      let successMsg = message;
+
+      if (isNull(successMsg) || isUnDef(successMsg) || isEmpty(successMsg)) {
+        successMsg = t(`sys.api.operationSuccess`);
+      }
+
+      if (options.successMessageMode === 'modal') {
+        createSuccessModal({ title: t('sys.api.successTip'), content: successMsg });
+      } else if (options.successMessageMode === 'message') {
+        createMessage.success(successMsg);
+      }
+      return result;
     }
 
-    // 在此處根據自己項目的實際情況對不同的code執行不同的操作
-    // 如果不希望中斷當前請求，請return數據，否則直接拋出異常即可
+    // 在此处根据自己项目的实际情况对不同的code执行不同的操作
+    // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
     let timeoutMsg = '';
     switch (code) {
       case ResultEnum.TIMEOUT:
@@ -70,13 +81,13 @@ const transform: AxiosTransform = {
         userStore.logout(true);
         break;
       default:
-        if (msg) {
-          timeoutMsg = msg;
+        if (message) {
+          timeoutMsg = message;
         }
     }
 
-    // errorMessageMode=‘modal’的時候會顯示modal錯誤彈窗，而不是消息提示，用於一些比較重要的錯誤
-    // errorMessageMode='none' 一般是調用時明確表示不希望自動彈出錯誤提示
+    // errorMessageMode='modal'的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
+    // errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
     if (options.errorMessageMode === 'modal') {
       createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
     } else if (options.errorMessageMode === 'message') {
@@ -86,7 +97,7 @@ const transform: AxiosTransform = {
     throw new Error(timeoutMsg || t('sys.api.apiRequestFailed'));
   },
 
-  // 請求之前處理config
+  // 请求之前处理config
   beforeRequestHook: (config, options) => {
     const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true, urlPrefix } = options;
 
@@ -102,10 +113,10 @@ const transform: AxiosTransform = {
     formatDate && data && !isString(data) && formatRequestDate(data);
     if (config.method?.toUpperCase() === RequestEnum.GET) {
       if (!isString(params)) {
-        // 給 get 請求加上時間戳參數，避免從緩存中拿數據。
+        // 给 get 请求加上时间戳参数，避免从缓存中拿数据。
         config.params = Object.assign(params || {}, joinTimestamp(joinTime, false));
       } else {
-        // 兼容restful風格
+        // 兼容restful风格
         config.url = config.url + params + `${joinTimestamp(joinTime, true)}`;
         config.params = undefined;
       }
@@ -120,7 +131,7 @@ const transform: AxiosTransform = {
           config.data = data;
           config.params = params;
         } else {
-          // 非GET請求如果沒有提供data，則將params視為data
+          // 非GET请求如果没有提供data，则将params视为data
           config.data = params;
           config.params = undefined;
         }
@@ -131,7 +142,7 @@ const transform: AxiosTransform = {
           );
         }
       } else {
-        // 兼容restful風格
+        // 兼容restful风格
         config.url = config.url + params;
         config.params = undefined;
       }
@@ -140,10 +151,10 @@ const transform: AxiosTransform = {
   },
 
   /**
-   * @description: 請求攔截器處理
+   * @description: 请求拦截器处理
    */
   requestInterceptors: (config, options) => {
-    // 請求之前處理config
+    // 请求之前处理config
     const token = getToken();
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // jwt token
@@ -155,14 +166,14 @@ const transform: AxiosTransform = {
   },
 
   /**
-   * @description: 響應攔截器處理
+   * @description: 响应拦截器处理
    */
   responseInterceptors: (res: AxiosResponse<any>) => {
     return res;
   },
 
   /**
-   * @description: 響應錯誤處理
+   * @description: 响应错误处理
    */
   responseInterceptorsCatch: (axiosInstance: AxiosResponse, error: any) => {
     const { t } = useI18n();
@@ -173,6 +184,10 @@ const transform: AxiosTransform = {
     const msg: string = response?.data?.error?.message ?? '';
     const err: string = error?.toString?.() ?? '';
     let errMessage = '';
+
+    if (axios.isCancel(error)) {
+      return Promise.reject(error);
+    }
 
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
@@ -196,7 +211,7 @@ const transform: AxiosTransform = {
 
     checkStatus(error?.response?.status, msg, errorMessageMode);
 
-    // 添加自動重試機制 保險起見 只針對GET請求
+    // 添加自动重试机制 保险起见 只针对GET请求
     const retryRequest = new AxiosRetry();
     const { isOpenRetry } = config.requestOptions.retryRequest;
     config.method?.toUpperCase() === RequestEnum.GET &&
@@ -209,7 +224,7 @@ const transform: AxiosTransform = {
 
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new VAxios(
-    // 深度合併
+    // 深度合并
     deepMerge(
       {
         // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
@@ -217,37 +232,37 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // authenticationScheme: 'Bearer',
         authenticationScheme: '',
         timeout: 10 * 1000,
-        // 基礎接口地址
+        // 基础接口地址
         // baseURL: globSetting.apiUrl,
 
         headers: { 'Content-Type': ContentTypeEnum.JSON },
         // 如果是form-data格式
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
-        // 數據處理方式
+        // 数据处理方式
         transform: clone(transform),
-        // 配置項，下面的選項都可以在獨立的接口請求中覆蓋
+        // 配置项，下面的选项都可以在独立的接口请求中覆盖
         requestOptions: {
-          // 默認將prefix 添加到url
+          // 默认将prefix 添加到url
           joinPrefix: true,
-          // 是否返回原生響應頭 比如：需要獲取響應頭時使用該屬性
+          // 是否返回原生响应头 比如：需要获取响应头时使用该属性
           isReturnNativeResponse: false,
-          // 需要對返回數據進行處理
+          // 需要对返回数据进行处理
           isTransformResponse: true,
-          // post請求的時候添加參數到url
+          // post请求的时候添加参数到url
           joinParamsToUrl: false,
-          // 格式化提交參數時間
+          // 格式化提交参数时间
           formatDate: true,
-          // 消息提示類型
+          // 消息提示类型
           errorMessageMode: 'message',
           // 接口地址
           apiUrl: globSetting.apiUrl,
           // 接口拼接地址
           urlPrefix: urlPrefix,
-          //  是否加入時間戳
+          //  是否加入时间戳
           joinTime: true,
-          // 忽略重複請求
+          // 忽略重复请求
           ignoreCancelToken: true,
-          // 是否攜帶token
+          // 是否携带token
           withToken: true,
           retryRequest: {
             isOpenRetry: true,

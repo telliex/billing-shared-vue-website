@@ -13,9 +13,9 @@
             ]"
             :dropDownActions="[
               {
-                label: '啓用',
+                label: '啟用',
                 popConfirm: {
-                  title: '是否啓用？',
+                  title: '是否啟用？',
                   confirm: handleOpen.bind(null, record),
                 },
               },
@@ -83,7 +83,7 @@
         console.log('點擊了刪除', record);
       }
       function handleOpen(record: Recordable) {
-        console.log('點擊了啓用', record);
+        console.log('點擊了啟用', record);
       }
       return {
         registerTable,

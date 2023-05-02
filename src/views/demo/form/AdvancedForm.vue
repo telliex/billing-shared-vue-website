@@ -1,10 +1,10 @@
 <template>
-  <PageWrapper title="可摺疊表單示例">
+  <PageWrapper title="可折疊表單示例">
     <CollapseContainer title="基礎收縮示例">
       <BasicForm @register="register" />
     </CollapseContainer>
 
-    <CollapseContainer title="超過3行自動收起，摺疊時保留2行" class="mt-4">
+    <CollapseContainer title="超過3行自動收起，折疊時保留2行" class="mt-4">
       <BasicForm @register="register1" />
     </CollapseContainer>
   </PageWrapper>

@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:39:53
--->
 <template>
   <PageWrapper title="Tab詳情頁面">
     <div>{{ index }} - 詳情頁內容在此</div>

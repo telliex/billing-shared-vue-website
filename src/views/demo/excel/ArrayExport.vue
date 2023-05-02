@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-09-30 08:02:53
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:34:31
--->
 <template>
   <PageWrapper title="導出示例" content="根據數組格式的數據進行導出">
     <BasicTable title="基礎表格" :columns="columns" :dataSource="data">

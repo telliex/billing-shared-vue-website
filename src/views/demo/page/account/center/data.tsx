@@ -12,43 +12,43 @@ export interface TabItem {
 
 export const tags: string[] = [
   '很有想法的',
-  '专注设计',
+  '專注設計',
   '川妹子',
-  '大长腿',
-  '海纳百川',
-  '前端开发',
+  '大長腿',
+  '海納百川',
+  '前端開發',
   'vue3',
 ];
 
 export const teams: ListItem[] = [
   {
     icon: 'ri:alipay-fill',
-    title: '科学搬砖组',
+    title: '科學搬磚組',
     color: '#ff4000',
   },
   {
     icon: 'emojione-monotone:letter-a',
-    title: '中二少年团',
+    title: '中二少年團',
     color: '#7c51b8',
   },
   {
     icon: 'ri:alipay-fill',
-    title: '高逼格设计',
+    title: '高逼格設計',
     color: '#00adf7',
   },
   {
     icon: 'jam:codepen-circle',
-    title: '程序员日常',
+    title: '程序員日常',
     color: '#00adf7',
   },
   {
     icon: 'fa:behance-square',
-    title: '科学搬砖组',
+    title: '科學搬磚組',
     color: '#7c51b8',
   },
   {
     icon: 'jam:codepen-circle',
-    title: '程序员日常',
+    title: '程序員日常',
     color: '#ff4000',
   },
 ];
@@ -56,15 +56,15 @@ export const teams: ListItem[] = [
 export const details: ListItem[] = [
   {
     icon: 'ic:outline-contacts',
-    title: '交互专家',
+    title: '交互專家',
   },
   {
     icon: 'grommet-icons:cluster',
-    title: '某某某事业群',
+    title: '某某某事業群',
   },
   {
     icon: 'bx:bx-home-circle',
-    title: '福建省厦门市',
+    title: '福建省廈門市',
   },
 ];
 
@@ -76,12 +76,12 @@ export const achieveList: TabItem[] = [
   },
   {
     key: '2',
-    name: '应用',
+    name: '應用',
     component: 'Application',
   },
   {
     key: '3',
-    name: '项目',
+    name: '項目',
     component: 'Project',
   },
 ];
@@ -96,9 +96,9 @@ export const articleList = (() => {
   const result: any[] = [];
   for (let i = 0; i < 4; i++) {
     result.push({
-      title: 'Data platform Admin',
-      description: ['ECV', '设计语言', 'Typescript'],
-      content: '基于Vue Next, TypeScript, Ant Design实现的一套完整的企业级后台管理系统。',
+      title: 'Vben Admin',
+      description: ['Vben', '設計語言', 'Typescript'],
+      content: '基於Vue Next, TypeScript, Ant Design實現的一套完整的企業級後台管理系統。',
       time: '2020-11-14 11:20',
     });
   }
@@ -109,7 +109,7 @@ export const applicationList = (() => {
   const result: any[] = [];
   for (let i = 0; i < 8; i++) {
     result.push({
-      title: 'Data platform Admin',
+      title: 'Vben Admin',
       icon: 'emojione-monotone:letter-a',
       color: '#1890ff',
       active: '100',
@@ -124,8 +124,8 @@ export const projectList = (() => {
   const result: any[] = [];
   for (let i = 0; i < 8; i++) {
     result.push({
-      title: 'Data platform Admin',
-      content: '基于Vue Next, TypeScript, Ant Design实现的一套完整的企业级后台管理系统。',
+      title: 'Vben Admin',
+      content: '基於Vue Next, TypeScript, Ant Design實現的一套完整的企業級後台管理系統。',
     });
   }
   return result;

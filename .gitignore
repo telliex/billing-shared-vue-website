@@ -12,11 +12,6 @@ tests/server/static/upload
 .env.local
 .env.*.local
 .eslintcache
-.env.dev
-.env.uat
-.env.satge
-.env.prod
-
 
 # Log files
 npm-debug.log*
@@ -36,5 +31,4 @@ pnpm-debug.log*
 package-lock.json
 pnpm-lock.yaml
 
-# nginx
-default.conf
+.history

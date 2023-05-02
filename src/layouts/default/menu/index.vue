@@ -1,6 +1,6 @@
 <script lang="tsx">
   import type { PropType, CSSProperties } from 'vue';
-  import { Icon } from '/@/components/Icon';
+
   import { computed, defineComponent, unref, toRef } from 'vue';
   import { BasicMenu } from '/@/components/Menu';
   import { SimpleMenu } from '/@/components/SimpleMenu';
@@ -110,10 +110,6 @@
        * @param menu
        */
 
-      function gotoMGT() {
-        window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL;
-      }
-
       function handleMenuClick(path: string) {
         go(path);
       }
@@ -147,13 +143,7 @@
         // console.log(menus);
         if (!menus || !menus.length) return null;
         return !props.isHorizontal ? (
-          <div>
-            <a-button type="text" style="color:#fff" onclick={gotoMGT}>
-              <Icon icon="ion:arrow-undo-sharp" />
-              MGT
-            </a-button>
-            <SimpleMenu {...menuProps} isSplitMenu={unref(getSplit)} items={menus} />
-          </div>
+          <SimpleMenu {...menuProps} isSplitMenu={unref(getSplit)} items={menus} />
         ) : (
           <BasicMenu
             {...(menuProps as any)}
@@ -192,7 +182,7 @@
 
       img {
         width: @logo-width;
-        height: @logo-height;
+        height: @logo-width;
       }
     }
 

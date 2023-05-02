@@ -1,15 +1,8 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:47:12
--->
 <template>
   <PageWrapper
     title="基礎表單"
     contentBackground
-    content=" 表單頁用於向用户收集或驗證信息，基礎表單常見於數據項較少的表單場景。"
+    content=" 表單頁用於向用戶收集或驗證信息，基礎表單常見於數據項較少的表單場景。"
     contentClass="p-4"
   >
     <BasicForm @register="register" />

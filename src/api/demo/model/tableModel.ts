@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-09-30 08:02:53
- * @LastEditors: Telliex
- * @LastEditTime: 2022-10-13 10:36:57
- */
 import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
 /**
  * @description: Request list interface parameters
@@ -24,5 +17,4 @@ export interface DemoListItem {
 /**
  * @description: Request list return value
  */
-
 export type DemoListGetResultModel = BasicFetchResult<DemoListItem>;

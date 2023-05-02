@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:21:49
--->
 <template>
   <div class="lg:flex">
     <Avatar :src="userinfo.avatar || headerImg" :size="72" class="!mx-auto !block" />

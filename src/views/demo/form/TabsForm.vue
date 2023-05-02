@@ -103,7 +103,7 @@
           }
 
           console.log('submit values: ', values);
-          createMessage.success('提交成功！請打開控制枱查看');
+          createMessage.success('提交成功！請打開控制台查看');
         } catch (e) {
           // 驗證失敗或出錯，切換到對應標籤頁
           activeKey.value = lastKey;

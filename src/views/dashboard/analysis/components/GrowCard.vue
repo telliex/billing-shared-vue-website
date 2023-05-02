@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:19:57
--->
 <template>
   <div class="md:flex">
     <template v-for="(item, index) in growCardList" :key="item.title">

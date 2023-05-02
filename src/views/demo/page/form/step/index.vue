@@ -2,7 +2,7 @@
   <PageWrapper
     title="分步表單"
     contentBackground
-    content=" 將一個冗長或用户不熟悉的表單任務分成多個步驟，指導用户完成。"
+    content=" 將一個冗長或用戶不熟悉的表單任務分成多個步驟，指導用戶完成。"
     contentClass="p-4"
   >
     <div class="step-form-form">

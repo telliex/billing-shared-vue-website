@@ -11,6 +11,7 @@
     "bootstrap": "pnpm install",
     "serve": "npm run dev",
     "dev": "vite",
+    "build": "cross-env NODE_ENV=production vite build && esno ./build/script/postBuild.ts",
     "build:prod": "cross-env NODE_ENV=prod vite build --mode prod && esno ./build/script/postBuild.ts",
     "build:dev": "cross-env NODE_ENV=dev vite build --mode dev && esno ./build/script/postBuild.ts",
     "build:uat": "cross-env NODE_ENV=uat vite build --mode uat && esno ./build/script/postBuild.ts",
@@ -26,7 +27,6 @@
     "lint:eslint": "eslint --cache --max-warnings 0  \"{src,mock}/**/*.{vue,ts,tsx}\" --fix",
     "lint:prettier": "prettier --write  \"src/**/*.{js,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
-    "lint:markdownlint": "npx markdownlint --config .markdownlint.js --fix .",
     "lint:lint-staged": "lint-staged",
     "test:unit": "jest",
     "test:gzip": "npx http-server dist --cors --gzip -c-1",
@@ -52,8 +52,8 @@
     "cropperjs": "^1.5.12",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.1",
-    "dayjs-plugin-utc": "^0.1.2",
     "echarts": "^5.3.2",
+    "exceljs": "^4.3.0",
     "intro.js": "^5.1.0",
     "js-guid": "^1.0.2",
     "lodash-es": "^4.17.21",
@@ -67,15 +67,15 @@
     "resize-observer-polyfill": "^1.5.1",
     "showdown": "^2.1.0",
     "sortablejs": "^1.15.0",
-    "tinymce": "^5.10.3",
+    "tinymce": "^5.10.7",
     "vditor": "^3.8.13",
-    "vue": "^3.2.33",
+    "vue": "^3.2.45",
     "vue-i18n": "^9.1.9",
     "vue-json-pretty": "^2.0.6",
     "vue-router": "^4.0.14",
     "vue-types": "^4.1.1",
-    "vuedraggable": "^2.24.3",
-    "vxe-table": "^4.3.10",
+    "vuedraggable": "^4.1.0",
+    "vxe-table": "^4.3.9",
     "vxe-table-plugin-export-xlsx": "^3.0.4",
     "xe-utils": "^3.5.7",
     "xlsx": "^0.18.5"
@@ -121,7 +121,6 @@
     "inquirer": "^8.2.2",
     "less": "^4.1.2",
     "lint-staged": "12.3.7",
-    "markdownlint-cli": "^0.32.2",
     "npm-run-all": "^4.1.5",
     "picocolors": "^1.0.0",
     "postcss": "^8.4.12",
@@ -131,6 +130,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.70.2",
     "rollup-plugin-visualizer": "^5.6.0",
+    "sass": "^1.57.1",
     "stylelint": "^14.7.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended": "^7.0.0",
@@ -153,7 +153,7 @@
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vite-plugin-windicss": "^1.8.4",
     "vue-eslint-parser": "^8.3.0",
-    "vue-tsc": "^0.33.9"
+    "vue-tsc": "^1.0.9"
   },
   "resolutions": {
     "bin-wrapper": "npm:bin-wrapper-china",
@@ -162,11 +162,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne"
+    "url": "git+https://github.com/anncwb/vue-vben-admin.git"
   },
   "license": "MIT",
-  "bugs": {},
-  "homepage": "",
+  "bugs": {
+    "url": "https://github.com/anncwb/vue-vben-admin/issues"
+  },
+  "homepage": "https://github.com/anncwb/vue-vben-admin",
   "engines": {
     "node": "^12 || >=14"
   },

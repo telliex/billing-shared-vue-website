@@ -1,6 +1,7 @@
 import 'virtual:windi-base.css';
 import 'virtual:windi-components.css';
 import '/@/design/index.less';
+import '/@/components/VxeTable/src/css/index.scss';
 import 'virtual:windi-utilities.css';
 // Register icon sprite
 import 'virtual:svg-icons-register';
@@ -29,17 +30,17 @@ async function bootstrap() {
   setupStore(app);
 
   // Initialize internal system configuration
-  // 初始化內部系統配置
+  // 初始化内部系统配置
   initAppConfigStore();
 
   // Register global components
-  // 注冊全局組件
+  // 注册全局组件
   registerGlobComp(app);
 
   // Multilingual configuration
-  // 多語言配置
+  // 多语言配置
   // Asynchronous case: language files may be obtained from the server side
-  // 異步案例：語言文件可能從服務器端獲取
+  // 异步案例：语言文件可能从服务器端获取
   await setupI18n(app);
 
   // Configure routing
@@ -47,15 +48,15 @@ async function bootstrap() {
   setupRouter(app);
 
   // router-guard
-  // 路由守衛
+  // 路由守卫
   setupRouterGuard(router);
 
   // Register global directive
-  // 注冊全局指令
+  // 注册全局指令
   setupGlobDirectives(app);
 
   // Configure global error handling
-  // 配置全局錯誤處理
+  // 配置全局错误处理
   setupErrorHandle(app);
 
   // https://next.router.vuejs.org/api/#isready

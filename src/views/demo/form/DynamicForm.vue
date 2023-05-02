@@ -165,10 +165,10 @@
       // @ts-ignore
       componentProps: ({ formActionType }) => {
         return {
-          placeholder: '值改變時執行查詢,查看控制枱',
+          placeholder: '值改變時執行查詢,查看控制台',
           onChange: async () => {
             const { validate } = formActionType;
-            // tableAction只適用於在表格內開啓表單的例子
+            // tableAction只適用於在表格內開啟表單的例子
             // const { reload } = tableAction;
             const res = await validate();
             console.log(res);

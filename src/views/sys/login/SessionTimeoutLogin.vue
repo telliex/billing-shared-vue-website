@@ -25,17 +25,17 @@
   };
 
   onMounted(() => {
-    // 記錄當前的UserId
+    // 记录当前的UserId
     userId.value = userStore.getUserInfo?.userId;
     console.log('Mounted', userStore.getUserInfo);
   });
 
   onBeforeUnmount(() => {
     if (userId.value && userId.value !== userStore.getUserInfo.userId) {
-      // 登錄的不是同一個用戶，刷新整個頁面以便丟棄之前用戶的頁面狀態
+      // 登录的不是同一个用户，刷新整个页面以便丢弃之前用户的页面状态
       document.location.reload();
     } else if (isBackMode() && permissionStore.getLastBuildMenuTime === 0) {
-      // 後台權限模式下，沒有成功加載過菜單，就重新加載整個頁面。這通常發生在會話過期後按F5刷新整個頁面後載入了本模塊這種場景
+      // 后台权限模式下，没有成功加载过菜单，就重新加载整个页面。这通常发生在会话过期后按F5刷新整个页面后载入了本模块这种场景
       document.location.reload();
     }
   });

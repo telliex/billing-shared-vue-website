@@ -1,17 +1,10 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2023-02-16 05:44:07
--->
 <template>
   <Card title="專案" v-bind="$attrs">
     <template #extra>
-      <a-button type="link" size="small">more</a-button>
+      <a-button type="link" size="small">更多</a-button>
     </template>
 
-    <CardGrid v-for="item in items" :key="item" class="!md:w-1/3 !w-full">
+    <CardGrid v-for="item in items" :key="item.title" class="!md:w-1/3 !w-full">
       <span class="flex">
         <Icon :icon="item.icon" :color="item.color" size="30" />
         <span class="text-lg ml-4">{{ item.title }}</span>
@@ -26,12 +19,12 @@
 </template>
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import { Card } from 'ant-design-vue';
+  import { Card, CardGrid } from 'ant-design-vue';
   import { Icon } from '/@/components/Icon';
   import { groupItems } from './data';
 
   export default defineComponent({
-    components: { Card, CardGrid: Card.Grid, Icon },
+    components: { Card, CardGrid, Icon },
     setup() {
       return { items: groupItems };
     },

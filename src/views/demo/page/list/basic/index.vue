@@ -7,11 +7,11 @@
           <p>8個任務</p>
         </a-col>
         <a-col :span="8" :class="`${prefixCls}__top-col`">
-          <div>本週任務平均處理時間</div>
+          <div>本周任務平均處理時間</div>
           <p>32分鐘</p>
         </a-col>
         <a-col :span="8" :class="`${prefixCls}__top-col`">
-          <div>本週完成任務數</div>
+          <div>本周完成任務數</div>
           <p>24個任務</p>
         </a-col>
       </a-row>

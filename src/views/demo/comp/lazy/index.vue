@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:30:15
--->
 <template>
   <PageWrapper title="懶加載基礎示例" content="向下滾動到可見區域才會加載組件">
     <div class="lazy-base-demo-wrap">

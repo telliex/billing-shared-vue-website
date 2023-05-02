@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-09-30 08:02:53
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:34:44
- */
 import { BasicColumn } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [

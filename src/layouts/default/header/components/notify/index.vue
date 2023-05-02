@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:30:06
--->
 <template>
   <div :class="prefixCls">
     <Popover title="" trigger="click" :overlayClassName="`${prefixCls}__overlay`">
@@ -19,7 +12,7 @@
                 {{ item.name }}
                 <span v-if="item.list.length !== 0">({{ item.list.length }})</span>
               </template>
-              <!-- 綁定title-click事件的通知列表中標題是“可點擊”的-->
+              <!-- 绑定title-click事件的通知列表中标题是“可点击”的-->
               <NoticeList :list="item.list" v-if="item.key === '1'" @title-click="onNoticeClick" />
               <NoticeList :list="item.list" v-else />
             </TabPane>
@@ -54,8 +47,8 @@
       });
 
       function onNoticeClick(record: ListItem) {
-        createMessage.success('你點擊了通知，ID=' + record.id);
-        // 可以直接將其標記為已讀（為標題添加刪除線）,此處演示的代碼會切換刪除線狀態
+        createMessage.success('你点击了通知，ID=' + record.id);
+        // 可以直接将其标记为已读（为标题添加删除线）,此处演示的代码会切换删除线状态
         record.titleDelete = !record.titleDelete;
       }
 

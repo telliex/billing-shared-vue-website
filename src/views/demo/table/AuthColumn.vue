@@ -19,13 +19,13 @@
             ]"
             :dropDownActions="[
               {
-                label: '啓用',
+                label: '啟用',
                 popConfirm: {
-                  title: '是否啓用？',
+                  title: '是否啟用？',
                   confirm: handleOpen.bind(null, record),
                 },
                 ifShow: (_action) => {
-                  return record.status !== 'enable'; // 根據業務控制是否顯示: 非enable狀態的不顯示啓用按鈕
+                  return record.status !== 'enable'; // 根據業務控制是否顯示: 非enable狀態的不顯示啟用按鈕
                 },
               },
               {
@@ -141,7 +141,7 @@
         console.log('點擊了刪除', record);
       }
       function handleOpen(record: Recordable) {
-        console.log('點擊了啓用', record);
+        console.log('點擊了啟用', record);
       }
       return {
         registerTable,

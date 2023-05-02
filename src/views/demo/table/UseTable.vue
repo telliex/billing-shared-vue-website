@@ -9,7 +9,7 @@
   <div class="p-4">
     <div class="mb-4">
       <a-button class="mr-2" @click="reloadTable"> 還原 </a-button>
-      <a-button class="mr-2" @click="changeLoading"> 開啓loading </a-button>
+      <a-button class="mr-2" @click="changeLoading"> 開啟loading </a-button>
       <a-button class="mr-2" @click="changeColumns"> 更改Columns </a-button>
       <a-button class="mr-2" @click="getColumn"> 獲取Columns </a-button>
       <a-button class="mr-2" @click="getTableData"> 獲取表格數據 </a-button>
@@ -93,22 +93,22 @@
         });
       }
       function getColumn() {
-        createMessage.info('請在控制枱查看！');
+        createMessage.info('請在控制檯查看！');
         console.log(getColumns());
       }
 
       function getTableData() {
-        createMessage.info('請在控制枱查看！');
+        createMessage.info('請在控制檯查看！');
         console.log(getDataSource());
       }
 
       function getTableRawData() {
-        createMessage.info('請在控制枱查看！');
+        createMessage.info('請在控制檯查看！');
         console.log(getRawDataSource());
       }
 
       function getPagination() {
-        createMessage.info('請在控制枱查看！');
+        createMessage.info('請在控制檯查看！');
         console.log(getPaginationRef());
       }
 
@@ -119,11 +119,11 @@
         reload();
       }
       function getSelectRowList() {
-        createMessage.info('請在控制枱查看！');
+        createMessage.info('請在控制檯查看！');
         console.log(getSelectRows());
       }
       function getSelectRowKeyList() {
-        createMessage.info('請在控制枱查看！');
+        createMessage.info('請在控制檯查看！');
         console.log(getSelectRowKeys());
       }
       function setSelectedRowKeyList() {

@@ -27,9 +27,9 @@
             ]"
             :dropDownActions="[
               {
-                label: '啓用',
+                label: '啟用',
                 popConfirm: {
-                  title: '是否啓用？',
+                  title: '是否啟用？',
                   confirm: handleOpen.bind(null, record),
                 },
               },
@@ -54,7 +54,7 @@
       const [registerTable] = useTable({
         api: demoListApi,
         title: '可展開表格演示',
-        titleHelpMessage: ['已啓用expandRowByClick', '已啓用stopButtonPropagation'],
+        titleHelpMessage: ['已啟用expandRowByClick', '已啟用stopButtonPropagation'],
         columns: getBasicColumns(),
         rowKey: 'id',
         canResize: false,
@@ -71,7 +71,7 @@
         console.log('點擊了刪除', record);
       }
       function handleOpen(record: Recordable) {
-        console.log('點擊了啓用', record);
+        console.log('點擊了啟用', record);
       }
 
       return {

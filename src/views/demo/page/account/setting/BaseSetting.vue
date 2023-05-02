@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:45:27
--->
 <template>
   <CollapseContainer title="基本設置" :canExpan="false">
     <a-row :gutter="24">
@@ -69,13 +62,15 @@
 
       const avatar = computed(() => {
         const { avatar } = userStore.getUserInfo;
+        console.log(avatar);
         return avatar || headerImg;
       });
 
-      function updateAvatar(src: string) {
+      function updateAvatar({ src, data }) {
         const userinfo = userStore.getUserInfo;
         userinfo.avatar = src;
         userStore.setUserInfo(userinfo);
+        console.log('data', data);
       }
 
       return {

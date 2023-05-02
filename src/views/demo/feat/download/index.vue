@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:37:00
--->
 <template>
   <PageWrapper title="文件下載示例">
     <a-alert message="根據後台接口文件流下載" />
@@ -47,7 +40,7 @@
         });
 
         downloadByUrl({
-          url: 'https://www.ecloudvalley.com/img/ECV_logo_CLR.c0439d7d.svg',
+          url: 'https://vebn.oss-cn-beijing.aliyuncs.com/vben/logo.png',
           target: '_self',
         });
       }

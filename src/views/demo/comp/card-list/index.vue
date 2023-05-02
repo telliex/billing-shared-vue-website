@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:26:15
--->
 <template>
   <PageWrapper title="卡片列表示例" content="基礎封裝">
     <CardList :params="params" :api="demoListApi" @get-method="getMethod" @delete="handleDel">

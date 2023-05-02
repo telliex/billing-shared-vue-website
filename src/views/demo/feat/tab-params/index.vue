@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:39:28
--->
 <template>
   <PageWrapper title="帶參數標籤頁" content="支持帶參數多tab緩存">
     Current Param : {{ params }}

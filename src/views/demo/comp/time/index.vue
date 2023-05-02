@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:32:53
--->
 <template>
   <PageWrapper title="時間組件示例">
     <CollapseContainer title="基礎示例">

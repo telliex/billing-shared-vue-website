@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:39:05
--->
 <template>
   <PageWrapper title="Ripple示例">
     <div class="demo-box" v-ripple>content</div>

@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:30:22
--->
 <template>
   <Card hoverable :style="{ width: '240px', background: '#fff' }">
     <template #cover>

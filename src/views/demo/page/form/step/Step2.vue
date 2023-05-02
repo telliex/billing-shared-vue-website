@@ -1,17 +1,10 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:48:27
--->
 <template>
   <div class="step2">
-    <a-alert message="確認轉賬後，資金將直接打入對方賬户，無法退回。" show-icon />
+    <a-alert message="確認轉賬後，資金將直接打入對方賬戶，無法退回。" show-icon />
     <a-descriptions :column="1" class="mt-5">
-      <a-descriptions-item label="付款賬户"> ant-design@alipay.com </a-descriptions-item>
-      <a-descriptions-item label="收款賬户"> test@example.com </a-descriptions-item>
-      <a-descriptions-item label="收款人姓名"> ECV </a-descriptions-item>
+      <a-descriptions-item label="付款賬戶"> ant-design@alipay.com </a-descriptions-item>
+      <a-descriptions-item label="收款賬戶"> test@example.com </a-descriptions-item>
+      <a-descriptions-item label="收款人姓名"> Vben </a-descriptions-item>
       <a-descriptions-item label="轉賬金額"> 500元 </a-descriptions-item>
     </a-descriptions>
     <a-divider />

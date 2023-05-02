@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-12-14 08:10:48
- */
 import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
 
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from '/@/router/routes/basic';
@@ -15,7 +8,6 @@ import { t } from '/@/hooks/web/useI18n';
 
 // import.meta.globEager() 直接引入所有的模块 Vite 独有的功能
 const modules = import.meta.globEager('./modules/**/*.ts');
-
 const routeModuleList: AppRouteModule[] = [];
 
 // 加入到路由集合中

@@ -5,7 +5,6 @@ import type { RouteLocationNormalized } from 'vue-router';
 import { createLocalStorage, createSessionStorage } from '/@/utils/cache';
 import { Memory } from './memory';
 import {
-  COMPANY_KEY,
   TOKEN_KEY,
   USER_INFO_KEY,
   ROLES_KEY,
@@ -20,7 +19,6 @@ import { toRaw } from 'vue';
 import { pick, omit } from 'lodash-es';
 
 interface BasicStore {
-  [COMPANY_KEY]: string;
   [TOKEN_KEY]: string | number | null | undefined;
   [USER_INFO_KEY]: UserInfo;
   [ROLES_KEY]: string[];
@@ -99,8 +97,8 @@ export class Persistent {
 }
 
 window.addEventListener('beforeunload', function () {
-  // TOKEN_KEY 在登錄或注銷時已經寫入到storage了，此處為了解決同時打開多個窗口時token不同步的問題
-  // LOCK_INFO_KEY 在鎖屏和解鎖時寫入，此處也不應修改
+  // TOKEN_KEY 在登录或注销时已经写入到storage了，此处为了解决同时打开多个窗口时token不同步的问题
+  // LOCK_INFO_KEY 在锁屏和解锁时写入，此处也不应修改
   ls.set(APP_LOCAL_CACHE_KEY, {
     ...omit(localMemory.getCache, LOCK_INFO_KEY),
     ...pick(ls.get(APP_LOCAL_CACHE_KEY), [TOKEN_KEY, USER_INFO_KEY, LOCK_INFO_KEY]),

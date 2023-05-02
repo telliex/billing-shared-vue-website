@@ -1,14 +1,14 @@
 <!--
  * @Description: 
  * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
+ * @Date: 2023-05-01 23:22:49
  * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:38:43
+ * @LastEditTime: 2023-05-02 05:41:11
 -->
 <template>
-  <PageWrapper title="打印示例">
-    <CollapseContainer title="json打印表格">
-      <a-button type="primary" @click="jsonPrint">打印</a-button>
+  <PageWrapper title="列印示例">
+    <CollapseContainer title="json列印表格">
+      <a-button type="primary" @click="jsonPrint">列印</a-button>
     </CollapseContainer>
 
     <a-button type="primary" class="mt-5" @click="imagePrint">Image Print</a-button>

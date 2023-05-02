@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2023-05-01 23:22:19
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-05-02 01:20:08
+-->
 <template>
   <ConfigProvider :locale="getAntdLocale">
     <AppProvider>

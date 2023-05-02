@@ -1,4 +1,4 @@
-import type { FormSchema } from '/@/components/Form';
+import { FormSchema } from '/@/components/Form';
 const colProps = {
   span: 8,
 };
@@ -25,11 +25,11 @@ export const schemas: FormSchema[] = [
     field: 'client',
     component: 'Input',
     colProps,
-    label: '客户',
-    helpMessage: '目標的服務對象',
+    label: '客戶',
+    helpMessage: '目標的服務對像',
     subLabel: '( 選填 )',
     componentProps: {
-      placeholder: '請描述你服務的客户，內部客户直接 @姓名／工號',
+      placeholder: '請描述你服務的客戶，內部客戶直接 @姓名／工號',
     },
   },
   {
@@ -87,7 +87,7 @@ export const schemas: FormSchema[] = [
       span: 16,
     },
     itemProps: {
-      extra: '客户、邀評人默認被分享',
+      extra: '客戶、邀評人默認被分享',
     },
     componentProps: {
       options: [

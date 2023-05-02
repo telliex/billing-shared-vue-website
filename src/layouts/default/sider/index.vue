@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2023-02-08 02:03:11
- * @LastEditors: Telliex
- * @LastEditTime: 2023-02-18 05:57:07
--->
 <template>
   <Drawer
     v-if="getIsMobile"

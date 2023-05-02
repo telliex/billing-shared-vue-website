@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:32:44
--->
 <template>
   <PageWrapper title="密碼強度校驗組件">
     <div class="flex justify-center">

@@ -222,7 +222,7 @@
         canResize.value = !canResize.value;
       }
       function defaultHeader({ filename, bookType }: ExportModalResult) {
-        // 默认Object.keys(data[0])作为header
+        // 默認Object.keys(data[0])作為header
         jsonToSheetXlsx({
           data: getBasicData(),
           filename,

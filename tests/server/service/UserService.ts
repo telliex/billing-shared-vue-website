@@ -1,16 +1,9 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-10-06 07:49:16
- * @LastEditors: Telliex
- * @LastEditTime: 2022-10-17 09:06:59
- */
 import { Result } from '../utils';
 
 const fakeUserInfo = {
   userId: '1',
-  username: 'billing',
-  realName: 'Data Platform Admin',
+  username: 'vben',
+  realName: 'Vben Admin',
   desc: 'manager',
   password: '123456',
   token: 'fakeToken1',

@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:36:02
- */
 /**
  * Data processing class, can be configured according to the project
  */
@@ -25,17 +18,17 @@ export abstract class AxiosTransform {
   beforeRequestHook?: (config: AxiosRequestConfig, options: RequestOptions) => AxiosRequestConfig;
 
   /**
-   * @description: 處理響應數據
+   * @description: 处理响应数据
    */
   transformResponseHook?: (res: AxiosResponse<Result>, options: RequestOptions) => any;
 
   /**
-   * @description: 請求失敗處理
+   * @description: 请求失败处理
    */
   requestCatchHook?: (e: Error, options: RequestOptions) => Promise<any>;
 
   /**
-   * @description: 請求之前的攔截器
+   * @description: 请求之前的拦截器
    */
   requestInterceptors?: (
     config: AxiosRequestConfig,
@@ -43,17 +36,17 @@ export abstract class AxiosTransform {
   ) => AxiosRequestConfig;
 
   /**
-   * @description: 請求之後的攔截器
+   * @description: 请求之后的拦截器
    */
   responseInterceptors?: (res: AxiosResponse<any>) => AxiosResponse<any>;
 
   /**
-   * @description: 請求之前的攔截器錯誤處理
+   * @description: 请求之前的拦截器错误处理
    */
   requestInterceptorsCatch?: (error: Error) => void;
 
   /**
-   * @description: 請求之後的攔截器錯誤處理
+   * @description: 请求之后的拦截器错误处理
    */
   responseInterceptorsCatch?: (axiosInstance: AxiosResponse, error: Error) => void;
 }

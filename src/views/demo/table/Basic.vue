@@ -9,7 +9,7 @@
   <div class="p-4">
     <BasicTable
       title="基礎示例"
-      titleHelpMessage="温馨提醒"
+      titleHelpMessage="溫馨提醒"
       :columns="columns"
       :dataSource="data"
       :canResize="canResize"
@@ -27,7 +27,7 @@
         <a-button type="primary" @click="toggleBorder">
           {{ !border ? '顯示邊框' : '隱藏邊框' }}
         </a-button>
-        <a-button type="primary" @click="toggleLoading"> 開啓loading </a-button>
+        <a-button type="primary" @click="toggleLoading"> 開啟loading </a-button>
         <a-button type="primary" @click="toggleStriped">
           {{ !striped ? '顯示斑馬紋' : '隱藏斑馬紋' }}
         </a-button>

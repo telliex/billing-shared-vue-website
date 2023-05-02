@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:32:25
--->
 <template>
   <PageWrapper class="virtual-scroll-demo">
     <Divider>基礎滾動示例</Divider>

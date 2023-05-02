@@ -28,7 +28,7 @@
         <a-steps :current="1" progress-dot size="small">
           <a-step title="創建項目">
             <template #description>
-              <div>ECV</div>
+              <div>Vben</div>
               <p>2016-12-12 12:32</p>
             </template>
           </a-step>
@@ -37,14 +37,14 @@
               <p>Chad</p>
             </template>
           </a-step>
-          <a-step title="財務複核" />
+          <a-step title="財務覆核" />
           <a-step title="完成" />
         </a-steps>
       </a-card>
 
-      <a-card title="用户信息" :bordered="false" class="mt-5">
+      <a-card title="用戶信息" :bordered="false" class="mt-5">
         <a-descriptions :column="3">
-          <a-descriptions-item label="用户姓名"> 付小小 </a-descriptions-item>
+          <a-descriptions-item label="用戶姓名"> 付小小 </a-descriptions-item>
           <a-descriptions-item label="會員卡號"> XX 32943898021309809423 </a-descriptions-item>
           <a-descriptions-item label="身份證"> 3321944288191034921 </a-descriptions-item>
           <a-descriptions-item label="聯繫方式"> 18112345678 </a-descriptions-item>
@@ -75,7 +75,7 @@
           <a-descriptions title="組名稱" :column="1">
             <a-descriptions-item label="學名">
               Citrullus lanatus (Thunb.) Matsum. et
-              Nakai一年生蔓生藤本；莖、枝粗壯，具明顯的稜。卷鬚較粗..
+              Nakai一年生蔓生籐本；莖、枝粗壯，具明顯的稜。捲鬚較粗..
             </a-descriptions-item>
           </a-descriptions>
           <a-divider />
@@ -85,7 +85,7 @@
           </a-descriptions>
         </a-card>
       </a-card>
-      <a-card title="用户近半年來電記錄" class="my-5">
+      <a-card title="用戶近半年來電記錄" class="my-5">
         <Empty />
       </a-card>
       <BasicTable @register="registerTimeTable" />

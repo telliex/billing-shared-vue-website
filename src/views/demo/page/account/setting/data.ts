@@ -71,7 +71,7 @@ export const baseSetschemas: FormSchema[] = [
 export const secureSettingList: ListItem[] = [
   {
     key: '1',
-    title: '賬户密碼',
+    title: '賬戶密碼',
     description: '當前密碼強度：：強',
     extra: '修改',
   },
@@ -84,7 +84,7 @@ export const secureSettingList: ListItem[] = [
   {
     key: '3',
     title: '密保問題',
-    description: '未設置密保問題，密保問題可有效保護賬户安全',
+    description: '未設置密保問題，密保問題可有效保護賬戶安全',
     extra: '修改',
   },
   {
@@ -133,8 +133,8 @@ export const accountBindList: ListItem[] = [
 export const msgNotifyList: ListItem[] = [
   {
     key: '1',
-    title: '賬户密碼',
-    description: '其他用户的消息將以站內信的形式通知',
+    title: '賬戶密碼',
+    description: '其他用戶的消息將以站內信的形式通知',
   },
   {
     key: '2',

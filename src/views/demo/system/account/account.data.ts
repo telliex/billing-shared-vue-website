@@ -4,7 +4,7 @@ import { FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
-    title: '用户名',
+    title: '用戶名',
     dataIndex: 'account',
     width: 120,
   },
@@ -37,7 +37,7 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'account',
-    label: '用户名',
+    label: '用戶名',
     component: 'Input',
     colProps: { span: 8 },
   },
@@ -52,13 +52,13 @@ export const searchFormSchema: FormSchema[] = [
 export const accountFormSchema: FormSchema[] = [
   {
     field: 'account',
-    label: '用户名',
+    label: '用戶名',
     component: 'Input',
-    helpMessage: ['本字段演示異步驗證', '不能輸入帶有admin的用户名'],
+    helpMessage: ['本字段演示異步驗證', '不能輸入帶有admin的用戶名'],
     rules: [
       {
         required: true,
-        message: '請輸入用户名',
+        message: '請輸入用戶名',
       },
       {
         validator(_, value) {

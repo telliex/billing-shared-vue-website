@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:37:24
--->
 <template>
   <PageWrapper title="Icon組件示例">
     <CollapseContainer title="Antv Icon使用 (直接按需引入相應組件即可)">

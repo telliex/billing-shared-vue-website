@@ -1,14 +1,7 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:39:13
--->
 <template>
   <PageWrapper
     title="登錄過期示例"
-    content="用户登錄過期示例，不再跳轉登錄頁，直接生成頁面覆蓋當前頁面，方便保持過期前的用户狀態！"
+    content="用戶登錄過期示例，不再跳轉登錄頁，直接生成頁面覆蓋當前頁面，方便保持過期前的用戶狀態！"
   >
     <a-card title="請點擊下面的按鈕訪問測試接口" extra="所訪問的接口會返回Token過期響應">
       <a-card-grid style="width: 50%; text-align: center">

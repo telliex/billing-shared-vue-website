@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:36:14
- */
 import type { ErrorMessageMode } from '/#/axios';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
@@ -46,7 +39,7 @@ export function checkStatus(
     case 403:
       errMessage = t('sys.api.errMsg403');
       break;
-    // 404請求不存在
+    // 404请求不存在
     case 404:
       errMessage = t('sys.api.errMsg404');
       break;

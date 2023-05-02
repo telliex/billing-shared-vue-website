@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:19:33
--->
 <template>
   <Card title="轉化率" :loading="loading">
     <div ref="chartRef" :style="{ width, height }"></div>

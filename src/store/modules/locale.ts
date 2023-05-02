@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 03:34:20
- */
 import type { LocaleSetting, LocaleType } from '/#/config';
 
 import { defineStore } from 'pinia';
@@ -28,11 +21,11 @@ export const useLocaleStore = defineStore({
     localInfo: lsLocaleSetting,
   }),
   getters: {
-    getShowPicker(): boolean {
-      return !!this.localInfo?.showPicker;
+    getShowPicker(state): boolean {
+      return !!state.localInfo?.showPicker;
     },
-    getLocale(): LocaleType {
-      return this.localInfo?.locale ?? 'zh_TW';
+    getLocale(state): LocaleType {
+      return state.localInfo?.locale ?? 'zh_CN';
     },
   },
   actions: {

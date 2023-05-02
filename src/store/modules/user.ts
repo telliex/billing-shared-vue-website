@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import { store } from '/@/store';
 import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
-import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY, COMPANY_KEY } from '/@/enums/cacheEnum';
+import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
@@ -18,7 +18,6 @@ import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
 interface UserState {
-  company: string;
   userInfo: Nullable<UserInfo>;
   token?: string;
   roleList: RoleEnum[];
@@ -29,8 +28,6 @@ interface UserState {
 export const useUserStore = defineStore({
   id: 'app-user',
   state: (): UserState => ({
-    // 公司別
-    company: '',
     // user info
     userInfo: null,
     // token
@@ -43,23 +40,20 @@ export const useUserStore = defineStore({
     lastUpdateTime: 0,
   }),
   getters: {
-    getCompany(): string {
-      return this.company || getAuthCache<string>(COMPANY_KEY);
+    getUserInfo(state): UserInfo {
+      return state.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
     },
-    getUserInfo(): UserInfo {
-      return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+    getToken(state): string {
+      return state.token || getAuthCache<string>(TOKEN_KEY);
     },
-    getToken(): string {
-      return this.token || getAuthCache<string>(TOKEN_KEY);
+    getRoleList(state): RoleEnum[] {
+      return state.roleList.length > 0 ? state.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
     },
-    getRoleList(): RoleEnum[] {
-      return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
+    getSessionTimeout(state): boolean {
+      return !!state.sessionTimeout;
     },
-    getSessionTimeout(): boolean {
-      return !!this.sessionTimeout;
-    },
-    getLastUpdateTime(): number {
-      return this.lastUpdateTime;
+    getLastUpdateTime(state): number {
+      return state.lastUpdateTime;
     },
   },
   actions: {
@@ -70,11 +64,6 @@ export const useUserStore = defineStore({
     setRoleList(roleList: RoleEnum[]) {
       this.roleList = roleList;
       setAuthCache(ROLES_KEY, roleList);
-    },
-    setCompany(company: string | '') {
-      this.company = company;
-      this.lastUpdateTime = new Date().getTime();
-      setAuthCache(COMPANY_KEY, company);
     },
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
@@ -100,8 +89,6 @@ export const useUserStore = defineStore({
       },
     ): Promise<GetUserInfoModel | null> {
       try {
-        console.log(window.location.href);
-
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
         const { token } = data;
@@ -157,17 +144,13 @@ export const useUserStore = defineStore({
         try {
           await doLogout();
         } catch {
-          console.log('註銷Token失敗');
+          console.log('注销Token失败');
         }
       }
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
-      // goLogin && router.push(PageEnum.BASE_LOGIN);
-      if (goLogin) {
-        window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL + '/index.php?logout';
-      }
-      // router.push( import.meta.env.VITE_GLOB_OLD_MGT_URL+'/index.php?logout');
+      goLogin && router.push(PageEnum.BASE_LOGIN);
     },
 
     /**

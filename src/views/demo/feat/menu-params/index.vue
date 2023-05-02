@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:38:25
--->
 <template>
   <PageWrapper title="帶參數菜單（路由）" content="支持多級參數">
     當前參數：{{ params }}

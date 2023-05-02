@@ -26,14 +26,14 @@ export enum SessionTimeoutProcessingEnum {
 }
 
 /**
- * 權限模式
+ * 权限模式
  */
 export enum PermissionModeEnum {
   // role
-  // 角色權限
+  // 角色权限
   ROLE = 'ROLE',
   // black
-  // 後端
+  // 后端
   BACK = 'BACK',
   // route mapping
   // 路由映射
@@ -41,7 +41,7 @@ export enum PermissionModeEnum {
 }
 
 // Route switching animation
-// 路由切換動畫
+// 路由切换动画
 export enum RouterTransitionEnum {
   ZOOM_FADE = 'zoom-fade',
   ZOOM_OUT = 'zoom-out',

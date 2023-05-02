@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:36:46
--->
 <template>
   <PageWrapper title="文本複製示例">
     <CollapseContainer class="w-full h-32 bg-white rounded-md" title="Copy Example">

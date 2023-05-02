@@ -13,7 +13,7 @@
             <template #addonBefore> 服務地址 </template>
           </a-input>
           <a-button :type="getIsOpen ? 'danger' : 'primary'" @click="toggle">
-            {{ getIsOpen ? '關閉連接' : '開啓連接' }}
+            {{ getIsOpen ? '關閉連接' : '開啟連接' }}
           </a-button>
         </div>
         <p class="text-lg font-medium mt-4">設置</p>

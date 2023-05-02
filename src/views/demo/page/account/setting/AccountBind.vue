@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:45:20
--->
 <template>
   <CollapseContainer title="賬號綁定" :canExpan="false">
     <List>

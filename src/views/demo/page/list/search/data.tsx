@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2022-11-14 06:35:01
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-25 02:49:22
- */
 import { FormSchema } from '/@/components/Form/index';
 
 export const searchList = (() => {
@@ -12,8 +5,8 @@ export const searchList = (() => {
   for (let i = 0; i < 6; i++) {
     result.push({
       id: i,
-      title: 'Data Platform Admin',
-      description: ['ECV', '設計語言', 'Typescript'],
+      title: 'Vben Admin',
+      description: ['Vben', '設計語言', 'Typescript'],
       content: '基於Vue Next, TypeScript, Ant Design實現的一套完整的企業級後台管理系統。',
       time: '2020-11-14 11:20',
     });

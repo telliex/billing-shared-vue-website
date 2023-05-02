@@ -22,7 +22,7 @@
     setup() {
       const checkedKeys = ref<Array<string | number>>([]);
       const [registerTable] = useTable({
-        title: '開啓搜索區域1',
+        title: '開啟搜索區域1',
         api: demoListApi,
         columns: getBasicColumns(),
         useSearchForm: true,
