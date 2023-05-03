@@ -1,9 +1,7 @@
 export default {
   api: {
-    operationSuccess: 'Operation Success',
     operationFailed: 'Operation failed',
     errorTip: 'Error Tip',
-    successTip: 'Success Tip',
     errorMessage: 'The operation failed, the system is abnormal!',
     timeoutMessage: 'Login timed out, please log in again!',
     apiTimeoutMessage: 'The interface request timed out, please refresh the page and try again!',
@@ -73,7 +71,7 @@ export default {
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',
 
-    signInTitle: 'Backstage management system',
+    signInTitle: 'Cloudy Report System',
     signInDesc: 'Enter your personal details and get started!',
     policy: 'I agree to the xxx Privacy Policy',
     scanSign: `scanning the code to complete the login`,
@@ -96,6 +94,7 @@ export default {
     policyPlaceholder: 'Register after checking',
     diffPwd: 'The two passwords are inconsistent',
 
+    company: 'Company',
     userName: 'Username',
     password: 'Password',
     confirmPassword: 'Confirm Password',
