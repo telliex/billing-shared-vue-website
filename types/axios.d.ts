@@ -35,10 +35,28 @@ export interface RetryRequest {
   count: number;
   waitTime: number;
 }
+
+// original code
+// export interface Result<T = any> {
+//   code: number;
+//   type: 'success' | 'error' | 'warning';
+//   message: string;
+//   result: T;
+// }
+// modofied and tested code
+
 export interface Result<T = any> {
   code: number;
   type: 'success' | 'error' | 'warning';
-  message: string;
+  // message: string;
+  msg: string;
+  results: T;
+  requested_time: string;
+  responsed_time: string;
+  current_page: number;
+  status: number;
+  total_pages: number;
+  trace_id: string;
   result: T;
 }
 

@@ -7,8 +7,10 @@
  */
 export default {
   api: {
+    operationSuccess: '操作成功',
     operationFailed: '操作失敗',
     errorTip: '錯誤提示',
+    successTip: '成功提示',
     errorMessage: '操作失敗,系統異常!',
     timeoutMessage: '登錄超時,請重新登錄!',
     apiTimeoutMessage: '接口請求超時,請刷新頁面重試!',

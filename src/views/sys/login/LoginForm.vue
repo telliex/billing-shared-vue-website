@@ -223,85 +223,85 @@
     );
 
     if (window.location.search) {
-      try {
-        let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
-        // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
-        let userId = parameterList[0].split('=')[1] || null;
-        if (!userId) {
-          createMessage.error('登入出錯，請重新登入 MGT 平台 !');
+      // try {
+      let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
+      // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
+      let userId = parameterList[0].split('=')[1] || null;
+      if (!userId) {
+        createMessage.error('登入出錯，請重新登入 MGT 平台 !');
+        // setTimeout(() => {
+        //   window.location.href = document.referrer;
+        // }, 50000);
+        return;
+      }
+      let queryData = parameterList[1].split('=')[1] || null;
+      console.log('userId:', userId);
+      console.log('data:', queryData);
+
+      // 0. admin user 校驗
+      if (userId === 'admin') {
+        console.log('= admin login =');
+        formData.account = 'billing';
+        formData.password = '123456';
+      } else {
+        console.log('= use id login =');
+        let userListURL = await GetUserInfoList({
+          trace_id: Guid.newGuid().toString(),
+          bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
+          bucket_name: import.meta.env.VITE_GLOB_S3_JSON,
+          object_key: 'user.json',
+          duration: '10',
+        });
+
+        console.log('99999');
+        console.log(userListURL);
+
+        if (userListURL) {
+          userList = [];
+          let temp = await axios.get(userListURL);
+          userList = [...temp.data];
+          console.log('JSON UserList');
+          console.log(userList);
+        }
+
+        let checkUser = userList.find((item) => item.userId === userId?.toString());
+
+        // 1.校驗使用者
+        if (!checkUser) {
+          return createMessage.error('Incorrect account or password！');
+        }
+        console.log('User Login Pass !!');
+
+        redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
+        console.log('redirectUrl:', redirectUrl);
+
+        // 2.跳轉校驗
+        if (
+          document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
+          fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
+        ) {
+          createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
           // setTimeout(() => {
           //   window.location.href = document.referrer;
           // }, 50000);
           return;
         }
-        let queryData = parameterList[1].split('=')[1] || null;
-        console.log('userId:', userId);
-        console.log('data:', queryData);
 
-        // 0. admin user 校驗
-        if (userId === 'admin') {
-          console.log('= admin login =');
-          formData.account = 'billing';
+        // 3.登入 password give
+        if (userId && redirectUrl) {
+          formData.account = userId;
           formData.password = '123456';
+          handleLogin();
         } else {
-          console.log('= id login =');
-          let userListURL = await GetUserInfoList({
-            trace_id: Guid.newGuid().toString(),
-            bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
-            bucket_name: import.meta.env.VITE_GLOB_S3_JSON,
-            object_key: 'user.json',
-            duration: '10',
-          });
-
-          console.log('99999');
-          console.log(userListURL);
-
-          if (userListURL) {
-            userList = [];
-            let temp = await axios.get(userListURL);
-            userList = [...temp.data];
-            console.log('JSON UserList');
-            console.log(userList);
-          }
-
-          let checkUser = userList.find((item) => item.userId === userId?.toString());
-
-          // 1.校驗使用者
-          if (!checkUser) {
-            return createMessage.error('Incorrect account or password！');
-          }
-          console.log('User Login Pass !!');
-
-          redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
-          console.log('redirectUrl:', redirectUrl);
-
-          // 2.跳轉校驗
-          if (
-            document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
-            fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
-          ) {
-            createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
-            // setTimeout(() => {
-            //   window.location.href = document.referrer;
-            // }, 50000);
-            return;
-          }
-
-          // 3.登入 password give
-          if (userId && redirectUrl) {
-            formData.account = userId;
-            formData.password = '123456';
-            handleLogin();
-          } else {
-            createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
-          }
+          createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
         }
-      } catch (e) {
-        createMessage.error('redirect 錯誤，請重新登入 MGT 平台 !!');
-        // setTimeout(() => {
-        //   window.location.href = fromURL;
-        // }, 5000);
       }
+      // } catch (e) {
+      //   createMessage.error('redirect 錯誤，請重新登入 MGT 平台 !!');
+      //   // setTimeout(() => {
+      //   //   window.location.href = fromURL;
+      //   // }, 5000);
+      // }
     } else {
       createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!!');
       // setTimeout(() => {
