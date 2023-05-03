@@ -1,8 +1,15 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2023-05-01 23:22:36
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-05-03 03:08:22
+ */
 /**
  * @description: Request result set
  */
 export enum ResultEnum {
-  SUCCESS = 0,
+  SUCCESS = 1000,
   ERROR = -1,
   TIMEOUT = 401,
   TYPE = 'success',

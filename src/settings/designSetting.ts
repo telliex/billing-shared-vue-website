@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2023-05-01 23:22:42
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-05-03 03:35:45
+ */
+import { ThemeEnum } from '/@/enums/appEnum';
 export const prefixCls = 'gather';
 
 export const darkMode = ThemeEnum.LIGHT;
