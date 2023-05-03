@@ -225,18 +225,26 @@
     if (window.location.search) {
       try {
         let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
-        console.log(parameterList[0].split('=')[1]);
         // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
         let userId = parameterList[0].split('=')[1] || null;
+        if (!userId) {
+          createMessage.error('登入出錯，請重新登入 MGT 平台 !');
+          // setTimeout(() => {
+          //   window.location.href = document.referrer;
+          // }, 50000);
+          return;
+        }
         let queryData = parameterList[1].split('=')[1] || null;
         console.log('userId:', userId);
         console.log('data:', queryData);
 
         // 0. admin user 校驗
         if (userId === 'admin') {
+          console.log('= admin login =');
           formData.account = 'billing';
           formData.password = '123456';
         } else {
+          console.log('= id login =');
           let userListURL = await GetUserInfoList({
             trace_id: Guid.newGuid().toString(),
             bucket_region: import.meta.env.VITE_GLOB_S3_REGION,

@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2023-03-03 07:25:18
  * @LastEditors: Telliex
- * @LastEditTime: 2023-04-26 05:38:16
+ * @LastEditTime: 2023-05-03 03:51:35
  */
 export default {
   api: {
@@ -73,7 +73,7 @@ export default {
     forgetFormTitle: '重置密码',
 
     signInTitle: '云端报表管理系统',
-    signInDesc: '输入您的个人详细信息开始使用！',
+    signInDesc: '登入开始使用！',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 
