@@ -1,5 +1,5 @@
 <template>
-  <CollapseContainer title="賬號綁定" :canExpan="false">
+  <CollapseContainer title="帳號綁定" :canExpan="false">
     <List>
       <template v-for="item in list" :key="item.key">
         <ListItem>

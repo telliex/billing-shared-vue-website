@@ -53,7 +53,7 @@
         ]);
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增賬號' : '編輯賬號'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增帳號' : '編輯帳號'));
 
       async function handleSubmit() {
         try {

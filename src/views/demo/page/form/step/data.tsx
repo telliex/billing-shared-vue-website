@@ -4,7 +4,7 @@ export const step1Schemas: FormSchema[] = [
   {
     field: 'account',
     component: 'Select',
-    label: '付款賬戶',
+    label: '付款帳戶',
     required: true,
     defaultValue: '1',
     componentProps: {
@@ -22,7 +22,7 @@ export const step1Schemas: FormSchema[] = [
   {
     field: 'fac',
     component: 'InputGroup',
-    label: '收款賬戶',
+    label: '收款帳戶',
     required: true,
     defaultValue: 'test@example.com',
     slot: 'fac',
@@ -50,7 +50,7 @@ export const step1Schemas: FormSchema[] = [
   {
     field: 'money',
     component: 'Input',
-    label: '轉賬金額',
+    label: '轉帳金額',
     defaultValue: '500',
     required: true,
     renderComponentContent: () => {

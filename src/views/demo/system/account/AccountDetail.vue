@@ -6,7 +6,7 @@
     @back="goBack"
   >
     <template #extra>
-      <a-button type="primary" danger> 禁用賬號 </a-button>
+      <a-button type="primary" danger> 禁用帳號 </a-button>
       <a-button type="primary"> 修改密碼 </a-button>
     </template>
     <template #footer>
@@ -51,7 +51,7 @@
 
       // 頁面左側點擊返回鏈接時的操作
       function goBack() {
-        // 本例的效果時點擊返回始終跳轉到賬號列表頁，實際應用時可返回上一頁
+        // 本例的效果時點擊返回始終跳轉到帳號列表頁，實際應用時可返回上一頁
         go('/system/account');
       }
       return { userId, currentKey, goBack };

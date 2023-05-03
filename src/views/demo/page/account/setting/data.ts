@@ -23,7 +23,7 @@ export const settingList = [
   },
   {
     key: '3',
-    name: '賬號綁定',
+    name: '帳號綁定',
     component: 'AccountBind',
   },
   {
@@ -71,7 +71,7 @@ export const baseSetschemas: FormSchema[] = [
 export const secureSettingList: ListItem[] = [
   {
     key: '1',
-    title: '賬戶密碼',
+    title: '帳戶密碼',
     description: '當前密碼強度：：強',
     extra: '修改',
   },
@@ -84,7 +84,7 @@ export const secureSettingList: ListItem[] = [
   {
     key: '3',
     title: '密保問題',
-    description: '未設置密保問題，密保問題可有效保護賬戶安全',
+    description: '未設置密保問題，密保問題可有效保護帳戶安全',
     extra: '修改',
   },
   {
@@ -101,12 +101,12 @@ export const secureSettingList: ListItem[] = [
   },
 ];
 
-// 賬號綁定 list
+// 帳號綁定 list
 export const accountBindList: ListItem[] = [
   {
     key: '1',
     title: '綁定淘寶',
-    description: '當前未綁定淘寶賬號',
+    description: '當前未綁定淘寶帳號',
     extra: '綁定',
     avatar: 'ri:taobao-fill',
     color: '#ff4000',
@@ -114,7 +114,7 @@ export const accountBindList: ListItem[] = [
   {
     key: '2',
     title: '綁定支付寶',
-    description: '當前未綁定支付寶賬號',
+    description: '當前未綁定支付寶帳號',
     extra: '綁定',
     avatar: 'fa-brands:alipay',
     color: '#2eabff',
@@ -122,7 +122,7 @@ export const accountBindList: ListItem[] = [
   {
     key: '3',
     title: '綁定釘釘',
-    description: '當前未綁定釘釘賬號',
+    description: '當前未綁定釘釘帳號',
     extra: '綁定',
     avatar: 'ri:dingding-fill',
     color: '#2eabff',
@@ -133,7 +133,7 @@ export const accountBindList: ListItem[] = [
 export const msgNotifyList: ListItem[] = [
   {
     key: '1',
-    title: '賬戶密碼',
+    title: '帳戶密碼',
     description: '其他用戶的消息將以站內信的形式通知',
   },
   {

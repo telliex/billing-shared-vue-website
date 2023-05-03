@@ -9,12 +9,12 @@
       <div class="result-error__content-title">您提交的內容有如下錯誤：</div>
       <div class="mb-4">
         <CloseCircleOutlined class="mr-2 result-error__content-icon" />
-        您的賬戶已被凍結
+        您的帳戶已被凍結
         <a class="ml-4">立即解凍 ></a>
       </div>
       <div class="mb-4">
         <CloseCircleOutlined class="mr-2 result-error__content-icon" />
-        您的賬戶還不具備申請資格
+        您的帳戶還不具備申請資格
         <a class="ml-4">立即解凍 ></a>
       </div>
     </div>

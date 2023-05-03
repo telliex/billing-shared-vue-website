@@ -3,7 +3,7 @@
     <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增賬號</a-button>
+        <a-button type="primary" @click="handleCreate">新增帳號</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -22,7 +22,7 @@
               {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
-                tooltip: '刪除此賬號',
+                tooltip: '刪除此帳號',
                 popConfirm: {
                   title: '是否確認刪除',
                   placement: 'left',
@@ -59,7 +59,7 @@
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
-        title: '賬號列表',
+        title: '帳號列表',
         api: getAccountList,
         rowKey: 'id',
         columns,
