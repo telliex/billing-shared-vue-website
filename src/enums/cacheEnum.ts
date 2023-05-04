@@ -1,7 +1,13 @@
+// user key
+export const USER_KEY = 'USER__';
+
 // token key
 export const TOKEN_KEY = 'TOKEN__';
 
 export const LOCALE_KEY = 'LOCALE__';
+
+// user system key
+export const SYSTEM_KEY = 'SYSTEM__';
 
 // user company key
 export const COMPANY_KEY = 'COMPANY__';

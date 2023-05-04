@@ -4,10 +4,17 @@ import { defineStore } from 'pinia';
 import { store } from '/@/store';
 import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
-import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY, COMPANY_KEY } from '/@/enums/cacheEnum';
+import {
+  ROLES_KEY,
+  TOKEN_KEY,
+  USER_INFO_KEY,
+  SYSTEM_KEY,
+  COMPANY_KEY,
+  USER_KEY,
+} from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
+// import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -18,7 +25,10 @@ import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
 interface UserState {
+  userId: string;
+  tempUserInfo: Nullable<UserInfo>;
   company: string;
+  system: string;
   userInfo: Nullable<UserInfo>;
   token?: string;
   roleList: RoleEnum[];
@@ -29,8 +39,14 @@ interface UserState {
 export const useUserStore = defineStore({
   id: 'app-user',
   state: (): UserState => ({
+    // user id
+    userId: '',
+    // temp user info
+    tempUserInfo: null,
     // 公司別
     company: '',
+    // 系統別
+    system: '',
     // user info
     userInfo: null,
     // token
@@ -43,8 +59,17 @@ export const useUserStore = defineStore({
     lastUpdateTime: 0,
   }),
   getters: {
+    getUserId(): string {
+      return this.userId || getAuthCache<string>(USER_KEY);
+    },
+    getTempUserInfo(state) {
+      return state.tempUserInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+    },
     getCompany(): string {
       return this.company || getAuthCache<string>(COMPANY_KEY);
+    },
+    getSystem(): string {
+      return this.system || getAuthCache<string>(SYSTEM_KEY);
     },
     getUserInfo(state): UserInfo {
       return state.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
@@ -63,6 +88,22 @@ export const useUserStore = defineStore({
     },
   },
   actions: {
+    setUserId(id: string | '') {
+      this.userId = id;
+      setAuthCache(COMPANY_KEY, id);
+    },
+    setTempUserInfo(info: UserInfo | null) {
+      this.tempUserInfo = info;
+    },
+    setCompany(company: string | '') {
+      this.company = company;
+      this.lastUpdateTime = new Date().getTime();
+      setAuthCache(COMPANY_KEY, company);
+    },
+    setSystem(system: string | '') {
+      this.system = system;
+      setAuthCache(COMPANY_KEY, system);
+    },
     setToken(info: string | undefined) {
       this.token = info ? info : ''; // for null or undefined value
       setAuthCache(TOKEN_KEY, info);
@@ -70,11 +111,6 @@ export const useUserStore = defineStore({
     setRoleList(roleList: RoleEnum[]) {
       this.roleList = roleList;
       setAuthCache(ROLES_KEY, roleList);
-    },
-    setCompany(company: string | '') {
-      this.company = company;
-      this.lastUpdateTime = new Date().getTime();
-      setAuthCache(COMPANY_KEY, company);
     },
     setUserInfo(info: UserInfo | null) {
       this.userInfo = info;
@@ -101,8 +137,14 @@ export const useUserStore = defineStore({
     ): Promise<GetUserInfoModel | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
-        const data = await loginApi(loginParams, mode);
-        const { token } = data;
+        console.log('1111111111');
+        console.log('tempUserInfo:', this.tempUserInfo);
+        console.log('demo:', mode);
+        console.log('loginParams:', loginParams);
+
+        // const data = await loginApi(loginParams, mode);
+        // const { token } = data;
+        const { token } = this.tempUserInfo as any;
 
         // save token
         this.setToken(token);
@@ -115,7 +157,6 @@ export const useUserStore = defineStore({
       if (!this.getToken) return null;
       // get user info
       const userInfo = await this.getUserInfoAction();
-
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
         this.setSessionTimeout(false);
@@ -135,7 +176,8 @@ export const useUserStore = defineStore({
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
-      const userInfo = await getUserInfo();
+      // const userInfo = await getUserInfo();
+      const userInfo = this.tempUserInfo as any;
       const { roles = [] } = userInfo;
       if (isArray(roles)) {
         const roleList = roles.map((item) => item.value) as RoleEnum[];
@@ -151,13 +193,14 @@ export const useUserStore = defineStore({
      * @description: logout
      */
     async logout(goLogin = false) {
-      if (this.getToken) {
-        try {
-          await doLogout();
-        } catch {
-          console.log('註銷Token失敗');
-        }
-      }
+      // temp login 暫時 remove
+      // if (this.getToken) {
+      //   try {
+      //     await doLogout();
+      //   } catch {
+      //     console.log('註銷Token失敗');
+      //   }
+      // }
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
