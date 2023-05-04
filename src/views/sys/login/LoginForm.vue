@@ -276,16 +276,16 @@
           console.log('redirectUrl:', redirectUrl);
 
           // 2.跳轉校驗
-          if (
-            document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
-            fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
-          ) {
-            createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
-            setTimeout(() => {
-              window.location.href = fromURL;
-            }, 5000);
-            return;
-          }
+          // if (
+          //   document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
+          //   fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
+          // ) {
+          //   createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
+          //   setTimeout(() => {
+          //     window.location.href = fromURL;
+          //   }, 5000);
+          //   return;
+          // }
 
           // 3.登入 password give
           if (userId && redirectUrl) {
