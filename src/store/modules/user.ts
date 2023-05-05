@@ -23,10 +23,11 @@ import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { isArray } from '/@/utils/is';
 import { h } from 'vue';
+import { createLocalStorage } from '/@/utils/cache';
 
+const ls = createLocalStorage();
 interface UserState {
   userId: string;
-  tempUserInfo: Nullable<UserInfo>;
   company: string;
   system: string;
   userInfo: Nullable<UserInfo>;
@@ -41,8 +42,6 @@ export const useUserStore = defineStore({
   state: (): UserState => ({
     // user id
     userId: '',
-    // temp user info
-    tempUserInfo: null,
     // 公司別
     company: '',
     // 系統別
@@ -61,9 +60,6 @@ export const useUserStore = defineStore({
   getters: {
     getUserId(): string {
       return this.userId || getAuthCache<string>(USER_KEY);
-    },
-    getTempUserInfo(state) {
-      return state.tempUserInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
     },
     getCompany(): string {
       return this.company || getAuthCache<string>(COMPANY_KEY);
@@ -91,9 +87,6 @@ export const useUserStore = defineStore({
     setUserId(id: string | '') {
       this.userId = id;
       setAuthCache(COMPANY_KEY, id);
-    },
-    setTempUserInfo(info: UserInfo | null) {
-      this.tempUserInfo = info;
     },
     setCompany(company: string | '') {
       this.company = company;
@@ -138,14 +131,15 @@ export const useUserStore = defineStore({
       try {
         const { goHome = true, mode, ...loginParams } = params;
         console.log('1111111111');
-        console.log('tempUserInfo:', this.tempUserInfo);
         console.log('demo:', mode);
         console.log('loginParams:', loginParams);
-
+        // todo recovery == start
         // const data = await loginApi(loginParams, mode);
         // const { token } = data;
-        const { token } = this.tempUserInfo as any;
-
+        // todo recovery == end
+        // todo remove == start
+        const { token } = ls.get('TEMP_USER_INFO_KEY__');
+        // todo remove == end
         // save token
         this.setToken(token);
         return this.afterLoginAction(goHome);
@@ -155,6 +149,7 @@ export const useUserStore = defineStore({
     },
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
+      console.log('77777777');
       // get user info
       const userInfo = await this.getUserInfoAction();
       const sessionTimeout = this.sessionTimeout;
@@ -176,8 +171,13 @@ export const useUserStore = defineStore({
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
+      // todo recovery == start
       // const userInfo = await getUserInfo();
-      const userInfo = this.tempUserInfo as any;
+      // todo recovery == end
+      console.log('888888');
+
+      const userInfo = ls.get('TEMP_USER_INFO_KEY__');
+
       const { roles = [] } = userInfo;
       if (isArray(roles)) {
         const roleList = roles.map((item) => item.value) as RoleEnum[];
@@ -190,10 +190,11 @@ export const useUserStore = defineStore({
       return userInfo;
     },
     /**
-     * @description: logout
+     * @description: logout , click left-top coner user avatar
      */
     async logout(goLogin = false) {
       // temp login 暫時 remove
+      // todo recovery == start
       // if (this.getToken) {
       //   try {
       //     await doLogout();
@@ -201,9 +202,15 @@ export const useUserStore = defineStore({
       //     console.log('註銷Token失敗');
       //   }
       // }
+      // todo recovery == end
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
+      // todo remove == start
+      ls.set('TEMP_USER_ID_KEY__', null);
+      ls.set('TEMP_USER_INFO_KEY__', null);
+      ls.set('TEMP_JSON_URL_KEY__', null);
+      // todo remove == end
       // goLogin && router.push(PageEnum.BASE_LOGIN);
       if (goLogin) {
         window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL + '/index.php?logout';

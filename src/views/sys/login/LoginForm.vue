@@ -90,21 +90,20 @@
 
   import LoginFormTitle from './LoginFormTitle.vue';
 
-  import axios from 'axios';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { Guid } from 'js-guid';
+
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
+  import { createLocalStorage } from '/@/utils/cache';
+  import { getS3JSON, getJSONURL } from '/@/utils/json';
 
   // this imports a bare-bones version of S3 that exposes the .send operation
   // import { S3, S3Client, AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
 
   // this imports just the getObject operation from S3
   // import { GetObjectCommand } from '@aws-sdk/client-s3';
-
-  import { GetUserInfoList } from '/@/api/sys/system';
 
   const ACol = Col;
   const ARow = Row;
@@ -128,6 +127,8 @@
     account: '',
     password: '',
   });
+
+  const ls = createLocalStorage();
 
   let userList: any[] = reactive([]);
   // const options = reactive([
@@ -179,8 +180,6 @@
       //   username: 'billing',
       //   mode: 'none', //不要默认的错误提示
       // });
-      console.log('333333');
-      console.log('userInfo:', userInfo);
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
@@ -238,6 +237,7 @@
           return;
         }
 
+        ls.set('TEMP_USER_ID_KEY__', userId);
         userStore.setUserId(userId.toString());
 
         let queryData = parameterList[1].split('=')[1] || null;
@@ -246,18 +246,14 @@
 
         // 0. admin user 校驗
         if (userId) {
-          let userListURL = await GetUserInfoList({
-            trace_id: Guid.newGuid().toString(),
-            bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
-            bucket_name: import.meta.env.VITE_GLOB_S3_JSON,
-            object_key: 'user.json',
-            duration: '10',
-          });
+          // 此處統一獲取 S3 JSON
+          // [user.json]
+          let JSONInputArray = ['user'];
+          let JSONUrlList = await getJSONURL(JSONInputArray);
 
+          let userListURL = JSONUrlList['user'];
           if (userListURL) {
-            userList = [];
-            let temp = await axios.get(userListURL);
-            userList = [...temp.data];
+            userList = await getS3JSON(userListURL);
             console.log('JSON UserList');
             console.log(userList);
           }
@@ -266,11 +262,12 @@
 
           // 1.校驗使用者
           if (!checkUser) {
-            return createMessage.error('Incorrect account or password！');
+            return createMessage.error('The corresponding user information was not obtained!');
           }
           console.log('User Login Pass !!');
           console.log(checkUser);
-          userStore.setTempUserInfo(checkUser);
+
+          ls.set('TEMP_USER_INFO_KEY__', checkUser);
 
           redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
           console.log('redirectUrl:', redirectUrl);
@@ -299,16 +296,16 @@
         }
       } catch (e) {
         createMessage.error('redirect 錯誤，請重新登入 MGT 平台 !!');
-        setTimeout(() => {
-          window.location.href = fromURL;
-        }, 5000);
+        // setTimeout(() => {
+        //   window.location.href = fromURL;
+        // }, 5000);
       }
     } else {
       createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!!');
-      setTimeout(() => {
-        userStore.setUserId('');
-        window.location.href = fromURL;
-      }, 5000);
+      // setTimeout(() => {
+      //   userStore.setUserId('');
+      //   window.location.href = fromURL;
+      // }, 5000);
     }
   });
 </script>
