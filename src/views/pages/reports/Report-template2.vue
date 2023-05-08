@@ -8,9 +8,7 @@
 <template>
   <div class="p-4">
     <ImpExcel @success="loadDataSuccess" dateFormat="YYYY-MM-DD">
-      <a-button v-if="hasPermission(RoleEnum.SUPER) || hasPermission(RoleEnum.DEVELOP)" class="m-3">
-        導入
-      </a-button>
+      <a-button class="m-3"> 導入 </a-button>
     </ImpExcel>
 
     <BasicTable @register="registerTable" :loading="loading">

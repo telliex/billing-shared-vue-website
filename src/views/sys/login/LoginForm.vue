@@ -238,7 +238,6 @@
         }
 
         ls.set('TEMP_USER_ID_KEY__', userId);
-        userStore.setUserId(userId.toString());
 
         let queryData = parameterList[1].split('=')[1] || null;
 
@@ -266,8 +265,13 @@
           }
           console.log('User Login Pass !!');
           console.log(checkUser);
-
           ls.set('TEMP_USER_INFO_KEY__', checkUser);
+          userStore.setUserId(userId.toString());
+          let systemInfo = {
+            company: checkUser.company,
+            system: checkUser.system,
+          };
+          ls.set('TEMP_SYS_KEY__', systemInfo);
 
           redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
           console.log('redirectUrl:', redirectUrl);

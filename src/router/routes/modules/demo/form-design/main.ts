@@ -7,16 +7,17 @@ const permission: AppRouteModule = {
   name: 'Form-designer',
   component: LAYOUT,
   meta: {
+    hideMenu: true,
     orderNo: 10000,
     icon: 'ion:build-outline',
-    title: '表单设计',
+    title: '表單設計',
   },
   children: [
     {
       path: 'design',
       name: 'Design',
       meta: {
-        title: '表单设计',
+        title: '表單設計',
       },
       component: () => import('/@/views/form-design/index.vue'),
     },

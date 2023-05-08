@@ -9,6 +9,7 @@ const feat: AppRouteModule = {
   component: LAYOUT,
   redirect: '/feat/icon',
   meta: {
+    hideMenu: true,
     orderNo: 19,
     icon: 'ion:git-compare-outline',
     title: t('routes.demo.feat.feat'),

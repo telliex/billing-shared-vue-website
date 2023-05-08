@@ -174,8 +174,6 @@ export const useUserStore = defineStore({
       // todo recovery == start
       // const userInfo = await getUserInfo();
       // todo recovery == end
-      console.log('888888');
-
       const userInfo = ls.get('TEMP_USER_INFO_KEY__');
 
       const { roles = [] } = userInfo;

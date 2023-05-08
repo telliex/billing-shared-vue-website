@@ -52,7 +52,9 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, unref, computed, reactive } from 'vue';
+  import { defineComponent, ref, unref, computed, reactive, onMounted } from 'vue';
+  import { GetUserInfoList } from '/@/api/sys/system';
+  import { Guid } from 'js-guid';
   import { CollapseContainer } from '/@/components/Container';
   import { BasicForm, FormSchema, ApiSelect } from '/@/components/Form/index';
   import {
@@ -67,18 +69,19 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { optionsListApi } from '/@/api/demo/select';
   import { cloneDeep } from 'lodash-es';
+  import dayjs from 'dayjs';
+
+  interface SearchItems {
+    ReportType: string;
+    YearMonth: string;
+  }
 
   const valueSelectA = ref<string[]>([]);
   const valueSelectB = ref<string[]>([]);
   const options = ref<Recordable[]>([]);
-  const formData = reactive<{
-    type: string;
-    month?: string;
-    day?: string;
-  }>({
-    type: '',
-    month: '',
-    day: '',
+  const formData = reactive<SearchItems>({
+    ReportType: '',
+    YearMonth: '',
   });
   const optionsA = computed(() => {
     return cloneDeep(unref(options)).map((op) => {
@@ -94,37 +97,58 @@
   });
 
   const schemas: FormSchema[] = [
+    // {
+    //   field: 'reportType',
+    //   component: 'Select',
+    //   label: '報表類型:',
+    //   colProps: {
+    //     span: 6,
+    //   },
+    //   componentProps: {
+    //     options: [
+    //       {
+    //         label: '月報表',
+    //         value: 'month',
+    //         key: 'month',
+    //       },
+    //       {
+    //         label: '日報表',
+    //         value: 'day',
+    //         key: 'day',
+    //       },
+    //     ],
+    //     onChange: (e: any) => {
+    //       console.log(e);
+    //       formData.type = e;
+    //     },
+    //   },
+    // },
     {
-      field: 'reportType',
+      field: 'ReportType',
       component: 'Select',
-      label: '報表類型:',
-      colProps: {
-        span: 6,
-      },
+      label: '報表種類:',
+      // ifShow: () => formData.type === 'month',
       componentProps: {
         options: [
           {
-            label: '月報表',
-            value: 'month',
-            key: 'month',
-          },
-          {
-            label: '日報表',
-            value: 'day',
-            key: 'day',
+            label: '特調成本',
+            value: 'dop_cost_report',
+            key: 'dop_cost_report',
           },
         ],
         onChange: (e: any) => {
           console.log(e);
-          formData.type = e;
         },
+      },
+      colProps: {
+        span: 6,
       },
     },
     {
-      field: 'month',
+      field: 'YearMonth',
       component: 'DatePicker',
-      label: '月份:',
-      ifShow: () => formData.type === 'month',
+      label: '時間:',
+      // ifShow: () => formData.type === 'month',
       componentProps: {
         picker: 'month',
         onChange: (e: any) => {
@@ -135,20 +159,20 @@
         span: 6,
       },
     },
-    {
-      field: 'day',
-      ifShow: () => formData.type === 'day',
-      component: 'DatePicker',
-      label: '日期:',
-      componentProps: {
-        onChange: (e: any) => {
-          console.log(e);
-        },
-      },
-      colProps: {
-        span: 6,
-      },
-    },
+    // {
+    //   field: 'day',
+    //   ifShow: () => formData.type === 'day',
+    //   component: 'DatePicker',
+    //   label: '日期:',
+    //   componentProps: {
+    //     onChange: (e: any) => {
+    //       console.log(e);
+    //     },
+    //   },
+    //   colProps: {
+    //     span: 6,
+    //   },
+    // },
   ];
 
   export default defineComponent({
@@ -199,7 +223,9 @@
           tableListRef.value.push({ title: sheetName, dataSource: results, columns });
         }
       }
-
+      onMounted(() => {
+        console.log(`the component is now mounted.`);
+      });
       return {
         schemas,
         columns: getBasicColumns(),
@@ -212,13 +238,33 @@
         openModal,
         defaultHeader,
         handleReset: () => {
-          formData.type = '';
-          formData.month = '';
-          formData.day = '';
+          formData.ReportType = '';
+          formData.YearMonth = '';
         },
-        handleSubmit: (values: any) => {
+        handleSubmit: (values: SearchItems) => {
           console.log('values', values);
           createMessage.success('click search,values:' + JSON.stringify(values));
+          let S3ReportClass = values.ReportType;
+          let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth)
+            .format('YYYYMM')
+            .toString()}.xlsx`;
+          let S3Month = dayjs(values.YearMonth).format('MM').toString();
+          let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
+          let S3Bucket = 'data-platform-data-bucket-ecv-dev';
+
+          GetUserInfoList({
+            trace_id: Guid.newGuid().toString(),
+            bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
+            bucket_name: S3Bucket,
+            object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`,
+            duration: '10',
+          })
+            .then((res) => {
+              console.log('7777777:', res);
+            })
+            .catch((err) => {
+              console.log('8888888:', err);
+            });
         },
         optionsListApi,
         optionsA,
