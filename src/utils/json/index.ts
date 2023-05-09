@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GetUserInfoList } from '/@/api/sys/system';
+import { GetS3TargetUrl } from '/@/api/sys/system';
 import { Guid } from 'js-guid';
 import { createLocalStorage } from '/@/utils/cache';
 
@@ -10,7 +10,7 @@ export async function getJSONURL(arr: string[]) {
   const promises: any[] = [];
   arr.forEach((item) => {
     promises.push(
-      GetUserInfoList({
+      GetS3TargetUrl({
         trace_id: Guid.newGuid().toString(),
         bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
         bucket_name: import.meta.env.VITE_GLOB_S3_JSON,

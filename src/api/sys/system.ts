@@ -27,7 +27,7 @@ enum Api {
   GetParameterStoreFromAWS = '/get-parameter-store',
   GetBillCodeValue = '/get-billcode-list',
   GetDictionary = '/get-dict-value', // get dictionary
-  GetUserInfoListValue = '/get-download-url',
+  GetS3TargetUrlValue = '/get-download-url',
 }
 
 const version = '/v1.0';
@@ -101,9 +101,9 @@ export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
     },
   );
 
-export const GetUserInfoList = (params: any) =>
+export const GetS3TargetUrl = (params: any) =>
   defHttp.post(
-    { url: '/aws' + version + Api.GetUserInfoListValue, data: params },
+    { url: '/aws' + version + Api.GetS3TargetUrlValue, data: params },
     {
       apiUrl: '/elu-api',
     },

@@ -8,37 +8,14 @@
 <template>
   <div class="p-4">
     <CollapseContainer title="查詢欄位">
-      <BasicForm
-        autoFocusFirstItem
-        :labelWidth="100"
-        :schemas="schemas"
-        :actionColOptions="{ span: 24 }"
-        @submit="handleSubmit"
-        @reset="handleReset"
-      >
-        <template #localSearch="{ model, field }">
-          <ApiSelect
-            :api="optionsListApi"
-            showSearch
-            v-model:value="model[field]"
-            optionFilterProp="label"
-            resultField="list"
-            labelField="name"
-            valueField="id"
-          />
-        </template>
-      </BasicForm>
+      <BasicForm @register="register" @submit="handleSearchSubmit" @reset="handleReset" />
     </CollapseContainer>
-
     <BasicTable
-      title="表0"
-      :columns="columns"
-      :dataSource="data"
-      titleHelpMessage=""
-      :canResize="canResize"
-      :loading="loading"
-      showTableSetting
-      :pagination="pagination"
+      title="特調成本報表"
+      v-for="(table, index) in tableListRef"
+      :key="index"
+      :columns="table.columns"
+      :dataSource="table.dataSource"
     >
       <template #toolbar>
         <a-button type="primary" @click="toggleCanResize">
@@ -48,15 +25,15 @@
         <a-button type="primary" @click="openModal"> 導出 </a-button>
       </template>
     </BasicTable>
-    <ExpExcelModal @register="register" @success="defaultHeader" />
+    <ExpExcelModal @register="registerForExportFile" @success="exportFile" />
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, unref, computed, reactive, onMounted } from 'vue';
-  import { GetUserInfoList } from '/@/api/sys/system';
+  import { defineComponent, ref, reactive, onMounted } from 'vue';
+  import { GetS3TargetUrl } from '/@/api/sys/system';
   import { Guid } from 'js-guid';
   import { CollapseContainer } from '/@/components/Container';
-  import { BasicForm, FormSchema, ApiSelect } from '/@/components/Form/index';
+  import { BasicForm, FormSchema, useForm } from '/@/components/Form/index';
   import {
     jsonToSheetXlsx,
     ExpExcelModal,
@@ -67,34 +44,16 @@
   import { useModal } from '/@/components/Modal';
   import { getBasicColumns, getBasicData } from './tableData';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { optionsListApi } from '/@/api/demo/select';
-  import { cloneDeep } from 'lodash-es';
+  import queryString from 'query-string';
   import dayjs from 'dayjs';
+  import * as XLSX from 'xlsx';
+  import { dateUtil } from '/@/utils/dateUtil';
+  import axios from 'axios';
 
   interface SearchItems {
     ReportType: string;
     YearMonth: string;
   }
-
-  const valueSelectA = ref<string[]>([]);
-  const valueSelectB = ref<string[]>([]);
-  const options = ref<Recordable[]>([]);
-  const formData = reactive<SearchItems>({
-    ReportType: '',
-    YearMonth: '',
-  });
-  const optionsA = computed(() => {
-    return cloneDeep(unref(options)).map((op) => {
-      op.disabled = unref(valueSelectB).indexOf(op.value) !== -1;
-      return op;
-    });
-  });
-  const optionsB = computed(() => {
-    return cloneDeep(unref(options)).map((op) => {
-      op.disabled = unref(valueSelectA).indexOf(op.value) !== -1;
-      return op;
-    });
-  });
 
   const schemas: FormSchema[] = [
     // {
@@ -176,28 +135,42 @@
   ];
 
   export default defineComponent({
-    components: { BasicTable, ExpExcelModal, BasicForm, ApiSelect, CollapseContainer },
+    components: { BasicTable, ExpExcelModal, BasicForm, CollapseContainer },
     setup() {
       const canResize = ref(false);
       const loading = ref(false);
-      const pagination = ref<any>(false);
+      const formData = reactive<SearchItems>({
+        ReportType: '',
+        YearMonth: '',
+      });
+
+      const [register, { setFieldsValue }] = useForm({
+        labelWidth: 100,
+        schemas,
+        actionColOptions: {
+          span: 24,
+        },
+      });
+
+      const loadingRef = ref<Boolean>(false);
 
       const { createMessage } = useMessage();
 
       function toggleCanResize() {
         canResize.value = !canResize.value;
       }
-      function defaultHeader({ filename, bookType }: ExportModalResult) {
+      // export file
+      function exportFile({ filename, bookType }: ExportModalResult) {
         // 默認Object.keys(data[0])作為header
         jsonToSheetXlsx({
-          data: getBasicData(),
+          data: tableListRef.value[0].dataSource || [],
           filename,
           write2excelOpts: {
             bookType,
           },
         });
       }
-      const [register, { openModal }] = useModal();
+      const [registerForExportFile, { openModal }] = useModal();
 
       const tableListRef = ref<
         {
@@ -223,9 +196,144 @@
           tableListRef.value.push({ title: sheetName, dataSource: results, columns });
         }
       }
+
+      function shapeWorkSheel(sheet: XLSX.WorkSheet, range: XLSX.Range) {
+        let str = ' ',
+          char = 65,
+          customWorkSheet = {
+            t: 's',
+            v: str,
+            r: '<t> </t><phoneticPr fontId="1" type="noConversion"/>',
+            h: str,
+            w: str,
+          };
+        if (!sheet || !sheet['!ref']) return [];
+        let c = 0,
+          r = 1;
+        while (c < range.e.c + 1) {
+          while (r < range.e.r + 1) {
+            if (!sheet[String.fromCharCode(char) + r]) {
+              sheet[String.fromCharCode(char) + r] = customWorkSheet;
+            }
+            r++;
+          }
+          r = 1;
+          str += ' ';
+          customWorkSheet = {
+            t: 's',
+            v: str,
+            r: '<t> </t><phoneticPr fontId="1" type="noConversion"/>',
+            h: str,
+            w: str,
+          };
+          c++;
+          char++;
+        }
+      }
+
+      /**
+       * @description: 第一行作为头部
+       */
+      function getHeaderRow(sheet: XLSX.WorkSheet) {
+        if (!sheet || !sheet['!ref']) return [];
+        const headers: string[] = [];
+        // A3:B7=>{s:{c:0, r:2}, e:{c:1, r:6}}
+        const range: XLSX.Range = XLSX.utils.decode_range(sheet['!ref']);
+        shapeWorkSheel(sheet, range);
+        const R = range.s.r;
+        /* start in the first row */
+        for (let C = range.s.c; C <= range.e.c; ++C) {
+          /* walk every column in the range */
+          const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
+          /* find the cell in the first row */
+          let hdr = 'UNKNOWN ' + C; // <-- replace with your desired default
+          if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
+          headers.push(hdr);
+        }
+        return headers;
+      }
+
+      /**
+       * @description: 获得excel数据
+       */
+      function getExcelData(workbook: XLSX.WorkBook) {
+        const excelData: ExcelData[] = [];
+        // const { dateFormat, timeZone } = props;
+        let timeZone = 8;
+        let dateFormat = 'YYYY-MM-DD';
+        for (const sheetName of workbook.SheetNames) {
+          const worksheet = workbook.Sheets[sheetName];
+          const header: string[] = getHeaderRow(worksheet);
+          let results = XLSX.utils.sheet_to_json(worksheet, {
+            raw: true,
+            dateNF: dateFormat, //Not worked
+          }) as object[];
+          results = results.map((row: object) => {
+            for (let field in row) {
+              if (row[field] instanceof Date) {
+                if (timeZone === 8) {
+                  row[field].setSeconds(row[field].getSeconds() + 43);
+                }
+                if (dateFormat) {
+                  row[field] = dateUtil(row[field]).format(dateFormat);
+                }
+              }
+            }
+            return row;
+          });
+
+          excelData.push({
+            header,
+            results,
+            meta: {
+              sheetName,
+            },
+          });
+        }
+        return excelData;
+      }
+
+      /**
+       * @description: 读取excel数据
+       */
+      function readerData(rawFile: File) {
+        loadingRef.value = true;
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = async (e) => {
+            try {
+              const data = e.target && e.target.result;
+              console.log('data');
+              console.log(data);
+              const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+              // console.log(workbook);
+              /* DO SOMETHING WITH workbook HERE */
+              const excelData = getExcelData(workbook);
+              console.log('excelData', excelData);
+              loadDataSuccess(excelData);
+              // emit('success', excelData);
+              resolve('');
+            } catch (error) {
+              console.log(error);
+              reject(error);
+              // emit('error');
+            } finally {
+              loadingRef.value = false;
+            }
+          };
+          reader.readAsArrayBuffer(rawFile);
+        });
+      }
       onMounted(() => {
-        console.log(`the component is now mounted.`);
+        const parsed: any = queryString.parse(location.search.replace(/\//, ''));
+        console.log('parsed');
+        console.log(parsed);
+        setFieldsValue({
+          ReportType: 'dop_cost_report',
+          YearMonth: parsed.qdate ? dayjs(parsed.qdate).format('YYYY-MM') : '',
+        });
       });
+
       return {
         schemas,
         columns: getBasicColumns(),
@@ -233,16 +341,16 @@
         canResize,
         loading,
         toggleCanResize,
-        pagination,
+        registerForExportFile,
         register,
         openModal,
-        defaultHeader,
+        exportFile,
         handleReset: () => {
           formData.ReportType = '';
           formData.YearMonth = '';
         },
-        handleSubmit: (values: SearchItems) => {
-          console.log('values', values);
+        handleSearchSubmit: async (values: SearchItems) => {
+          console.log('Search Items values', values);
           createMessage.success('click search,values:' + JSON.stringify(values));
           let S3ReportClass = values.ReportType;
           let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth)
@@ -252,25 +360,34 @@
           let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
           let S3Bucket = 'data-platform-data-bucket-ecv-dev';
 
-          GetUserInfoList({
+          let S3Location = await GetS3TargetUrl({
             trace_id: Guid.newGuid().toString(),
             bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
             bucket_name: S3Bucket,
             object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`,
             duration: '10',
-          })
-            .then((res) => {
-              console.log('7777777:', res);
-            })
-            .catch((err) => {
-              console.log('8888888:', err);
+          }).catch((err) => {
+            console.log(err);
+            createMessage.warning('該條件下未有資料！');
+          });
+
+          console.log('S3Location:', S3Location);
+          // download file & read file
+          if (S3Location) {
+            const fileData: any = await axios({
+              url: S3Location,
+              method: 'GET',
+              data: {},
+              responseType: 'blob',
+            }).catch((err) => {
+              console.log(err);
+              createMessage.warning('檔案解析錯誤！');
             });
+            console.log('fileData.data');
+            console.log(fileData.data);
+            readerData(fileData.data);
+          }
         },
-        optionsListApi,
-        optionsA,
-        optionsB,
-        valueSelectA,
-        valueSelectB,
         loadDataSuccess,
         tableListRef,
       };

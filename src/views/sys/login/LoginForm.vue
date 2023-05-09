@@ -98,7 +98,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { createLocalStorage } from '/@/utils/cache';
   import { getS3JSON, getJSONURL } from '/@/utils/json';
-
+  import queryString from 'query-string';
   // this imports a bare-bones version of S3 that exposes the .send operation
   // import { S3, S3Client, AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
 
@@ -224,9 +224,11 @@
 
     if (window.location.search) {
       try {
-        let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
+        // let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
+        let parameterList = queryString.parse(location.search.replace(/\//, ''));
+        console.log(parameterList);
         // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
-        let userId = parameterList[0].split('=')[1] || null;
+        let userId = parameterList.user || null;
         console.log('userId:', userId);
 
         if (!userId) {
@@ -238,10 +240,6 @@
         }
 
         ls.set('TEMP_USER_ID_KEY__', userId);
-
-        let queryData = parameterList[1].split('=')[1] || null;
-
-        console.log('data:', queryData);
 
         // 0. admin user 校驗
         if (userId) {
