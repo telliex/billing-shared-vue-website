@@ -189,8 +189,9 @@
 
         setTimeout(() => {
           if (redirectUrl.value) {
+            console.log('====redirect url=====');
             console.log(`${window.location.host}/#${redirectUrl.value}`);
-            router.push({ name: 'contractList' });
+            router.push({ path: redirectUrl.value });
           }
         }, 2000);
       }
@@ -271,8 +272,11 @@
           };
           ls.set('TEMP_SYS_KEY__', systemInfo);
 
-          redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
-          console.log('redirectUrl:', redirectUrl);
+          // redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
+          redirectUrl.value =
+            queryString.parse(window.location.hash)['/login?redirect']?.toString() || null;
+          console.log('redirectUrl:', redirectUrl.value);
+          console.log(queryString.parse(location.hash)['/login?redirect']);
 
           // 2.跳轉校驗
           // if (
