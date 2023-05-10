@@ -7,7 +7,7 @@ const report: AppRouteModule = {
   path: '/reports',
   name: 'Reports',
   component: LAYOUT,
-  redirect: '/reports/special',
+  redirect: '/reports/dop-cost',
   meta: {
     orderNo: 500,
     icon: 'ion:bar-chart-outline',
@@ -15,12 +15,12 @@ const report: AppRouteModule = {
   },
   children: [
     {
-      path: 'special',
-      name: 'Special',
+      path: 'dop-cost',
+      name: 'dop-cost',
       meta: {
         title: t('routes.reports.dropCost'),
       },
-      component: () => import('/@/views/pages/reports/Report-template1.vue'),
+      component: () => import('/@/views/pages/reports/dop-cost.vue'),
     },
     {
       path: 'powerbi',
