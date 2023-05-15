@@ -26,6 +26,7 @@ const report: AppRouteModule = {
       path: 'import',
       name: 'ExcelImport',
       meta: {
+        hideMenu: true,
         title: 'Excel Import',
       },
       // component: () => import('/@/views/pages/reports/Report1.vue'),
@@ -35,6 +36,7 @@ const report: AppRouteModule = {
       path: 'sales-cdn-revenue',
       name: 'SalesCDNRevenue',
       meta: {
+        hideMenu: true,
         title: 'Sales CDN revenue',
       },
       component: () => import('/@/views/pages/reports/Report-sales-cdn-revenue.vue'),
