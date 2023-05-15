@@ -7,11 +7,15 @@
 -->
 <template>
   <div class="p-4">
-    <CollapseContainer title="查詢欄位">
-      <BasicForm @register="register" @submit="handleSearchSubmit" @reset="handleReset" />
+    <CollapseContainer :title="t('report.searchAreaTitle')">
+      <BasicForm
+        @register="registerForSearch"
+        @submit="handleSearchSubmit"
+        @reset="handleSearchReset"
+      />
     </CollapseContainer>
     <BasicTable
-      title="特調成本報表"
+      :title="formData.YearMonth + t('report.tableAreaTitle')"
       v-for="(table, index) in tableListRef"
       :key="index"
       :columns="table.columns"
@@ -19,10 +23,10 @@
     >
       <template #toolbar>
         <a-button type="primary" @click="toggleCanResize">
-          {{ !canResize ? '自適應高度' : '取消自適應' }}
+          {{ !canResize ? t('report.autoFitHeight') : t('report.cancalFitHeight') }}
         </a-button>
 
-        <a-button type="primary" @click="openModal"> 導出 </a-button>
+        <a-button type="primary" @click="openModal">{{ t('report.exportFile') }}</a-button>
       </template>
     </BasicTable>
     <ExpExcelModal @register="registerForExportFile" @success="exportFile" />
@@ -34,6 +38,8 @@
   import { Guid } from 'js-guid';
   import { CollapseContainer } from '/@/components/Container';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form/index';
+  // hooks
+  import { useI18n } from '/@/hooks/web/useI18n';
   import {
     jsonToSheetXlsx,
     ExpExcelModal,
@@ -54,7 +60,7 @@
     ReportType: string;
     YearMonth: string;
   }
-
+  const { t } = useI18n();
   const schemas: FormSchema[] = [
     // {
     //   field: 'reportType',
@@ -85,7 +91,7 @@
     {
       field: 'ReportType',
       component: 'Select',
-      label: '報表種類:',
+      label: `${t('report.searchAreaReportTypeLavel')}:`,
       // ifShow: () => formData.type === 'month',
       componentProps: {
         options: [
@@ -106,7 +112,7 @@
     {
       field: 'YearMonth',
       component: 'DatePicker',
-      label: '時間:',
+      label: `${t('report.searchAreaYYYYMMLavel')}:`,
       // ifShow: () => formData.type === 'month',
       componentProps: {
         picker: 'month',
@@ -139,12 +145,12 @@
     setup() {
       const canResize = ref(false);
       const loading = ref(false);
-      const formData = reactive<SearchItems>({
+      let formData = reactive<SearchItems>({
         ReportType: '',
         YearMonth: '',
       });
 
-      const [register, { setFieldsValue }] = useForm({
+      const [registerForSearch, { setFieldsValue }] = useForm({
         labelWidth: 100,
         schemas,
         actionColOptions: {
@@ -342,10 +348,10 @@
         loading,
         toggleCanResize,
         registerForExportFile,
-        register,
+        registerForSearch,
         openModal,
         exportFile,
-        handleReset: () => {
+        handleSearchReset: () => {
           formData.ReportType = '';
           formData.YearMonth = '';
         },
@@ -390,6 +396,8 @@
         },
         loadDataSuccess,
         tableListRef,
+        formData,
+        t,
       };
     },
   });

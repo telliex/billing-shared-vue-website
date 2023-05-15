@@ -23,13 +23,21 @@ const report: AppRouteModule = {
       component: () => import('/@/views/pages/reports/dop-cost.vue'),
     },
     {
-      path: 'powerbi',
-      name: 'PowerBI',
+      path: 'import',
+      name: 'ExcelImport',
       meta: {
-        title: t('routes.reports.powerBI'),
+        title: 'Excel Import',
       },
       // component: () => import('/@/views/pages/reports/Report1.vue'),
-      component: () => import('/@/views/pages/reports/Report-template2.vue'),
+      component: () => import('/@/views/pages/reports/Report-template-demo.vue'),
+    },
+    {
+      path: 'sales-cdn-revenue',
+      name: 'SalesCDNRevenue',
+      meta: {
+        title: 'Sales CDN revenue',
+      },
+      component: () => import('/@/views/pages/reports/Report-sales-cdn-revenue.vue'),
     },
   ],
 };

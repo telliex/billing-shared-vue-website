@@ -28,6 +28,7 @@ enum Api {
   GetBillCodeValue = '/get-billcode-list',
   GetDictionary = '/get-dict-value', // get dictionary
   GetS3TargetUrlValue = '/get-download-url',
+  GetPowerBITokenValue = '/token',
 }
 
 const version = '/v1.0';
@@ -106,5 +107,13 @@ export const GetS3TargetUrl = (params: any) =>
     { url: '/aws' + version + Api.GetS3TargetUrlValue, data: params },
     {
       apiUrl: '/elu-api',
+    },
+  );
+
+export const GetPowerBIToken = (params: any) =>
+  defHttp.post(
+    { url: '/', data: params },
+    {
+      apiUrl: 'https://login.microsoftonline.com/common/oauth2/token',
     },
   );
