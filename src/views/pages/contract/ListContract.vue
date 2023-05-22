@@ -457,7 +457,7 @@
         });
 
         timeLimited.value =
-          hasPermission([RoleEnum.TESTER, RoleEnum.SUPER, RoleEnum.DEVELOP, RoleEnum.OPERATION]) ||
+          hasPermission([RoleEnum.TEST, RoleEnum.SUPER, RoleEnum.DEVELOPER, RoleEnum.OPERATION]) ||
           !tempReturn[0].response_items[0]['code-name']
             .split(',')
             .includes(dayjs().date().toString());

@@ -86,8 +86,8 @@ const iframe: AppRouteModule[] = [
           roles: [
             RoleEnum.OPERATION,
             RoleEnum.SUPER,
-            RoleEnum.DEVELOP,
-            RoleEnum.TESTER,
+            RoleEnum.DEVELOPER,
+            RoleEnum.TEST,
             RoleEnum.BU,
           ],
         },

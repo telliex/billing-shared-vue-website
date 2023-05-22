@@ -1,5 +1,5 @@
 import type { AppRouteModule } from '/@/router/types';
-
+import { RoleEnum } from '/@/enums/roleEnum';
 import { LAYOUT } from '/@/router/constant';
 import { t } from '/@/hooks/web/useI18n';
 
@@ -12,6 +12,7 @@ const report: AppRouteModule = {
     orderNo: 500,
     icon: 'ion:bar-chart-outline',
     title: t('routes.reports.reportCollection'),
+    roles: [RoleEnum.OPERATION, RoleEnum.SUPER, RoleEnum.DEVELOPER, RoleEnum.TEST, RoleEnum.SALES],
   },
   children: [
     {
@@ -36,10 +37,17 @@ const report: AppRouteModule = {
       path: 'sales-cdn-revenue',
       name: 'SalesCDNRevenue',
       meta: {
-        hideMenu: true,
         title: 'Sales CDN revenue',
       },
       component: () => import('/@/views/pages/reports/Report-sales-cdn-revenue.vue'),
+    },
+    {
+      path: 'sales-monthly-revenue',
+      name: 'SalesMonthlyRevenue',
+      meta: {
+        title: 'Sales Monthly Revenue',
+      },
+      component: () => import('/@/views/pages/reports/Report-sales_monthly_revenue.vue'),
     },
   ],
 };
