@@ -15,6 +15,7 @@ main_process() {
     ENV="$(echo ${6} | tr '[:upper:]' '[:lower:]')"
     S3_REGION_URL=$7
     S3_JSON_URL=$8
+    PERMISSION_API_URL=$9
 
     ENV_TEMPLATE_NAME=".env.template"
     NEGIEX_CONFIG_TEMPLATE="default.template.conf"
@@ -22,14 +23,15 @@ main_process() {
     TARGET_ENV_FILE_NAME=".env.$ENV"
 
     echo $REPORT_API_URL
+    echo $PERMISSION_API_URL
     echo $ELU_API_URL
     echo $OLD_MGT_URL
     echo $CRS_URL
     echo $CBMS_URL
     echo '-------------------------'
 
-    cat $ENV_TEMPLATE_NAME | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{CBMS_URL}}|'$CBMS_URL'|g' | sed -e 's|{{OLD_MGT_URL}}|'$OLD_MGT_URL'|g' | sed -e 's|{{CRS_URL}}|'$CRS_URL'|g' | sed -e 's|{{S3_REGION_URL}}|'$S3_REGION_URL'|g' | sed -e 's|{{S3_JSON_URL}}|'$S3_JSON_URL'|g' >| "$TARGET_ENV_FILE_NAME"
-    cat $NEGIEX_CONFIG_TEMPLATE | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g'  >| "$NEGIEX_CONFIG_TARGET"
+    cat $ENV_TEMPLATE_NAME | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{CBMS_URL}}|'$CBMS_URL'|g' | sed -e 's|{{OLD_MGT_URL}}|'$OLD_MGT_URL'|g' | sed -e 's|{{CRS_URL}}|'$CRS_URL'|g' | sed -e 's|{{S3_REGION_URL}}|'$S3_REGION_URL'|g' | sed -e 's|{{S3_JSON_URL}}|'$S3_JSON_URL'|g' | sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g' >| "$TARGET_ENV_FILE_NAME"
+    cat $NEGIEX_CONFIG_TEMPLATE | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g'  >| "$NEGIEX_CONFIG_TARGET"
 }
 
 

@@ -53,14 +53,14 @@
   const ls = createLocalStorage();
   let currentPagePermissionId = 13;
   let currentUserId = ls.get('TEMP_USER_ID_KEY__');
-  const reportId = '0b553f33-d174-423a-8da8-ea72d96a404b'; // need to change
+  const reportId = 'd05c2708-af30-4fa5-835f-108e37ddd24a'; // need to change
   // const tableName = 'sales-revenue-report'; // need to change
 
   // Flag which specifies whether to use phase embedding or not
   const phasedEmbeddingFlag = false;
 
   // CSS Class to be passed to the wrapper
-  const reportClass = 'report-sales-cdn-revenue__container';
+  const reportClass = 'report-sales-monthly-revenue__container';
 
   let report: Report;
 
