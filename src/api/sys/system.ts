@@ -33,6 +33,8 @@ enum Api {
   GetPowerBIEmbedDataValue = '/billing-powerbi-get-embed-data',
   GetUserPermissionValue = '/mgt-permission/get-user-permission-by-user',
   GetUserPermissionRoleListValue = '/mgt-permission/get-permission',
+  GetPowerBIFilterValueValue = '/billing-powerbi-get-filter-value',
+  GetUserPermissionGetRoleScopeValue = '/mgt-permission/get-role-scope',
 }
 
 const version = '/v1.0';
@@ -118,6 +120,45 @@ export const GetUserPermissionRoleList = (params: any) =>
   defHttp.get(
     {
       url: '/api' + version + Api.GetUserPermissionRoleListValue,
+      data: params,
+      transformResponse: [
+        function (data) {
+          // Do whatever you want to transform the data
+          if (data.length) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [JSON.parse(data)],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/permission-api',
+    },
+  );
+
+export const GetUserPermissionGetRoleScope = (params: any) =>
+  defHttp.post(
+    {
+      url: '/api' + version + Api.GetUserPermissionGetRoleScopeValue,
       data: params,
       transformResponse: [
         function (data) {
@@ -305,5 +346,45 @@ export const GetPowerBIEmbedData = (params: any) =>
     },
     {
       apiUrl: '/power-bi3',
+    },
+  );
+export const GetPowerBIFilterValue = (params: any) =>
+  defHttp.post(
+    {
+      url: Api.GetPowerBIFilterValueValue,
+      data: params,
+      transformResponse: [
+        function (data) {
+          // Do whatever you want to transform the data
+          console.log('------------');
+          console.log(data);
+          if (data) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [JSON.parse(data)],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/power-bi4',
     },
   );

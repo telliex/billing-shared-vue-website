@@ -35,11 +35,14 @@
     GetPowerBIAccessToken,
     GetPowerBIEmbedInfo,
     GetPowerBIEmbedData,
-    // GetUserPermission,
+    GetUserPermission,
     GetUserPermissionRoleList,
+    GetPowerBIFilterValue,
   } from '/@/api/sys/system';
   import { PowerBIReportEmbed } from 'powerbi-client-vue-js';
   import { createLocalStorage } from '/@/utils/cache';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  const { createMessage } = useMessage();
   import { useLoading } from '/@/components/Loading';
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
@@ -126,28 +129,26 @@
     openWrapLoading();
     console.log(ls.get('TEMP_USER_ID_KEY__'));
     console.log('Embed Report clicked');
+
     // get user permission list
-    let permissionListResult = await GetUserPermissionRoleList({
+    let permissionResult = await GetUserPermission({
       trace_id: Guid.newGuid().toString(),
       BillMasterId: currentUserId,
     }).catch((err) => {
       console.log('err:', err);
     });
 
-    console.log("Current User's permissionList:", permissionListResult[0].data);
-
-    if (!permissionListResult[0].data.length) {
-      console.log('You do not have permission to view this report.');
-      return;
-    }
+    console.log("Current User's permissionList:", permissionResult[0].data);
 
     // check the page if the user has permission to view this report
-    let isOnPermissionList = permissionListResult[0].data.find(
-      (item: any) => item.read.permissionId === currentPagePermissionId,
+    let isOnPermission = permissionResult[0].data.find(
+      (item: any) => item.read.permissionId === currentPagePermissionId && item.read.status === 1,
     );
 
-    if (!isOnPermissionList) {
+    if (!isOnPermission) {
+      createMessage.error('You do not have permission to view this report !');
       console.log('You do not have permission to view this report.');
+      closeWrapLoading();
       return;
     }
 
@@ -166,6 +167,8 @@
 
     if (!tokenResponse[0]?.ok) {
       console.error(`Failed to fetch PowerBI Token. `);
+      createMessage.error('Failed to fetch PowerBI Token. ');
+      closeWrapLoading();
       return;
     }
     let accessToken = tokenResponse[0].accessToken;
@@ -181,6 +184,8 @@
 
     if (!embedInfoResponse[0]?.ok) {
       console.error(`Failed to fetch PowerBI Embed Info. `);
+      createMessage.error('Failed to fetch PowerBI Embed Info.');
+      closeWrapLoading();
       return;
     }
 
@@ -199,6 +204,8 @@
 
     if (!embedDataResponse[0]?.ok) {
       console.error(`Failed to fetch PowerBI Embed Data. `);
+      createMessage.error('Failed to fetch PowerBI Embed Data.');
+      closeWrapLoading();
       return;
     }
 
@@ -327,7 +334,37 @@
    * Assign Embed Object from Report component to report
    * @param value
    */
-  function setReportObj(value: Report) {
+  async function setReportObj(value: Report) {
+    console.log('6666666666');
+    console.log(value);
+
+    let filterValueResult = await GetPowerBIFilterValue({
+      userId: currentUserId,
+    }).catch((err) => {
+      console.log(err);
+    });
+    console.log('filterValueResult:', filterValueResult[0].result);
+
+    //[239,273,384]
+    let targetValue = filterValueResult[0].result;
+    value.config.filters = [
+      {
+        $schema: 'http://powerbi.com/product/schema#basic',
+        target: {
+          table: 'sales-revenue-report',
+          column: 'ecloud_sales',
+        },
+        operator: 'In',
+        values: targetValue,
+        filterType: 1,
+        requireSingleSelection: true,
+        displaySettings: {
+          isHiddenInViewMode: true,
+          isLockedInViewMode: true,
+        },
+      },
+    ];
+    console.log(value);
     report = value;
   }
 
@@ -344,13 +381,13 @@
   }
 
   onMounted(async () => {
-    // GetUserPermission({
-    //   trace_id: Guid.newGuid().toString(),
-    //   BillMasterId: 545,
-    // }).then((res) => {
-    //   console.log('==========');
-    //   console.log('res1:', res);
-    // });
+    GetUserPermissionRoleList({
+      trace_id: Guid.newGuid().toString(),
+      BillMasterId: currentUserId,
+    }).then((res) => {
+      console.log('====Permission List======');
+      console.log('res1:', res);
+    });
     setTimeout(() => {
       embedReport();
     }, 1000);
