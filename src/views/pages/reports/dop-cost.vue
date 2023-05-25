@@ -88,10 +88,12 @@
     //     },
     //   },
     // },
+    // disabled
     {
       field: 'ReportType',
       component: 'Select',
       label: `${t('report.searchAreaReportTypeLavel')}:`,
+      show: false,
       // ifShow: () => formData.type === 'month',
       componentProps: {
         options: [
@@ -309,13 +311,10 @@
           reader.onload = async (e) => {
             try {
               const data = e.target && e.target.result;
-              console.log('data');
-              console.log(data);
               const workbook = XLSX.read(data, { type: 'array', cellDates: true });
               // console.log(workbook);
               /* DO SOMETHING WITH workbook HERE */
               const excelData = getExcelData(workbook);
-              console.log('excelData', excelData);
               loadDataSuccess(excelData);
               // emit('success', excelData);
               resolve('');
@@ -332,8 +331,6 @@
       }
       onMounted(() => {
         const parsed: any = queryString.parse(location.search.replace(/\//, ''));
-        console.log('parsed');
-        console.log(parsed);
         setFieldsValue({
           ReportType: 'dop_cost_report',
           YearMonth: parsed.qdate ? dayjs(parsed.qdate).format('YYYY-MM') : '',
@@ -356,7 +353,6 @@
           formData.YearMonth = '';
         },
         handleSearchSubmit: async (values: SearchItems) => {
-          console.log('Search Items values', values);
           createMessage.success('click search,values:' + JSON.stringify(values));
           let S3ReportClass = values.ReportType;
           let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth)
@@ -389,8 +385,6 @@
               console.log(err);
               createMessage.warning('檔案解析錯誤！');
             });
-            console.log('fileData.data');
-            console.log(fileData.data);
             readerData(fileData.data);
           }
         },
