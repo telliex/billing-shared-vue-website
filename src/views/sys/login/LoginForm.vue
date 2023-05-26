@@ -213,6 +213,7 @@
   onMounted(async () => {
     console.log('elu:', import.meta.env.VITE_GLOB_ELU_API_URL);
     console.log('report:', import.meta.env.VITE_GLOB_REPORT_API_URL);
+    console.log('permission:', import.meta.env.VITE_GLOB_PERMISSION_API_URL);
     // http://localhost:5151/?user=admin/#/login?redirect=/home
     console.log('window.location.pathname:', window.location.pathname);
     console.log('window.location.search:', window.location.search);

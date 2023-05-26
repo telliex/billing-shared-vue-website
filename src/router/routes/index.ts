@@ -9,7 +9,6 @@ import { t } from '/@/hooks/web/useI18n';
 // import.meta.globEager() 直接引入所有的模块 Vite 独有的功能
 const modules = import.meta.globEager('./modules/**/*.ts');
 const routeModuleList: AppRouteModule[] = [];
-console.log('menue-modules', modules);
 // cbs ,cbms
 const systemStr = new RegExp(`./modules/${import.meta.env.VITE_GLOB_SYSTEM}/`);
 // 加入到路由集合中

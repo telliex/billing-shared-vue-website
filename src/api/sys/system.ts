@@ -28,7 +28,13 @@ enum Api {
   GetBillCodeValue = '/get-billcode-list',
   GetDictionary = '/get-dict-value', // get dictionary
   GetS3TargetUrlValue = '/get-download-url',
-  GetPowerBITokenValue = '/token',
+  GetPowerBIAccessTokenValue = '/billing-powerbi-get-access-token',
+  GetPowerBIEmbedInfoValue = '/billing-powerbi-get-embed-info',
+  GetPowerBIEmbedDataValue = '/billing-powerbi-get-embed-data',
+  GetUserPermissionValue = '/mgt-permission/get-user-permission-by-user',
+  GetUserPermissionRoleListValue = '/mgt-permission/get-permission',
+  GetPowerBIFilterValueValue = '/billing-powerbi-get-filter-value',
+  GetUserPermissionGetRoleScopeValue = '/mgt-permission/get-role-scope',
 }
 
 const version = '/v1.0';
@@ -110,10 +116,160 @@ export const GetS3TargetUrl = (params: any) =>
     },
   );
 
-export const GetPowerBIToken = (params: any) =>
-  defHttp.post(
-    { url: '/', data: params },
+export const GetUserPermissionRoleList = (params: any) =>
+  defHttp.get(
     {
-      apiUrl: 'https://login.microsoftonline.com/common/oauth2/token',
+      url: '/api' + version + Api.GetUserPermissionRoleListValue,
+      data: params,
+      transformResponse: [
+        function (data) {
+          // Do whatever you want to transform the data
+          if (data.length) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [JSON.parse(data)],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/permission-api',
+    },
+  );
+
+export const GetUserPermissionGetRoleScope = (params: any) =>
+  defHttp.post(
+    {
+      url: '/api' + version + Api.GetUserPermissionGetRoleScopeValue,
+      data: params,
+      transformResponse: [
+        function (data) {
+          // Do whatever you want to transform the data
+          if (data.length) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [JSON.parse(data)],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/permission-api',
+    },
+  );
+
+export const GetUserPermission = (params: any) =>
+  defHttp.post(
+    {
+      url: '/api' + version + Api.GetUserPermissionValue,
+      data: params,
+      transformResponse: [
+        function (data) {
+          // Do whatever you want to transform the data
+          if (data.length) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [JSON.parse(data)],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/permission-api',
+    },
+  );
+
+export const GetPowerBIFilterValue = (params: any) =>
+  defHttp.post(
+    {
+      url: Api.GetPowerBIFilterValueValue,
+      data: params,
+      transformResponse: [
+        function (data) {
+          // Do whatever you want to transform the data
+          console.log('------------');
+          console.log(data);
+          if (data) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [JSON.parse(data)],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/power-bi',
     },
   );

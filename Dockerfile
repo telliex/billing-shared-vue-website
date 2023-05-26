@@ -23,6 +23,7 @@ COPY . .
 
 ARG A_ENV
 ARG A_API_MGT_REPORT
+ARG A_API_MGT_PERMISSION
 ARG A_API_MGT_ELU
 ARG A_OLD_MGT
 ARG A_CRS
@@ -34,6 +35,7 @@ ARG A_S3_JSON
 ENV ENV $A_ENV
 ENV REGION us-west-2
 ENV API_MGT_REPORT $A_API_MGT_REPORT
+ENV API_MGT_PERMISSION $A_API_MGT_PERMISSION
 ENV API_MGT_ELU $A_API_MGT_ELU
 ENV OLD_MGT $A_OLD_MGT
 ENV CRS $A_CRS
@@ -46,6 +48,7 @@ ENV S3_JSON billing-dev-website-resource
 # ENV ENV dev
 # ENV REGION us-west-2
 # ENV API_MGT_REPORT http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3007
+# ENV API_MGT_PERMISSION http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3002
 # ENV API_MGT_ELU http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3006
 # ENV OLD_MGT http://mgt-dev.ecv-billing-center.com
 # ENV CRS http://dataplatform-dev.ecv-billing-center.com

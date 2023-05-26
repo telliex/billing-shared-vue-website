@@ -7,4 +7,19 @@ export enum RoleEnum {
 
   // user
   USER = 'user',
+
+  // salse
+  SALES = 'sales',
+
+  // opration
+  OPERATION = 'op',
+
+  // developer
+  DEVELOPER = 'developer',
+
+  // accountant
+  ACCOUNTANT = 'accountant',
+
+  // bu
+  BU = 'bu',
 }
