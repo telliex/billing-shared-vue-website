@@ -27,14 +27,12 @@
 </template>
 <script lang="ts" setup>
   import { ref, reactive, onMounted } from 'vue';
+  import type { IEmbedConfigurationBase } from 'powerbi-models';
   import { models, Report, IReportEmbedConfiguration, Page, service, Embed } from 'powerbi-client';
   import { IHttpPostMessageResponse } from 'http-post-message';
   import 'powerbi-report-authoring';
   import { Guid } from 'js-guid';
   import {
-    GetPowerBIAccessToken,
-    GetPowerBIEmbedInfo,
-    GetPowerBIEmbedData,
     GetUserPermission,
     GetUserPermissionRoleList,
     GetPowerBIFilterValue,
@@ -54,17 +52,15 @@
   });
 
   const ls = createLocalStorage();
-  let currentPagePermissionId = 13;
+  let currentPagePermissionId = null;
+  let currentPageReportName = 'sales_monthly_revenue'; // need to change
+  // CSS Class to be passed to the wrapper
+  const reportClass = `${currentPageReportName}__container`;
   let currentUserId = ls.get('TEMP_USER_ID_KEY__');
-  const reportId = 'd05c2708-af30-4fa5-835f-108e37ddd24a'; // need to change
-  // const tableName = 'sales-revenue-report'; // need to change
-
   // Flag which specifies whether to use phase embedding or not
   const phasedEmbeddingFlag = false;
 
-  // CSS Class to be passed to the wrapper
-  const reportClass = 'report-sales-monthly-revenue__container';
-
+  let targetValue = [];
   let report: Report;
 
   // Handles the embed config response for embedding
@@ -74,6 +70,13 @@
     EmbedToken: {
       Token: string;
     };
+  }
+
+  interface IEmbedConfigurationBaseExtended extends IEmbedConfigurationBase {
+    filters?: any[];
+  }
+  interface ReportExtended extends Report {
+    config: IEmbedConfigurationBaseExtended;
   }
 
   // Track Report embedding status
@@ -152,71 +155,32 @@
       return;
     }
 
-    // Get the embed config from the service and set the reportConfigResponse
-    let tokenResponse = await GetPowerBIAccessToken({}).catch((err) => {
-      console.log(err);
-    });
-
-    // type: 'i-want-embed-token',
-    //   reportId: reportId,
-    // }).catch((err) => {
-    //   console.log(err);
-    // });
-
-    console.log('reportConfigResponse-accessToken:', tokenResponse[0].accessToken);
-
-    if (!tokenResponse[0]?.ok) {
-      console.error(`Failed to fetch PowerBI Token. `);
-      createMessage.error('Failed to fetch PowerBI Token. ');
-      closeWrapLoading();
-      return;
-    }
-    let accessToken = tokenResponse[0].accessToken;
-
-    let embedInfoResponse = await GetPowerBIEmbedInfo({
-      accessToken: accessToken,
-      reportId: reportId,
+    let filterValueResult = await GetPowerBIFilterValue({
+      userId: currentUserId,
+      pageName: currentPageReportName,
     }).catch((err) => {
       console.log(err);
     });
-
-    console.log('embedInfoResponse:', embedInfoResponse[0]);
-
-    if (!embedInfoResponse[0]?.ok) {
-      console.error(`Failed to fetch PowerBI Embed Info. `);
-      createMessage.error('Failed to fetch PowerBI Embed Info.');
-      closeWrapLoading();
-      return;
-    }
-
-    let datasetId = embedInfoResponse[0].datasetId;
-    let embed_url = embedInfoResponse[0].embed_url;
-
-    let embedDataResponse = await GetPowerBIEmbedData({
-      accessToken: accessToken,
-      reportId: reportId,
-      datasetId: datasetId,
-    }).catch((err) => {
-      console.log(err);
-    });
-
-    console.log('embedDataResponse:', embedDataResponse[0]);
-
-    if (!embedDataResponse[0]?.ok) {
+    if (!filterValueResult[0]?.ok) {
       console.error(`Failed to fetch PowerBI Embed Data. `);
       createMessage.error('Failed to fetch PowerBI Embed Data.');
       closeWrapLoading();
       return;
     }
 
-    let embedToken = embedDataResponse[0].embedToken;
-    // let expiryTime = embedDataResponse[0].expiryTime;
+    console.log('filterValueResult:', filterValueResult[0]);
+
+    //[239,273,384]
+    targetValue = filterValueResult[0].userNameList;
+    let embedUrl = filterValueResult[0].embedUrl;
+    let embedToken = filterValueResult[0].embedToken;
+    let reportId = filterValueResult[0].reportId;
 
     // Update the reportConfig to embed the PowerBI report
     currentReportConfig = {
       ...currentReportConfig,
       id: reportId,
-      embedUrl: embed_url,
+      embedUrl: embedUrl,
       accessToken: embedToken,
     };
     console.log('currentReportConfig:', currentReportConfig);
@@ -334,25 +298,17 @@
    * Assign Embed Object from Report component to report
    * @param value
    */
-  async function setReportObj(value: Report) {
-    console.log('6666666666');
+  async function setReportObj(value: ReportExtended) {
+    console.log('===report===');
     console.log(value);
 
-    let filterValueResult = await GetPowerBIFilterValue({
-      userId: currentUserId,
-    }).catch((err) => {
-      console.log(err);
-    });
-    console.log('filterValueResult:', filterValueResult[0].result);
-
-    //[239,273,384]
-    let targetValue = filterValueResult[0].result;
     value.config.filters = [
       {
         $schema: 'http://powerbi.com/product/schema#basic',
         target: {
           table: 'sales-revenue-report',
           column: 'ecloud_sales',
+          report,
         },
         operator: 'In',
         values: targetValue,
@@ -386,11 +342,16 @@
       BillMasterId: currentUserId,
     }).then((res) => {
       console.log('====Permission List======');
-      console.log('res1:', res);
-    });
-    setTimeout(() => {
+      console.log('res1:', res[0].data);
+
+      res[0].data.forEach((item) => {
+        if (item.type === currentPageReportName) {
+          currentPagePermissionId = item.read.permissionId;
+          console.log('currentPagePermissionId:', currentPagePermissionId);
+        }
+      });
       embedReport();
-    }, 1000);
+    });
   });
 </script>
 <style lang="less">

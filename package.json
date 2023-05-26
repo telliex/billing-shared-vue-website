@@ -66,6 +66,7 @@
     "pinia": "2.0.12",
     "powerbi-client": "^2.22.2",
     "powerbi-client-vue-js": "^1.0.3",
+    "powerbi-models": "^1.12.6",
     "powerbi-report-authoring": "^2.0.0",
     "print-js": "^1.6.0",
     "qrcode": "^1.5.0",

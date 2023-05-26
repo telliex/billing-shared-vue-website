@@ -233,121 +233,6 @@ export const GetUserPermission = (params: any) =>
     },
   );
 
-export const GetPowerBIAccessToken = (params: any) =>
-  defHttp.post(
-    {
-      url: Api.GetPowerBIAccessTokenValue,
-      data: params,
-      transformResponse: [
-        function (data) {
-          // Do whatever you want to transform the data
-          if (data) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [JSON.parse(data)],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
-          } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
-            };
-          }
-        },
-      ],
-    },
-    {
-      apiUrl: '/power-bi1',
-    },
-  );
-
-export const GetPowerBIEmbedInfo = (params: any) =>
-  defHttp.post(
-    {
-      url: Api.GetPowerBIEmbedInfoValue,
-      data: params,
-      transformResponse: [
-        function (data) {
-          // Do whatever you want to transform the data
-          if (data) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [JSON.parse(data)],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
-          } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
-            };
-          }
-        },
-      ],
-    },
-    {
-      apiUrl: '/power-bi2',
-    },
-  );
-export const GetPowerBIEmbedData = (params: any) =>
-  defHttp.post(
-    {
-      url: Api.GetPowerBIEmbedDataValue,
-      data: params,
-      transformResponse: [
-        function (data) {
-          // Do whatever you want to transform the data
-          if (data) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [JSON.parse(data)],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
-          } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
-            };
-          }
-        },
-      ],
-    },
-    {
-      apiUrl: '/power-bi3',
-    },
-  );
 export const GetPowerBIFilterValue = (params: any) =>
   defHttp.post(
     {
@@ -385,6 +270,6 @@ export const GetPowerBIFilterValue = (params: any) =>
       ],
     },
     {
-      apiUrl: '/power-bi4',
+      apiUrl: '/power-bi',
     },
   );
