@@ -53,7 +53,7 @@
 
   const ls = createLocalStorage();
   let currentPagePermissionId = null;
-  let currentPageReportName = 'sales_monthly_revenue'; // need to change
+  let currentPageReportName = 'sales_cdn_revenue'; // need to change
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName}__container`;
   let currentUserId = ls.get('TEMP_USER_ID_KEY__');
