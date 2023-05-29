@@ -21,7 +21,7 @@ const report: AppRouteModule = {
       meta: {
         title: t('routes.reports.dropCost'),
       },
-      component: () => import('/@/views/pages/reports/dop-cost.vue'),
+      component: () => import('/@/views/pages/reports/dop-cost/index.vue'),
     },
     {
       path: 'import',

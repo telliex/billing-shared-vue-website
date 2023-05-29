@@ -1,8 +1,12 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2023-05-10 03:42:33
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-05-29 03:08:35
+ */
 export default {
   searchAreaTitle: '查詢欄位',
-  searchAreaReportTypeLavel: '報表種類',
-  searchAreaYYYYMMLavel: '月份',
-  tableAreaTitle: '特調成本報表',
   queryText: '查詢',
   resetText: '重置',
   exportFile: '導出',
@@ -21,4 +25,10 @@ export default {
   back: '返回',
   light: '亮色主題',
   dark: '黑暗主題',
+  dopCost: {
+    tableAreaTitle: '特調成本報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '特調成本',
+    searchAreaYYYYMMLavel: '月份',
+  },
 };

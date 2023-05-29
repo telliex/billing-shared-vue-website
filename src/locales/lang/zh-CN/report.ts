@@ -1,8 +1,5 @@
 export default {
   searchAreaTitle: '查询栏位',
-  searchAreaReportTypeLavel: '报表种类',
-  searchAreaYYYYMMLavel: '月份',
-  tableAreaTitle: '特调成本报表',
   queryText: '查询',
   resetText: '重置',
   exportFile: '导出',
@@ -21,4 +18,10 @@ export default {
   back: '返回',
   light: '亮色主题',
   dark: '黑暗主题',
+  dopCost: {
+    tableAreaTitle: '特调成本报表',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: '特调成本',
+    searchAreaYYYYMMLavel: '月份',
+  },
 };

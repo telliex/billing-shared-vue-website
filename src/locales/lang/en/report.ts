@@ -1,8 +1,12 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2023-05-29 03:12:11
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-05-29 21:23:31
+ */
 export default {
   searchAreaTitle: 'Search',
-  searchAreaReportTypeLavel: 'Repot Type',
-  searchAreaYYYYMMLavel: 'Month',
-  tableAreaTitle: 'Drop Cost Report',
   queryText: 'Search',
   resetText: 'Reset',
   exportFile: 'export',
@@ -21,4 +25,10 @@ export default {
   back: 'Back',
   light: 'Light',
   dark: 'Dark',
+  dopCost: {
+    tableAreaTitle: 'Drop Cost Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Drop Cost',
+    searchAreaYYYYMMLavel: 'Month',
+  },
 };
