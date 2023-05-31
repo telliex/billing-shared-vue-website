@@ -57,6 +57,8 @@
     YearMonth: string;
   }
   let tableName = ref(t('report.dopCost.tableAreaTitle'));
+  let reportType = 'dop_cost_report'; // report type & S3 prefix folder name,
+  let S3Bucket = 'data-platform-data-bucket-ecv-dev'; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
   const canResize = ref(false);
@@ -69,15 +71,25 @@
   >([]);
   // const loading = ref(false);
   let formData = reactive<SearchItems>({
-    ReportType: '',
+    ReportType: reportType,
     YearMonth: '',
   });
 
-  const [registerForSearch, { setFieldsValue }] = useForm({
+  const [registerForSearch, { setFieldsValue, clearValidate }] = useForm({
     labelWidth: 100,
+    size: 'small',
+    autoFocusFirstItem: true,
     schemas,
     actionColOptions: {
       span: 24,
+    },
+    submitButtonOptions: {
+      postIcon: 'ant-design:search-outlined',
+      iconSize: 12,
+    },
+    resetButtonOptions: {
+      postIcon: 'ant-design:reload-outlined',
+      iconSize: 12,
     },
   });
   const [registerForExportFile, { openModal }] = useModal();
@@ -244,7 +256,7 @@
   }
 
   function handleSearchReset() {
-    formData.ReportType = '';
+    formData.ReportType = reportType;
     formData.YearMonth = '';
   }
 
@@ -254,7 +266,6 @@
     let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
-    let S3Bucket = 'data-platform-data-bucket-ecv-dev';
 
     let S3Location = await GetS3TargetUrl({
       trace_id: Guid.newGuid().toString(),
@@ -286,8 +297,9 @@
   onMounted(() => {
     const parsed: any = queryString.parse(location.search.replace(/\//, ''));
     setFieldsValue({
-      ReportType: 'dop_cost_report',
-      YearMonth: parsed.qdate ? dayjs(parsed.qdate).format('YYYY-MM') : '',
+      ReportType: reportType,
+      YearMonth: parsed.qdate ? dayjs(parsed.qdate).format('YYYY-MM') : null,
     });
+    clearValidate();
   });
 </script>

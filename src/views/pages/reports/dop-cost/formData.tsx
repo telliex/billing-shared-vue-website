@@ -26,6 +26,8 @@ export function getFormSchema(): FormSchema[] {
       field: 'YearMonth',
       component: 'DatePicker',
       label: `${t('report.dopCost.searchAreaYYYYMMLavel')}:`,
+      labelWidth: 100,
+      required: true,
       componentProps: {
         picker: 'month',
       },
