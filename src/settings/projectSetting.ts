@@ -29,8 +29,8 @@ const setting: ProjectConfig = {
 
   // Permission mode
   // 權限模式,默認前端角色權限模式
-  // ROUTE_MAPPING: 前端模式（菜單由路由生成，默認）
-  // ROLE：前端模式（菜單路由分開）
+  // ROUTE_MAPPING: 前端模式（選單由路由生成，默認）
+  // ROLE：前端模式（選單路由分開）
   permissionMode: PermissionModeEnum.ROUTE_MAPPING,
 
   // Permission-related cache is stored in sessionStorage or localStorage
@@ -53,7 +53,7 @@ const setting: ProjectConfig = {
   colorWeak: false,
 
   // Whether to cancel the menu, the top, the multi-tab page display, for possible embedded in other systems
-  // 是否取消菜單,頂部,多標簽頁顯示, 用於可能內嵌在別的系統內
+  // 是否取消選單,頂部,多標簽頁顯示, 用於可能內嵌在別的系統內
   fullContent: false,
 
   // content mode
@@ -89,7 +89,7 @@ const setting: ProjectConfig = {
     //  (change)顯示消息中心按鈕
     showNotice: false,
     // Whether to display the menu search
-    //  (change)顯示菜單搜索按鈕
+    //  (change)顯示選單搜索按鈕
     showSearch: false,
   },
 

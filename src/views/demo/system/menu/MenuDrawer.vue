@@ -49,7 +49,7 @@
         });
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增菜單' : '編輯菜單'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增選單' : '編輯選單'));
 
       async function handleSubmit() {
         try {

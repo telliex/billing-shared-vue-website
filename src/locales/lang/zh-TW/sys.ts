@@ -30,7 +30,7 @@ export default {
     errMsg504: '網絡超時!',
     errMsg505: 'http版本不支持該請求!',
   },
-  app: { logoutTip: '溫馨提醒', logoutMessage: '是否確認退出系統?', menuLoading: '菜單加載中...' },
+  app: { logoutTip: '溫馨提醒', logoutMessage: '是否確認退出系統?', menuLoading: '選單加載中...' },
   errorLog: {
     tableTitle: '錯誤日志列表',
     tableColumnType: '類型',

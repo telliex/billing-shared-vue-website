@@ -6,7 +6,7 @@ import { mainOutRoutes } from './mainOut';
 import { PageEnum } from '/@/enums/pageEnum';
 import { t } from '/@/hooks/web/useI18n';
 
-// import.meta.globEager() 直接引入所有的模块 Vite 独有的功能
+// import.meta.globEager() 直接引入所有的模塊 Vite 獨有的功能
 const modules = import.meta.globEager('./modules/**/*.ts');
 const routeModuleList: AppRouteModule[] = [];
 // cbs ,cbms
@@ -48,11 +48,16 @@ export const LoginRoute: AppRouteRecordRaw = {
 };
 
 // Basic routing without permission
-// 未经许可的基本路由
+// 未經許可的基本路由
 export const basicRoutes = [
+  // 登錄路由 /login
   LoginRoute,
+  // 根路由 /
   RootRoute,
+  // 新頁面 /main-out
   ...mainOutRoutes,
+  // 從定義 /redirect
   REDIRECT_ROUTE,
+  // 404 /:path(.*)*
   PAGE_NOT_FOUND_ROUTE,
 ];

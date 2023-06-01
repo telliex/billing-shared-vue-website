@@ -11,7 +11,7 @@
         />
       </Col>
       <Col :span="8">
-        <BasicTree title="右鍵菜單" :treeData="treeData" :beforeRightClick="getRightMenuList" />
+        <BasicTree title="右鍵選單" :treeData="treeData" :beforeRightClick="getRightMenuList" />
       </Col>
       <Col :span="8">
         <BasicTree

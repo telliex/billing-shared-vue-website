@@ -46,7 +46,7 @@ export default {
     copy: '覆制圖標成功!',
   },
   menu: {
-    search: '菜單搜索',
+    search: '選單搜索',
   },
   modal: {
     cancelText: '關閉',

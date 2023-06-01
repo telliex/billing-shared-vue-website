@@ -32,12 +32,12 @@ interface PermissionState {
   // 路由是否動態添加
   isDynamicAddedRoute: boolean;
   // To trigger a menu update
-  // 觸發菜單更新
+  // 觸發選單更新
   lastBuildMenuTime: number;
   // Backstage menu list
-  // 後台菜單列表
+  // 後台選單列表
   backMenuList: Menu[];
-  // 菜單列表
+  // 選單列表
   frontMenuList: Menu[];
 }
 
@@ -50,13 +50,13 @@ export const usePermissionStore = defineStore({
     // 路由是否動態添加
     isDynamicAddedRoute: false,
     // To trigger a menu update
-    // 觸發菜單更新
+    // 觸發選單更新
     lastBuildMenuTime: 0,
     // Backstage menu list
-    // 後台菜單列表
+    // 後台選單列表
     backMenuList: [],
     // menu List
-    // 菜單列表
+    // 選單列表
     frontMenuList: [],
   }),
   getters: {
@@ -132,7 +132,7 @@ export const usePermissionStore = defineStore({
 
       const routeRemoveIgnoreFilter = (route: AppRouteRecordRaw) => {
         const { meta } = route;
-        // ignoreRoute 為true 則路由僅用於菜單生成，不會在實際的路由表中出現
+        // ignoreRoute 為true 則路由僅用於選單生成，不會在實際的路由表中出現
         const { ignoreRoute } = meta || {};
         // arr.filter 返回 true 表示該元素通過測試
         return !ignoreRoute;
@@ -188,18 +188,18 @@ export const usePermissionStore = defineStore({
           routes = filter(asyncRoutes, routeFilter);
           // 對一級路由再次根據角色權限過濾
           routes = routes.filter(routeFilter);
-          // 將路由轉換成菜單
+          // 將路由轉換成選單
           const menuList = transformRouteToMenu(routes, true);
           // 移除掉 ignoreRoute: true 的路由 非一級路由
           routes = filter(routes, routeRemoveIgnoreFilter);
           // 移除掉 ignoreRoute: true 的路由 一級路由；
           routes = routes.filter(routeRemoveIgnoreFilter);
-          // 對菜單進行排序
+          // 對選單進行排序
           menuList.sort((a, b) => {
             return (a.meta?.orderNo || 0) - (b.meta?.orderNo || 0);
           });
 
-          // 設置菜單列表
+          // 設置選單列表
           this.setFrontMenuList(menuList);
 
           // Convert multi-level routing to level 2 routing
@@ -234,7 +234,7 @@ export const usePermissionStore = defineStore({
           routeList = transformObjToRoute(routeList);
 
           //  Background routing to menu structure
-          //  後台路由到菜單結構
+          //  後台路由到選單結構
           const backMenuList = transformRouteToMenu(routeList);
           this.setBackMenuList(backMenuList);
 

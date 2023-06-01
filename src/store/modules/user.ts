@@ -129,6 +129,7 @@ export const useUserStore = defineStore('user', {
     ): Promise<GetUserInfoModel | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
+        // 1、調用登錄接口
         // todo recovery == start
         // const data = await loginApi(loginParams, mode);
         // const { token } = data;
@@ -136,7 +137,7 @@ export const useUserStore = defineStore('user', {
         // todo remove == start
         const { token } = ls.get('TEMP_USER_INFO_KEY__');
         // todo remove == end
-        // save token
+        // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(token);
         return this.afterLoginAction(goHome);
       } catch (error) {
@@ -145,8 +146,7 @@ export const useUserStore = defineStore('user', {
     },
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
-      console.log('77777777');
-      // get user info
+      // 3、獲取用户信息
       const userInfo = await this.getUserInfoAction();
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
@@ -154,6 +154,7 @@ export const useUserStore = defineStore('user', {
       } else {
         const permissionStore = usePermissionStore();
         if (!permissionStore.isDynamicAddedRoute) {
+          // 4、獲取路由配置並動態添加路由配置
           const routes = await permissionStore.buildRoutesAction();
           routes.forEach((route) => {
             router.addRoute(route as unknown as RouteRecordRaw);

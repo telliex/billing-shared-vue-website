@@ -2,7 +2,7 @@
   <div>
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增菜單 </a-button>
+        <a-button type="primary" @click="handleCreate"> 新增選單 </a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -46,7 +46,7 @@
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload, expandAll }] = useTable({
-        title: '菜單列表',
+        title: '選單列表',
         api: getMenuList,
         columns,
         formConfig: {
