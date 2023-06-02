@@ -116,6 +116,9 @@
   function loadDataSuccess(excelDataList: ExcelData[]) {
     tableListRef.value = [];
     console.log(excelDataList);
+    if (excelDataList[0].results.length == 0) {
+      createMessage.warning('該條件下未有資料！');
+    }
     for (const excelData of excelDataList) {
       const {
         header,
@@ -261,7 +264,7 @@
   }
 
   async function handleSearchSubmit(values: SearchItems) {
-    createMessage.success('click search,values:' + JSON.stringify(values));
+    // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3ReportClass = values.ReportType;
     let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
@@ -275,7 +278,7 @@
       duration: '10',
     }).catch((err) => {
       console.log(err);
-      createMessage.warning('該條件下未有資料！');
+      // createMessage.warning('該條件下未有資料！');
     });
 
     console.log('S3Location:', S3Location);

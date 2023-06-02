@@ -5,7 +5,7 @@
  * @Anthor: Telliex
  * @Date: 2023-02-08 02:03:09
  * @LastEditors: Telliex
- * @LastEditTime: 2023-04-26 04:56:14
+ * @LastEditTime: 2023-06-02 00:40:36
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useUserStore } from '/@/store/modules/user';
@@ -110,7 +110,39 @@ export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
 
 export const GetS3TargetUrl = (params: any) =>
   defHttp.post(
-    { url: '/aws' + version + Api.GetS3TargetUrlValue, data: params },
+    {
+      url: '/aws' + version + Api.GetS3TargetUrlValue,
+      data: params,
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj.status === 1000 || resObj.status === 1001) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj.results],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: 'No data resource on S3!!',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
     {
       apiUrl: '/elu-api',
     },
