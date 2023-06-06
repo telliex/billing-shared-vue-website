@@ -35,13 +35,14 @@
   import {
     GetUserPermission,
     GetUserPermissionRoleList,
-    GetPowerBIFilterValue,
+    // GetPowerBIFilterValue,
   } from '/@/api/sys/system';
   import { PowerBIReportEmbed } from 'powerbi-client-vue-js';
   import { createLocalStorage } from '/@/utils/cache';
   import { useMessage } from '/@/hooks/web/useMessage';
   const { createMessage } = useMessage();
   import { useLoading } from '/@/components/Loading';
+  import axios from 'axios';
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
     target: wrapEl,
@@ -155,12 +156,26 @@
       return;
     }
 
-    let filterValueResult = await GetPowerBIFilterValue({
-      userId: currentUserId,
-      pageName: currentPageReportName,
+    // let filterValueResult = await GetPowerBIFilterValue({
+    //   userId: currentUserId,
+    //   pageName: currentPageReportName,
+    // }).catch((err) => {
+    //   console.log(err);
+    // });
+    let filterValueResult: any[] = [];
+
+    let tempRes: any = await axios({
+      method: 'post',
+      url: 'https://rgoyovotjqogivdmoth4ut3dsm0jgyhl.lambda-url.us-west-2.on.aws/',
+      data: {
+        userId: currentUserId,
+        pageName: currentPageReportName,
+      },
     }).catch((err) => {
       console.log(err);
     });
+    filterValueResult[0] = tempRes.data;
+
     if (!filterValueResult[0]?.ok) {
       console.error(`Failed to fetch PowerBI Embed Data. `);
       createMessage.error('Failed to fetch PowerBI Embed Data.');

@@ -5,7 +5,7 @@
  * @Anthor: Telliex
  * @Date: 2023-02-08 02:03:09
  * @LastEditors: Telliex
- * @LastEditTime: 2023-06-02 00:40:36
+ * @LastEditTime: 2023-06-06 03:02:06
  */
 import { defHttp } from '/@/utils/http/axios';
 import { useUserStore } from '/@/store/modules/user';
@@ -33,7 +33,7 @@ enum Api {
   GetPowerBIEmbedDataValue = '/billing-powerbi-get-embed-data',
   GetUserPermissionValue = '/mgt-permission/get-user-permission-by-user',
   GetUserPermissionRoleListValue = '/mgt-permission/get-permission',
-  GetPowerBIFilterValueValue = '/billing-powerbi-get-filter-value',
+  // GetPowerBIFilterValueValue = '/billing-powerbi-get-filter-value',
   GetUserPermissionGetRoleScopeValue = '/mgt-permission/get-role-scope',
 }
 
@@ -265,43 +265,43 @@ export const GetUserPermission = (params: any) =>
     },
   );
 
-export const GetPowerBIFilterValue = (params: any) =>
-  defHttp.post(
-    {
-      url: Api.GetPowerBIFilterValueValue,
-      data: params,
-      transformResponse: [
-        function (data) {
-          // Do whatever you want to transform the data
-          console.log('------------');
-          console.log(data);
-          if (data) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [JSON.parse(data)],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
-          } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
-            };
-          }
-        },
-      ],
-    },
-    {
-      apiUrl: '/power-bi',
-    },
-  );
+// export const GetPowerBIFilterValue = (params: any) =>
+//   defHttp.post(
+//     {
+//       url: Api.GetPowerBIFilterValueValue,
+//       data: params,
+//       transformResponse: [
+//         function (data) {
+//           // Do whatever you want to transform the data
+//           console.log('------------');
+//           console.log(data);
+//           if (data) {
+//             return {
+//               trace_id: '',
+//               total_pages: 0,
+//               current_page: 0,
+//               results: [JSON.parse(data)],
+//               status: 1000,
+//               msg: 'success',
+//               requested_time: '',
+//               responsed_time: '',
+//             };
+//           } else {
+//             return {
+//               trace_id: '',
+//               total_pages: 0,
+//               current_page: 0,
+//               results: [],
+//               status: 9999,
+//               msg: data,
+//               requested_time: '',
+//               responsed_time: '',
+//             };
+//           }
+//         },
+//       ],
+//     },
+//     {
+//       apiUrl: '/power-bi',
+//     },
+//   );
