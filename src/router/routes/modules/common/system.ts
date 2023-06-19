@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:54
  * @LastEditors: Telliex
- * @LastEditTime: 2022-12-20 02:52:03
+ * @LastEditTime: 2023-06-19 23:13:15
  */
 import type { AppRouteModule } from '/@/router/types';
 import { RoleEnum } from '/@/enums/roleEnum';
@@ -28,6 +28,7 @@ const system: AppRouteModule = {
       meta: {
         title: t('routes.demo.system.account'),
         ignoreKeepAlive: false,
+        hideMenu: true,
       },
       component: () => import('/@/views/demo/system/account/index.vue'),
     },
@@ -39,6 +40,7 @@ const system: AppRouteModule = {
         ignoreKeepAlive: true,
         showMenu: false,
         currentActiveMenu: '/system/account',
+        hideMenu: true,
       },
       component: () => import('/@/views/demo/system/account/AccountDetail.vue'),
     },
@@ -67,6 +69,7 @@ const system: AppRouteModule = {
       meta: {
         title: t('routes.demo.system.dept'),
         ignoreKeepAlive: true,
+        hideMenu: true,
       },
       component: () => import('/@/views/demo/system/dept/index.vue'),
     },
@@ -76,6 +79,7 @@ const system: AppRouteModule = {
       meta: {
         title: t('routes.demo.system.password'),
         ignoreKeepAlive: true,
+        hideMenu: true,
       },
       component: () => import('/@/views/demo/system/password/index.vue'),
     },

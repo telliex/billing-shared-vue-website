@@ -71,45 +71,25 @@ export const getNavList = (params: FilterItems) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('11111111', resObj);
-
-          const menuTree: any[] = [];
-          const pageItems: any[] = [];
-          const buttonItems: any[] = [];
+          console.log('return menu items', resObj);
           resObj.forEach((item) => {
             if (item.parentMenu == '' && item.type == 'catalog') {
-              item.children = [];
-              menuTree.push(item);
+              // menuTree.push(item);
             } else {
-              if (item.type == 'page') {
-                item.children = [];
-                pageItems.push(item);
-              } else if (item.type == 'button') {
-                buttonItems.push(item);
-              } else {
-                //
-              }
+              resObj.forEach((subItem) => {
+                if (item.parentMenu === subItem.id) {
+                  if (subItem.children) {
+                    subItem.children.push(item);
+                  } else {
+                    subItem.children = [item];
+                  }
+                }
+              });
             }
           });
+          console.log('resObj:', resObj);
+          const menuTree = resObj.filter((item) => item.parentMenu == '' && item.type == 'catalog');
           console.log('menuTree:', menuTree);
-          console.log('pageItems:', pageItems);
-          console.log('buttonItems:', buttonItems);
-
-          buttonItems.forEach((item) => {
-            pageItems.forEach((pageItem) => {
-              if (item.parentMenu == pageItem.id) {
-                pageItem.children.push(item);
-              }
-            });
-          });
-          pageItems.forEach((item) => {
-            menuTree.forEach((menuTreeItem) => {
-              if (item.parentMenu == menuTreeItem.id) {
-                menuTreeItem.children.push(item);
-              }
-            });
-          });
-
           if (resObj.length) {
             return {
               trace_id: '',

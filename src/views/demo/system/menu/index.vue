@@ -31,15 +31,12 @@
 </template>
 <script lang="ts">
   import { defineComponent, nextTick, onMounted } from 'vue';
-
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { getNavList, removeNavItem } from '/@/api/demo/system';
-  // import { createLocalStorage } from '/@/utils/cache';
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
   import { columns, searchFormSchema } from './menu.data';
-  // const ls = createLocalStorage();
 
   export default defineComponent({
     name: 'MenuManagement',
@@ -66,7 +63,6 @@
           width: 80,
           title: '操作',
           dataIndex: 'action',
-          // slots: { customRender: 'action' },
           fixed: 'right',
         },
       });
