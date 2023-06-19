@@ -3,6 +3,7 @@ import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 import { Icon } from '/@/components/Icon';
+import moment from 'moment';
 
 export const columns: BasicColumn[] = [
   {
@@ -10,6 +11,11 @@ export const columns: BasicColumn[] = [
     dataIndex: 'menuName',
     width: 200,
     align: 'left',
+  },
+  {
+    title: '描述',
+    dataIndex: 'description',
+    width: 200,
   },
   {
     title: '圖標',
@@ -23,6 +29,10 @@ export const columns: BasicColumn[] = [
     title: '權限標識',
     dataIndex: 'permission',
     width: 180,
+  },
+  {
+    title: '組件名稱',
+    dataIndex: 'componentName',
   },
   {
     title: '組件',
@@ -39,7 +49,7 @@ export const columns: BasicColumn[] = [
     width: 80,
     customRender: ({ record }) => {
       const status = record.status;
-      const enable = ~~status === 0;
+      const enable = status === 1;
       const color = enable ? 'green' : 'red';
       const text = enable ? '啟用' : '停用';
       return h(Tag, { color: color }, () => text);
@@ -47,14 +57,25 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '創建時間',
-    dataIndex: 'createTime',
+    dataIndex: 'addTime',
     width: 180,
+    customRender: ({ record }) => {
+      return moment(record.addTime).format('YYYY-MM-DD h:mm:ss');
+    },
+  },
+  {
+    title: '修改時間',
+    dataIndex: 'changeTime',
+    width: 180,
+    customRender: ({ record }) => {
+      return moment(record.changeTime).format('YYYY-MM-DD h:mm:ss');
+    },
   },
 ];
 
-const isDir = (type: string) => type === '0';
-const isMenu = (type: string) => type === '1';
-const isButton = (type: string) => type === '2';
+const isDir = (type: string) => type === 'catalog';
+const isMenu = (type: string) => type === 'page';
+const isButton = (type: string) => type === 'butiion';
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -69,8 +90,8 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: [
-        { label: '啟用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '啟用', value: 1 },
+        { label: '停用', value: 0 },
       ],
     },
     colProps: { span: 8 },
@@ -82,12 +103,12 @@ export const formSchema: FormSchema[] = [
     field: 'type',
     label: '選單類型',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 'catalog',
     componentProps: {
       options: [
-        { label: '目錄', value: '0' },
-        { label: '選單', value: '1' },
-        { label: '按鈕', value: '2' },
+        { label: '目錄', value: 'catalog' },
+        { label: '選單', value: 'page' },
+        { label: '按鈕', value: 'button' },
       ],
     },
     colProps: { lg: 24, md: 24 },
@@ -126,13 +147,24 @@ export const formSchema: FormSchema[] = [
     required: true,
     ifShow: ({ values }) => !isButton(values.type),
   },
+  {
+    field: 'description',
+    label: '描述',
+    component: 'Input',
+  },
 
   {
-    field: 'routePath',
+    field: 'routPath',
     label: '路由地址',
     component: 'Input',
     required: true,
     ifShow: ({ values }) => !isButton(values.type),
+  },
+  {
+    field: 'componentName',
+    label: '組件路名稱',
+    component: 'Input',
+    ifShow: ({ values }) => isMenu(values.type),
   },
   {
     field: 'component',
@@ -150,11 +182,11 @@ export const formSchema: FormSchema[] = [
     field: 'status',
     label: '狀態',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 0,
     componentProps: {
       options: [
-        { label: '啟用', value: '0' },
-        { label: '禁用', value: '1' },
+        { label: '啟用', value: 1 },
+        { label: '禁用', value: 0 },
       ],
     },
   },
@@ -162,39 +194,39 @@ export const formSchema: FormSchema[] = [
     field: 'isExt',
     label: '是否外鏈',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 0,
     componentProps: {
       options: [
-        { label: '否', value: '0' },
-        { label: '是', value: '1' },
+        { label: '否', value: 0 },
+        { label: '是', value: 1 },
       ],
     },
     ifShow: ({ values }) => !isButton(values.type),
   },
 
   {
-    field: 'keepalive',
+    field: 'isCache',
     label: '是否緩存',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 0,
     componentProps: {
       options: [
-        { label: '否', value: '0' },
-        { label: '是', value: '1' },
+        { label: '否', value: 0 },
+        { label: '是', value: 1 },
       ],
     },
     ifShow: ({ values }) => isMenu(values.type),
   },
 
   {
-    field: 'show',
+    field: 'isShow',
     label: '是否顯示',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 1,
     componentProps: {
       options: [
-        { label: '是', value: '0' },
-        { label: '否', value: '1' },
+        { label: '否', value: 0 },
+        { label: '是', value: 1 },
       ],
     },
     ifShow: ({ values }) => !isButton(values.type),

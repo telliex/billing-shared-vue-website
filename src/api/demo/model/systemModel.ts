@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Anthor: Telliex
+ * @Date: 2023-05-04 22:15:16
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-06-19 02:36:14
+ */
 import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
 
 export type AccountParams = BasicPageParams & {
@@ -19,6 +26,10 @@ export type DeptParams = {
 
 export type MenuParams = {
   menuName?: string;
+  status?: string;
+};
+export type NavParams = {
+  id?: string;
   status?: string;
 };
 
@@ -60,6 +71,28 @@ export interface RoleListItem {
   createTime: string;
 }
 
+export interface NavListItem {
+  id: string;
+  type: string;
+  menuName: string;
+  description: string;
+  permission: string;
+  component: string;
+  componentName: string;
+  routPath: string;
+  orderNo: number;
+  icon: string;
+  parentMenu: string;
+  iExt: number;
+  isCache: number;
+  isShow: number;
+  status: number;
+  addMaster: number;
+  addTime: string;
+  changeMaster: number;
+  changeTime: string;
+}
+
 /**
  * @description: Request list return value
  */
@@ -72,3 +105,5 @@ export type MenuListGetResultModel = BasicFetchResult<MenuListItem>;
 export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
 
 export type RoleListGetResultModel = RoleListItem[];
+
+export type NavListResultModel = BasicFetchResult<NavListItem>;

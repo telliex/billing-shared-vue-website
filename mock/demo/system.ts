@@ -139,7 +139,7 @@ const deptList = (() => {
   }
   return result;
 })();
-
+// 選單
 const menuList = (() => {
   const result: any[] = [];
   for (let index = 0; index < 3; index++) {
@@ -147,21 +147,29 @@ const menuList = (() => {
       id: `${index}`,
       icon: ['ion:layers-outline', 'ion:git-compare-outline', 'ion:tv-outline'][index],
       component: 'LAYOUT',
-      type: '0',
+      type: 'catalog',
+      description: 'This is catalog description',
       menuName: ['Dashboard', '權限管理', '功能'][index],
       permission: '',
       orderNo: index + 1,
       createTime: '@datetime',
-      'status|1': ['0', '0', '1'],
+      'status|1': ['normal', 'stop'],
       children: (() => {
         const children: any[] = [];
         for (let j = 0; j < 4; j++) {
           children.push({
             id: `${index}-${j}`,
-            type: '1',
+            type: 'page',
             menuName: ['選單1', '選單2', '選單3', '選單4'][j],
+            description: 'This is page description',
             icon: 'ion:document',
             permission: ['menu1:view', 'menu2:add', 'menu3:update', 'menu4:del'][index],
+            componentName: [
+              'name:/dashboard/welcome/index',
+              'name:/dashboard/analysis/index',
+              'name:/dashboard/workbench/index',
+              'name:/dashboard/test/index',
+            ][j],
             component: [
               '/dashboard/welcome/index',
               '/dashboard/analysis/index',
@@ -170,20 +178,27 @@ const menuList = (() => {
             ][j],
             orderNo: j + 1,
             createTime: '@datetime',
-            'status|1': ['0', '1'],
+            'status|1': ['normal', 'stop'],
             parentMenu: `${index}`,
             children: (() => {
               const children: any[] = [];
               for (let k = 0; k < 4; k++) {
                 children.push({
                   id: `${index}-${j}-${k}`,
-                  type: '2',
+                  type: 'button',
                   menuName: '按鈕' + (j + 1) + '-' + (k + 1),
+                  description: 'This is button description',
                   icon: '',
                   permission:
                     ['menu1:view', 'menu2:add', 'menu3:update', 'menu4:del'][index] +
                     ':btn' +
                     (k + 1),
+                  componentName: [
+                    'neme:/dashboard/welcome/index',
+                    'neme:/dashboard/analysis/index',
+                    'neme:/dashboard/workbench/index',
+                    'neme:/dashboard/test/index',
+                  ][j],
                   component: [
                     '/dashboard/welcome/index',
                     '/dashboard/analysis/index',
@@ -192,7 +207,7 @@ const menuList = (() => {
                   ][j],
                   orderNo: j + 1,
                   createTime: '@datetime',
-                  'status|1': ['0', '1'],
+                  'status|1': ['normal', 'stop'],
                   parentMenu: `${index}-${j}`,
                   children: undefined,
                 });

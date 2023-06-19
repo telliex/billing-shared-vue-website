@@ -30,15 +30,16 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, nextTick } from 'vue';
+  import { defineComponent, nextTick, onMounted } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuList } from '/@/api/demo/system';
-
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { getNavList, removeNavItem } from '/@/api/demo/system';
+  // import { createLocalStorage } from '/@/utils/cache';
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
-
   import { columns, searchFormSchema } from './menu.data';
+  // const ls = createLocalStorage();
 
   export default defineComponent({
     name: 'MenuManagement',
@@ -47,7 +48,7 @@
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload, expandAll }] = useTable({
         title: '選單列表',
-        api: getMenuList,
+        api: getNavList,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -66,10 +67,10 @@
           title: '操作',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
-          fixed: undefined,
+          fixed: 'right',
         },
       });
-
+      const { createMessage } = useMessage();
       function handleCreate() {
         openDrawer(true, {
           isUpdate: false,
@@ -85,6 +86,13 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        if (record.children && record.children.length > 0) {
+          createMessage.warning('包含子項目，不能刪除');
+          return;
+        }
+        removeNavItem(record).then(() => {
+          reload();
+        });
       }
 
       function handleSuccess() {
@@ -95,6 +103,8 @@
         // 演示默認展開所有表項
         nextTick(expandAll);
       }
+
+      onMounted(() => {});
 
       return {
         registerTable,

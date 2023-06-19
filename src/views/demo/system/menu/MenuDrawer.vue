@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Anthor: Telliex
+ * @Date: 2023-05-04 22:15:16
+ * @LastEditors: Telliex
+ * @LastEditTime: 2023-06-19 05:18:40
+-->
 <template>
   <BasicDrawer
     v-bind="$attrs"
@@ -15,8 +22,8 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-
-  import { getMenuList } from '/@/api/demo/system';
+  import { createNavItem, getNavList, updateNavItem } from '/@/api/demo/system';
+  import { NavListItem } from './type';
 
   export default defineComponent({
     name: 'MenuDrawer',
@@ -24,7 +31,7 @@
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
-
+      const record = ref<NavListItem | null>(null);
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 100,
         schemas: formSchema,
@@ -36,13 +43,17 @@
         resetFields();
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
+        record.value = data?.record || null;
 
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
           });
         }
-        const treeData = await getMenuList();
+        const treeData = await getNavList({
+          status: null,
+          menuName: null,
+        });
         updateSchema({
           field: 'parentMenu',
           componentProps: { treeData },
@@ -55,8 +66,33 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
           console.log(values);
+          let template = {
+            id: '',
+            type: '',
+            menuName: '',
+            description: '',
+            permission: '',
+            component: '',
+            componentName: '',
+            routPath: '',
+            orderNo: 0,
+            icon: '',
+            parentId: '',
+            iExt: 0,
+            isCache: 0,
+            isShow: 0,
+            status: 'normal',
+            addMaster: 0,
+            addTime: '',
+            changeMaster: 0,
+            changeTime: '',
+          };
+          if (!unref(isUpdate)) {
+            await createNavItem(Object.assign(template, values));
+          } else {
+            await updateNavItem(Object.assign(template, record.value, values));
+          }
           closeDrawer();
           emit('success');
         } finally {
