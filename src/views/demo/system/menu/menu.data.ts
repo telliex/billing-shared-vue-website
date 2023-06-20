@@ -147,8 +147,10 @@ export const formSchema: FormSchema[] = [
     field: 'icon',
     label: '圖標',
     component: 'IconPicker',
-    required: true,
     ifShow: ({ values }) => !isButton(values.type),
+    required: ({ values }) => {
+      return values.type === 'catalog';
+    },
   },
   {
     field: 'description',
