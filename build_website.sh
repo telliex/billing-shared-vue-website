@@ -3,8 +3,8 @@
  # @Description: 
  # @Anthor: Telliex
  # @Date: 2023-04-26 00:42:34
- # @LastEditors: Telliex
- # @LastEditTime: 2023-04-27 00:44:51
+ # @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
+ # @LastEditTime: 2023-06-26 22:04:15
 ### 
 # cd /app
 # bash build.sh ${API_MGT_REPORT} ${API_MGT_ELU} ${OLD_MGT} ${CRS} ${ENV} 
@@ -39,7 +39,7 @@
 # 執行命令
 echo "----------======------------"
 echo ${ENV}
-bash build.sh ${API_MGT_REPORT} ${API_MGT_ELU} ${OLD_MGT} ${CRS} ${CBMS} ${ENV} ${S3_REGION} ${S3_JSON} ${API_MGT_PERMISSION}
+bash build.sh ${API_MGT_REPORT} ${API_MGT_ELU} ${OLD_MGT} ${CRS} ${CBMS} ${ENV} ${S3_REGION} ${S3_JSON} ${API_MGT_PERMISSION} ${API_SYS}
 pnpm build:${ENV}
 cp -r dist/* ../usr/share/nginx/html 
 cp -r default.conf ../etc/nginx/conf.d/default.conf 

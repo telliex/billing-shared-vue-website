@@ -117,7 +117,7 @@ export const getNavList = (params: FilterItems) =>
       ],
     },
     {
-      apiUrl: '/sys',
+      apiUrl: '/sys-api',
     },
   );
 
@@ -133,7 +133,7 @@ export const getNavItem = (params: NavParams) => {
       },
     },
     {
-      apiUrl: '/sys',
+      apiUrl: '/sys-api',
     },
   );
 };
@@ -166,7 +166,7 @@ export const removeNavItem = (params: any) =>
       ],
     },
     {
-      apiUrl: '/sys',
+      apiUrl: '/sys-api',
     },
   );
 
@@ -199,7 +199,7 @@ export const updateNavItem = (params: any) =>
       ],
     },
     {
-      apiUrl: '/sys',
+      apiUrl: '/sys-api',
     },
   );
 
@@ -233,7 +233,7 @@ export const createNavItem = (body: any) => {
       ],
     },
     {
-      apiUrl: '/sys',
+      apiUrl: '/sys-api',
     },
   );
 };
