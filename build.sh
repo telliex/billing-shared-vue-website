@@ -32,7 +32,7 @@ main_process() {
     echo $SYS_API_URL
     echo '-------------------------'
 
-    cat $ENV_TEMPLATE_NAME | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{SYS_API_URL}}|'$SYS_API_URL'|g' | sed -e 's|{{CBMS_URL}}|'$CBMS_URL'|g' | sed -e 's|{{OLD_MGT_URL}}|'$OLD_MGT_URL'|g' | sed -e 's|{{CRS_URL}}|'$CRS_URL'|g' | sed -e 's|{{S3_REGION_URL}}|'$S3_REGION_URL'|g' | sed -e 's|{{S3_JSON_URL}}|'$S3_JSON_URL'|g' | sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g' >| "$TARGET_ENV_FILE_NAME"
+    cat $ENV_TEMPLATE_NAME | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{CBMS_URL}}|'$CBMS_URL'|g' | sed -e 's|{{OLD_MGT_URL}}|'$OLD_MGT_URL'|g' | sed -e 's|{{CRS_URL}}|'$CRS_URL'|g' | sed -e 's|{{S3_REGION_URL}}|'$S3_REGION_URL'|g' | sed -e 's|{{S3_JSON_URL}}|'$S3_JSON_URL'|g' | sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g' | sed -e 's|{{SYS_API_URL}}|'$SYS_API_URL'|g' >| "$TARGET_ENV_FILE_NAME"
     cat $NEGIEX_CONFIG_TEMPLATE | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{SYS_API_URL}}|'$SYS_API_URL'|g' | sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g'  >| "$NEGIEX_CONFIG_TARGET"
 }
 
