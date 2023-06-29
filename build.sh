@@ -16,7 +16,7 @@ main_process() {
     S3_REGION_URL=$7
     S3_JSON_URL=$8
     PERMISSION_API_URL=$9
-    SYS_API_URL= ${10}
+    SYS_API_URL=${10}
 
     ENV_TEMPLATE_NAME=".env.template"
     NEGIEX_CONFIG_TEMPLATE="default.template.conf"
