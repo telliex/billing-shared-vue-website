@@ -11,18 +11,18 @@ export function getAllParentPath<T = Recordable>(treeData: T[], path: string) {
   return (menuList || []).map((item) => item.path);
 }
 
-// 路径处理
+// 路徑處理
 function joinParentPath(menus: Menu[], parentPath = '') {
   for (let index = 0; index < menus.length; index++) {
     const menu = menus[index];
     // https://next.router.vuejs.org/guide/essentials/nested-routes.html
     // Note that nested paths that start with / will be treated as a root path.
-    // 请注意，以 / 开头的嵌套路径将被视为根路径。
+    // 請注意，以 / 開頭的嵌套路徑將被視為根路徑。
     // This allows you to leverage the component nesting without having to use a nested URL.
-    // 这允许你利用组件嵌套，而无需使用嵌套 URL。
+    // 這允許你利用組件嵌套，而無需使用嵌套 URL。
     if (!(menu.path.startsWith('/') || isUrl(menu.path))) {
       // path doesn't start with /, nor is it a url, join parent path
-      // 路径不以 / 开头，也不是 url，加入父路径
+      // 路徑不以 / 開頭，也不是 url，加入父路徑
       menu.path = `${parentPath}/${menu.path}`;
     }
     if (menu?.children?.length) {
@@ -41,13 +41,13 @@ export function transformMenuModule(menuModule: MenuModule): Menu {
   return menuList[0];
 }
 
-// 将路由转换成菜单
+// 將路由轉換成菜單
 export function transformRouteToMenu(routeModList: AppRouteModule[], routerMapping = false) {
-  // 借助 lodash 深拷贝
+  // 藉助 lodash 深拷貝
   const cloneRouteModList = cloneDeep(routeModList);
   const routeList: AppRouteRecordRaw[] = [];
 
-  // 对路由项进行修改
+  // 對路由項進行修改
   cloneRouteModList.forEach((item) => {
     if (routerMapping && item.meta.hideChildrenInMenu && typeof item.redirect === 'string') {
       item.path = item.redirect;
@@ -60,7 +60,7 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
       routeList.push(item);
     }
   });
-  // 提取树指定结构
+  // 提取樹指定結構
   const list = treeMap(routeList, {
     conversion: (node: AppRouteRecordRaw) => {
       const { meta: { title, hideMenu = false } = {} } = node;
@@ -75,7 +75,7 @@ export function transformRouteToMenu(routeModList: AppRouteModule[], routerMappi
       };
     },
   });
-  // 路径处理
+  // 路徑處理
   joinParentPath(list);
   return cloneDeep(list);
 }

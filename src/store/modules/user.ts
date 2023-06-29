@@ -155,7 +155,9 @@ export const useUserStore = defineStore('user', {
         const permissionStore = usePermissionStore();
         if (!permissionStore.isDynamicAddedRoute) {
           // 4、獲取路由配置並動態添加路由配置
+          console.log('aaaaaaaa');
           const routes = await permissionStore.buildRoutesAction();
+          console.log('bbbbbbb');
           routes.forEach((route) => {
             router.addRoute(route as unknown as RouteRecordRaw);
           });

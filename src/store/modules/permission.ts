@@ -18,7 +18,8 @@ import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 
 import { filter } from '/@/utils/helper/treeHelper';
 
-import { getMenuList } from '/@/api/sys/menu';
+// import { getMenuList } from '/@/api/sys/menu';
+import { getNavList } from '/@/api/sys/menu';
 import { getPermCode } from '/@/api/sys/user';
 
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -104,8 +105,9 @@ export const usePermissionStore = defineStore({
       this.lastBuildMenuTime = 0;
     },
     async changePermissionCode() {
+      // depend on user id to get permission code list
       const codeList = await getPermCode();
-      console.log('aaaaaaaa');
+      console.log('perform changePermissionCode');
       console.log('codeList:', codeList);
       this.setPermCodeList(codeList);
     },
@@ -173,6 +175,7 @@ export const usePermissionStore = defineStore({
       switch (permissionMode) {
         // 角色權限
         case PermissionModeEnum.ROLE:
+          console.log('PermissionModeEnum.ROLE');
           // 對非一級路由進行過濾
           routes = filter(asyncRoutes, routeFilter);
           // 對一級路由根據角色權限過濾
@@ -184,6 +187,7 @@ export const usePermissionStore = defineStore({
 
         // 路由映射， 默認進入該case
         case PermissionModeEnum.ROUTE_MAPPING:
+          console.log('PermissionModeEnum.ROUTE_MAPPING');
           // 對非一級路由進行過濾
           routes = filter(asyncRoutes, routeFilter);
           // 對一級路由再次根據角色權限過濾
@@ -211,7 +215,7 @@ export const usePermissionStore = defineStore({
         //  如果確定不需要做後台動態權限，請在下方註釋整個判斷
         case PermissionModeEnum.BACK:
           const { createMessage } = useMessage();
-
+          console.log('PermissionModeEnum.BACK');
           createMessage.loading({
             content: t('sys.app.menuLoading'),
             duration: 1,
@@ -221,21 +225,25 @@ export const usePermissionStore = defineStore({
           // 模擬從後台獲取權限碼，
           // this function may only need to be executed once, and the actual project can be put at the right time by itself
           // 這個功能可能只需要執行一次，實際項目可以自己放在合適的時間
-          let routeList: AppRouteRecordRaw[] = [];
+          let routeListOri: AppRouteRecordRaw[] = [];
           try {
+            // write Permission codes to pinia
             await this.changePermissionCode();
-            routeList = (await getMenuList()) as AppRouteRecordRaw[];
+            console.log('0000000000001110');
+            routeListOri = (await getNavList()) as AppRouteRecordRaw[];
+            console.log('routeListOri:', routeListOri);
           } catch (error) {
             console.error(error);
           }
 
           // Dynamically introduce components
           // 動態引入組件
-          routeList = transformObjToRoute(routeList);
+          let routeList = transformObjToRoute(routeListOri);
 
           //  Background routing to menu structure
           //  後台路由到選單結構
           const backMenuList = transformRouteToMenu(routeList);
+          console.log('backMenuList:', backMenuList);
           this.setBackMenuList(backMenuList);
 
           // remove meta.ignoreRoute item
@@ -247,7 +255,6 @@ export const usePermissionStore = defineStore({
           routes = [PAGE_NOT_FOUND_ROUTE, ...routeList];
           break;
       }
-
       routes.push(ERROR_LOG_ROUTE);
       patchHomeAffix(routes);
       return routes;

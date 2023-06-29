@@ -31,7 +31,7 @@ const setting: ProjectConfig = {
   // 權限模式,默認前端角色權限模式
   // ROUTE_MAPPING: 前端模式（選單由路由生成，默認）
   // ROLE：前端模式（選單路由分開）
-  permissionMode: PermissionModeEnum.ROUTE_MAPPING,
+  permissionMode: PermissionModeEnum.BACK,
 
   // Permission-related cache is stored in sessionStorage or localStorage
   permissionCacheType: CacheTypeEnum.LOCAL,

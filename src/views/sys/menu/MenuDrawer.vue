@@ -2,8 +2,8 @@
  * @Description: 
  * @Anthor: Telliex
  * @Date: 2023-05-04 22:15:16
- * @LastEditors: Telliex
- * @LastEditTime: 2023-06-19 05:18:40
+ * @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
+ * @LastEditTime: 2023-06-29 00:22:10
 -->
 <template>
   <BasicDrawer
@@ -71,6 +71,7 @@
             id: '',
             type: '',
             menuName: '',
+            alias: '',
             description: '',
             permission: '',
             component: '',

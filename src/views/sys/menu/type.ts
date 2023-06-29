@@ -1,14 +1,8 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2023-06-19 02:36:45
- * @LastEditors: Telliex
- * @LastEditTime: 2023-06-19 02:36:53
- */
 export interface NavListItem {
   id: string;
   type: string;
   menuName: string;
+  alias: string;
   description: string;
   permission: string;
   component: string;

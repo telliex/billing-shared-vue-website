@@ -13,6 +13,12 @@ export const columns: BasicColumn[] = [
     align: 'left',
   },
   {
+    title: 'Alias',
+    dataIndex: 'alias',
+    width: 200,
+    align: 'left',
+  },
+  {
     title: '描述',
     dataIndex: 'description',
     width: 200,
@@ -75,7 +81,7 @@ export const columns: BasicColumn[] = [
 
 const isDir = (type: string) => type === 'catalog';
 const isMenu = (type: string) => type === 'page';
-const isButton = (type: string) => type === 'butiion';
+const isButton = (type: string) => type === 'button';
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -119,7 +125,12 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
     required: true,
   },
-
+  {
+    field: 'alias',
+    label: 'Alias',
+    component: 'Input',
+    required: true,
+  },
   {
     field: 'parentMenu',
     label: '上級選單',
@@ -234,6 +245,6 @@ export const formSchema: FormSchema[] = [
         { label: '是', value: 1 },
       ],
     },
-    ifShow: ({ values }) => !isButton(values.type),
+    ifShow: ({ values }) => isButton(values.type),
   },
 ];
