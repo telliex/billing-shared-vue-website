@@ -3,7 +3,7 @@
  * @Anthor: Telliex
  * @Date: 2023-05-04 22:15:16
  * @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
- * @LastEditTime: 2023-06-29 06:35:15
+ * @LastEditTime: 2023-06-29 06:50:00
 -->
 <template>
   <BasicDrawer
@@ -22,19 +22,19 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { Radio } from 'ant-design-vue';
+  // import { Radio } from 'ant-design-vue';
   import { createNavItem, getNavList, updateNavItem } from '/@/api/demo/system';
   import { NavListItem } from './type';
-  import RadioButtonGroup from '/@/components/Form/src/components/RadioButtonGroup.vue';
+  // import RadioButtonGroup from '/@/components/Form/src/components/RadioButtonGroup.vue';
 
   export default defineComponent({
     name: 'MenuDrawer',
     components: {
       BasicDrawer,
       BasicForm,
-      RadioButtonGroup,
-      RadioGroup: Radio.Group,
-      RadioButton: Radio.Button,
+      // RadioButtonGroup,
+      // RadioGroup: Radio.Group,
+      // RadioButton: Radio.Button,
     },
     emits: ['success', 'register'],
     setup(_, { emit }) {
