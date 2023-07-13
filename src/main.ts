@@ -27,7 +27,7 @@ async function bootstrap() {
 
   // Configure store
   // 配置 pinia store
-  setupStore(app);
+  await setupStore(app);
 
   // Initialize internal system configuration
   // 初始化内部系统配置

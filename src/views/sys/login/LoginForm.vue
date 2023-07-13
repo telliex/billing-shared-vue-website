@@ -243,112 +243,112 @@
     );
 
     if (window.location.search) {
-      try {
-        // let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
-        let parameterList = queryString.parse(location.search.replace(/\//, ''));
-        console.log(parameterList);
-        // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
-        let userId = parameterList.user || null;
-        console.log('entry userId:', userId);
-        if (!userId) {
-          createMessage.error('登入出錯，請重新登入 MGT 平台 !');
-          setTimeout(() => {
-            window.location.href = fromURL;
-          }, 30000);
-          return;
+      // try {
+      // let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
+      let parameterList = queryString.parse(location.search.replace(/\//, ''));
+      console.log(parameterList);
+      // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
+      let userId = parameterList.user || null;
+      console.log('entry userId:', userId);
+      if (!userId) {
+        createMessage.error('登入出錯，請重新登入 MGT 平台 !');
+        setTimeout(() => {
+          window.location.href = fromURL;
+        }, 30000);
+        return;
+      } else {
+        ls.set('TEMP_USER_ID_KEY__', userId);
+        let checkUser: UserInfoItem = {};
+        // admin 身份登入
+        if (userId === 'admin') {
+          checkUser = {
+            userId: 'admin',
+            username: 'billing',
+            realName: 'billing Admin',
+            avatar: 'https://picsum.photos/640/640',
+            system: 'cbs',
+            company: 'ECV',
+            desc: 'super',
+            password: '123456',
+            token: 'fakeToken1',
+            homePath: '/home',
+            roles: [
+              {
+                roleName: 'Admin',
+                value: 'super',
+              },
+            ],
+          };
+
+          ls.set('TEMP_USER_INFO_KEY__', checkUser);
+          redirectUrl.value = '/login?redirect=/home/index';
+          let systemInfo = {
+            company: checkUser.company,
+            system: checkUser.system,
+          };
+          ls.set('TEMP_SYS_KEY__', systemInfo);
         } else {
-          ls.set('TEMP_USER_ID_KEY__', userId);
-          let checkUser: UserInfoItem = {};
-          // admin 身份登入
-          if (userId === 'admin') {
-            checkUser = {
-              userId: 'admin',
-              username: 'billing',
-              realName: 'billing Admin',
-              avatar: 'https://picsum.photos/640/640',
-              system: 'cbs',
-              company: 'ECV',
-              desc: 'super',
-              password: '123456',
-              token: 'fakeToken1',
-              homePath: '/home',
-              roles: [
-                {
-                  roleName: 'Admin',
-                  value: 'super',
-                },
-              ],
-            };
+          // 此處統一獲取 S3 JSON
+          // [API] /get-download-url
+          let JSONUrlList = await getJSONURL(['user']);
 
-            ls.set('TEMP_USER_INFO_KEY__', checkUser);
-            redirectUrl.value = '/login?redirect=/home/index';
-            let systemInfo = {
-              company: checkUser.company,
-              system: checkUser.system,
-            };
-            ls.set('TEMP_SYS_KEY__', systemInfo);
-          } else {
-            // 此處統一獲取 S3 JSON
-            // [API] /get-download-url
-            let JSONUrlList = await getJSONURL(['user']);
-
-            let userListURL = JSONUrlList['user'];
-            if (userListURL) {
-              userList = await getS3JSON(userListURL);
-              console.log('JSON UserList');
-              console.log(userList);
-            }
-
-            checkUser = userList.find((item) => item.userId === userId?.toString());
-
-            // 1.校驗使用者
-            if (!checkUser) {
-              return createMessage.error('The corresponding user information was not obtained!');
-            }
-            console.log('User Login Pass !!');
-            console.log(checkUser);
-            ls.set('TEMP_USER_INFO_KEY__', checkUser);
-            userStore.setUserId(userId.toString());
-            let systemInfo = {
-              company: checkUser.company,
-              system: checkUser.system,
-            };
-            ls.set('TEMP_SYS_KEY__', systemInfo);
-
-            // redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
-            redirectUrl.value =
-              queryString.parse(window.location.hash)['/login?redirect']?.toString() || null;
-            console.log('redirectUrl:', redirectUrl.value);
-            console.log(queryString.parse(location.hash)['/login?redirect']);
-
-            // 2.跳轉校驗
-            // if (
-            //   document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
-            //   fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
-            // ) {
-            //   createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
-            //   setTimeout(() => {
-            //     window.location.href = fromURL;
-            //   }, 5000);
-            //   return;
-            // }
+          let userListURL = JSONUrlList['user'];
+          if (userListURL) {
+            userList = await getS3JSON(userListURL);
+            console.log('JSON UserList');
+            console.log(userList);
           }
-          // 3.登入 password give
-          if (userId && redirectUrl) {
-            // 輸入登入 form
-            formData.account = checkUser.userId || '';
-            formData.password = checkUser.password || '';
-            handleLogin();
-          } else {
-            createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
+
+          checkUser = userList.find((item) => item.userId === userId?.toString());
+
+          // 1.校驗使用者
+          if (!checkUser) {
+            return createMessage.error('The corresponding user information was not obtained!');
           }
+          console.log('User Login Pass !!');
+          console.log(checkUser);
+          ls.set('TEMP_USER_INFO_KEY__', checkUser);
+          userStore.setUserId(userId.toString());
+          let systemInfo = {
+            company: checkUser.company,
+            system: checkUser.system,
+          };
+          ls.set('TEMP_SYS_KEY__', systemInfo);
+
+          // redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
+          redirectUrl.value =
+            queryString.parse(window.location.hash)['/login?redirect']?.toString() || null;
+          console.log('redirectUrl:', redirectUrl.value);
+          console.log(queryString.parse(location.hash)['/login?redirect']);
+
+          // 2.跳轉校驗
+          // if (
+          //   document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
+          //   fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
+          // ) {
+          //   createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
+          //   setTimeout(() => {
+          //     window.location.href = fromURL;
+          //   }, 5000);
+          //   return;
+          // }
         }
-      } catch (e) {
-        createMessage.error('redirect 錯誤，請重新登入 MGT 平台 !!');
-        // setTimeout(() => {
-        //   window.location.href = fromURL;
-        // }, 5000);
+        // 3.登入 password give
+        if (userId && redirectUrl) {
+          // 輸入登入 form
+          formData.account = checkUser.userId || '';
+          formData.password = checkUser.password || '';
+          handleLogin();
+        } else {
+          createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
+        }
       }
+      // } catch (e) {
+      //   createMessage.error('redirect 錯誤，請重新登入 MGT 平台 !!');
+      //   // setTimeout(() => {
+      //   //   window.location.href = fromURL;
+      //   // }, 5000);
+      // }
     } else {
       createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!!');
       // setTimeout(() => {

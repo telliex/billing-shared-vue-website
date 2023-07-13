@@ -19,7 +19,7 @@ import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { filter } from '/@/utils/helper/treeHelper';
 
 // import { getMenuList } from '/@/api/sys/menu';
-import { getNavList } from '/@/api/sys/menu';
+import { getDynamicNavList } from '/@/api/sys/menu';
 import { getPermCode } from '/@/api/sys/user';
 
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -107,8 +107,6 @@ export const usePermissionStore = defineStore({
     async changePermissionCode() {
       // depend on user id to get permission code list
       const codeList = await getPermCode();
-      console.log('perform changePermissionCode');
-      console.log('codeList:', codeList);
       this.setPermCodeList(codeList);
     },
 
@@ -229,9 +227,7 @@ export const usePermissionStore = defineStore({
           try {
             // write Permission codes to pinia
             await this.changePermissionCode();
-            console.log('0000000000001110');
-            routeListOri = (await getNavList()) as AppRouteRecordRaw[];
-            console.log('routeListOri:', routeListOri);
+            routeListOri = (await getDynamicNavList()) as AppRouteRecordRaw[];
           } catch (error) {
             console.error(error);
           }
@@ -243,7 +239,6 @@ export const usePermissionStore = defineStore({
           //  Background routing to menu structure
           //  後台路由到選單結構
           const backMenuList = transformRouteToMenu(routeList);
-          console.log('backMenuList:', backMenuList);
           this.setBackMenuList(backMenuList);
 
           // remove meta.ignoreRoute item

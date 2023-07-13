@@ -1,12 +1,3 @@
-/*
- * @Description:
-
-
- * @Anthor: Telliex
- * @Date: 2023-02-08 02:03:09
- * @LastEditors: Telliex
- * @LastEditTime: 2023-06-16 02:15:31
- */
 import { defHttp } from '/@/utils/http/axios';
 import { useUserStore } from '/@/store/modules/user';
 // import { ErrorMessageMode } from '/#/axios';
@@ -19,6 +10,10 @@ import {
   GetParameterStoreBackAWSModel,
   GetBillCodeValueModel,
   GetBillCodeValueBackModel,
+  RolePageListGetResultModel,
+  RoleListGetResultModel,
+  RolePageParams,
+  RoleParams,
 } from './model/systemModel';
 
 enum Api {
@@ -35,6 +30,10 @@ enum Api {
   GetUserPermissionRoleListValue = '/mgt-permission/get-permission',
   // GetPowerBIFilterValueValue = '/billing-powerbi-get-filter-value',
   GetUserPermissionGetRoleScopeValue = '/mgt-permission/get-role-scope',
+  RolePageList = '/system/role',
+  GetAllRoleList = '/system/getAllRoleList',
+  SetRoleStatus = '/system/role/status',
+  RoleList = '/system/menu',
 }
 
 const version = '/v1.0';
@@ -115,6 +114,8 @@ export const GetS3TargetUrl = (params: any) =>
       data: params,
       transformResponse: [
         function (data) {
+          console.log('9999999nodata999999');
+          console.log(data);
           const resObj = JSON.parse(data);
 
           if (resObj.status === 1000 || resObj.status === 1001) {
@@ -305,3 +306,189 @@ export const GetUserPermission = (params: any) =>
 //       apiUrl: '/power-bi',
 //     },
 //   );
+
+// Role
+export const getAllRoleList = (params?: RoleParams) =>
+  defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
+
+export const getRoleListByPage = (params: RolePageParams) => {
+  console.log('jjjjjjjjjj');
+  console.log(params);
+  return defHttp.get<RolePageListGetResultModel>(
+    {
+      url: `/api${version}${Api.RolePageList}`,
+      data: {},
+      params: {
+        roleName: params.roleName,
+        status: params.status,
+      },
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          console.log('return role items', resObj);
+          if (resObj.length) {
+            return {
+              trace_id: '',
+              total_pages: 1,
+              current_page: 1,
+              results: resObj,
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};
+
+export const setRoleStatus = (id: string, params: any) => {
+  return defHttp.patch<RolePageListGetResultModel>(
+    {
+      url: `/api${version}${Api.SetRoleStatus}/${id}`,
+      data: params,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 1,
+              current_page: 1,
+              results: [],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};
+
+export const removeRoleItem = (params: any) =>
+  defHttp.delete<RolePageListGetResultModel>(
+    {
+      url: `/api${version}${Api.RolePageList}/${params.id}`,
+      data: params,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+export const updateRoleItem = (params: any) =>
+  defHttp.patch<RolePageListGetResultModel>(
+    {
+      url: `/api${version}${Api.RoleList}/${params.id}`,
+      data: params,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+
+export const createRoleItem = (body: any) => {
+  return defHttp.post<RolePageListGetResultModel>(
+    {
+      url: `/api${version}${Api.RoleList}`,
+      data: body,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};

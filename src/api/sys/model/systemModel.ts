@@ -1,13 +1,5 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2023-03-05 10:19:07
- * @LastEditors: Telliex
- * @LastEditTime: 2023-03-09 02:48:25
- */
-/**
- * @description: Login interface parameters
- */
+import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
+
 export interface GetDictionaryModel {
   trace_id: string;
   request_items: {
@@ -62,3 +54,25 @@ export interface GetBillCodeValueBackModel {
   };
   response_items: { 'code-id': string; 'code-name': string }[];
 }
+
+export interface RoleListItem {
+  id: string;
+  roleName: string;
+  roleValue: string;
+  status: number;
+  addMaster: number;
+  addTime: string;
+  changeMaster: number;
+  changeTime: string;
+}
+
+export type RoleParams = {
+  roleName?: string;
+  status?: string;
+};
+
+export type RolePageParams = BasicPageParams & RoleParams;
+
+export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
+
+export type RoleListGetResultModel = RoleListItem[];

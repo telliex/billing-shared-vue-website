@@ -27,8 +27,10 @@
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
-
-  import { getMenuList } from '/@/api/demo/system';
+  import { createRoleItem, updateRoleItem } from '/@/api/sys/system';
+  console.log('222222');
+  import { getRoleListByPage } from '/@/api/sys/system';
+  import { RoleListItem } from '/@/api/sys/model/systemModel';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -37,7 +39,7 @@
     setup(_, { emit }) {
       const isUpdate = ref(true);
       const treeData = ref<TreeItem[]>([]);
-
+      const record = ref<RoleListItem | null>(null);
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 90,
         baseColProps: { span: 24 },
@@ -48,11 +50,15 @@
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
         resetFields();
         setDrawerProps({ confirmLoading: false });
+        isUpdate.value = !!data?.isUpdate;
+        record.value = data?.record || null;
         // 需要在setFieldsValue之前先填充treeData，否則Tree組件可能會報key not exist警告
         if (unref(treeData).length === 0) {
-          treeData.value = (await getMenuList()) as any as TreeItem[];
+          treeData.value = (await getRoleListByPage({
+            status: null,
+            roleName: null,
+          })) as any as TreeItem[];
         }
-        isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
           setFieldsValue({
@@ -69,6 +75,21 @@
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
           console.log(values);
+          let template = {
+            id: '',
+            roleName: '',
+            roleValue: '',
+            status: 1,
+            addMaster: 0,
+            addTime: '',
+            changeMaster: 0,
+            changeTime: '',
+          };
+          if (!unref(isUpdate)) {
+            await createRoleItem(Object.assign(template, values));
+          } else {
+            await updateRoleItem(Object.assign(template, record.value, values));
+          }
           closeDrawer();
           emit('success');
         } finally {

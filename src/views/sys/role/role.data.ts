@@ -2,8 +2,9 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
-import { setRoleStatus } from '/@/api/demo/system';
+import { setRoleStatus } from '/@/api/sys/system';
 import { useMessage } from '/@/hooks/web/useMessage';
+import moment from 'moment';
 
 export const columns: BasicColumn[] = [
   {
@@ -30,15 +31,15 @@ export const columns: BasicColumn[] = [
         record.pendingStatus = false;
       }
       return h(Switch, {
-        checked: record.status === '1',
+        checked: record.status === 1,
         checkedChildren: '已啟用',
         unCheckedChildren: '已禁用',
         loading: record.pendingStatus,
         onChange(checked: boolean) {
           record.pendingStatus = true;
-          const newStatus = checked ? '1' : '0';
+          const newStatus = checked ? 1 : 0;
           const { createMessage } = useMessage();
-          setRoleStatus(record.id, newStatus)
+          setRoleStatus(record.id, { status: newStatus })
             .then(() => {
               record.status = newStatus;
               createMessage.success(`已成功修改角色狀態`);
@@ -54,19 +55,30 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '創建時間',
-    dataIndex: 'createTime',
-    width: 180,
-  },
-  {
     title: '備註',
     dataIndex: 'remark',
+  },
+  {
+    title: '創建時間',
+    dataIndex: 'addTime',
+    width: 180,
+    customRender: ({ record }) => {
+      return moment(record.addTime).format('YYYY-MM-DD h:mm:ss');
+    },
+  },
+  {
+    title: '修改時間',
+    dataIndex: 'changeTime',
+    width: 180,
+    customRender: ({ record }) => {
+      return moment(record.addTime).format('YYYY-MM-DD h:mm:ss');
+    },
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'roleNme',
+    field: 'roleName',
     label: '角色名稱',
     component: 'Input',
     colProps: { span: 8 },
@@ -77,8 +89,8 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     componentProps: {
       options: [
-        { label: '啟用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '啟用', value: 1 },
+        { label: '停用', value: 0 },
       ],
     },
     colProps: { span: 8 },
@@ -102,11 +114,11 @@ export const formSchema: FormSchema[] = [
     field: 'status',
     label: '狀態',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: 1,
     componentProps: {
       options: [
-        { label: '啟用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '啟用', value: 1 },
+        { label: '停用', value: 0 },
       ],
     },
   },

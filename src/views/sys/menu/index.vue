@@ -33,7 +33,7 @@
   import { defineComponent, nextTick, onMounted } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { getNavList, removeNavItem } from '/@/api/demo/system';
+  import { getNavList, removeNavItem } from '/@/api/sys/menu';
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
   import { columns, searchFormSchema } from './menu.data';

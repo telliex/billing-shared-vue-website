@@ -93,7 +93,6 @@ export function createPermissionGuard(router: Router) {
       next();
       return;
     }
-    console.log('iiiiiiiiiii');
     const routes = await permissionStore.buildRoutesAction();
     console.log('routes:', routes);
     routes.forEach((route) => {

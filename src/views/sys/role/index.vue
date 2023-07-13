@@ -30,10 +30,10 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, onMounted } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getRoleListByPage } from '/@/api/demo/system';
+  import { getRoleListByPage, removeRoleItem } from '/@/api/sys/system';
 
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
@@ -57,12 +57,13 @@
         showTableSetting: true,
         bordered: true,
         showIndexColumn: false,
+        canResize: false,
         actionColumn: {
           width: 80,
           title: '操作',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
-          fixed: undefined,
+          fixed: 'right',
         },
       });
 
@@ -81,11 +82,16 @@
 
       function handleDelete(record: Recordable) {
         console.log(record);
+        removeRoleItem(record).then(() => {
+          reload();
+        });
       }
 
       function handleSuccess() {
         reload();
       }
+
+      onMounted(() => {});
 
       return {
         registerTable,

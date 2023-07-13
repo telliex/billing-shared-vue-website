@@ -15,6 +15,7 @@ export function getAllParentPath<T = Recordable>(treeData: T[], path: string) {
 function joinParentPath(menus: Menu[], parentPath = '') {
   for (let index = 0; index < menus.length; index++) {
     const menu = menus[index];
+
     // https://next.router.vuejs.org/guide/essentials/nested-routes.html
     // Note that nested paths that start with / will be treated as a root path.
     // 請注意，以 / 開頭的嵌套路徑將被視為根路徑。

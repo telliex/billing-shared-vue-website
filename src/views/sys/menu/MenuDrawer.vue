@@ -1,10 +1,3 @@
-<!--
- * @Description: 
- * @Anthor: Telliex
- * @Date: 2023-05-04 22:15:16
- * @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
- * @LastEditTime: 2023-06-30 01:04:28
--->
 <template>
   <BasicDrawer
     v-bind="$attrs"
@@ -22,8 +15,8 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { createNavItem, getNavList, updateNavItem } from '/@/api/demo/system';
-  import { NavListItem } from './type';
+  import { createNavItem, getNavList, updateNavItem } from '/@/api/sys/menu';
+  import { NavListItem } from '/@/api/sys/model/menuModel';
 
   export default defineComponent({
     name: 'MenuDrawer',
