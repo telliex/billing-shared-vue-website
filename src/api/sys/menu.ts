@@ -1,16 +1,10 @@
 import { useUserStore } from '/@/store/modules/user';
 import { router } from '/@/router';
 import { defHttp } from '/@/utils/http/axios';
-import {
-  getMenuListResultModel,
-  NavParams,
-  NavListResultModel,
-  getNavListResultModel,
-} from './model/menuModel';
+import { NavParams, NavListResultModel, getNavListResultModel } from './model/menuModel';
 import dayjs from 'dayjs';
 
 enum Api {
-  GetMenuList = '/getMenuList',
   GetDynamicNavList = '/system/menu/nav',
   NavList = '/system/menu',
 }
@@ -44,10 +38,6 @@ router.beforeEach(async () => {
 /**
  * @description: Get user menu based on id
  */
-
-export const getMenuList = () => {
-  return defHttp.get<getMenuListResultModel>({ url: Api.GetMenuList });
-};
 
 export const getDynamicNavList = () =>
   defHttp.get(
