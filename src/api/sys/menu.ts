@@ -24,9 +24,6 @@ const version = '/v1.0';
 
 let who = 0;
 
-setTimeout(() => {
-  who = useUserStore().getUserInfo?.userId as number;
-}, 1000);
 const timeTemp = dayjs().utcOffset();
 let timeZon = '';
 if (timeTemp === 0) {
