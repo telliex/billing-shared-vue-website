@@ -42,7 +42,7 @@ export type NavParams = {
 /**
  * @description: Get menu return value
  */
-export type getMenuListResultModel = RouteItem[];
+// export type getMenuListResultModel = RouteItem[];
 export type getNavListResultModel = RouteItem[];
 
 export type NavListResultModel = BasicFetchResult<NavListItem>;
