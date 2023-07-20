@@ -8,15 +8,17 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './dept.data';
-
-  import { getDeptList } from '/@/api/demo/system';
+  import { TreeItem } from '/@/components/Tree';
+  import { createDeptItem, getDeptList, updateDeptItem } from '/@/api/sys/system';
+  import { DeptListItem } from '/@/api/sys/model/systemModel';
   export default defineComponent({
     name: 'DeptModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
-
+      const record = ref<DeptListItem | null>(null);
+      const treeData = ref<TreeItem[]>([]);
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 24 },
@@ -25,16 +27,22 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
-
+        record.value = data?.record || null;
+        resetFields();
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
           });
         }
-        const treeData = await getDeptList();
+        treeData.value = (await getDeptList({
+          status: null,
+          deptName: null,
+          page: null,
+          pageSize: null,
+        })) as unknown as TreeItem[];
+
         updateSchema({
           field: 'parentDept',
           componentProps: { treeData },
@@ -49,6 +57,25 @@
           setModalProps({ confirmLoading: true });
           // TODO custom api
           console.log(values);
+          let template = {
+            deptName: '',
+            orderNo: 0,
+            remark: '',
+            status: 1,
+            parentDept: '',
+            children: undefined,
+            addMaster: 0,
+            addTime: '',
+            changeMaster: 0,
+            changeTime: '',
+          };
+
+          if (!unref(isUpdate)) {
+            let result = Object.assign(template, values);
+            await createDeptItem(result);
+          } else {
+            await updateDeptItem(Object.assign(template, record.value, values));
+          }
           closeModal();
           emit('success');
         } finally {

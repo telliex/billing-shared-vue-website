@@ -1,12 +1,14 @@
-import { isAccountExist } from '/@/api/demo/system';
-import { getAllRoleList } from '/@/api/sys/system';
+import moment from 'moment';
+import { getAllRoleList, isUserExist } from '/@/api/sys/system';
+import { h } from 'vue';
+import { Tag } from 'ant-design-vue';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
     title: '用戶名',
-    dataIndex: 'account',
+    dataIndex: 'userName',
     width: 120,
   },
   {
@@ -15,47 +17,85 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '郵箱',
+    title: 'Email',
     dataIndex: 'email',
-    width: 120,
+    width: 200,
   },
   {
-    title: '創建時間',
-    dataIndex: 'createTime',
-    width: 180,
+    title: '狀態',
+    dataIndex: 'status',
+    width: 80,
+    customRender: ({ record }) => {
+      const status = record.status;
+      const enable = ~~status === 1;
+      const color = enable ? 'green' : 'red';
+      const text = enable ? '啟用' : '停用';
+      return h(Tag, { color: color }, () => text);
+    },
   },
   {
     title: '角色',
-    dataIndex: 'role',
+    dataIndex: 'roles',
     width: 200,
   },
   {
     title: '備註',
     dataIndex: 'remark',
   },
+  {
+    title: '創建人',
+    dataIndex: 'addMaster',
+    width: 100,
+  },
+  {
+    title: '創建時間',
+    dataIndex: 'addTime',
+    width: 180,
+    customRender: ({ record }) => {
+      return moment(record.addTime).format('YYYY-MM-DD h:mm:ss');
+    },
+  },
+  {
+    title: '修改人',
+    dataIndex: 'changeMaster',
+    width: 100,
+  },
+  {
+    title: '修改時間',
+    dataIndex: 'changeTime',
+    width: 180,
+    customRender: ({ record }) => {
+      return moment(record.changeTime).format('YYYY-MM-DD h:mm:ss');
+    },
+  },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'account',
+    field: 'userName',
     label: '用戶名',
     component: 'Input',
     colProps: { span: 8 },
   },
   {
-    field: 'nickname',
-    label: '暱稱',
-    component: 'Input',
+    field: 'status',
+    label: '狀態',
+    component: 'Select',
+    componentProps: {
+      options: [
+        { label: '啟用', value: 1 },
+        { label: '停用', value: 0 },
+      ],
+    },
     colProps: { span: 8 },
   },
 ];
 
 export const accountFormSchema: FormSchema[] = [
   {
-    field: 'account',
+    field: 'userName',
     label: '用戶名',
     component: 'Input',
-    helpMessage: ['本字段演示異步驗證', '不能輸入帶有admin的用戶名'],
     rules: [
       {
         required: true,
@@ -64,7 +104,7 @@ export const accountFormSchema: FormSchema[] = [
       {
         validator(_, value) {
           return new Promise((resolve, reject) => {
-            isAccountExist(value)
+            isUserExist(value)
               .then(() => resolve())
               .catch((err) => {
                 reject(err.message || '驗證失敗');
@@ -75,6 +115,18 @@ export const accountFormSchema: FormSchema[] = [
     ],
   },
   {
+    field: 'realName',
+    label: '名稱',
+    required: true,
+    component: 'Input',
+  },
+  {
+    field: 'nickname',
+    label: '暱稱',
+    component: 'Input',
+    required: true,
+  },
+  {
     field: 'pwd',
     label: '密碼',
     component: 'InputPassword',
@@ -83,7 +135,7 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     label: '角色',
-    field: 'role',
+    field: 'roles',
     component: 'ApiSelect',
     componentProps: {
       api: getAllRoleList,
@@ -107,14 +159,19 @@ export const accountFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'nickname',
-    label: '暱稱',
-    component: 'Input',
-    required: true,
+    field: 'status',
+    label: '狀態',
+    component: 'RadioButtonGroup',
+    defaultValue: 1,
+    componentProps: {
+      options: [
+        { label: '啟用', value: 1 },
+        { label: '停用', value: 0 },
+      ],
+    },
   },
-
   {
-    label: '郵箱',
+    label: 'Email',
     field: 'email',
     component: 'Input',
     required: true,

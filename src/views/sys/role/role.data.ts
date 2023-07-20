@@ -59,12 +59,22 @@ export const columns: BasicColumn[] = [
     dataIndex: 'remark',
   },
   {
+    title: '創建人',
+    dataIndex: 'addMaster',
+    width: 100,
+  },
+  {
     title: '創建時間',
     dataIndex: 'addTime',
     width: 180,
     customRender: ({ record }) => {
       return moment(record.addTime).format('YYYY-MM-DD h:mm:ss');
     },
+  },
+  {
+    title: '修改人',
+    dataIndex: 'changeMaster',
+    width: 100,
   },
   {
     title: '修改時間',
@@ -111,6 +121,13 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
   },
   {
+    field: 'orderNo',
+    label: '排序',
+    required: true,
+    defaultValue: 100,
+    component: 'Input',
+  },
+  {
     field: 'status',
     label: '狀態',
     component: 'RadioButtonGroup',
@@ -127,10 +144,15 @@ export const formSchema: FormSchema[] = [
     field: 'remark',
     component: 'InputTextArea',
   },
+  // {
+  //   label: ' ',
+  //   field: 'menuPermission',
+  //   component: 'Input',
+  // },
   {
     label: ' ',
-    field: 'menu',
+    field: 'menuPermissionArray',
     slot: 'menu',
-    component: 'Input',
+    component: 'TreeSelect',
   },
 ];

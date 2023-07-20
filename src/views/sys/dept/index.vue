@@ -33,8 +33,8 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getDeptList } from '/@/api/demo/system';
-
+  import { getDeptList, removeDeptItem } from '/@/api/sys/system';
+  import { useMessage } from '/@/hooks/web/useMessage';
   import { useModal } from '/@/components/Modal';
   import DeptModal from './DeptModal.vue';
 
@@ -45,6 +45,7 @@
     components: { BasicTable, DeptModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();
+      const { createMessage } = useMessage();
       const [registerTable, { reload }] = useTable({
         title: '部門列表',
         api: getDeptList,
@@ -65,7 +66,7 @@
           title: '操作',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
-          fixed: undefined,
+          fixed: 'right',
         },
       });
 
@@ -83,7 +84,13 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
+        if (record.children && record.children.length > 0) {
+          createMessage.error('含有子部門，無法刪除');
+          return;
+        }
+        removeDeptItem(record).then(() => {
+          reload();
+        });
       }
 
       function handleSuccess() {

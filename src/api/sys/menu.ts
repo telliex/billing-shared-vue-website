@@ -52,7 +52,7 @@ export const getDynamicNavList = () =>
         function (data) {
           const resObj = JSON.parse(data);
           console.log('======nav resObj=======', resObj);
-          if (resObj.length) {
+          if (resObj.length >= 0) {
             return {
               trace_id: '',
               total_pages: 0,
@@ -119,7 +119,7 @@ export const getNavList = (params: FilterItems) =>
           console.log('resObj:', resObj);
           const menuTree = resObj.filter((item) => item.parentMenu == '' && item.type == 'catalog');
           console.log('menuTree:', menuTree);
-          if (resObj.length) {
+          if (resObj.length >= 0) {
             return {
               trace_id: '',
               total_pages: 0,

@@ -28,8 +28,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
   import { createRoleItem, updateRoleItem } from '/@/api/sys/system';
-  console.log('222222');
-  import { getRoleListByPage } from '/@/api/sys/system';
+  import { getNavList } from '/@/api/sys/menu';
   import { RoleListItem } from '/@/api/sys/model/systemModel';
 
   export default defineComponent({
@@ -48,18 +47,18 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
         // 需要在setFieldsValue之前先填充treeData，否則Tree組件可能會報key not exist警告
         if (unref(treeData).length === 0) {
-          treeData.value = (await getRoleListByPage({
+          treeData.value = (await getNavList({
             status: null,
-            roleName: null,
+            menuName: null,
           })) as any as TreeItem[];
         }
-
+        // put here to avoid the display required warning
+        resetFields();
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
@@ -74,11 +73,21 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
-          console.log(values);
+          // transform values
+          values.menuPermissionArray = values.menuPermissionArray ? values.menuPermissionArray : [];
+          values.menuPermission = values.menuPermissionArray.length
+            ? values.menuPermissionArray.join(',')
+            : '';
+          values.orderNo = Number(values.orderNo);
+
           let template = {
             id: '',
             roleName: '',
             roleValue: '',
+            orderNo: 0,
+            remark: '',
+            menuPermission: '',
+            menuPermissionArray: [],
             status: 1,
             addMaster: 0,
             addTime: '',
@@ -86,7 +95,8 @@
             changeTime: '',
           };
           if (!unref(isUpdate)) {
-            await createRoleItem(Object.assign(template, values));
+            let result = Object.assign(template, values);
+            await createRoleItem(result);
           } else {
             await updateRoleItem(Object.assign(template, record.value, values));
           }

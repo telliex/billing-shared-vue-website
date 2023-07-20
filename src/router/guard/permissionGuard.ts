@@ -113,7 +113,7 @@ export function createPermissionGuard(router: Router) {
           temp.redirect = route.redirect;
         }
       }
-      console.log('temp:', temp);
+
       router.addRoute(temp as unknown as RouteRecordRaw);
     });
 

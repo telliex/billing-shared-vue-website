@@ -14,6 +14,12 @@ import {
   RoleListGetResultModel,
   RolePageParams,
   RoleParams,
+  DeptPageParams,
+  DeptItem,
+  DeptListModel,
+  UserPageParams,
+  UserItem,
+  UserListModel,
 } from './model/systemModel';
 
 enum Api {
@@ -30,10 +36,12 @@ enum Api {
   GetUserPermissionRoleListValue = '/mgt-permission/get-permission',
   // GetPowerBIFilterValueValue = '/billing-powerbi-get-filter-value',
   GetUserPermissionGetRoleScopeValue = '/mgt-permission/get-role-scope',
-  RolePageList = '/system/role',
   GetAllRoleList = '/system/getAllRoleList',
   SetRoleStatus = '/system/role/status',
-  RoleList = '/system/menu',
+  RoleList = '/system/role',
+  DeptList = '/system/department',
+  UserList = '/system/user',
+  IsUserExist = '/system/user/exist',
 }
 
 const version = '/v1.0';
@@ -308,19 +316,20 @@ export const GetUserPermission = (params: any) =>
 //   );
 
 // Role
+// API for account use
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
-
+// Role list
 export const getRoleListByPage = (params: RolePageParams) => {
-  console.log('jjjjjjjjjj');
-  console.log(params);
   return defHttp.get<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RolePageList}`,
+      url: `/api${version}${Api.RoleList}`,
       data: {},
       params: {
         roleName: params.roleName,
         status: params.status,
+        page: params.page || 1,
+        pageSize: params.pageSize || 10,
       },
       headers: {
         'User-Id': who,
@@ -329,28 +338,32 @@ export const getRoleListByPage = (params: RolePageParams) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
+          // let role permission string to array
+          resObj.forEach((item) => {
+            item.menuPermissionArray = item.menuPermission ? item.menuPermission.split(',') : [];
+          });
           console.log('return role items', resObj);
-          if (resObj.length) {
+          if (resObj.length >= 0) {
             return {
-              trace_id: '',
-              total_pages: 1,
-              current_page: 1,
+              traceId: '',
+              totalPages: 1,
+              currentPage: 1,
               results: resObj,
               status: 1000,
               msg: 'success',
-              requested_time: '',
-              responsed_time: '',
+              requestedTime: '',
+              responsedTime: '',
             };
           } else {
             return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
+              traceId: '',
+              totalPages: 0,
+              currentPage: 0,
               results: [],
               status: 9999,
               msg: data,
-              requested_time: '',
-              responsed_time: '',
+              requestedTime: '',
+              responsedTime: '',
             };
           }
         },
@@ -398,7 +411,7 @@ export const setRoleStatus = (id: string, params: any) => {
 export const removeRoleItem = (params: any) =>
   defHttp.delete<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RolePageList}/${params.id}`,
+      url: `/api${version}${Api.RoleList}/${params.id}`,
       data: params,
       headers: {
         'User-Id': who,
@@ -492,3 +505,343 @@ export const createRoleItem = (body: any) => {
     },
   );
 };
+
+export const getDeptList = (params: DeptPageParams) => {
+  return defHttp.get<DeptListModel>(
+    {
+      url: `/api${version}${Api.DeptList}`,
+      data: {},
+      params: {
+        deptName: params.deptName,
+        status: params.status,
+        page: params.page,
+        pageSize: params.pageSize,
+      },
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          // let role permission string to array
+
+          console.log('return dept items', resObj);
+          if (resObj.length >= 0) {
+            return {
+              traceId: '',
+              totalPages: 1,
+              currentPage: 1,
+              results: resObj,
+              status: 1000,
+              msg: 'success',
+              requestedTime: '',
+              responsedTime: '',
+            };
+          } else {
+            return {
+              traceId: '',
+              totalPages: 0,
+              currentPage: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requestedTime: '',
+              responsedTime: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};
+
+export const createDeptItem = (body: any) => {
+  return defHttp.post<DeptItem>(
+    {
+      url: `/api${version}${Api.DeptList}`,
+      data: body,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};
+
+export const updateDeptItem = (params: any) =>
+  defHttp.patch<DeptItem>(
+    {
+      url: `/api${version}${Api.DeptList}/${params.id}`,
+      data: params,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+
+export const removeDeptItem = (params: any) =>
+  defHttp.delete<DeptItem>(
+    {
+      url: `/api${version}${Api.DeptList}/${params.id}`,
+      data: params,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+
+// check user if exist
+export const isUserExist = (params: any) =>
+  defHttp.get<UserItem>(
+    {
+      url: `/api${version}${Api.IsUserExist}/${params.userName}`,
+      data: {},
+      params: {
+        userName: params.deptName,
+      },
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+
+export const getUserList = (params: UserPageParams) => {
+  return defHttp.get<UserListModel>(
+    {
+      url: `/api${version}${Api.UserList}`,
+      data: {},
+      params: {
+        userName: params.userName,
+        status: params.status,
+        dept: params.dept,
+        page: params.page,
+        pageSize: params.pageSize,
+      },
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          // let role permission string to array
+
+          console.log('return dept items', resObj);
+          if (resObj.length >= 0) {
+            return {
+              traceId: '',
+              totalPages: 1,
+              currentPage: 1,
+              results: resObj,
+              status: 1000,
+              msg: 'success',
+              requestedTime: '',
+              responsedTime: '',
+            };
+          } else {
+            return {
+              traceId: '',
+              totalPages: 0,
+              currentPage: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requestedTime: '',
+              responsedTime: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};
+
+export const removeUserItem = (body: any) =>
+  defHttp.delete<UserItem>(
+    {
+      url: `/api${version}${Api.UserList}/${body.id}`,
+      data: body,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+export const createUserItem = (body: any) => {
+  return defHttp.post<UserItem>(
+    {
+      url: `/api${version}${Api.UserList}`,
+      data: body,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};
+
+export const updateUserItem = (body: any) =>
+  defHttp.patch<UserItem>(
+    {
+      url: `/api${version}${Api.UserList}/${body.id}`,
+      data: body,
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );

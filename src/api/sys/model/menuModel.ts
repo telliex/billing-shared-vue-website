@@ -36,7 +36,7 @@ export interface RouteItem {
 
 export type NavParams = {
   id?: string;
-  status?: string;
+  status?: number;
 };
 
 /**

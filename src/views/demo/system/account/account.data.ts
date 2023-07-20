@@ -1,5 +1,4 @@
-import { isAccountExist } from '/@/api/demo/system';
-import { getAllRoleList } from '/@/api/sys/system';
+import { isUserExist, getAllRoleList } from '/@/api/sys/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
@@ -64,7 +63,7 @@ export const accountFormSchema: FormSchema[] = [
       {
         validator(_, value) {
           return new Promise((resolve, reject) => {
-            isAccountExist(value)
+            isUserExist(value)
               .then(() => resolve())
               .catch((err) => {
                 reject(err.message || '驗證失敗');

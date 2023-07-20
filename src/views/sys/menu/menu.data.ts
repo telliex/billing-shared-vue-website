@@ -62,12 +62,22 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: '創建人',
+    dataIndex: 'addMaster',
+    width: 100,
+  },
+  {
     title: '創建時間',
     dataIndex: 'addTime',
     width: 180,
     customRender: ({ record }) => {
       return moment(record.addTime).format('YYYY-MM-DD h:mm:ss');
     },
+  },
+  {
+    title: '修改人',
+    dataIndex: 'changeMaster',
+    width: 100,
   },
   {
     title: '修改時間',

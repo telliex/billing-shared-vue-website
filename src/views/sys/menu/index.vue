@@ -83,7 +83,7 @@
       function handleDelete(record: Recordable) {
         console.log(record);
         if (record.children && record.children.length > 0) {
-          createMessage.warning('包含子項目，不能刪除');
+          createMessage.warning('包含子選單，無法刪除');
           return;
         }
         removeNavItem(record).then(() => {
@@ -92,6 +92,7 @@
       }
 
       function handleSuccess() {
+        createMessage.info('Please reload page to update the menu ! ');
         reload();
       }
 

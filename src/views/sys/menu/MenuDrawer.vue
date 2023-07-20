@@ -36,20 +36,22 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
 
+        const treeData = await getNavList({
+          status: null,
+          menuName: null,
+        });
+        // put here to avoid the display required warning
+        resetFields();
         if (unref(isUpdate)) {
           setFieldsValue({
             ...data.record,
           });
         }
-        const treeData = await getNavList({
-          status: null,
-          menuName: null,
-        });
+
         updateSchema({
           field: 'parentMenu',
           componentProps: { treeData },
@@ -62,7 +64,6 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          console.log(values);
           let template = {
             id: '',
             type: '',
