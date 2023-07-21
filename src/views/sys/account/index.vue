@@ -34,7 +34,7 @@
         </template>
       </template>
     </BasicTable>
-    <AccountModal @register="registerModal" @success="handleSuccess" />
+    <UserModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts">
@@ -46,14 +46,14 @@
   import DeptTree from './DeptTree.vue';
 
   import { useModal } from '/@/components/Modal';
-  import AccountModal from './AccountModal.vue';
+  import UserModal from './UserModal.vue';
 
-  import { columns, searchFormSchema } from './account.data';
+  import { columns, searchFormSchema } from './user.data';
   import { useGo } from '/@/hooks/web/usePage';
 
   export default defineComponent({
     name: 'AccountManagement',
-    components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
+    components: { BasicTable, PageWrapper, DeptTree, UserModal, TableAction },
     setup() {
       const go = useGo();
       const [registerModal, { openModal }] = useModal();

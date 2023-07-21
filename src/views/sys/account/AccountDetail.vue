@@ -34,7 +34,7 @@
   import { useTabs } from '/@/hooks/web/useTabs';
   import { Tabs } from 'ant-design-vue';
   export default defineComponent({
-    name: 'AccountDetail',
+    name: 'UserDetail',
     components: { PageWrapper, ATabs: Tabs, ATabPane: Tabs.TabPane },
     setup() {
       const route = useRoute();

@@ -7,17 +7,20 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { accountFormSchema } from './account.data';
-  import { getDeptList } from '/@/api/sys/system';
+  import { accountFormSchema } from './user.data';
+  import { getDeptList, createUserItem, updateUserItem, isUserExist } from '/@/api/sys/system';
+  import { UserItem } from '/@/api/sys/model/systemModel';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   export default defineComponent({
-    name: 'AccountModal',
+    name: 'UserModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
       const rowId = ref('');
-
+      const record = ref<UserItem | null>(null);
+      const { createMessage } = useMessage();
       const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 24 },
@@ -31,6 +34,7 @@
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
+        record.value = data?.record || null;
 
         resetFields();
         if (unref(isUpdate)) {
@@ -64,8 +68,40 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
+          let isUser = await isUserExist({
+            id: rowId.value,
+            userName: values.userName,
+          });
+
+          if (!isUser) {
+            console.log('isUser:', isUser);
+            createMessage.error('帳號已存在');
+            return;
+          }
           // TODO custom api
-          console.log(values);
+
+          let template = {
+            id: '',
+            userName: '',
+            realName: '',
+            nickname: '',
+            email: '',
+            remark: '',
+            roles: '',
+            status: 1,
+            addMaster: 0,
+            addTime: '',
+            changeMaster: 0,
+            changeTime: '',
+          };
+
+          if (!unref(isUpdate)) {
+            let result = Object.assign(template, values);
+            await createUserItem(result);
+          } else {
+            await updateUserItem(Object.assign(template, record.value, values));
+          }
+
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {

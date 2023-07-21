@@ -36,8 +36,8 @@ enum Api {
   GetUserPermissionRoleListValue = '/mgt-permission/get-permission',
   // GetPowerBIFilterValueValue = '/billing-powerbi-get-filter-value',
   GetUserPermissionGetRoleScopeValue = '/mgt-permission/get-role-scope',
-  GetAllRoleList = '/system/getAllRoleList',
-  SetRoleStatus = '/system/role/status',
+  GetAllRoleList = '/system/getAllRoleList', // O
+  RoleStatus = '/system/role/status',
   RoleList = '/system/role',
   DeptList = '/system/department',
   UserList = '/system/user',
@@ -115,15 +115,13 @@ export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
     },
   );
 
-export const GetS3TargetUrl = (params: any) =>
+export const GetS3TargetUrl = (body: any) =>
   defHttp.post(
     {
       url: '/aws' + version + Api.GetS3TargetUrlValue,
-      data: params,
+      data: body,
       transformResponse: [
         function (data) {
-          console.log('9999999nodata999999');
-          console.log(data);
           const resObj = JSON.parse(data);
 
           if (resObj.status === 1000 || resObj.status === 1001) {
@@ -157,11 +155,11 @@ export const GetS3TargetUrl = (params: any) =>
     },
   );
 
-export const GetUserPermissionRoleList = (params: any) =>
+export const GetUserPermissionRoleList = (body: any) =>
   defHttp.get(
     {
       url: '/api' + version + Api.GetUserPermissionRoleListValue,
-      data: params,
+      data: body,
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -196,11 +194,11 @@ export const GetUserPermissionRoleList = (params: any) =>
     },
   );
 
-export const GetUserPermissionGetRoleScope = (params: any) =>
+export const GetUserPermissionGetRoleScope = (body: any) =>
   defHttp.post(
     {
       url: '/api' + version + Api.GetUserPermissionGetRoleScopeValue,
-      data: params,
+      data: body,
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -235,11 +233,11 @@ export const GetUserPermissionGetRoleScope = (params: any) =>
     },
   );
 
-export const GetUserPermission = (params: any) =>
+export const GetUserPermission = (body: any) =>
   defHttp.post(
     {
       url: '/api' + version + Api.GetUserPermissionValue,
-      data: params,
+      data: body,
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -315,7 +313,9 @@ export const GetUserPermission = (params: any) =>
 //     },
 //   );
 
-// Role
+/**
+ * @description: Role
+ */
 // API for account use
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
@@ -375,11 +375,11 @@ export const getRoleListByPage = (params: RolePageParams) => {
   );
 };
 
-export const setRoleStatus = (id: string, params: any) => {
+export const setRoleStatus = (id: string, body: any) => {
   return defHttp.patch<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.SetRoleStatus}/${id}`,
-      data: params,
+      url: `/api${version}${Api.RoleStatus}/${id}`,
+      data: body,
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
@@ -408,11 +408,11 @@ export const setRoleStatus = (id: string, params: any) => {
   );
 };
 
-export const removeRoleItem = (params: any) =>
+export const removeRoleItem = (body: any) =>
   defHttp.delete<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RoleList}/${params.id}`,
-      data: params,
+      url: `/api${version}${Api.RoleList}/${body.id}`,
+      data: body,
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
@@ -439,11 +439,11 @@ export const removeRoleItem = (params: any) =>
       apiUrl: '/sys-api',
     },
   );
-export const updateRoleItem = (params: any) =>
+export const updateRoleItem = (body: any) =>
   defHttp.patch<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RoleList}/${params.id}`,
-      data: params,
+      url: `/api${version}${Api.RoleList}/${body.id}`,
+      data: body,
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
@@ -506,6 +506,9 @@ export const createRoleItem = (body: any) => {
   );
 };
 
+/**
+ * @description: Department
+ */
 export const getDeptList = (params: DeptPageParams) => {
   return defHttp.get<DeptListModel>(
     {
@@ -593,11 +596,11 @@ export const createDeptItem = (body: any) => {
   );
 };
 
-export const updateDeptItem = (params: any) =>
+export const updateDeptItem = (body: any) =>
   defHttp.patch<DeptItem>(
     {
-      url: `/api${version}${Api.DeptList}/${params.id}`,
-      data: params,
+      url: `/api${version}${Api.DeptList}/${body.id}`,
+      data: body,
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
@@ -626,11 +629,11 @@ export const updateDeptItem = (params: any) =>
     },
   );
 
-export const removeDeptItem = (params: any) =>
+export const removeDeptItem = (body: any) =>
   defHttp.delete<DeptItem>(
     {
-      url: `/api${version}${Api.DeptList}/${params.id}`,
-      data: params,
+      url: `/api${version}${Api.DeptList}/${body.id}`,
+      data: body,
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
@@ -658,15 +661,16 @@ export const removeDeptItem = (params: any) =>
     },
   );
 
+/**
+ * @description: User
+ */
 // check user if exist
-export const isUserExist = (params: any) =>
-  defHttp.get<UserItem>(
+export const isUserExist = (params: any) => {
+  return defHttp.get<UserItem>(
     {
-      url: `/api${version}${Api.IsUserExist}/${params.userName}`,
+      url: `/api${version}${Api.IsUserExist}`,
       data: {},
-      params: {
-        userName: params.deptName,
-      },
+      params: params,
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
@@ -674,14 +678,26 @@ export const isUserExist = (params: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (resObj) {
+          console.log('data:77777', resObj);
+          if (!resObj) {
             return {
               trace_id: '',
               total_pages: 0,
               current_page: 0,
-              results: [resObj],
+              results: [],
               status: 1000,
               msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: null,
+              status: 1000,
+              msg: '帳號已存在',
               requested_time: '',
               responsed_time: '',
             };
@@ -693,6 +709,7 @@ export const isUserExist = (params: any) =>
       apiUrl: '/sys-api',
     },
   );
+};
 
 export const getUserList = (params: UserPageParams) => {
   return defHttp.get<UserListModel>(

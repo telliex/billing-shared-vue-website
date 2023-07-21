@@ -96,20 +96,31 @@ export const accountFormSchema: FormSchema[] = [
     field: 'userName',
     label: '用戶名',
     component: 'Input',
+    componentProps: {
+      onChange: (e: any) => {
+        console.log(e);
+      },
+    },
     rules: [
       {
         required: true,
         message: '請輸入用戶名',
-      },
-      {
+        trigger: 'change',
+
         validator(_, value) {
-          return new Promise((resolve, reject) => {
-            isUserExist(value)
-              .then(() => resolve())
-              .catch((err) => {
-                reject(err.message || '驗證失敗');
-              });
-          });
+          if (!value) {
+            /* eslint-disable-next-line */
+            console.log('值不能為空');
+            return Promise.reject('值不能為空');
+          }
+          return Promise.resolve();
+          // return new Promise((resolve, reject) => {
+          //   isUserExist(value)
+          //     .then(() => resolve())
+          //     .catch((err) => {
+          //       reject(err.message || '驗證失敗');
+          //     });
+          // });
         },
       },
     ],
@@ -142,7 +153,6 @@ export const accountFormSchema: FormSchema[] = [
       labelField: 'roleName',
       valueField: 'roleValue',
     },
-    required: true,
   },
   {
     field: 'dept',

@@ -2,8 +2,8 @@
  * @Description:
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:54
- * @LastEditors: Telliex
- * @LastEditTime: 2023-06-20 01:31:10
+ * @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
+ * @LastEditTime: 2023-07-21 04:17:38
  */
 import type { AppRouteModule } from '/@/router/types';
 import { RoleEnum } from '/@/enums/roleEnum';
@@ -34,7 +34,7 @@ const system: AppRouteModule = {
     },
     {
       path: 'account_detail/:id',
-      name: 'AccountDetail',
+      name: 'UserDetail',
       meta: {
         title: t('routes.demo.system.account_detail'),
         ignoreKeepAlive: true,

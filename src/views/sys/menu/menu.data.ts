@@ -119,6 +119,7 @@ export const formSchema: FormSchema[] = [
     field: 'type',
     label: '選單類型',
     component: 'RadioButtonGroup',
+    helpMessage: ['第一級選單需為目錄 catalog'],
     defaultValue: 'catalog',
     componentProps: {
       options: [
@@ -139,6 +140,7 @@ export const formSchema: FormSchema[] = [
     field: 'alias',
     label: 'Alias',
     component: 'Input',
+    helpMessage: ['選單呈現文字'],
     required: true,
   },
   {
@@ -183,6 +185,7 @@ export const formSchema: FormSchema[] = [
     field: 'routPath',
     label: '路由地址',
     component: 'Input',
+    helpMessage: ['[站内]: 以 "/" 開頭', '[站外]: 以 "http" 開頭'],
     required: true,
     ifShow: ({ values }) => !isButton(values.type),
   },
@@ -195,12 +198,14 @@ export const formSchema: FormSchema[] = [
   {
     field: 'component',
     label: '組件路徑',
+    helpMessage: ['[目錄 catalog]: LAYOUT', '[選單 page]: Vue 組件名'],
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
   },
   {
     field: 'permission',
     label: '權限標識',
+    helpMessage: ['[選單 page]: menu1:view', '[按鈕 button]: menu1:view:btn1'],
     component: 'Input',
     ifShow: ({ values }) => !isDir(values.type),
   },
@@ -209,6 +214,7 @@ export const formSchema: FormSchema[] = [
     label: '狀態',
     component: 'RadioButtonGroup',
     defaultValue: 0,
+    helpMessage: ['顯示 / 隱藏'],
     componentProps: {
       options: [
         { label: '啟用', value: 1 },
@@ -221,6 +227,7 @@ export const formSchema: FormSchema[] = [
     label: '是否外鏈',
     component: 'RadioButtonGroup',
     defaultValue: 0,
+    helpMessage: ['選單指向站外連結'],
     componentProps: {
       options: [
         { label: '否', value: 0 },

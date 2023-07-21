@@ -40,7 +40,12 @@
           });
         }
 
-        const treeData = await getDeptList();
+        const treeData = await getDeptList({
+          deptName: null,
+          status: null,
+          page: null,
+          pageSize: null,
+        });
         updateSchema([
           {
             field: 'pwd',
