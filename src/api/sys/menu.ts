@@ -84,6 +84,72 @@ export const getDynamicNavList = () =>
   );
 
 // system menu===========
+export const getNavTreeList = (params: FilterItems) =>
+  defHttp.get<getNavListResultModel>(
+    {
+      url: `/api${version}${Api.NavList}`,
+      data: {},
+      params: {
+        menuName: params.menuName,
+        status: params.status,
+      },
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          let resObj = JSON.parse(data);
+          resObj = resObj.filter((item) => item.type === 'catalog');
+          console.log('return menu items', resObj);
+          resObj.forEach((item) => {
+            if (item.parentMenu == '' && item.type == 'catalog') {
+              // menuTree.push(item);
+            } else {
+              resObj.forEach((subItem) => {
+                if (item.parentMenu === subItem.id) {
+                  if (subItem.children) {
+                    subItem.children.push(item);
+                  } else {
+                    subItem.children = [item];
+                  }
+                }
+              });
+            }
+          });
+          console.log('resObj:', resObj);
+          const menuTree = resObj.filter((item) => item.parentMenu == '' && item.type == 'catalog');
+          console.log('menuTree:', menuTree);
+          if (resObj.length >= 0) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: menuTree,
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
 export const getNavList = (params: FilterItems) =>
   defHttp.get<getNavListResultModel>(
     {

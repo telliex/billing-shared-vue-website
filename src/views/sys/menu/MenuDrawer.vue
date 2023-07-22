@@ -15,7 +15,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { createNavItem, getNavList, updateNavItem } from '/@/api/sys/menu';
+  import { createNavItem, getNavTreeList, updateNavItem } from '/@/api/sys/menu';
   import { NavListItem } from '/@/api/sys/model/menuModel';
 
   export default defineComponent({
@@ -40,7 +40,7 @@
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
 
-        const treeData = await getNavList({
+        const treeData = await getNavTreeList({
           status: null,
           menuName: null,
         });
@@ -64,6 +64,16 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
+          if (values.type === 'catalog') {
+            if (values.isExt === 1) {
+              values.component = 'IFrame';
+              values.componentName = 'IFrame';
+            } else {
+              values.component = 'LAYOUT';
+              values.componentName = 'LAYOUT';
+            }
+          }
+          console.log('value11111111:', values);
           let template = {
             id: '',
             type: '',
@@ -73,7 +83,7 @@
             permission: '',
             component: '',
             componentName: '',
-            routPath: '',
+            routePath: '',
             orderNo: 0,
             icon: '',
             parentId: '',

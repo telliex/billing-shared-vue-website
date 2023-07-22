@@ -182,10 +182,14 @@ export const formSchema: FormSchema[] = [
   },
 
   {
-    field: 'routPath',
+    field: 'routePath',
     label: '路由地址',
     component: 'Input',
-    helpMessage: ['[站内]: 以 "/" 開頭', '[站外]: 以 "http" 開頭'],
+    helpMessage: [
+      '[站内-第一級選單]: 以 "/" 開頭, 末尾不加 "/"',
+      '[站内-非第一級選單]: 首尾不加 "/"',
+      '[站外]: 以 "http" 開頭',
+    ],
     required: true,
     ifShow: ({ values }) => !isButton(values.type),
   },
@@ -198,7 +202,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'component',
     label: '組件路徑',
-    helpMessage: ['[目錄 catalog]: LAYOUT', '[選單 page]: Vue 組件名'],
+    helpMessage: ['[目錄 catalog]: LAYOUT', '[選單 page]: Vue 組件相對位置'],
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
   },
@@ -214,7 +218,7 @@ export const formSchema: FormSchema[] = [
     label: '狀態',
     component: 'RadioButtonGroup',
     defaultValue: 0,
-    helpMessage: ['顯示 / 隱藏'],
+    helpMessage: ['啓用 / 禁用'],
     componentProps: {
       options: [
         { label: '啟用', value: 1 },
@@ -227,12 +231,35 @@ export const formSchema: FormSchema[] = [
     label: '是否外鏈',
     component: 'RadioButtonGroup',
     defaultValue: 0,
-    helpMessage: ['選單指向站外連結'],
-    componentProps: {
-      options: [
-        { label: '否', value: 0 },
-        { label: '是', value: 1 },
-      ],
+    helpMessage: ['站外連結.組件路由名稱及組件路徑需設爲 "IFrame"'],
+    componentProps: ({ formModel }) => {
+      return {
+        options: [
+          { label: '否', value: 0 },
+          { label: '是', value: 1 },
+        ],
+        onchange: (e: any) => {
+          console.log(formModel);
+          console.log('e:', e);
+          if (formModel.isExt === 1) {
+            // outer link
+            if (
+              formModel.routePath &&
+              !formModel.routePath.match(/(http|https):\/\/([\w.]+\/?)\S*/gi)
+            ) {
+              formModel.routePath = '';
+            }
+          } else {
+            // inner link
+            if (
+              formModel.routePath &&
+              formModel.routePath.match(/(http|https):\/\/([\w.]+\/?)\S*/gi)
+            ) {
+              formModel.routePath = '';
+            }
+          }
+        },
+      };
     },
     ifShow: ({ values }) => !isButton(values.type),
   },

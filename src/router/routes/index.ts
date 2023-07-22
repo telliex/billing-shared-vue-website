@@ -56,7 +56,7 @@ export const basicRoutes = [
   RootRoute,
   // 新頁面 /main-out
   ...mainOutRoutes,
-  // 從定義 /redirect
+  // 重定義 /redirect
   REDIRECT_ROUTE,
   // 404 /:path(.*)*
   PAGE_NOT_FOUND_ROUTE,

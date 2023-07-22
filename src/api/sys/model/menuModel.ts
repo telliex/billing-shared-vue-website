@@ -10,7 +10,7 @@ export interface NavListItem {
   permission: string;
   component: string;
   componentName: string;
-  routPath: string;
+  routePath: string;
   orderNo: number;
   icon: string;
   parentMenu: string;
