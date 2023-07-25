@@ -2,8 +2,10 @@ import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
 
 interface ItemAdditionInfo {
   addMaster: number;
+  addMasterName: string;
   addTime: string;
   changeMaster: number;
+  changeMasterName: string;
   changeTime: string;
 }
 

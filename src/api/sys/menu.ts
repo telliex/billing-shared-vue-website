@@ -11,6 +11,7 @@ enum Api {
 
 interface FilterItems {
   menuName: string | null;
+  alias: string | null;
   status: number | null;
 }
 
@@ -150,6 +151,10 @@ export const getNavTreeList = (params: FilterItems) =>
       apiUrl: '/sys-api',
     },
   );
+
+/**
+ * @description: menu management list
+ */
 export const getNavList = (params: FilterItems) =>
   defHttp.get<getNavListResultModel>(
     {
@@ -157,6 +162,7 @@ export const getNavList = (params: FilterItems) =>
       data: {},
       params: {
         menuName: params.menuName,
+        alias: params.alias,
         status: params.status,
       },
       headers: {
@@ -166,31 +172,72 @@ export const getNavList = (params: FilterItems) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('return menu items', resObj);
-          resObj.forEach((item) => {
-            if (item.parentMenu == '' && item.type == 'catalog') {
-              // menuTree.push(item);
-            } else {
-              resObj.forEach((subItem) => {
-                if (item.parentMenu === subItem.id) {
-                  if (subItem.children) {
-                    subItem.children.push(item);
-                  } else {
-                    subItem.children = [item];
-                  }
+          console.log('return menu items22222', resObj);
+          const main = resObj.filter((item) => item.parentMenu == '' && item.type === 'catalog');
+          const catalogs = resObj.filter((item) => item.type === 'catalog');
+          const pages = resObj.filter((item) => item.type === 'page');
+          const buttons = resObj.filter((item) => item.type === 'button');
+
+          buttons.forEach((item) => {
+            pages.forEach((pageItem) => {
+              if (item.parentMenu === pageItem.id) {
+                if (pageItem.children) {
+                  pageItem.children.push(item);
+                } else {
+                  pageItem.children = [item];
                 }
-              });
-            }
+              }
+            });
           });
-          console.log('resObj:', resObj);
-          const menuTree = resObj.filter((item) => item.parentMenu == '' && item.type == 'catalog');
-          console.log('menuTree:', menuTree);
+
+          pages.forEach((item) => {
+            catalogs.forEach((catalogItem) => {
+              if (item.parentMenu === catalogItem.id) {
+                if (catalogItem.children) {
+                  catalogItem.children.push(item);
+                } else {
+                  catalogItem.children = [item];
+                }
+              }
+            });
+          });
+
+          main.forEach((item) => {
+            catalogs.forEach((catalogItem) => {
+              if (item.id === catalogItem.parentMenu) {
+                if (item.children) {
+                  item.children.push(catalogItem);
+                } else {
+                  item.children = [catalogItem];
+                }
+              }
+            });
+          });
+
+          // resObj.forEach((item) => {
+          //   if (item.parentMenu == '' && item.type == 'catalog') {
+          //     // menuTree.push(item);
+          //   } else {
+          //     resObj.forEach((subItem) => {
+          //       if (item.parentMenu === subItem.id) {
+          //         if (subItem.children) {
+          //           subItem.children.push(item);
+          //         } else {
+          //           subItem.children = [item];
+          //         }
+          //       }
+          //     });
+          //   }
+          // });
+          // console.log('resObj:', resObj);
+          // const menuTree = resObj.filter((item) => item.parentMenu == '' && item.type == 'catalog');
+          // console.log('menuTree:', menuTree);
           if (resObj.length >= 0) {
             return {
               trace_id: '',
               total_pages: 0,
               current_page: 0,
-              results: menuTree,
+              results: main,
               status: 1000,
               msg: 'success',
               requested_time: '',

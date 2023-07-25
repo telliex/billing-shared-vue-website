@@ -13,7 +13,7 @@ export const columns: BasicColumn[] = [
     align: 'left',
   },
   {
-    title: 'Alias',
+    title: '展示名稱',
     dataIndex: 'alias',
     width: 200,
     align: 'left',
@@ -41,7 +41,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'componentName',
   },
   {
-    title: '組件',
+    title: '組件路徑',
     dataIndex: 'component',
   },
   {
@@ -63,7 +63,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '創建人',
-    dataIndex: 'addMaster',
+    dataIndex: 'addMasterName',
     width: 100,
   },
   {
@@ -76,7 +76,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '修改人',
-    dataIndex: 'changeMaster',
+    dataIndex: 'changeMasterName',
     width: 100,
   },
   {
@@ -94,15 +94,22 @@ const isMenu = (type: string) => type === 'page';
 const isButton = (type: string) => type === 'button';
 
 export const searchFormSchema: FormSchema[] = [
-  {
-    field: 'menuName',
-    label: '選單名稱',
-    component: 'Input',
-    colProps: { span: 8 },
-  },
+  // {
+  //   field: 'menuName',
+  //   label: '選單名稱',
+  //   component: 'Input',
+  //   colProps: { span: 8 },
+  // },
+  // {
+  //   field: 'alias',
+  //   label: '展示名稱',
+  //   component: 'Input',
+  //   colProps: { span: 8 },
+  // },
   {
     field: 'status',
     label: '狀態',
+    labelWidth: 50,
     component: 'Select',
     componentProps: {
       options: [
@@ -138,7 +145,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'alias',
-    label: 'Alias',
+    label: '展示名稱',
     component: 'Input',
     helpMessage: ['選單呈現文字'],
     required: true,
