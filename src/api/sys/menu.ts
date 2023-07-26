@@ -1,17 +1,29 @@
 import { useUserStore } from '/@/store/modules/user';
 import { router } from '/@/router';
 import { defHttp } from '/@/utils/http/axios';
-import { NavParams, NavListResultModel, getNavListResultModel } from './model/menuModel';
+import {
+  NavParams,
+  NavListResultModel,
+  getNavListResultModel,
+  getButtonListResultModel,
+  ButtonItem,
+} from './model/menuModel';
 import dayjs from 'dayjs';
 
 enum Api {
   GetDynamicNavList = '/system/menu/nav',
   NavList = '/system/menu',
+  ButtonsList = '/system/menu-buttons',
 }
 
 interface FilterItems {
   menuName: string | null;
   alias: string | null;
+  status: number | null;
+}
+
+interface FilterButtonItems {
+  belongMenuId: string | null;
   status: number | null;
 }
 
@@ -31,6 +43,7 @@ if (timeTemp === 0) {
 
 // Fixed: Cannot access 'useUserStore' before initialization
 router.beforeEach(async () => {
+  console.log('xxxxxxxxx:', who);
   if (useUserStore() === null) {
     who = useUserStore().getUserInfo?.userId as number;
   }
@@ -46,7 +59,7 @@ export const getDynamicNavList = () =>
       url: '/api' + version + Api.GetDynamicNavList,
       data: {},
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
       },
       transformResponse: [
@@ -95,7 +108,7 @@ export const getNavTreeList = (params: FilterItems) =>
         status: params.status,
       },
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
       },
       transformResponse: [
@@ -166,13 +179,12 @@ export const getNavList = (params: FilterItems) =>
         status: params.status,
       },
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
       },
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('return menu items22222', resObj);
           const main = resObj.filter((item) => item.parentMenu == '' && item.type === 'catalog');
           const catalogs = resObj.filter((item) => item.type === 'catalog');
           const pages = resObj.filter((item) => item.type === 'page');
@@ -270,7 +282,7 @@ export const getNavItem = (params: NavParams) => {
       url: `/api${version}${Api.NavList}/${params.id}`,
       data: params,
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
       },
     },
@@ -286,7 +298,7 @@ export const removeNavItem = (params: any) =>
       url: `/api${version}${Api.NavList}/${params.id}`,
       data: params,
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
       },
       transformResponse: [
@@ -318,7 +330,7 @@ export const updateNavItem = (params: any) =>
       url: `/api${version}${Api.NavList}/${params.id}`,
       data: params,
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
       },
       transformResponse: [
@@ -351,7 +363,7 @@ export const createNavItem = (body: any) => {
       url: `/api${version}${Api.NavList}`,
       data: body,
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
       },
       transformResponse: [
@@ -378,3 +390,149 @@ export const createNavItem = (body: any) => {
     },
   );
 };
+
+export const getButtonList = (params: FilterButtonItems) =>
+  defHttp.get<getButtonListResultModel>(
+    {
+      url: `/api${version}${Api.ButtonsList}`,
+      data: {},
+      params: {
+        belongMenuId: params.belongMenuId,
+        status: params.status,
+      },
+      headers: {
+        'User-Id': useUserStore().getUserInfo?.userId,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          if (resObj.length >= 0) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: resObj,
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+
+export const updateButtonItem = (params: any) =>
+  defHttp.patch<ButtonItem>(
+    {
+      url: `/api${version}${Api.ButtonsList}/${params.id}`,
+      data: params,
+      headers: {
+        'User-Id': useUserStore().getUserInfo?.userId,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+
+export const createButtonItem = (body: any) => {
+  return defHttp.post<ButtonItem>(
+    {
+      url: `/api${version}${Api.ButtonsList}`,
+      data: body,
+      headers: {
+        'User-Id': useUserStore().getUserInfo?.userId,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};
+
+export const removeButtonItem = (params: any) =>
+  defHttp.delete<ButtonItem>(
+    {
+      url: `/api${version}${Api.ButtonsList}/${params.id}`,
+      data: params,
+      headers: {
+        'User-Id': useUserStore().getUserInfo?.userId,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          if (resObj) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [resObj],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );

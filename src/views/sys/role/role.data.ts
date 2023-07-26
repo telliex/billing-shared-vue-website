@@ -57,10 +57,11 @@ export const columns: BasicColumn[] = [
   {
     title: '備註',
     dataIndex: 'remark',
+    align: 'left',
   },
   {
     title: '創建人',
-    dataIndex: 'addMaster',
+    dataIndex: 'addMasterName',
     width: 100,
   },
   {
@@ -73,7 +74,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '修改人',
-    dataIndex: 'changeMaster',
+    dataIndex: 'changeMasterName',
     width: 100,
   },
   {

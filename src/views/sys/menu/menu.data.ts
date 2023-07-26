@@ -13,41 +13,16 @@ export const columns: BasicColumn[] = [
     align: 'left',
   },
   {
+    title: '類型',
+    dataIndex: 'type',
+    width: 100,
+    align: 'left',
+  },
+  {
     title: '展示名稱',
     dataIndex: 'alias',
     width: 200,
     align: 'left',
-  },
-  {
-    title: '描述',
-    dataIndex: 'description',
-    width: 200,
-  },
-  {
-    title: '圖標',
-    dataIndex: 'icon',
-    width: 50,
-    customRender: ({ record }) => {
-      return h(Icon, { icon: record.icon });
-    },
-  },
-  {
-    title: '權限標識',
-    dataIndex: 'permission',
-    width: 180,
-  },
-  {
-    title: '組件名稱',
-    dataIndex: 'componentName',
-  },
-  {
-    title: '組件路徑',
-    dataIndex: 'component',
-  },
-  {
-    title: '排序',
-    dataIndex: 'orderNo',
-    width: 50,
   },
   {
     title: '狀態',
@@ -60,6 +35,73 @@ export const columns: BasicColumn[] = [
       const text = enable ? '啟用' : '停用';
       return h(Tag, { color: color }, () => text);
     },
+  },
+  {
+    title: '描述',
+    dataIndex: 'description',
+    width: 200,
+    align: 'left',
+  },
+  {
+    title: '圖標',
+    dataIndex: 'icon',
+    width: 50,
+    customRender: ({ record }) => {
+      return h(Icon, { icon: record.icon });
+    },
+  },
+  {
+    title: '權限標識',
+    dataIndex: 'permission',
+    width: 200,
+    align: 'left',
+  },
+  {
+    title: '按鈕權限',
+    dataIndex: 'menuButtons',
+    width: 300,
+    align: 'left',
+    customRender: ({ record }) => {
+      const buttonList = record.menuButtons ? record.menuButtons.split(',') : [];
+      const buttonColorList = ['default'];
+      if (record.type === 'catalog' || !buttonList.length) {
+        return '';
+      } else {
+        return h(
+          'div',
+          buttonList.map((item) =>
+            h(Tag, { style: { color: buttonColorList[0], marginRight: '5px' } }, () => item),
+          ),
+        );
+      }
+    },
+    // customRender: ({ record }) => {
+    //   const status = record.status;
+    //   const enable = status === 1;
+    //   const color = enable ? 'green' : 'red';
+    //   const text = enable ? '啟用' : '停用';
+    //   return h(
+    //     'div',
+    //     Array.from({ length: 20 }).map(() => {
+    //       return h('p', 'hi');
+    //     }),
+    //   );
+    // },
+  },
+  {
+    title: '組件名稱',
+    dataIndex: 'componentName',
+    align: 'left',
+  },
+  {
+    title: '組件路徑',
+    dataIndex: 'component',
+    align: 'left',
+  },
+  {
+    title: '排序',
+    dataIndex: 'orderNo',
+    width: 50,
   },
   {
     title: '創建人',
@@ -125,6 +167,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'type',
     label: '選單類型',
+    labelWidth: 150,
     component: 'RadioButtonGroup',
     helpMessage: ['第一級選單需為目錄 catalog'],
     defaultValue: 'catalog',
@@ -132,7 +175,7 @@ export const formSchema: FormSchema[] = [
       options: [
         { label: '目錄', value: 'catalog' },
         { label: '選單', value: 'page' },
-        { label: '按鈕', value: 'button' },
+        // { label: '按鈕', value: 'button' },
       ],
     },
     colProps: { lg: 24, md: 24 },
@@ -141,6 +184,7 @@ export const formSchema: FormSchema[] = [
     field: 'menuName',
     label: '選單名稱',
     component: 'Input',
+    labelWidth: 150,
     required: true,
   },
   {
@@ -149,10 +193,12 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
     helpMessage: ['選單呈現文字'],
     required: true,
+    labelWidth: 150,
   },
   {
     field: 'parentMenu',
     label: '上級選單',
+    labelWidth: 150,
     component: 'TreeSelect',
     componentProps: {
       fieldNames: {
@@ -172,10 +218,12 @@ export const formSchema: FormSchema[] = [
     label: '排序',
     component: 'InputNumber',
     required: true,
+    labelWidth: 150,
   },
   {
     field: 'icon',
     label: '圖標',
+    labelWidth: 150,
     component: 'IconPicker',
     ifShow: ({ values }) => !isButton(values.type),
     required: ({ values }) => {
@@ -185,6 +233,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'description',
     label: '描述',
+    labelWidth: 150,
     component: 'Input',
   },
 
@@ -192,6 +241,7 @@ export const formSchema: FormSchema[] = [
     field: 'routePath',
     label: '路由地址',
     component: 'Input',
+    labelWidth: 150,
     helpMessage: [
       '[站内-第一級選單]: 以 "/" 開頭, 末尾不加 "/"',
       '[站内-非第一級選單]: 首尾不加 "/"',
@@ -203,12 +253,14 @@ export const formSchema: FormSchema[] = [
   {
     field: 'componentName',
     label: '組件路名稱',
+    labelWidth: 150,
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
   },
   {
     field: 'component',
     label: '組件路徑',
+    labelWidth: 150,
     helpMessage: ['[目錄 catalog]: LAYOUT', '[選單 page]: Vue 組件相對位置'],
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
@@ -216,6 +268,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'permission',
     label: '權限標識',
+    labelWidth: 150,
     helpMessage: ['[選單 page]: menu1:view', '[按鈕 button]: menu1:view:btn1'],
     component: 'Input',
     ifShow: ({ values }) => !isDir(values.type),
@@ -223,6 +276,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'status',
     label: '狀態',
+    labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
     helpMessage: ['啓用 / 禁用'],
@@ -236,6 +290,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'isExt',
     label: '是否外鏈',
+    labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
     helpMessage: ['站外連結.組件路由名稱及組件路徑需設爲 "IFrame"'],
@@ -274,6 +329,7 @@ export const formSchema: FormSchema[] = [
   {
     field: 'isCache',
     label: '是否緩存',
+    labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
     componentProps: {

@@ -1,5 +1,12 @@
 <template>
-  <div>
+  <BasicDrawer
+    v-bind="$attrs"
+    @register="registerDrawer"
+    showFooter
+    :title="getTitle"
+    width="50%"
+    @ok="handleSubmit"
+  >
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 新增選單 </a-button>
@@ -10,27 +17,15 @@
             :actions="[
               {
                 icon: 'clarity:note-edit-line',
-                // label: '編輯',
                 onClick: handleEdit.bind(null, record),
               },
               {
                 icon: 'ant-design:delete-outlined',
-                // label: '刪除',
                 color: 'error',
                 popConfirm: {
                   title: '是否確認刪除',
-                  placement: 'top',
+                  placement: 'left',
                   confirm: handleDelete.bind(null, record),
-                },
-              },
-              {
-                icon: 'clarity:rack-server-line',
-                // label: '按鈕權限',
-                onClick: handleButtons.bind(null, record),
-                ifShow: record.type !== 'catalog',
-                tooltip: {
-                  title: '按鈕權限',
-                  placement: 'top',
                 },
               },
             ]"
@@ -38,32 +33,48 @@
         </template>
       </template>
     </BasicTable>
-    <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
-    <ButtonsDrawer @register="registerButtonsDrawer" @success="handleSuccess" />
-  </div>
+    <ButtonModal @register="buttonRegister" @success="handleSuccess" />
+  </BasicDrawer>
 </template>
 <script lang="ts">
-  import { defineComponent, nextTick, onMounted } from 'vue';
+  import { defineComponent, ref, nextTick } from 'vue';
+  import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
+  import { useModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { getNavList, removeNavItem } from '/@/api/sys/menu';
-  import { useDrawer } from '/@/components/Drawer';
-  import MenuDrawer from './MenuDrawer.vue';
-  import ButtonsDrawer from './ButtonsDrawer.vue';
-  import { columns, searchFormSchema } from './menu.data';
+  import { getButtonList, removeButtonItem } from '/@/api/sys/menu';
+  import { NavListItem } from '/@/api/sys/model/menuModel';
+  import { columns, searchFormSchema } from './buttons.data';
+
+  import ButtonModal from './ButtonModal.vue';
 
   export default defineComponent({
-    name: 'MenuManagement',
-    components: { BasicTable, MenuDrawer, ButtonsDrawer, TableAction },
-    setup() {
-      const [registerDrawer, { openDrawer, setDrawerProps }] = useDrawer();
-      // setDrawerProps({
-      //   width: 800,
-      // });
-      const [registerButtonsDrawer, { openDrawer: openButtonsDrawer }] = useDrawer();
+    name: 'ButtonDrawer',
+    components: {
+      BasicDrawer,
+      ButtonModal,
+      BasicTable,
+      TableAction,
+    },
+    emits: ['success', 'register'],
+    setup(_, { emit }) {
+      const record = ref<NavListItem | null>(null);
+      const [buttonRegister, { openModal }] = useModal();
+      const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+        setDrawerProps({ confirmLoading: false });
+        record.value = data?.record || null;
+        // table data
+        reload();
+      });
+
       const [registerTable, { reload, expandAll }] = useTable({
         title: '選單列表',
-        api: getNavList,
+        api: getButtonList,
+        beforeFetch(params) {
+          params.belongMenuId = record.value?.id;
+          return params;
+        },
+        immediate: false, // fit with useDrawerInner reload()
         columns,
         formConfig: {
           labelWidth: 120,
@@ -78,34 +89,27 @@
         showIndexColumn: false,
         canResize: false,
         actionColumn: {
-          width: 180,
+          width: 100,
           title: '操作',
           dataIndex: 'action',
           fixed: 'right',
         },
       });
+
+      const getTitle = '選單按鈕';
       const { createMessage } = useMessage();
       function handleCreate() {
-        setDrawerProps({
-          width: 900,
-        });
-        openDrawer(true, {
+        openModal(true, {
+          belongMenuId: record.value?.id,
           isUpdate: false,
         });
       }
 
       function handleEdit(record: Recordable) {
-        setDrawerProps({
-          width: 900,
-        });
-        openDrawer(true, {
+        openModal(true, {
+          belongMenuId: record.value?.id,
           record,
           isUpdate: true,
-        });
-      }
-      function handleButtons(record: Recordable) {
-        openButtonsDrawer(true, {
-          record,
         });
       }
 
@@ -114,15 +118,10 @@
           createMessage.warning('包含子選單，無法刪除');
           return;
         }
-        removeNavItem(record).then(() => {
+        removeButtonItem(record).then(() => {
           createMessage.info('Please reload page to update the menu ! ');
           reload();
         });
-      }
-
-      function handleSuccess() {
-        createMessage.info('Please reload page to update the menu ! ');
-        reload();
       }
 
       function onFetchSuccess() {
@@ -130,18 +129,33 @@
         nextTick(expandAll);
       }
 
-      onMounted(() => {});
+      function handleSuccess() {
+        createMessage.info('Please reload page to update the menu ! ');
+        reload();
+      }
+
+      async function handleSubmit() {
+        try {
+          setDrawerProps({ confirmLoading: true });
+
+          closeDrawer();
+          emit('success');
+        } finally {
+          setDrawerProps({ confirmLoading: false });
+        }
+      }
 
       return {
         registerTable,
         registerDrawer,
-        registerButtonsDrawer,
-        handleButtons,
-        handleCreate,
-        handleEdit,
+        getTitle,
+        handleSubmit,
         handleDelete,
-        handleSuccess,
+        handleEdit,
+        handleCreate,
         onFetchSuccess,
+        buttonRegister,
+        handleSuccess,
       };
     },
   });

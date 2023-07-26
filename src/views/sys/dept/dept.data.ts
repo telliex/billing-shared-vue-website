@@ -12,11 +12,6 @@ export const columns: BasicColumn[] = [
     align: 'left',
   },
   {
-    title: '排序',
-    dataIndex: 'orderNo',
-    width: 50,
-  },
-  {
     title: '狀態',
     dataIndex: 'status',
     width: 80,
@@ -30,11 +25,18 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '備註',
+    width: 150,
     dataIndex: 'remark',
+    align: 'left',
+  },
+  {
+    title: '排序',
+    dataIndex: 'orderNo',
+    width: 50,
   },
   {
     title: '創建人',
-    dataIndex: 'addMaster',
+    dataIndex: 'addMasterName',
     width: 100,
   },
   {
@@ -47,7 +49,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '修改人',
-    dataIndex: 'changeMaster',
+    dataIndex: 'changeMasterName',
     width: 100,
   },
   {

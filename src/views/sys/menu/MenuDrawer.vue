@@ -19,7 +19,7 @@
   import { NavListItem } from '/@/api/sys/model/menuModel';
 
   export default defineComponent({
-    name: 'MenuDrawer',
+    name: 'ButtonMenuDrawer',
     components: {
       BasicDrawer,
       BasicForm,
@@ -42,6 +42,7 @@
 
         const treeData = await getNavTreeList({
           status: null,
+          alias: null,
           menuName: null,
         });
         // put here to avoid the display required warning
@@ -73,7 +74,6 @@
               values.componentName = 'LAYOUT';
             }
           }
-          console.log('value11111111:', values);
           let template = {
             id: '',
             type: '',
@@ -90,7 +90,7 @@
             iExt: 0,
             isCache: 0,
             isShow: 0,
-            status: 'normal',
+            status: 1,
             addMaster: 0,
             addTime: '',
             changeMaster: 0,

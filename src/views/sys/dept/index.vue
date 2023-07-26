@@ -57,7 +57,7 @@
         pagination: false,
         striped: false,
         useSearchForm: true,
-        showTableSetting: true,
+        showTableSetting: false,
         bordered: true,
         showIndexColumn: false,
         canResize: false,

@@ -20,7 +20,9 @@ export interface NavListItem {
   status: number;
   addMaster: number;
   addTime: string;
+  addMasterName: string;
   changeMaster: number;
+  changeMasterName: string;
   changeTime: string;
 }
 export interface RouteItem {
@@ -44,5 +46,23 @@ export type NavParams = {
  */
 // export type getMenuListResultModel = RouteItem[];
 export type getNavListResultModel = RouteItem[];
-
 export type NavListResultModel = BasicFetchResult<NavListItem>;
+
+export interface ButtonItem {
+  id: string;
+  buttonName: string;
+  description: string;
+  belongMenu: string;
+  permission: string;
+  isShow: number;
+  status: number;
+  addMaster: number;
+  addMasterName: string;
+  addTime: string;
+  changeMaster: number;
+  changeMasterName: string;
+  changeTime: string;
+}
+
+export type getButtonListResultModel = ButtonItem[];
+export type ButtonListResultModel = BasicFetchResult<ButtonItem>;

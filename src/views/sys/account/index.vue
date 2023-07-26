@@ -69,7 +69,7 @@
           autoSubmitOnEnter: true,
         },
         useSearchForm: true,
-        showTableSetting: true,
+        showTableSetting: false,
         bordered: true,
         handleSearchInfoFn(info) {
           console.log('handleSearchInfoFn', info);
