@@ -12,7 +12,7 @@
         <BasicTree
           v-model:value="model[field]"
           :treeData="treeData"
-          :fieldNames="{ title: 'menuName', key: 'id' }"
+          :fieldNames="{ title: 'title', key: 'id' }"
           checkable
           toolbar
           title="選單分配"
@@ -28,7 +28,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
   import { createRoleItem, updateRoleItem } from '/@/api/sys/system';
-  import { getNavList } from '/@/api/sys/menu';
+  import { getNavTreeListWithButton } from '/@/api/sys/menu';
   import { RoleListItem } from '/@/api/sys/model/systemModel';
 
   export default defineComponent({
@@ -52,9 +52,10 @@
         record.value = data?.record || null;
         // 需要在setFieldsValue之前先填充treeData，否則Tree組件可能會報key not exist警告
         if (unref(treeData).length === 0) {
-          treeData.value = (await getNavList({
-            status: null,
+          treeData.value = (await getNavTreeListWithButton({
+            status: 1,
             menuName: null,
+            alias: null,
           })) as any as TreeItem[];
         }
         // put here to avoid the display required warning

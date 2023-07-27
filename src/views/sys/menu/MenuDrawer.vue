@@ -15,7 +15,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { createNavItem, getNavTreeList, updateNavItem } from '/@/api/sys/menu';
+  import { createNavItem, getNavList, updateNavItem } from '/@/api/sys/menu';
   import { NavListItem } from '/@/api/sys/model/menuModel';
 
   export default defineComponent({
@@ -40,8 +40,8 @@
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
 
-        const treeData = await getNavTreeList({
-          status: null,
+        const treeData = await getNavList({
+          status: 1,
           alias: null,
           menuName: null,
         });

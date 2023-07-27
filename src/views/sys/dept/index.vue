@@ -9,17 +9,19 @@
           <TableAction
             :actions="[
               {
-                icon: 'clarity:note-edit-line',
+                icon: 'ant-design:edit-twotone',
                 onClick: handleEdit.bind(null, record),
+                tooltip: '編輯此部門',
               },
               {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
+                icon: 'ant-design:delete-twotone',
+                // color: 'error',
                 popConfirm: {
                   title: '是否確認刪除',
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
+                tooltip: '刪除此部門',
               },
             ]"
           />

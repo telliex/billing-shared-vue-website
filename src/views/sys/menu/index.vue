@@ -9,29 +9,28 @@
           <TableAction
             :actions="[
               {
-                icon: 'clarity:note-edit-line',
+                icon: 'ant-design:edit-twotone',
                 // label: '編輯',
                 onClick: handleEdit.bind(null, record),
+                tooltip: '編輯選單',
               },
               {
-                icon: 'ant-design:delete-outlined',
+                icon: 'ant-design:delete-twotone',
                 // label: '刪除',
-                color: 'error',
+                // color: 'error',
                 popConfirm: {
                   title: '是否確認刪除',
                   placement: 'top',
                   confirm: handleDelete.bind(null, record),
                 },
+                tooltip: '刪除此選單',
               },
               {
                 icon: 'clarity:rack-server-line',
                 // label: '按鈕權限',
                 onClick: handleButtons.bind(null, record),
                 ifShow: record.type !== 'catalog',
-                tooltip: {
-                  title: '按鈕權限',
-                  placement: 'top',
-                },
+                tooltip: '編輯按鈕權限',
               },
             ]"
           />

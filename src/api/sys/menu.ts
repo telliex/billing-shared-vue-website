@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 
 enum Api {
   GetDynamicNavList = '/system/menu/nav',
+  NavTreeList = '/system/menu/tree',
   NavList = '/system/menu',
   ButtonsList = '/system/menu-buttons',
 }
@@ -98,13 +99,14 @@ export const getDynamicNavList = () =>
   );
 
 // system menu===========
-export const getNavTreeList = (params: FilterItems) =>
+export const getNavTreeListWithButton = (params: FilterItems) =>
   defHttp.get<getNavListResultModel>(
     {
-      url: `/api${version}${Api.NavList}`,
+      url: `/api${version}${Api.NavTreeList}`,
       data: {},
       params: {
         menuName: params.menuName,
+        alias: params.alias,
         status: params.status,
       },
       headers: {
@@ -113,33 +115,55 @@ export const getNavTreeList = (params: FilterItems) =>
       },
       transformResponse: [
         function (data) {
-          let resObj = JSON.parse(data);
-          resObj = resObj.filter((item) => item.type === 'catalog');
-          console.log('return menu items', resObj);
-          resObj.forEach((item) => {
-            if (item.parentMenu == '' && item.type == 'catalog') {
-              // menuTree.push(item);
-            } else {
-              resObj.forEach((subItem) => {
-                if (item.parentMenu === subItem.id) {
-                  if (subItem.children) {
-                    subItem.children.push(item);
-                  } else {
-                    subItem.children = [item];
-                  }
+          const resObj = JSON.parse(data);
+          console.log('0000000000', resObj);
+          const main = resObj.filter((item) => item.parentMenu == '' && item.type === 'catalog');
+          const catalogs = resObj.filter((item) => item.type === 'catalog');
+          const pages = resObj.filter((item) => item.type === 'page');
+          const buttons = resObj.filter((item) => item.type === 'button');
+
+          buttons.forEach((item) => {
+            pages.forEach((pageItem) => {
+              if (item.parentMenu === pageItem.id) {
+                if (pageItem.children) {
+                  pageItem.children.push(item);
+                } else {
+                  pageItem.children = [item];
                 }
-              });
-            }
+              }
+            });
           });
-          console.log('resObj:', resObj);
-          const menuTree = resObj.filter((item) => item.parentMenu == '' && item.type == 'catalog');
-          console.log('menuTree:', menuTree);
+
+          pages.forEach((item) => {
+            catalogs.forEach((catalogItem) => {
+              if (item.parentMenu === catalogItem.id) {
+                if (catalogItem.children) {
+                  catalogItem.children.push(item);
+                } else {
+                  catalogItem.children = [item];
+                }
+              }
+            });
+          });
+
+          main.forEach((item) => {
+            catalogs.forEach((catalogItem) => {
+              if (item.id === catalogItem.parentMenu) {
+                if (item.children) {
+                  item.children.push(catalogItem);
+                } else {
+                  item.children = [catalogItem];
+                }
+              }
+            });
+          });
+          console.log('main tree', main);
           if (resObj.length >= 0) {
             return {
               trace_id: '',
               total_pages: 0,
               current_page: 0,
-              results: menuTree,
+              results: main,
               status: 1000,
               msg: 'success',
               requested_time: '',
@@ -168,6 +192,8 @@ export const getNavTreeList = (params: FilterItems) =>
 /**
  * @description: menu management list
  */
+
+// main table
 export const getNavList = (params: FilterItems) =>
   defHttp.get<getNavListResultModel>(
     {
@@ -188,19 +214,19 @@ export const getNavList = (params: FilterItems) =>
           const main = resObj.filter((item) => item.parentMenu == '' && item.type === 'catalog');
           const catalogs = resObj.filter((item) => item.type === 'catalog');
           const pages = resObj.filter((item) => item.type === 'page');
-          const buttons = resObj.filter((item) => item.type === 'button');
+          // const buttons = resObj.filter((item) => item.type === 'button');
 
-          buttons.forEach((item) => {
-            pages.forEach((pageItem) => {
-              if (item.parentMenu === pageItem.id) {
-                if (pageItem.children) {
-                  pageItem.children.push(item);
-                } else {
-                  pageItem.children = [item];
-                }
-              }
-            });
-          });
+          // buttons.forEach((item) => {
+          //   pages.forEach((pageItem) => {
+          //     if (item.parentMenu === pageItem.id) {
+          //       if (pageItem.children) {
+          //         pageItem.children.push(item);
+          //       } else {
+          //         pageItem.children = [item];
+          //       }
+          //     }
+          //   });
+          // });
 
           pages.forEach((item) => {
             catalogs.forEach((catalogItem) => {

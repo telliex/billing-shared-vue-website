@@ -202,7 +202,7 @@ export const formSchema: FormSchema[] = [
     component: 'TreeSelect',
     componentProps: {
       fieldNames: {
-        label: 'menuName',
+        label: 'alias',
         key: 'id',
         value: 'id',
       },
@@ -269,7 +269,7 @@ export const formSchema: FormSchema[] = [
     field: 'permission',
     label: '權限標識',
     labelWidth: 150,
-    helpMessage: ['[選單 page]: menu1:view', '[按鈕 button]: menu1:view:btn1'],
+    helpMessage: ['[選單 page]: menu1:view'],
     component: 'Input',
     ifShow: ({ values }) => !isDir(values.type),
   },

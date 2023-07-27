@@ -10,18 +10,18 @@
           <TableAction
             :actions="[
               {
-                icon: 'clarity:info-standard-line',
+                icon: 'ant-design:info-circle-twotone',
                 tooltip: '查看用戶詳情',
                 onClick: handleView.bind(null, record),
               },
               {
-                icon: 'clarity:note-edit-line',
+                icon: 'ant-design:edit-twotone',
                 tooltip: '編輯用戶資料',
                 onClick: handleEdit.bind(null, record),
               },
               {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
+                icon: 'ant-design:delete-twotone',
+                // color: 'error',
                 tooltip: '刪除此帳號',
                 popConfirm: {
                   title: '是否確認刪除',
