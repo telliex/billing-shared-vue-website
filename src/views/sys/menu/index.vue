@@ -116,12 +116,18 @@
         removeNavItem(record).then(() => {
           createMessage.info('Please reload page to update the menu ! ');
           reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 200);
         });
       }
 
       function handleSuccess() {
         createMessage.info('Please reload page to update the menu ! ');
         reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       }
 
       function onFetchSuccess() {

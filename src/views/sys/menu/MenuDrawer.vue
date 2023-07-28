@@ -65,6 +65,17 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
+
+          // avoid the path warning
+          if (values.isExt === 0) {
+            // non-external link
+            if (values.type === 'catalog') {
+              values.routePath = '/' + values.routePath.replace(/^\/+|\/+$/g, '');
+            } else {
+              values.routePath = values.routePath.replace(/^\/+|\/+$/g, '');
+            }
+          }
+
           if (values.type === 'catalog') {
             if (values.isExt === 1) {
               values.component = 'IFrame';
@@ -73,7 +84,14 @@
               values.component = 'LAYOUT';
               values.componentName = 'LAYOUT';
             }
+          } else {
+            // avoid the path gone
+            if (!values.component) {
+              values.component = 'default';
+              values.component = '/pages/demo/index';
+            }
           }
+
           let template = {
             id: '',
             type: '',

@@ -10,6 +10,8 @@ import {
 } from './model/menuModel';
 import dayjs from 'dayjs';
 
+import { buildNestedStructure, buildMenuNestedStructure } from '/@/utils/tools';
+
 enum Api {
   GetDynamicNavList = '/system/menu/nav',
   NavTreeList = '/system/menu/tree',
@@ -50,6 +52,21 @@ router.beforeEach(async () => {
   }
 });
 
+const processItems = (data: any[]) => {
+  data.forEach((item) => {
+    // Check if isExt is 0 and children is an empty array
+
+    if (item.isExt === 0 && (!item.children || item.children.length === 0)) {
+      item.meta.hideMenu = false;
+    }
+
+    // If item has children, recursively process them
+    if (item.children && item.children.length > 0) {
+      processItems(item.children);
+    }
+  });
+};
+
 /**
  * @description: Get user menu based on id
  */
@@ -66,7 +83,9 @@ export const getDynamicNavList = () =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('======nav resObj=======', resObj);
+          console.log('======dynamic menu resObj=======', resObj);
+
+          processItems(resObj);
           if (resObj.length >= 0) {
             return {
               trace_id: '',
@@ -116,54 +135,13 @@ export const getNavTreeListWithButton = (params: FilterItems) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('0000000000', resObj);
-          const main = resObj.filter((item) => item.parentMenu == '' && item.type === 'catalog');
-          const catalogs = resObj.filter((item) => item.type === 'catalog');
-          const pages = resObj.filter((item) => item.type === 'page');
-          const buttons = resObj.filter((item) => item.type === 'button');
-
-          buttons.forEach((item) => {
-            pages.forEach((pageItem) => {
-              if (item.parentMenu === pageItem.id) {
-                if (pageItem.children) {
-                  pageItem.children.push(item);
-                } else {
-                  pageItem.children = [item];
-                }
-              }
-            });
-          });
-
-          pages.forEach((item) => {
-            catalogs.forEach((catalogItem) => {
-              if (item.parentMenu === catalogItem.id) {
-                if (catalogItem.children) {
-                  catalogItem.children.push(item);
-                } else {
-                  catalogItem.children = [item];
-                }
-              }
-            });
-          });
-
-          main.forEach((item) => {
-            catalogs.forEach((catalogItem) => {
-              if (item.id === catalogItem.parentMenu) {
-                if (item.children) {
-                  item.children.push(catalogItem);
-                } else {
-                  item.children = [catalogItem];
-                }
-              }
-            });
-          });
-          console.log('main tree', main);
+          const expectedResult = buildNestedStructure(resObj);
           if (resObj.length >= 0) {
             return {
               trace_id: '',
               total_pages: 0,
               current_page: 0,
-              results: main,
+              results: expectedResult,
               status: 1000,
               msg: 'success',
               requested_time: '',
@@ -211,71 +189,13 @@ export const getNavList = (params: FilterItems) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          const main = resObj.filter((item) => item.parentMenu == '' && item.type === 'catalog');
-          const catalogs = resObj.filter((item) => item.type === 'catalog');
-          const pages = resObj.filter((item) => item.type === 'page');
-          // const buttons = resObj.filter((item) => item.type === 'button');
-
-          // buttons.forEach((item) => {
-          //   pages.forEach((pageItem) => {
-          //     if (item.parentMenu === pageItem.id) {
-          //       if (pageItem.children) {
-          //         pageItem.children.push(item);
-          //       } else {
-          //         pageItem.children = [item];
-          //       }
-          //     }
-          //   });
-          // });
-
-          pages.forEach((item) => {
-            catalogs.forEach((catalogItem) => {
-              if (item.parentMenu === catalogItem.id) {
-                if (catalogItem.children) {
-                  catalogItem.children.push(item);
-                } else {
-                  catalogItem.children = [item];
-                }
-              }
-            });
-          });
-
-          main.forEach((item) => {
-            catalogs.forEach((catalogItem) => {
-              if (item.id === catalogItem.parentMenu) {
-                if (item.children) {
-                  item.children.push(catalogItem);
-                } else {
-                  item.children = [catalogItem];
-                }
-              }
-            });
-          });
-
-          // resObj.forEach((item) => {
-          //   if (item.parentMenu == '' && item.type == 'catalog') {
-          //     // menuTree.push(item);
-          //   } else {
-          //     resObj.forEach((subItem) => {
-          //       if (item.parentMenu === subItem.id) {
-          //         if (subItem.children) {
-          //           subItem.children.push(item);
-          //         } else {
-          //           subItem.children = [item];
-          //         }
-          //       }
-          //     });
-          //   }
-          // });
-          // console.log('resObj:', resObj);
-          // const menuTree = resObj.filter((item) => item.parentMenu == '' && item.type == 'catalog');
-          // console.log('menuTree:', menuTree);
+          const expectedResult = buildMenuNestedStructure(resObj);
           if (resObj.length >= 0) {
             return {
               trace_id: '',
               total_pages: 0,
               current_page: 0,
-              results: main,
+              results: expectedResult,
               status: 1000,
               msg: 'success',
               requested_time: '',

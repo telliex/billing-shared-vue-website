@@ -208,9 +208,9 @@ export const formSchema: FormSchema[] = [
       },
       getPopupContainer: () => document.body,
     },
-    required: ({ values }) => {
-      return values.type !== 'catalog';
-    },
+    // required: ({ values }) => {
+    //   return values.type !== 'catalog';
+    // },
   },
 
   {
