@@ -68,7 +68,7 @@
           labelWidth: 120,
           schemas: searchFormSchema,
         },
-        showTableSetting: false,
+        showTableSetting: true,
         isTreeTable: true,
         pagination: false,
         striped: false,
@@ -109,8 +109,13 @@
       }
 
       function handleDelete(record: Recordable) {
+        console.log('222222:', record);
         if (record.children && record.children.length > 0) {
           createMessage.warning('包含子選單，無法刪除');
+          return;
+        }
+        if (record.menuButtons && record.menuButtons !== '') {
+          createMessage.warning('包含選單按鈕，無法刪除');
           return;
         }
         removeNavItem(record).then(() => {

@@ -105,7 +105,7 @@ export const formSchema: FormSchema[] = [
     label: '按鈕權限名稱',
     component: 'Select',
     helpMessage: ['第一級選單需為目錄 catalog'],
-    defaultValue: 'create',
+    defaultValue: 'CREATE',
     required: true,
     componentProps: {
       options: [
@@ -137,11 +137,21 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: 0,
     helpMessage: ['啓用 / 禁用'],
-    componentProps: {
-      options: [
-        { label: '啟用', value: 1 },
-        { label: '禁用', value: 0 },
-      ],
+    componentProps: ({ formModel }) => {
+      return {
+        options: [
+          { label: '啟用', value: 1 },
+          { label: '禁用', value: 0 },
+        ],
+        onchange: (e: any) => {
+          console.log(e);
+          if (formModel.status === 1) {
+            formModel.isShow = 1;
+          } else {
+            formModel.isShow = 0;
+          }
+        },
+      };
     },
   },
   {
@@ -149,11 +159,15 @@ export const formSchema: FormSchema[] = [
     label: '是否顯示',
     component: 'RadioButtonGroup',
     defaultValue: 1,
+    helpMessage: ['沒權限時，是: 以 disable 狀態顯示; 否: 不顯示'],
     componentProps: {
       options: [
         { label: '否', value: 0 },
         { label: '是', value: 1 },
       ],
+    },
+    dynamicDisabled: ({ values }) => {
+      return values.status === 1 ? false : true;
     },
   },
 ];

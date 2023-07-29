@@ -70,7 +70,11 @@ export const columns: BasicColumn[] = [
         return h(
           'div',
           buttonList.map((item) =>
-            h(Tag, { style: { color: buttonColorList[0], marginRight: '5px' } }, () => item),
+            h(
+              Tag,
+              { style: { color: buttonColorList[0], marginRight: '5px', marginBottom: '5px' } },
+              () => item,
+            ),
           ),
         );
       }
@@ -191,7 +195,7 @@ export const formSchema: FormSchema[] = [
     field: 'alias',
     label: '展示名稱',
     component: 'Input',
-    helpMessage: ['選單呈現文字'],
+    helpMessage: ['左側選單呈現文字'],
     required: true,
     labelWidth: 150,
   },
@@ -199,6 +203,7 @@ export const formSchema: FormSchema[] = [
     field: 'parentMenu',
     label: '上級選單',
     labelWidth: 150,
+    defaultValue: '',
     component: 'TreeSelect',
     componentProps: {
       fieldNames: {
@@ -245,7 +250,7 @@ export const formSchema: FormSchema[] = [
     helpMessage: [
       '[站内-第一級選單]: 以 "/" 開頭, 末尾不加 "/"',
       '[站内-非第一級選單]: 首尾不加 "/"',
-      '[站外]: 以 "http" 開頭',
+      '[站外]: 以 "http" 或 "https" 開頭',
     ],
     required: true,
     ifShow: ({ values }) => !isButton(values.type),
@@ -256,6 +261,9 @@ export const formSchema: FormSchema[] = [
     labelWidth: 150,
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
+    dynamicDisabled: ({ values }) => {
+      return values.type === 'page' && values.isExt === 1 ? true : false;
+    },
   },
   {
     field: 'component',
@@ -264,12 +272,15 @@ export const formSchema: FormSchema[] = [
     helpMessage: ['[目錄 catalog]: LAYOUT', '[選單 page]: Vue 組件相對位置'],
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
+    dynamicDisabled: ({ values }) => {
+      return values.isExt === 1 ? true : false;
+    },
   },
   {
     field: 'permission',
     label: '權限標識',
     labelWidth: 150,
-    helpMessage: ['[選單 page]: menu1:view'],
+    helpMessage: ['[選單 page]: 首字母大寫'],
     component: 'Input',
     ifShow: ({ values }) => !isDir(values.type),
   },
@@ -311,6 +322,8 @@ export const formSchema: FormSchema[] = [
             ) {
               formModel.routePath = '';
             }
+            formModel.component = 'IFrame';
+            formModel.componentName = 'IFrame';
           } else {
             // inner link
             if (
@@ -319,6 +332,8 @@ export const formSchema: FormSchema[] = [
             ) {
               formModel.routePath = '';
             }
+            formModel.component = '';
+            formModel.componentName = '';
           }
         },
       };

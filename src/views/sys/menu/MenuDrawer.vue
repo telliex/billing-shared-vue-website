@@ -66,6 +66,10 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
 
+          if (!values.parentMenu) {
+            values.parentMenu = '';
+          }
+
           // avoid the path warning
           if (values.isExt === 0) {
             // non-external link
@@ -87,11 +91,12 @@
           } else {
             // avoid the path gone
             if (!values.component) {
-              values.component = 'default';
+              values.componentName = 'default';
               values.component = '/pages/demo/index';
             }
           }
 
+          console.log('values:', values);
           let template = {
             id: '',
             type: '',
@@ -101,6 +106,7 @@
             permission: '',
             component: '',
             componentName: '',
+            parentMenu: '',
             routePath: '',
             orderNo: 0,
             icon: '',
@@ -114,10 +120,15 @@
             changeMaster: 0,
             changeTime: '',
           };
+
+          console.log('record.value:', record.value);
           if (!unref(isUpdate)) {
+            console.log('menu item send to server:', Object.assign(template, values));
             await createNavItem(Object.assign(template, values));
           } else {
-            await updateNavItem(Object.assign(template, record.value, values));
+            console.log('menu item send to server:', Object.assign(template, record.value, values));
+            console.log('menu item send to server:', { ...template, ...record.value, ...values });
+            await updateNavItem({ ...template, ...record.value, ...values });
           }
           closeDrawer();
           emit('success');

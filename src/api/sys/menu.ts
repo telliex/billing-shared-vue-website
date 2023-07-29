@@ -56,8 +56,12 @@ const processItems = (data: any[]) => {
   data.forEach((item) => {
     // Check if isExt is 0 and children is an empty array
 
-    if (item.isExt === 0 && (!item.children || item.children.length === 0)) {
-      item.meta.hideMenu = false;
+    if (
+      item.type === 'catalog' &&
+      item.isExt === 0 &&
+      (!item.children || item.children.length === 0)
+    ) {
+      item.meta.hideMenu = true;
     }
 
     // If item has children, recursively process them
@@ -188,14 +192,17 @@ export const getNavList = (params: FilterItems) =>
       },
       transformResponse: [
         function (data) {
-          const resObj = JSON.parse(data);
-          const expectedResult = buildMenuNestedStructure(resObj);
+          let resObj = JSON.parse(data);
+          if (typeof params.status === 'undefined') {
+            resObj = buildMenuNestedStructure(resObj);
+          }
+
           if (resObj.length >= 0) {
             return {
               trace_id: '',
               total_pages: 0,
               current_page: 0,
-              results: expectedResult,
+              results: resObj,
               status: 1000,
               msg: 'success',
               requested_time: '',
