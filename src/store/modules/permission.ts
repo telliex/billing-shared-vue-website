@@ -235,11 +235,9 @@ export const usePermissionStore = defineStore({
           // Dynamically introduce components
           // 動態引入組件
           let routeList = transformObjToRoute(routeListOri);
-          console.log('1111111:', routeList);
           //  Background routing to menu structure
           //  後台路由到選單結構
           const backMenuList = transformRouteToMenu(routeList);
-          console.log('2222222:', backMenuList);
           this.setBackMenuList(backMenuList);
 
           // remove meta.ignoreRoute item
@@ -253,7 +251,6 @@ export const usePermissionStore = defineStore({
       }
       routes.push(ERROR_LOG_ROUTE);
       patchHomeAffix(routes);
-      console.log('88888888:', routes);
       return routes;
     },
   },

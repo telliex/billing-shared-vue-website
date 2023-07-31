@@ -171,6 +171,56 @@ export const getNavTreeListWithButton = (params: FilterItems) =>
     },
   );
 
+export const getNavTreeListOnlyCatalog = (params: FilterItems) =>
+  defHttp.get<getNavListResultModel>(
+    {
+      url: `/api${version}${Api.NavTreeList}`,
+      data: {},
+      params: {
+        menuName: params.menuName,
+        alias: params.alias,
+        status: params.status,
+      },
+      headers: {
+        'User-Id': useUserStore().getUserInfo?.userId,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data).filter((item: any) => item.type == 'catalog');
+          console.log('resObj--------', resObj);
+          const expectedResult = buildNestedStructure(resObj);
+          if (resObj.length >= 0) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: expectedResult,
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+
 /**
  * @description: menu management list
  */

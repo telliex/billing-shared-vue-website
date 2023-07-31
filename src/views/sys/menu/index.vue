@@ -109,7 +109,6 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log('222222:', record);
         if (record.children && record.children.length > 0) {
           createMessage.warning('包含子選單，無法刪除');
           return;

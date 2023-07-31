@@ -68,7 +68,7 @@
       });
 
       const [registerTable, { reload, expandAll }] = useTable({
-        title: '選單列表',
+        title: '選單按鈕列表',
         api: getButtonList,
         beforeFetch(params) {
           params.belongMenuId = record.value?.id;

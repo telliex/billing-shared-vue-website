@@ -73,6 +73,7 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
+          console.log('role item values', values);
           // TODO custom api
           // transform values
           values.menuPermissionArray = values.menuPermissionArray ? values.menuPermissionArray : [];

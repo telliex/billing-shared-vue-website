@@ -207,7 +207,7 @@ export const formSchema: FormSchema[] = [
     component: 'TreeSelect',
     componentProps: {
       fieldNames: {
-        label: 'alias',
+        label: 'title',
         key: 'id',
         value: 'id',
       },
@@ -222,6 +222,7 @@ export const formSchema: FormSchema[] = [
     field: 'orderNo',
     label: '排序',
     component: 'InputNumber',
+    helpMessage: ['同層級，數字越小越靠上'],
     required: true,
     labelWidth: 150,
   },
