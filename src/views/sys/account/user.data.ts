@@ -37,6 +37,27 @@ export const columns: BasicColumn[] = [
     title: '角色',
     dataIndex: 'roles',
     width: 200,
+    align: 'left',
+    customRender: ({ record }) => {
+      // const rolesList = record.rolesString ? record.rolesString.split(',') : [];
+      const rolesList = record.rolesString ? JSON.parse(record.rolesString) : [];
+
+      const rolesColorList = ['default'];
+      // if (record.type === 'catalog' || !rolesList.length) {
+      //   return '';
+      // } else {
+      return h(
+        'div',
+        rolesList.map((item) =>
+          h(
+            Tag,
+            { style: { color: rolesColorList[0], marginRight: '5px', marginBottom: '5px' } },
+            () => item.fieldValue,
+          ),
+        ),
+      );
+      // }
+    },
   },
   {
     title: '備註',
@@ -148,10 +169,17 @@ export const accountFormSchema: FormSchema[] = [
     label: '角色',
     field: 'roles',
     component: 'ApiSelect',
-    componentProps: {
-      api: getAllRoleList,
-      labelField: 'roleName',
-      valueField: 'roleValue',
+    componentProps: ({ formModel }) => {
+      console.log('formModel========', formModel);
+      return {
+        mode: 'multiple',
+        labelInValue: true,
+        api: getAllRoleList,
+        labelField: 'roleName',
+        // valueField: '{key: roleName, label: id}',
+        valueField: 'id',
+        // apiParamKey: 'parentCode',
+      };
     },
   },
   {

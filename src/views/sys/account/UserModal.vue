@@ -80,6 +80,16 @@
           }
           // TODO custom api
 
+          let rolesArray: any[] = [];
+          values.roles.forEach((item) => {
+            rolesArray.push({
+              fieldKey: item.value,
+              fieldValue: item.label,
+            });
+          });
+
+          values.rolesString = JSON.stringify(rolesArray);
+
           let template = {
             id: '',
             userName: '',
@@ -87,7 +97,8 @@
             nickname: '',
             email: '',
             remark: '',
-            roles: '',
+            rolesString: '',
+            roles: [],
             status: 1,
             addMaster: 0,
             addTime: '',
@@ -97,8 +108,10 @@
 
           if (!unref(isUpdate)) {
             let result = Object.assign(template, values);
+            console.log('result:', result);
             await createUserItem(result);
           } else {
+            console.log('result:', Object.assign(template, record.value, values));
             await updateUserItem(Object.assign(template, record.value, values));
           }
 

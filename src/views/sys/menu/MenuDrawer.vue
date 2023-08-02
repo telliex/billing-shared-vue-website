@@ -95,8 +95,6 @@
               values.component = '/pages/demo/index';
             }
           }
-
-          console.log('values:', values);
           let template = {
             id: '',
             type: '',
@@ -121,7 +119,6 @@
             changeTime: '',
           };
 
-          console.log('record.value:', record.value);
           if (!unref(isUpdate)) {
             console.log('menu item send to server:', Object.assign(template, values));
             await createNavItem(Object.assign(template, values));

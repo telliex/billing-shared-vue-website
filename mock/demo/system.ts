@@ -251,14 +251,14 @@ export default [
       return resultSuccess({ id, status });
     },
   },
-  {
-    url: '/basic-api/system/getAllRoleList',
-    timeout: 100,
-    method: 'get',
-    response: () => {
-      return resultSuccess(roleList);
-    },
-  },
+  // {
+  //   url: '/basic-api/system/getAllRoleList',
+  //   timeout: 100,
+  //   method: 'get',
+  //   response: () => {
+  //     return resultSuccess(roleList);
+  //   },
+  // },
   // {
   //   url: '/basic-api/system/getDeptList',
   //   timeout: 100,

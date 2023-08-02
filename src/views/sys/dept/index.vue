@@ -43,7 +43,7 @@
   import { columns, searchFormSchema } from './dept.data';
 
   export default defineComponent({
-    name: 'DeptManagement',
+    name: 'Department',
     components: { BasicTable, DeptModal, TableAction },
     setup() {
       const [registerModal, { openModal }] = useModal();
@@ -55,6 +55,14 @@
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
+          submitButtonOptions: {
+            postIcon: 'ant-design:search-outlined',
+            iconSize: 12,
+          },
+          resetButtonOptions: {
+            postIcon: 'ant-design:reload-outlined',
+            iconSize: 12,
+          },
         },
         pagination: false,
         striped: false,

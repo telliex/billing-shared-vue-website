@@ -4,7 +4,9 @@ import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 import { Icon } from '/@/components/Icon';
 import moment from 'moment';
+import { useMessage } from '/@/hooks/web/useMessage';
 
+const { createMessage } = useMessage();
 export const columns: BasicColumn[] = [
   {
     title: '選單名稱',
@@ -258,7 +260,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'componentName',
-    label: '組件路名稱',
+    label: '組件名稱',
     labelWidth: 150,
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
@@ -270,11 +272,22 @@ export const formSchema: FormSchema[] = [
     field: 'component',
     label: '組件路徑',
     labelWidth: 150,
-    helpMessage: ['[目錄 catalog]: LAYOUT', '[選單 page]: Vue 組件相對位置'],
+    helpMessage: ['[選單 page]: Vue 組件相對位置'],
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
     dynamicDisabled: ({ values }) => {
       return values.isExt === 1 ? true : false;
+    },
+    componentProps: ({ formModel }) => {
+      return {
+        onchange: () => {
+          if (formModel.type === 'page' && formModel.component === 'LAYOUT') {
+            // hack
+            createMessage.warning('LAYOUT 為 catalog 保留字，不可在此設置');
+            formModel.component = '';
+          }
+        },
+      };
     },
   },
   {
@@ -312,9 +325,7 @@ export const formSchema: FormSchema[] = [
           { label: '否', value: 0 },
           { label: '是', value: 1 },
         ],
-        onchange: (e: any) => {
-          console.log(formModel);
-          console.log('e:', e);
+        onchange: () => {
           if (formModel.isExt === 1) {
             // outer link
             if (

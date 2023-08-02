@@ -52,7 +52,7 @@
   import { useGo } from '/@/hooks/web/usePage';
 
   export default defineComponent({
-    name: 'AccountManagement',
+    name: 'User',
     components: { BasicTable, PageWrapper, DeptTree, UserModal, TableAction },
     setup() {
       const go = useGo();
@@ -67,12 +67,19 @@
           labelWidth: 120,
           schemas: searchFormSchema,
           autoSubmitOnEnter: true,
+          submitButtonOptions: {
+            postIcon: 'ant-design:search-outlined',
+            iconSize: 12,
+          },
+          resetButtonOptions: {
+            postIcon: 'ant-design:reload-outlined',
+            iconSize: 12,
+          },
         },
         useSearchForm: true,
         showTableSetting: false,
         bordered: true,
         handleSearchInfoFn(info) {
-          console.log('handleSearchInfoFn', info);
           return info;
         },
         actionColumn: {
@@ -90,7 +97,6 @@
       }
 
       function handleEdit(record: Recordable) {
-        console.log(record);
         openModal(true, {
           record,
           isUpdate: true,
@@ -98,7 +104,6 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
         removeUserItem(record).then(() => {
           reload();
         });
@@ -109,7 +114,7 @@
           // 演示不刷新表格直接更新內部數據。
           // 注意：updateTableDataRecord要求表格的rowKey屬性為string並且存在於每一行的record的keys中
           const result = updateTableDataRecord(values.id, values);
-          console.log(result);
+          console.log('成功:', result);
         } else {
           reload();
         }

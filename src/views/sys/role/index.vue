@@ -43,7 +43,7 @@
   import { columns, searchFormSchema } from './role.data';
 
   export default defineComponent({
-    name: 'RoleManagement',
+    name: 'Role',
     components: { BasicTable, RoleDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
@@ -54,6 +54,14 @@
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
+          submitButtonOptions: {
+            postIcon: 'ant-design:search-outlined',
+            iconSize: 12,
+          },
+          resetButtonOptions: {
+            postIcon: 'ant-design:reload-outlined',
+            iconSize: 12,
+          },
         },
         pagination: true,
         useSearchForm: true,
@@ -93,6 +101,9 @@
 
       function handleSuccess() {
         reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 200);
       }
 
       onMounted(() => {});

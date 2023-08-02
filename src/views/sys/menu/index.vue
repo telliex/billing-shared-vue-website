@@ -52,7 +52,7 @@
   import { columns, searchFormSchema } from './menu.data';
 
   export default defineComponent({
-    name: 'MenuManagement',
+    name: 'Menu',
     components: { BasicTable, MenuDrawer, ButtonsDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer, setDrawerProps }] = useDrawer();
@@ -67,6 +67,14 @@
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
+          submitButtonOptions: {
+            postIcon: 'ant-design:search-outlined',
+            iconSize: 12,
+          },
+          resetButtonOptions: {
+            postIcon: 'ant-design:reload-outlined',
+            iconSize: 12,
+          },
         },
         showTableSetting: true,
         isTreeTable: true,

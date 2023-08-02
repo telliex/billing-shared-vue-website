@@ -144,13 +144,13 @@
 
       function renderMenu() {
         const { menus, ...menuProps } = unref(getCommonProps);
-        // console.log(menus);
+        const showString = `display:${unref(getCollapsed) ? 'none' : 'inline-block'}`;
         if (!menus || !menus.length) return null;
         return !props.isHorizontal ? (
           <div>
             <a-button type="text" style="color:#fff" onclick={gotoMGT}>
               <Icon icon="ion:arrow-undo-sharp" />
-              MGT
+              <span style={showString}>MGT</span>
             </a-button>
             <SimpleMenu {...menuProps} isSplitMenu={unref(getSplit)} items={menus} />
           </div>

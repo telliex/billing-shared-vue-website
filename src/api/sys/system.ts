@@ -317,8 +317,64 @@ export const GetUserPermission = (body: any) =>
  * @description: Role
  */
 // API for account use
-export const getAllRoleList = (params?: RoleParams) =>
-  defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
+export const getAllRoleList = (params: RolePageParams) => {
+  return defHttp.get<RolePageListGetResultModel>(
+    {
+      url: `/api${version}${Api.RoleList}`,
+      data: {},
+      params: {
+        roleName: params.roleName,
+        status: params.status,
+        page: params.page || 1,
+        pageSize: params.pageSize || 10,
+      },
+      headers: {
+        'User-Id': who,
+        'Time-Zone': timeZon,
+      },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          // let role permission string to array
+          // resObj.forEach((item) => {
+          //   item.roleValueOject = {
+          //     value: item.id,
+          //     label: item.roleName,
+          //   };
+          // });
+          console.log('return role11111111 items', resObj);
+          if (resObj.length >= 0) {
+            return {
+              traceId: '',
+              totalPages: 1,
+              currentPage: 1,
+              results: resObj,
+              status: 1000,
+              msg: 'success',
+              requestedTime: '',
+              responsedTime: '',
+            };
+          } else {
+            return {
+              traceId: '',
+              totalPages: 0,
+              currentPage: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requestedTime: '',
+              responsedTime: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+    },
+  );
+};
+
 // Role list
 export const getRoleListByPage = (params: RolePageParams) => {
   return defHttp.get<RolePageListGetResultModel>(
@@ -731,6 +787,9 @@ export const getUserList = (params: UserPageParams) => {
         function (data) {
           const resObj = JSON.parse(data);
           // let role permission string to array
+          resObj.forEach(
+            (item) => (item.roles = item.rolesString ? item.rolesString.split(',') : []),
+          );
 
           console.log('return dept items', resObj);
           if (resObj.length >= 0) {
