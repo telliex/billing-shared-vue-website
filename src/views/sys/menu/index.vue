@@ -65,16 +65,17 @@
         api: getNavList,
         columns,
         formConfig: {
+          showResetButton: false,
           labelWidth: 120,
           schemas: searchFormSchema,
           submitButtonOptions: {
             postIcon: 'ant-design:search-outlined',
             iconSize: 12,
           },
-          resetButtonOptions: {
-            postIcon: 'ant-design:reload-outlined',
-            iconSize: 12,
-          },
+          // resetButtonOptions: {
+          //   postIcon: 'ant-design:reload-outlined',
+          //   iconSize: 12,
+          // },
         },
         showTableSetting: true,
         isTreeTable: true,

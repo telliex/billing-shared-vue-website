@@ -39,6 +39,11 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: '路由地址',
+    dataIndex: 'routePath',
+    align: 'left',
+  },
+  {
     title: '描述',
     dataIndex: 'description',
     width: 200,

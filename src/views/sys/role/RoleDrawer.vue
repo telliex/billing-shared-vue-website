@@ -14,6 +14,7 @@
           :treeData="treeData"
           :fieldNames="{ title: 'title', key: 'id' }"
           checkable
+          :height="300"
           toolbar
           title="選單分配"
         />
@@ -100,6 +101,7 @@
             let result = Object.assign(template, values);
             await createRoleItem(result);
           } else {
+            console.log('99999', Object.assign(template, record.value, values));
             await updateRoleItem(Object.assign(template, record.value, values));
           }
           closeDrawer();

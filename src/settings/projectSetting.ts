@@ -171,7 +171,7 @@ const setting: ProjectConfig = {
 
   // Whether to enable KeepAlive cache is best to close during development, otherwise the cache needs to be cleared every time
   //  (change)是否開啟 KeepAlive緩存  開發時候最好關閉,不然每次都需要清除緩存
-  openKeepAlive: false,
+  openKeepAlive: true,
 
   // Automatic screen lock time, 0 does not lock the screen. Unit minute default 0
   // 自動鎖屏時間，為0不鎖屏。 單位分鐘 默認1個小時

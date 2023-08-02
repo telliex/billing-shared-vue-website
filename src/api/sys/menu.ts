@@ -46,7 +46,6 @@ if (timeTemp === 0) {
 
 // Fixed: Cannot access 'useUserStore' before initialization
 router.beforeEach(async () => {
-  console.log('xxxxxxxxx:', who);
   if (useUserStore() === null) {
     who = useUserStore().getUserInfo?.userId as number;
   }

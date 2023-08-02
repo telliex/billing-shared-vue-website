@@ -52,6 +52,7 @@
         api: getRoleListByPage,
         columns,
         formConfig: {
+          showResetButton: false,
           labelWidth: 120,
           schemas: searchFormSchema,
           submitButtonOptions: {

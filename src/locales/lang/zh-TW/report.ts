@@ -2,13 +2,13 @@
  * @Description:
  * @Anthor: Telliex
  * @Date: 2023-05-10 03:42:33
- * @LastEditors: Telliex
- * @LastEditTime: 2023-05-29 03:08:35
+ * @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
+ * @LastEditTime: 2023-08-02 20:54:07
  */
 export default {
   searchAreaTitle: '查詢欄位',
   queryText: '查詢',
-  resetText: '重置',
+  resetText: '清除',
   exportFile: '導出',
   autoFitHeight: '自適應高度',
   cancalFitHeight: '取消自適應',
