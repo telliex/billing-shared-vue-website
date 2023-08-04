@@ -36,6 +36,10 @@
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
 
+        data.record['rolesArray'] = data.record['rolesString']
+          ? JSON.parse(data.record['rolesString'])
+          : [];
+        console.log('9999999', data.record);
         resetFields();
         if (unref(isUpdate)) {
           rowId.value = data.record.id;
@@ -80,15 +84,13 @@
           }
           // TODO custom api
 
-          let rolesArray: any[] = [];
-          values.roles.forEach((item) => {
-            rolesArray.push({
-              fieldKey: item.value,
-              fieldValue: item.label,
-            });
-          });
-
-          values.rolesString = JSON.stringify(rolesArray);
+          // let rolesTemp: string[] = [];
+          // values.rolesArray.forEach((item: any) => {
+          //   // rolesArray.push(item.value);
+          //   rolesTemp.push(item.label);
+          // });
+          // values.roles = JSON.stringify(rolesTemp);
+          values.rolesString = JSON.stringify(values.rolesArray);
 
           let template = {
             id: '',

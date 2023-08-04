@@ -52,7 +52,7 @@ export const columns: BasicColumn[] = [
           h(
             Tag,
             { style: { color: rolesColorList[0], marginRight: '5px', marginBottom: '5px' } },
-            () => item.fieldValue,
+            () => item.option.roleValue,
           ),
         ),
       );
@@ -167,7 +167,7 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     label: '角色',
-    field: 'roles',
+    field: 'rolesArray',
     component: 'ApiSelect',
     componentProps: ({ formModel }) => {
       console.log('formModel========', formModel);

@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+  <PageWrapper dense contentFullHeight contentClass="flex">
     <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
@@ -13,6 +13,7 @@
                 icon: 'ant-design:info-circle-twotone',
                 tooltip: '查看用戶詳情',
                 onClick: handleView.bind(null, record),
+                disabled: true,
               },
               {
                 icon: 'ant-design:edit-twotone',

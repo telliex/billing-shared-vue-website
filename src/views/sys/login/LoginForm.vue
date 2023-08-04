@@ -338,7 +338,7 @@
           // 輸入登入 form
           formData.account = checkUser.userId || '';
           formData.password = checkUser.password || '';
-          handleLogin();
+          // handleLogin();
         } else {
           createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
         }
