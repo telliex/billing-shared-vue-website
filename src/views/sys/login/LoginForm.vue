@@ -97,13 +97,10 @@
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { createLocalStorage } from '/@/utils/cache';
-  import { getS3JSON, getJSONURL } from '/@/utils/json';
+  // import { getS3JSON, getJSONURL } from '/@/utils/json';
   import queryString from 'query-string';
-  // this imports a bare-bones version of S3 that exposes the .send operation
-  // import { S3, S3Client, AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
+  import { loginApi } from '/@/api/sys/user';
 
-  // this imports just the getObject operation from S3
-  // import { GetObjectCommand } from '@aws-sdk/client-s3';
   interface Role {
     roleName: string;
     value: string;
@@ -116,7 +113,7 @@
     avatar?: string;
     system?: string;
     company?: string;
-    desc?: string;
+    remark?: string;
     password?: string;
     token?: string;
     homePath?: string;
@@ -147,7 +144,7 @@
 
   const ls = createLocalStorage();
 
-  let userList: any[] = reactive([]);
+  // let userList: any[] = reactive([]);
   // const options = reactive([
   //   {
   //     label: 'ECV',
@@ -244,20 +241,20 @@
 
     if (window.location.search) {
       // try {
-      // let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
       let parameterList = queryString.parse(location.search.replace(/\//, ''));
-      console.log(parameterList);
-      // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
       let userId = parameterList.user || null;
       console.log('entry userId:', userId);
       if (!userId) {
+        // Can't get user id from url
         createMessage.error('登入出錯，請重新登入 MGT 平台 !');
         setTimeout(() => {
           window.location.href = fromURL;
         }, 30000);
         return;
       } else {
+        // get user id from url
         ls.set('TEMP_USER_ID_KEY__', userId);
+
         let checkUser: UserInfoItem = {};
         // admin 身份登入
         if (userId === 'admin') {
@@ -268,7 +265,7 @@
             avatar: 'https://picsum.photos/640/640',
             system: 'cbs',
             company: 'ECV',
-            desc: 'super',
+            remark: 'super',
             password: '123456',
             token: 'fakeToken1',
             homePath: '/home',
@@ -290,17 +287,17 @@
         } else {
           // 此處統一獲取 S3 JSON
           // [API] /get-download-url
-          let JSONUrlList = await getJSONURL(['user']);
+          // let JSONUrlList = await getJSONURL(['user']);
 
-          let userListURL = JSONUrlList['user'];
-          if (userListURL) {
-            userList = await getS3JSON(userListURL);
-            console.log('JSON UserList');
-            console.log(userList);
-          }
+          // let userListURL = JSONUrlList['user'];
+          // if (userListURL) {
+          //   userList = await getS3JSON(userListURL);
+          //   console.log('JSON UserList');
+          //   console.log(userList);
+          // }
+          // checkUser = userList.find((item) => item.userId === userId?.toString());
 
-          checkUser = userList.find((item) => item.userId === userId?.toString());
-
+          checkUser = await loginApi({ password: 'token' + userId, mgtNumber: userId });
           // 1.校驗使用者
           if (!checkUser) {
             return createMessage.error('The corresponding user information was not obtained!');
