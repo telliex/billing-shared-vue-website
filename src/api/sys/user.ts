@@ -64,14 +64,12 @@ export const loginApi = (body: any) =>
 
           // Do whatever you want to transform the data
           if (resObj.type === 'success') {
-            console.log('okokokokoko');
             return {
               ...resObj,
               total_pages: 0,
               current_page: 0,
             };
           } else {
-            console.log('nonononono');
             return {
               ...resObj,
               results: resObj.results !== '' ? resObj.results : null,

@@ -224,7 +224,8 @@
       loading.value = false;
     }
   }
-  onMounted(async () => {
+
+  async function enterance() {
     console.log('elu:', import.meta.env.VITE_GLOB_ELU_API_URL);
     console.log('sys:', import.meta.env.VITE_GLOB_SYS_API_URL);
     console.log('report:', import.meta.env.VITE_GLOB_REPORT_API_URL);
@@ -357,5 +358,11 @@
         window.location.href = fromURL;
       }, 5000);
     }
+  }
+
+  onMounted(async () => {
+    setTimeout(() => {
+      enterance();
+    }, 3000);
   });
 </script>

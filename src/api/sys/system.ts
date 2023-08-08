@@ -347,7 +347,6 @@ export const getAllRoleList = (params: RolePageParams) => {
           //     label: item.roleName,
           //   };
           // });
-          console.log('return role11111111 items', resObj);
           if (resObj.length >= 0) {
             return {
               traceId: '',
@@ -589,7 +588,7 @@ export const getDeptList = (params: DeptPageParams) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
-        Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {

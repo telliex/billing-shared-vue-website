@@ -16,7 +16,6 @@ import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 // import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
 import { logoutApi } from '/@/api/sys/user';
-// import { loginApi } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -133,6 +132,7 @@ export const useUserStore = defineStore('user', {
       },
     ): Promise<GetUserInfoModel | null> {
       console.log('aaaaaaaaaa');
+
       try {
         const { goHome = true, mode, ...loginParams } = params;
         // 1、調用登錄接口
@@ -194,6 +194,7 @@ export const useUserStore = defineStore('user', {
      * @description: logout , click left-top coner user avatar
      */
     async logout(goLogin = false) {
+      console.log('000000');
       if (this.getToken) {
         try {
           await logoutApi();
