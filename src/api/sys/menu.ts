@@ -82,6 +82,7 @@ export const getDynamicNavList = () =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -134,6 +135,7 @@ export const getNavTreeListWithButton = (params: FilterItems) =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -183,6 +185,7 @@ export const getNavTreeListOnlyCatalog = (params: FilterItems) =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -238,6 +241,7 @@ export const getNavList = (params: FilterItems) =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -286,6 +290,7 @@ export const getNavItem = (params: NavParams) => {
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
     },
     {
@@ -302,6 +307,7 @@ export const removeNavItem = (params: any) =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -334,6 +340,7 @@ export const updateNavItem = (params: any) =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -367,6 +374,7 @@ export const createNavItem = (body: any) => {
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -405,6 +413,7 @@ export const getButtonList = (params: FilterButtonItems) =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -448,6 +457,7 @@ export const updateButtonItem = (params: any) =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -481,6 +491,7 @@ export const createButtonItem = (body: any) => {
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -515,6 +526,7 @@ export const removeButtonItem = (params: any) =>
       headers: {
         'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {

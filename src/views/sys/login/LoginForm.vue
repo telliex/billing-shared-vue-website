@@ -300,6 +300,10 @@
           checkUser = await loginApi({ password: 'token' + userId, mgtNumber: userId });
           // 1.校驗使用者
           if (!checkUser) {
+            setTimeout(() => {
+              userStore.setUserId('');
+              window.location.href = fromURL;
+            }, 5000);
             return createMessage.error('The corresponding user information was not obtained!');
           }
           console.log('User Login Pass !!');
@@ -335,7 +339,7 @@
           // 輸入登入 form
           formData.account = checkUser.userId || '';
           formData.password = checkUser.password || '';
-          // handleLogin();
+          handleLogin();
         } else {
           createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
         }
@@ -348,10 +352,10 @@
       // }
     } else {
       createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!!');
-      // setTimeout(() => {
-      //   userStore.setUserId('');
-      //   window.location.href = fromURL;
-      // }, 5000);
+      setTimeout(() => {
+        userStore.setUserId('');
+        window.location.href = fromURL;
+      }, 5000);
     }
   });
 </script>

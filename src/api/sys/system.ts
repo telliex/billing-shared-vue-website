@@ -64,6 +64,7 @@ export const GetDictionaryItems = (data: GetDictionaryModel) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
     },
     {
@@ -79,6 +80,7 @@ export const getUserInfo = (data: GetUserInfoModel) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
     },
     {
@@ -93,6 +95,7 @@ export const GetParameterStoreFromAWS = (data: GetParameterStoreFromAWSModel) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
     },
     {
@@ -108,6 +111,7 @@ export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
     },
     {
@@ -331,6 +335,7 @@ export const getAllRoleList = (params: RolePageParams) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -390,6 +395,7 @@ export const getRoleListByPage = (params: RolePageParams) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -439,6 +445,7 @@ export const setRoleStatus = (id: string, body: any) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -472,6 +479,7 @@ export const removeRoleItem = (body: any) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -503,6 +511,7 @@ export const updateRoleItem = (body: any) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -536,6 +545,7 @@ export const createRoleItem = (body: any) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -579,12 +589,12 @@ export const getDeptList = (params: DeptPageParams) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
       },
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
           // let role permission string to array
-
           console.log('return dept items', resObj);
           if (resObj.length >= 0) {
             return {
@@ -626,6 +636,7 @@ export const createDeptItem = (body: any) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -660,6 +671,7 @@ export const updateDeptItem = (body: any) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -693,6 +705,7 @@ export const removeDeptItem = (body: any) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -730,6 +743,7 @@ export const isUserExist = (params: any) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -782,6 +796,7 @@ export const getUserList = (params: UserPageParams) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -832,6 +847,7 @@ export const removeUserItem = (body: any) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -863,6 +879,7 @@ export const createUserItem = (body: any) => {
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
@@ -897,6 +914,7 @@ export const updateUserItem = (body: any) =>
       headers: {
         'User-Id': who,
         'Time-Zone': timeZon,
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {

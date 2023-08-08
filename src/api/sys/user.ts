@@ -4,6 +4,7 @@ import { GetUserInfoModel } from './model/userModel';
 // import { ErrorMessageMode } from '/#/axios';
 import { useUserStore } from '/@/store/modules/user';
 import dayjs from 'dayjs';
+import { router } from '/@/router';
 enum Api {
   Login = '/auth/login',
   Logout = '/auth/logout',
@@ -11,10 +12,16 @@ enum Api {
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
 }
-
+let who = 0;
 const version = '/v1.0';
-const userStore = useUserStore();
-const who = userStore.getUserInfo?.userId;
+// const userStore = useUserStore();
+
+router.beforeEach(async () => {
+  if (useUserStore() === null) {
+    who = useUserStore().getUserInfo?.userId as number;
+  }
+});
+
 const timeTemp = dayjs().utcOffset();
 let timeZon = '';
 if (timeTemp === 0) {
@@ -46,85 +53,75 @@ export const loginApi = (body: any) =>
       url: '/api' + version + Api.Login,
       data: body,
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
-        Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
+          const resObj = JSON.parse(data);
+          console.log('data111111:', resObj);
+
           // Do whatever you want to transform the data
-          if (data.length) {
+          if (resObj.type === 'success') {
+            console.log('okokokokoko');
             return {
-              trace_id: '',
+              ...resObj,
               total_pages: 0,
               current_page: 0,
-              results: [JSON.parse(data)],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
             };
           } else {
+            console.log('nonononono');
             return {
-              trace_id: '',
+              ...resObj,
+              results: resObj.results === '' ? resObj.results : null,
               total_pages: 0,
               current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
+              status: 1000,
             };
           }
         },
       ],
     },
     {
-      apiUrl: '/permission-api',
+      apiUrl: '/sys-api',
     },
   );
 
-export const logoutApi = (body: any) =>
+export const logoutApi = () =>
   defHttp.get(
     {
       url: '/api' + version + Api.Logout,
-      data: body,
+      // data: body,
       headers: {
-        'User-Id': who,
+        'User-Id': useUserStore().getUserInfo?.userId,
         'Time-Zone': timeZon,
-        Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
+        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
       },
       transformResponse: [
         function (data) {
+          const resObj = JSON.parse(data);
           // Do whatever you want to transform the data
-          if (data.length) {
+          if (resObj.type === 'success') {
             return {
-              trace_id: '',
+              ...resObj,
               total_pages: 0,
               current_page: 0,
-              results: [JSON.parse(data)],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
             };
           } else {
             return {
-              trace_id: '',
+              ...resObj,
+              results: resObj.results === '' ? resObj.results : null,
               total_pages: 0,
               current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
+              status: 1000,
             };
           }
         },
       ],
     },
     {
-      apiUrl: '/permission-api',
+      apiUrl: '/sys-api',
     },
   );
 
@@ -139,9 +136,9 @@ export function getPermCode() {
   return defHttp.get<string[]>({ url: Api.GetPermCode });
 }
 
-export function doLogout() {
-  return defHttp.get({ url: Api.Logout });
-}
+// export function doLogout() {
+//   return defHttp.get({ url: Api.Logout });
+// }
 
 export function testRetry() {
   return defHttp.get(

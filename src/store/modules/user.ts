@@ -14,8 +14,9 @@ import {
 } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-// import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
-import { loginApi } from '/@/api/sys/user';
+// import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
+import { logoutApi } from '/@/api/sys/user';
+// import { loginApi } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -131,6 +132,7 @@ export const useUserStore = defineStore('user', {
         mode?: ErrorMessageMode;
       },
     ): Promise<GetUserInfoModel | null> {
+      console.log('aaaaaaaaaa');
       try {
         const { goHome = true, mode, ...loginParams } = params;
         // 1、調用登錄接口
@@ -192,16 +194,14 @@ export const useUserStore = defineStore('user', {
      * @description: logout , click left-top coner user avatar
      */
     async logout(goLogin = false) {
-      // temp login 暫時 remove
-      // todo recovery == start
-      // if (this.getToken) {
-      //   try {
-      //     await doLogout();
-      //   } catch {
-      //     console.log('註銷Token失敗');
-      //   }
-      // }
-      // todo recovery == end
+      if (this.getToken) {
+        try {
+          await logoutApi();
+        } catch {
+          console.log('註銷 Token 失敗');
+        }
+      }
+
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
@@ -210,10 +210,16 @@ export const useUserStore = defineStore('user', {
       ls.set('TEMP_USER_INFO_KEY__', null);
       ls.set('TEMP_JSON_URL_KEY__', null);
       // todo remove == end
-      // goLogin && router.push(PageEnum.BASE_LOGIN);
-      if (goLogin) {
-        window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL + '/index.php?logout';
-      }
+      console.log('PageEnum.BASE_LOGIN', PageEnum.BASE_LOGIN);
+      goLogin && router.push(PageEnum.BASE_LOGIN);
+      setTimeout(() => {
+        if (goLogin) {
+          console.log('redirect to old mgt');
+          console.log(import.meta.env.VITE_GLOB_OLD_MGT_URL + '/index.php?logout');
+          window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL + '/index.php?logout';
+        }
+      }, 10000);
+
       // router.push( import.meta.env.VITE_GLOB_OLD_MGT_URL+'/index.php?logout');
     },
 
