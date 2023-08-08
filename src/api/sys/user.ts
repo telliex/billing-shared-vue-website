@@ -74,7 +74,7 @@ export const loginApi = (body: any) =>
             console.log('nonononono');
             return {
               ...resObj,
-              results: resObj.results === '' ? resObj.results : null,
+              results: resObj.results !== '' ? resObj.results : null,
               total_pages: 0,
               current_page: 0,
               status: 1000,
@@ -111,7 +111,7 @@ export const logoutApi = () =>
           } else {
             return {
               ...resObj,
-              results: resObj.results === '' ? resObj.results : null,
+              results: resObj.results !== '' ? resObj.results : null,
               total_pages: 0,
               current_page: 0,
               status: 1000,
