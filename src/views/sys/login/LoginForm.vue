@@ -99,26 +99,7 @@
   import { createLocalStorage } from '/@/utils/cache';
   // import { getS3JSON, getJSONURL } from '/@/utils/json';
   import queryString from 'query-string';
-  import { loginApi } from '/@/api/sys/user';
 
-  interface Role {
-    roleName: string;
-    value: string;
-  }
-
-  interface UserInfoItem {
-    userId?: string;
-    username?: string;
-    realName?: string;
-    avatar?: string;
-    system?: string;
-    company?: string;
-    remark?: string;
-    password?: string;
-    token?: string;
-    homePath?: string;
-    roles?: Role[];
-  }
   const ACol = Col;
   const ARow = Row;
   const FormItem = Form.Item;
@@ -178,23 +159,30 @@
   //     content: 'content message...',
   //   });
   // }
-
   async function handleLogin() {
+    let userId = ls.get('TEMP_USER_ID_KEY__');
+    // fake id & pw
+    formData.account = String(userId) || '';
+    formData.password = `token${userId}` || '';
+
     const data = await validForm();
     if (!data) return;
     try {
       loading.value = true;
+      // call login api
       const userInfo = await userStore.login({
         password: data.password,
         username: data.account,
-        mode: 'none', //不要默认的错误提示
+        mode: 'none', //不要默認的錯誤提示
       });
-      // const userInfo = await userStore.login({
-      //   password: '123456',
-      //   username: 'billing',
-      //   mode: 'none', //不要默认的错误提示
-      // });
+
       if (userInfo) {
+        ls.set('TEMP_USER_INFO_KEY__', userInfo);
+        ls.set('TEMP_SYS_KEY__', {
+          company: userInfo.company,
+          system: userInfo.system,
+        });
+
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
           description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
@@ -210,6 +198,7 @@
         }, 2000);
       }
     } catch (error) {
+      console.log('have error:');
       createErrorModal({
         title: t('sys.api.errorTip'),
         content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
@@ -224,8 +213,54 @@
       loading.value = false;
     }
   }
+  // async function handleLogin() {
+  //   const data = await validForm();
+  //   console.log('form data:', data);
+  //   if (!data) return;
+  //   try {
+  //     loading.value = true;
+  //     const userInfo = await userStore.login({
+  //       password: data.password,
+  //       username: data.account,
+  //       mode: 'none', //不要默認的錯誤提示
+  //     });
+  //     // const userInfo = await userStore.login({
+  //     //   password: '123456',
+  //     //   username: 'billing',
+  //     //   mode: 'none', //不要默認的錯誤提示
+  //     // });
+  //     if (userInfo) {
+  //       notification.success({
+  //         message: t('sys.login.loginSuccessTitle'),
+  //         description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+  //         duration: 3,
+  //       });
 
-  async function enterance() {
+  //       setTimeout(() => {
+  //         if (redirectUrl.value) {
+  //           console.log('====redirect url=====');
+  //           console.log(`${window.location.host}/#${redirectUrl.value}`);
+  //           router.push({ path: redirectUrl.value });
+  //         }
+  //       }, 2000);
+  //     }
+  //   } catch (error) {
+  //     createErrorModal({
+  //       title: t('sys.api.errorTip'),
+  //       content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
+  //       getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
+  //       onOk: () => {
+  //         setTimeout(() => {
+  //           window.location.href = fromURL;
+  //         }, 3000);
+  //       },
+  //     });
+  //   } finally {
+  //     loading.value = false;
+  //   }
+  // }
+
+  async function entrance() {
     console.log('elu:', import.meta.env.VITE_GLOB_ELU_API_URL);
     console.log('sys:', import.meta.env.VITE_GLOB_SYS_API_URL);
     console.log('report:', import.meta.env.VITE_GLOB_REPORT_API_URL);
@@ -247,99 +282,39 @@
       console.log('entry userId:', userId);
       if (!userId) {
         // Can't get user id from url
-        createMessage.error('登入出錯，請重新登入 MGT 平台 !');
+        createMessage.error('登入 ID 出錯，請重新登入 MGT 平台 !');
         setTimeout(() => {
           window.location.href = fromURL;
         }, 30000);
         return;
       } else {
         // get user id from url
+        userStore.setUserId(userId.toString());
         ls.set('TEMP_USER_ID_KEY__', userId);
 
-        let checkUser: UserInfoItem = {};
-        // admin 身份登入
-        if (userId === 'admin') {
-          checkUser = {
-            userId: 'admin',
-            username: 'billing',
-            realName: 'billing Admin',
-            avatar: 'https://picsum.photos/640/640',
-            system: 'cbs',
-            company: 'ECV',
-            remark: 'super',
-            password: '123456',
-            token: 'fakeToken1',
-            homePath: '/home',
-            roles: [
-              {
-                roleName: 'Admin',
-                value: 'super',
-              },
-            ],
-          };
+        // 1.設置跳轉連結
 
-          ls.set('TEMP_USER_INFO_KEY__', checkUser);
-          redirectUrl.value = '/login?redirect=/home/index';
-          let systemInfo = {
-            company: checkUser.company,
-            system: checkUser.system,
-          };
-          ls.set('TEMP_SYS_KEY__', systemInfo);
-        } else {
-          // 此處統一獲取 S3 JSON
-          // [API] /get-download-url
-          // let JSONUrlList = await getJSONURL(['user']);
+        // redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
+        // redirectUrl.value = '/login?redirect=/home/index';
+        redirectUrl.value =
+          queryString.parse(window.location.hash)['/login?redirect']?.toString() || null;
+        console.log('redirectUrl:', redirectUrl.value);
+        console.log(queryString.parse(location.hash)['/login?redirect']);
 
-          // let userListURL = JSONUrlList['user'];
-          // if (userListURL) {
-          //   userList = await getS3JSON(userListURL);
-          //   console.log('JSON UserList');
-          //   console.log(userList);
-          // }
-          // checkUser = userList.find((item) => item.userId === userId?.toString());
+        // 2.跳轉校驗
+        // if (
+        //   document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
+        //   fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
+        // ) {
+        //   createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
+        //   setTimeout(() => {
+        //     window.location.href = fromURL;
+        //   }, 5000);
+        //   return;
+        // }
 
-          checkUser = await loginApi({ password: 'token' + userId, mgtNumber: userId });
-          // 1.校驗使用者
-          if (!checkUser) {
-            setTimeout(() => {
-              userStore.setUserId('');
-              window.location.href = fromURL;
-            }, 5000);
-            return createMessage.error('The corresponding user information was not obtained!');
-          }
-          console.log('User Login Pass !!');
-          console.log(checkUser);
-          ls.set('TEMP_USER_INFO_KEY__', checkUser);
-          userStore.setUserId(userId.toString());
-          let systemInfo = {
-            company: checkUser.company,
-            system: checkUser.system,
-          };
-          ls.set('TEMP_SYS_KEY__', systemInfo);
-
-          // redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
-          redirectUrl.value =
-            queryString.parse(window.location.hash)['/login?redirect']?.toString() || null;
-          console.log('redirectUrl:', redirectUrl.value);
-          console.log(queryString.parse(location.hash)['/login?redirect']);
-
-          // 2.跳轉校驗
-          // if (
-          //   document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
-          //   fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
-          // ) {
-          //   createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
-          //   setTimeout(() => {
-          //     window.location.href = fromURL;
-          //   }, 5000);
-          //   return;
-          // }
-        }
         // 3.登入 password give
         if (userId && redirectUrl) {
-          // 輸入登入 form
-          formData.account = checkUser.userId || '';
-          formData.password = checkUser.password || '';
           handleLogin();
         } else {
           createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
@@ -352,6 +327,7 @@
       //   // }, 5000);
       // }
     } else {
+      console.log('Error: window.location.search is not exist !');
       createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!!');
       setTimeout(() => {
         userStore.setUserId('');
@@ -362,7 +338,8 @@
 
   onMounted(async () => {
     setTimeout(() => {
-      enterance();
-    }, 3000);
+      entrance();
+      // andleLogin();
+    }, 1000);
   });
 </script>

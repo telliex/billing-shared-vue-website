@@ -5,6 +5,7 @@ import { GetUserInfoModel } from './model/userModel';
 import { useUserStore } from '/@/store/modules/user';
 import dayjs from 'dayjs';
 import { router } from '/@/router';
+import { ErrorMessageMode } from '/#/axios';
 enum Api {
   Login = '/auth/login',
   Logout = '/auth/logout',
@@ -47,7 +48,7 @@ if (timeTemp === 0) {
 //   );
 // }
 
-export const loginApi = (body: any) =>
+export const loginApi = (body: any, mode: ErrorMessageMode = 'modal') =>
   defHttp.post(
     {
       url: '/api' + version + Api.Login,
@@ -82,6 +83,7 @@ export const loginApi = (body: any) =>
       ],
     },
     {
+      errorMessageMode: mode,
       apiUrl: '/sys-api',
     },
   );

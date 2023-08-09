@@ -15,7 +15,7 @@ import {
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 // import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
-import { logoutApi } from '/@/api/sys/user';
+import { loginApi, logoutApi } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -131,17 +131,17 @@ export const useUserStore = defineStore('user', {
         mode?: ErrorMessageMode;
       },
     ): Promise<GetUserInfoModel | null> {
-      console.log('aaaaaaaaaa');
-
       try {
         const { goHome = true, mode, ...loginParams } = params;
         // 1、調用登錄接口
         // todo recovery == start
-        // const data = await loginApi(loginParams, mode);
-        // const { token } = data;
+        const data = await loginApi(loginParams, mode);
+
+        const { token } = data;
+        ls.set('TEMP_USER_INFO_KEY__', data); // leave out call getUserInfo();
         // todo recovery == end
         // todo remove == start
-        const { token } = ls.get('TEMP_USER_INFO_KEY__');
+        // const { token } = ls.get('TEMP_USER_INFO_KEY__');
         // todo remove == end
         // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(token);
@@ -154,14 +154,19 @@ export const useUserStore = defineStore('user', {
       if (!this.getToken) return null;
       // 3、獲取用户信息
       const userInfo = await this.getUserInfoAction();
+
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
+        console.log('sessionTimeout');
         this.setSessionTimeout(false);
       } else {
         const permissionStore = usePermissionStore();
+        console.log('permissionStore:', permissionStore);
         if (!permissionStore.isDynamicAddedRoute) {
+          console.log('動態添加路由配置');
           // 4、獲取路由配置並動態添加路由配置
           const routes = await permissionStore.buildRoutesAction();
+          console.log('routes:', routes);
           routes.forEach((route) => {
             router.addRoute(route as unknown as RouteRecordRaw);
           });
