@@ -1,3 +1,6 @@
+import { Guid } from 'js-guid';
+import { useUserStore } from '/@/store/modules/user';
+import dayjs from 'dayjs';
 export function buildNestedStructure(data: any[]) {
   const map: any = {}; // 用來快速查找 id 對應的物件
   const result: any[] = []; // 最終的結果
@@ -50,4 +53,51 @@ export function buildMenuNestedStructure(data: any[]) {
   });
 
   return result;
+}
+
+export function apiTransDataForHeader() {
+  const userStore = useUserStore();
+  const who = userStore.getUserInfo?.userId;
+
+  const timeTemp = dayjs().utcOffset();
+  let timeZon = '';
+  if (timeTemp === 0) {
+    timeZon = 'UTC+0';
+  } else if (timeTemp > 0) {
+    timeZon = 'UTC+' + timeTemp / 60;
+  } else if (timeTemp < 0) {
+    timeZon = 'UTC-' + timeTemp / 60;
+  }
+
+  return {
+    'User-Id': who,
+    'Time-Zone': timeZon,
+    Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
+  };
+}
+
+export function correntReturn(obj: any) {
+  return {
+    trace_id: Guid.newGuid().toString(),
+    total_pages: 1,
+    current_page: 1,
+    results: obj,
+    status: 1000,
+    msg: 'success',
+    requested_time: '',
+    responsed_time: '',
+  };
+}
+
+export function errorReturn(error: any) {
+  return {
+    trace_id: Guid.newGuid().toString(),
+    total_pages: 0,
+    current_page: 0,
+    results: null,
+    status: 9999,
+    msg: error.message,
+    requested_time: '',
+    responsed_time: new Date(),
+  };
 }

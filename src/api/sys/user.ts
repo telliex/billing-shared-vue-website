@@ -2,10 +2,8 @@ import { defHttp } from '/@/utils/http/axios';
 import { GetUserInfoModel } from './model/userModel';
 
 // import { ErrorMessageMode } from '/#/axios';
-import { useUserStore } from '/@/store/modules/user';
-import dayjs from 'dayjs';
-import { router } from '/@/router';
 import { ErrorMessageMode } from '/#/axios';
+import { apiTransDataForHeader } from '/@/utils/tools';
 enum Api {
   Login = '/auth/login',
   Logout = '/auth/logout',
@@ -13,93 +11,65 @@ enum Api {
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
 }
-let who = 0;
+
 const version = '/v1.0';
-// const userStore = useUserStore();
-
-router.beforeEach(async () => {
-  if (useUserStore() === null) {
-    who = useUserStore().getUserInfo?.userId as number;
-  }
-});
-
-const timeTemp = dayjs().utcOffset();
-let timeZon = '';
-if (timeTemp === 0) {
-  timeZon = 'UTC+0';
-} else if (timeTemp > 0) {
-  timeZon = 'UTC+' + timeTemp / 60;
-} else if (timeTemp < 0) {
-  timeZon = 'UTC-' + timeTemp / 60;
-}
 
 /**
  * @description: user login api
  */
-// export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
-//   return defHttp.post<LoginResultModel>(
-//     {
-//       url: Api.Login,
-//       params,
-//     },
-//     {
-//       errorMessageMode: mode,
-//     },
-//   );
-// }
-
 export const loginApi = (body: any, mode: ErrorMessageMode = 'modal') =>
   defHttp.post(
     {
       url: '/api' + version + Api.Login,
       data: body,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('data111111:', resObj);
+          console.log('api login:', resObj);
 
           // Do whatever you want to transform the data
-          if (resObj.type === 'success') {
-            return {
-              ...resObj,
-              total_pages: 0,
-              current_page: 0,
-            };
-          } else {
-            return {
-              ...resObj,
-              results: resObj.results !== '' ? resObj.results : null,
-              total_pages: 0,
-              current_page: 0,
-              status: 1000,
-            };
-          }
+          // if (resObj.type === 'success') {
+          return {
+            ...resObj,
+            total_pages: 0,
+            current_page: 0,
+          };
+          // } else {
+          //   return {
+          //     ...resObj,
+          //     results: resObj.results !== '' ? resObj.results : null,
+          //     total_pages: 0,
+          //     current_page: 0,
+          //     status: 1000,
+          //   };
+          // }
         },
       ],
     },
     {
       errorMessageMode: mode,
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
+/**
+ * @description: user logout api
+ */
 export const logoutApi = () =>
   defHttp.get(
     {
       url: '/api' + version + Api.Logout,
       // data: body,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
+          console.log('ddddddddddddd');
           const resObj = JSON.parse(data);
           // Do whatever you want to transform the data
           if (resObj.type === 'success') {
@@ -122,6 +92,11 @@ export const logoutApi = () =>
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 

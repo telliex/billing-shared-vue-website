@@ -16,6 +16,7 @@ import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 // import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
 import { loginApi, logoutApi } from '/@/api/sys/user';
+import { getUserInfo } from '/@/api/sys/system';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -25,6 +26,7 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 import { createLocalStorage } from '/@/utils/cache';
+import { Guid } from 'js-guid';
 
 const ls = createLocalStorage();
 interface UserState {
@@ -134,15 +136,11 @@ export const useUserStore = defineStore('user', {
       try {
         const { goHome = true, mode, ...loginParams } = params;
         // 1、調用登錄接口
-        // todo recovery == start
-        const data = await loginApi(loginParams, mode);
 
+        const data = await loginApi(loginParams, mode);
         const { token } = data;
         ls.set('TEMP_USER_INFO_KEY__', data); // leave out call getUserInfo();
-        // todo recovery == end
-        // todo remove == start
-        // const { token } = ls.get('TEMP_USER_INFO_KEY__');
-        // todo remove == end
+
         // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(token);
         return this.afterLoginAction(goHome);
@@ -180,7 +178,12 @@ export const useUserStore = defineStore('user', {
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       // todo recovery == start
-      // const userInfo = await getUserInfo();
+      const userBillingInfo = await getUserInfo({
+        trace_id: Guid.newGuid().toString(),
+        id: ls.get('TEMP_USER_ID_KEY__').value,
+      });
+      console.log('Billing_user_info:', userBillingInfo);
+      ls.set('TEMP_USER_BILLING_INFO_KEY__', userBillingInfo);
       // todo recovery == end
       const userInfo = ls.get('TEMP_USER_INFO_KEY__');
 
@@ -199,7 +202,7 @@ export const useUserStore = defineStore('user', {
      * @description: logout , click left-top coner user avatar
      */
     async logout(goLogin = false) {
-      console.log('000000');
+      console.log('outoutout');
       if (this.getToken) {
         try {
           await logoutApi();

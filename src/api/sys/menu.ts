@@ -1,5 +1,3 @@
-import { useUserStore } from '/@/store/modules/user';
-import { router } from '/@/router';
 import { defHttp } from '/@/utils/http/axios';
 import {
   NavParams,
@@ -8,9 +6,15 @@ import {
   getButtonListResultModel,
   ButtonItem,
 } from './model/menuModel';
-import dayjs from 'dayjs';
 
-import { buildNestedStructure, buildMenuNestedStructure } from '/@/utils/tools';
+import {
+  buildNestedStructure,
+  buildMenuNestedStructure,
+  apiTransDataForHeader,
+  correntReturn,
+  errorReturn,
+} from '/@/utils/tools';
+import { isArray } from 'xe-utils';
 
 enum Api {
   GetDynamicNavList = '/system/menu/nav',
@@ -31,25 +35,6 @@ interface FilterButtonItems {
 }
 
 const version = '/v1.0';
-
-let who = 0;
-
-const timeTemp = dayjs().utcOffset();
-let timeZon = '';
-if (timeTemp === 0) {
-  timeZon = 'UTC+0';
-} else if (timeTemp > 0) {
-  timeZon = 'UTC+' + timeTemp / 60;
-} else if (timeTemp < 0) {
-  timeZon = 'UTC-' + timeTemp / 60;
-}
-
-// Fixed: Cannot access 'useUserStore' before initialization
-router.beforeEach(async () => {
-  if (useUserStore() === null) {
-    who = useUserStore().getUserInfo?.userId as number;
-  }
-});
 
 const processItems = (data: any[]) => {
   data.forEach((item) => {
@@ -79,45 +64,28 @@ export const getDynamicNavList = () =>
     {
       url: '/api' + version + Api.GetDynamicNavList,
       data: {},
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
           console.log('======dynamic menu resObj=======', resObj);
 
           processItems(resObj);
-          if (resObj.length >= 0) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: resObj,
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
           } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: 'No data resource on Nav List!!',
-              requested_time: '',
-              responsed_time: '',
-            };
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -132,43 +100,27 @@ export const getNavTreeListWithButton = (params: FilterItems) =>
         alias: params.alias,
         status: params.status,
       },
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          const expectedResult = buildNestedStructure(resObj);
-          if (resObj.length >= 0) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: expectedResult,
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+
+          if (isArray(resObj)) {
+            const expectedResult = buildNestedStructure(resObj);
+            return correntReturn(expectedResult);
           } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
-            };
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -182,44 +134,28 @@ export const getNavTreeListOnlyCatalog = (params: FilterItems) =>
         alias: params.alias,
         status: params.status,
       },
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
-          const resObj = JSON.parse(data).filter((item: any) => item.type == 'catalog');
-          console.log('resObj--------', resObj);
-          const expectedResult = buildNestedStructure(resObj);
-          if (resObj.length >= 0) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: expectedResult,
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          let resObj = JSON.parse(data);
+          if (isArray(resObj)) {
+            resObj = resObj.filter((item: any) => item.type == 'catalog');
+
+            const expectedResult = buildNestedStructure(resObj);
+            return correntReturn(expectedResult);
           } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
-            };
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -238,46 +174,29 @@ export const getNavList = (params: FilterItems) =>
         alias: params.alias,
         status: params.status,
       },
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           let resObj = JSON.parse(data);
-          if (typeof params.status === 'undefined') {
-            resObj = buildMenuNestedStructure(resObj);
-          }
-
-          if (resObj.length >= 0) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: resObj,
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            if (typeof params.status === 'undefined') {
+              resObj = buildMenuNestedStructure(resObj);
+            }
+            return correntReturn(resObj);
           } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
-            };
+            console.log('errorrrrrrrr');
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -287,14 +206,15 @@ export const getNavItem = (params: NavParams) => {
     {
       url: `/api${version}${Api.NavList}/${params.id}`,
       data: params,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -304,31 +224,25 @@ export const removeNavItem = (params: any) =>
     {
       url: `/api${version}${Api.NavList}/${params.id}`,
       data: params,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -337,32 +251,26 @@ export const updateNavItem = (params: any) =>
     {
       url: `/api${version}${Api.NavList}/${params.id}`,
       data: params,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -371,32 +279,26 @@ export const createNavItem = (body: any) => {
     {
       url: `/api${version}${Api.NavList}`,
       data: body,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -410,42 +312,25 @@ export const getButtonList = (params: FilterButtonItems) =>
         belongMenuId: params.belongMenuId,
         status: params.status,
       },
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (resObj.length >= 0) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: resObj,
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
           } else {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requested_time: '',
-              responsed_time: '',
-            };
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -454,32 +339,25 @@ export const updateButtonItem = (params: any) =>
     {
       url: `/api${version}${Api.ButtonsList}/${params.id}`,
       data: params,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -488,32 +366,26 @@ export const createButtonItem = (body: any) => {
     {
       url: `/api${version}${Api.ButtonsList}`,
       data: body,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -523,30 +395,24 @@ export const removeButtonItem = (params: any) =>
     {
       url: `/api${version}${Api.ButtonsList}/${params.id}`,
       data: params,
-      headers: {
-        'User-Id': useUserStore().getUserInfo?.userId,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );

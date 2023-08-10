@@ -1,19 +1,17 @@
 import { defHttp } from '/@/utils/http/axios';
-import { useUserStore } from '/@/store/modules/user';
 // import { ErrorMessageMode } from '/#/axios';
-import dayjs from 'dayjs';
 
 import {
   GetDictionaryModel,
-  GetUserInfoModel,
+  // GetBillingUserInfoModel,
   GetParameterStoreFromAWSModel,
   GetParameterStoreBackAWSModel,
   GetBillCodeValueModel,
   GetBillCodeValueBackModel,
   RolePageListGetResultModel,
-  RoleListGetResultModel,
+  // RoleListGetResultModel,
   RolePageParams,
-  RoleParams,
+  // RoleParams,
   DeptPageParams,
   DeptItem,
   DeptListModel,
@@ -21,6 +19,10 @@ import {
   UserItem,
   UserListModel,
 } from './model/systemModel';
+
+import { apiTransDataForHeader, correntReturn, errorReturn } from '/@/utils/tools';
+import { isArray } from 'xe-utils';
+import { Guid } from 'js-guid';
 
 enum Api {
   GetUserOwnMenu = '/admin/get-menu-query',
@@ -45,46 +47,33 @@ enum Api {
 }
 
 const version = '/v1.0';
-const userStore = useUserStore();
-const who = userStore.getUserInfo?.userId;
-const timeTemp = dayjs().utcOffset();
-let timeZon = '';
-if (timeTemp === 0) {
-  timeZon = 'UTC+0';
-} else if (timeTemp > 0) {
-  timeZon = 'UTC+' + timeTemp / 60;
-} else if (timeTemp < 0) {
-  timeZon = 'UTC-' + timeTemp / 60;
-}
+
 export const GetDictionaryItems = (data: GetDictionaryModel) =>
   defHttp.post(
     {
       url: '/parameter' + version + Api.GetDictionary,
       data,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/elu-api',
     },
   );
 
-export const getUserInfo = (data: GetUserInfoModel) =>
+export const getUserInfo = (data: any) =>
   defHttp.post(
     {
       url: version + Api.GetBillUserInfo,
       data,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/elu-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 export const GetParameterStoreFromAWS = (data: GetParameterStoreFromAWSModel) =>
@@ -92,14 +81,15 @@ export const GetParameterStoreFromAWS = (data: GetParameterStoreFromAWSModel) =>
     {
       url: '/aws' + version + Api.GetParameterStoreFromAWS,
       data,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/elu-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -108,14 +98,15 @@ export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
     {
       url: '/parameter' + version + Api.GetBillCodeValue,
       data,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/elu-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -156,6 +147,11 @@ export const GetS3TargetUrl = (body: any) =>
     },
     {
       apiUrl: '/elu-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -195,6 +191,11 @@ export const GetUserPermissionRoleList = (body: any) =>
     },
     {
       apiUrl: '/permission-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -234,6 +235,11 @@ export const GetUserPermissionGetRoleScope = (body: any) =>
     },
     {
       apiUrl: '/permission-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -273,6 +279,11 @@ export const GetUserPermission = (body: any) =>
     },
     {
       apiUrl: '/permission-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -332,11 +343,7 @@ export const getAllRoleList = (params: RolePageParams) => {
         page: params.page || 1,
         pageSize: params.pageSize || 10,
       },
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -347,39 +354,28 @@ export const getAllRoleList = (params: RolePageParams) => {
           //     label: item.roleName,
           //   };
           // });
-          if (resObj.length >= 0) {
-            return {
-              traceId: '',
-              totalPages: 1,
-              currentPage: 1,
-              results: resObj,
-              status: 1000,
-              msg: 'success',
-              requestedTime: '',
-              responsedTime: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
           } else {
-            return {
-              traceId: '',
-              totalPages: 0,
-              currentPage: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requestedTime: '',
-              responsedTime: '',
-            };
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
 
-// Role list
+/**
+ * @description: table Role list
+ */
 export const getRoleListByPage = (params: RolePageParams) => {
   return defHttp.get<RolePageListGetResultModel>(
     {
@@ -391,47 +387,33 @@ export const getRoleListByPage = (params: RolePageParams) => {
         page: params.page || 1,
         pageSize: params.pageSize || 10,
       },
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          // let role permission string to array
-          resObj.forEach((item) => {
-            item.menuPermissionArray = item.menuPermission ? item.menuPermission.split(',') : [];
-          });
-          console.log('return role items', resObj);
-          if (resObj.length >= 0) {
-            return {
-              traceId: '',
-              totalPages: 1,
-              currentPage: 1,
-              results: resObj,
-              status: 1000,
-              msg: 'success',
-              requestedTime: '',
-              responsedTime: '',
-            };
+          console.log('aaaaaaa:', resObj);
+          if (isArray(resObj)) {
+            console.log('i am array');
+
+            resObj.forEach((item) => {
+              item.menuPermissionArray = item.menuPermission ? item.menuPermission.split(',') : [];
+            });
+
+            return correntReturn(resObj);
           } else {
-            return {
-              traceId: '',
-              totalPages: 0,
-              currentPage: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requestedTime: '',
-              responsedTime: '',
-            };
+            console.log('errorrrrrrrr');
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -441,31 +423,25 @@ export const setRoleStatus = (id: string, body: any) => {
     {
       url: `/api${version}${Api.RoleStatus}/${id}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 1,
-              current_page: 1,
-              results: [],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -475,31 +451,25 @@ export const removeRoleItem = (body: any) =>
     {
       url: `/api${version}${Api.RoleList}/${body.id}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 export const updateRoleItem = (body: any) =>
@@ -507,32 +477,26 @@ export const updateRoleItem = (body: any) =>
     {
       url: `/api${version}${Api.RoleList}/${body.id}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -541,32 +505,26 @@ export const createRoleItem = (body: any) => {
     {
       url: `/api${version}${Api.RoleList}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -585,44 +543,26 @@ export const getDeptList = (params: DeptPageParams) => {
         page: params.page,
         pageSize: params.pageSize,
       },
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
           // let role permission string to array
-          console.log('return dept items', resObj);
-          if (resObj.length >= 0) {
-            return {
-              traceId: '',
-              totalPages: 1,
-              currentPage: 1,
-              results: resObj,
-              status: 1000,
-              msg: 'success',
-              requestedTime: '',
-              responsedTime: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
           } else {
-            return {
-              traceId: '',
-              totalPages: 0,
-              currentPage: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requestedTime: '',
-              responsedTime: '',
-            };
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -632,32 +572,26 @@ export const createDeptItem = (body: any) => {
     {
       url: `/api${version}${Api.DeptList}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -667,32 +601,26 @@ export const updateDeptItem = (body: any) =>
     {
       url: `/api${version}${Api.DeptList}/${body.id}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -701,31 +629,25 @@ export const removeDeptItem = (body: any) =>
     {
       url: `/api${version}${Api.DeptList}/${body.id}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
@@ -739,36 +661,31 @@ export const isUserExist = (params: any) => {
       url: `/api${version}${Api.IsUserExist}`,
       data: {},
       params: params,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('data:77777', resObj);
           if (!resObj) {
             return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
+              trace_id: Guid.newGuid().toString(),
+              total_pages: 1,
+              current_page: 1,
               results: [],
               status: 1000,
               msg: 'success',
               requested_time: '',
-              responsed_time: '',
+              responsed_time: new Date(),
             };
           } else {
             return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
+              trace_id: Guid.newGuid().toString(),
+              total_pages: 1,
+              current_page: 1,
               results: null,
               status: 1000,
               msg: '帳號已存在',
               requested_time: '',
-              responsed_time: '',
+              responsed_time: new Date(),
             };
           }
         },
@@ -776,6 +693,11 @@ export const isUserExist = (params: any) => {
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -792,48 +714,30 @@ export const getUserList = (params: UserPageParams) => {
         page: params.page,
         pageSize: params.pageSize,
       },
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
           // let role permission string to array
-          resObj.forEach(
-            (item) => (item.roles = item.rolesString ? item.rolesString.split(',') : []),
-          );
 
-          console.log('return dept items', resObj);
-          if (resObj.length >= 0) {
-            return {
-              traceId: '',
-              totalPages: 1,
-              currentPage: 1,
-              results: resObj,
-              status: 1000,
-              msg: 'success',
-              requestedTime: '',
-              responsedTime: '',
-            };
+          if (isArray(resObj)) {
+            resObj.forEach(
+              (item) => (item.roles = item.rolesString ? item.rolesString.split(',') : []),
+            );
+            return correntReturn(resObj);
           } else {
-            return {
-              traceId: '',
-              totalPages: 0,
-              currentPage: 0,
-              results: [],
-              status: 9999,
-              msg: data,
-              requestedTime: '',
-              responsedTime: '',
-            };
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -843,25 +747,14 @@ export const removeUserItem = (body: any) =>
     {
       url: `/api${version}${Api.UserList}/${body.id}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
@@ -875,32 +768,26 @@ export const createUserItem = (body: any) => {
     {
       url: `/api${version}${Api.UserList}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 };
@@ -910,31 +797,25 @@ export const updateUserItem = (body: any) =>
     {
       url: `/api${version}${Api.UserList}/${body.id}`,
       data: body,
-      headers: {
-        'User-Id': who,
-        'Time-Zone': timeZon,
-        Authorization: useUserStore().getToken ? `Bearer ${useUserStore().getToken}` : '',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (resObj) {
-            return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
-              results: [resObj],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
-            };
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
           }
         },
       ],
     },
     {
       apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );

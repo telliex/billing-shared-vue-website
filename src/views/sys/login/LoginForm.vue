@@ -116,6 +116,7 @@
   const rememberMe = ref(false);
   let redirectUrl = ref<string | null>('');
   const fromURL = import.meta.env.VITE_GLOB_OLD_MGT_URL;
+  let timer = ref();
   // const fromURL = 'http://localhost:3131/';
   const formData = reactive({
     company: 'ECV',
@@ -178,10 +179,10 @@
 
       if (userInfo) {
         ls.set('TEMP_USER_INFO_KEY__', userInfo);
-        ls.set('TEMP_SYS_KEY__', {
-          company: userInfo.company,
-          system: userInfo.system,
-        });
+        // ls.set('TEMP_SYS_KEY__', {
+        //   company: ls.get('TEMP_USER_INFO_KEY__').value.company,
+        //   system: ls.get('TEMP_USER_INFO_KEY__').value.system,
+        // });
 
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
@@ -189,7 +190,8 @@
           duration: 3,
         });
 
-        setTimeout(() => {
+        timer.value && clearTimeout(timer.value);
+        timer.value = setTimeout(() => {
           if (redirectUrl.value) {
             console.log('====redirect url=====');
             console.log(`${window.location.host}/#${redirectUrl.value}`);
@@ -204,7 +206,8 @@
         content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
         getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
         onOk: () => {
-          setTimeout(() => {
+          timer.value && clearTimeout(timer.value);
+          timer.value = setTimeout(() => {
             window.location.href = fromURL;
           }, 3000);
         },
@@ -283,7 +286,8 @@
       if (!userId) {
         // Can't get user id from url
         createMessage.error('登入 ID 出錯，請重新登入 MGT 平台 !');
-        setTimeout(() => {
+        timer.value && clearTimeout(timer.value);
+        timer.value = setTimeout(() => {
           window.location.href = fromURL;
         }, 30000);
         return;
@@ -329,7 +333,8 @@
     } else {
       console.log('Error: window.location.search is not exist !');
       createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!!');
-      setTimeout(() => {
+      timer.value && clearTimeout(timer.value);
+      timer.value = setTimeout(() => {
         userStore.setUserId('');
         window.location.href = fromURL;
       }, 5000);
@@ -337,7 +342,8 @@
   }
 
   onMounted(async () => {
-    setTimeout(() => {
+    timer.value && clearTimeout(timer.value);
+    timer.value = setTimeout(() => {
       entrance();
       // andleLogin();
     }, 1000);
