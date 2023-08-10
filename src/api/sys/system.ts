@@ -665,6 +665,7 @@ export const isUserExist = (params: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
+          console.log('000000:', resObj);
           if (!resObj) {
             return {
               trace_id: Guid.newGuid().toString(),

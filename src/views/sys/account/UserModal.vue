@@ -1,5 +1,12 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit">
+  <BasicModal
+    v-bind="$attrs"
+    :canFullscreen="false"
+    @register="registerModal"
+    :title="getTitle"
+    @ok="handleSubmit"
+    :okButtonProps="{ loading: false }"
+  >
     <BasicForm @register="registerForm" />
   </BasicModal>
 </template>
@@ -30,17 +37,22 @@
           span: 23,
         },
       });
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增帳號' : '編輯帳號'));
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
+        console.log('data.record:', data.record);
 
-        data.record['rolesArray'] = data.record['rolesString']
-          ? JSON.parse(data.record['rolesString'])
-          : [];
-        console.log('9999999', data.record);
+        if (record.value) {
+          data.record['rolesArray'] = data.record['rolesString']
+            ? JSON.parse(data.record['rolesString'])
+            : [];
+        }
+
         resetFields();
+        rowId.value = '';
         if (unref(isUpdate)) {
           rowId.value = data.record.id;
           setFieldsValue({
@@ -66,30 +78,26 @@
         ]);
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增帳號' : '編輯帳號'));
-
       async function handleSubmit() {
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
+
+          if (!values) {
+            createMessage.error('必填欄位未填寫！');
+            return;
+          }
+
           let isUser = await isUserExist({
             id: rowId.value,
             userName: values.userName,
           });
 
           if (!isUser) {
-            console.log('isUser:', isUser);
-            createMessage.error('帳號已存在');
+            createMessage.error('用戶名已存在');
             return;
           }
-          // TODO custom api
 
-          // let rolesTemp: string[] = [];
-          // values.rolesArray.forEach((item: any) => {
-          //   // rolesArray.push(item.value);
-          //   rolesTemp.push(item.label);
-          // });
-          // values.roles = JSON.stringify(rolesTemp);
           values.rolesString = JSON.stringify(values.rolesArray);
 
           let template = {
@@ -97,6 +105,7 @@
             userName: '',
             realName: '',
             nickname: '',
+            password: `default`,
             email: '',
             remark: '',
             rolesString: '',
@@ -108,17 +117,19 @@
             changeTime: '',
           };
 
-          if (!unref(isUpdate)) {
-            let result = Object.assign(template, values);
-            console.log('result:', result);
-            await createUserItem(result);
-          } else {
-            console.log('result:', Object.assign(template, record.value, values));
-            await updateUserItem(Object.assign(template, record.value, values));
-          }
+          if (isUser) {
+            if (!unref(isUpdate)) {
+              let result = Object.assign(template, values);
+              console.log('resultnew:', result);
+              await createUserItem(result);
+            } else {
+              console.log('resultold:', Object.assign(template, record.value, values));
+              await updateUserItem(Object.assign(template, record.value, values));
+            }
 
-          closeModal();
-          emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
+            closeModal();
+            emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
+          }
         } finally {
           setModalProps({ confirmLoading: false });
         }
