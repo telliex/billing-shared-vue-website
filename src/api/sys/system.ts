@@ -60,7 +60,7 @@ export const GetDictionaryItems = (data: GetDictionaryModel) =>
     },
   );
 
-export const getUserInfo = (data: any) =>
+export const getBillUserInfo = (data: any) =>
   defHttp.post(
     {
       url: version + Api.GetBillUserInfo,
@@ -391,17 +391,13 @@ export const getRoleListByPage = (params: RolePageParams) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('aaaaaaa:', resObj);
           if (isArray(resObj)) {
-            console.log('i am array');
-
             resObj.forEach((item) => {
               item.menuPermissionArray = item.menuPermission ? item.menuPermission.split(',') : [];
             });
 
             return correntReturn(resObj);
           } else {
-            console.log('errorrrrrrrr');
             return errorReturn(resObj);
           }
         },

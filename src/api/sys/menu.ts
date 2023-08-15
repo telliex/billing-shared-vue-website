@@ -70,8 +70,8 @@ export const getDynamicNavList = () =>
           const resObj = JSON.parse(data);
           console.log('======dynamic menu resObj=======', resObj);
 
-          processItems(resObj);
           if (isArray(resObj)) {
+            processItems(resObj);
             return correntReturn(resObj);
           } else {
             return errorReturn(resObj);

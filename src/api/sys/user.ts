@@ -1,5 +1,5 @@
 import { defHttp } from '/@/utils/http/axios';
-import { GetUserInfoModel } from './model/userModel';
+// import { GetUserInfoModel } from './model/userModel';
 
 // import { ErrorMessageMode } from '/#/axios';
 import { ErrorMessageMode } from '/#/axios';
@@ -7,7 +7,7 @@ import { apiTransDataForHeader } from '/@/utils/tools';
 enum Api {
   Login = '/auth/login',
   Logout = '/auth/logout',
-  GetUserInfo = '/getUserInfo',
+  // GetUserInfo = '/getUserInfo',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
 }
@@ -69,7 +69,7 @@ export const logoutApi = () =>
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
-          console.log('ddddddddddddd');
+          console.log('=========logout======');
           const resObj = JSON.parse(data);
           // Do whatever you want to transform the data
           if (resObj.type === 'success') {
@@ -103,9 +103,9 @@ export const logoutApi = () =>
 /**
  * @description: getUserInfo
  */
-export function getUserInfo() {
-  return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
-}
+// export function getUserInfo() {
+//   return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+// }
 
 export function getPermCode() {
   return defHttp.get<string[]>({ url: Api.GetPermCode });

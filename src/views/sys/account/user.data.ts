@@ -95,6 +95,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'userName',
     label: '用戶名',
+    helpMessage: ['不可重複', '英文小寫，名.姓'],
     component: 'Input',
     colProps: { span: 8 },
   },

@@ -31,6 +31,7 @@
                 onClick: handleButtons.bind(null, record),
                 ifShow: record.type !== 'catalog',
                 tooltip: '編輯按鈕權限',
+                disabled: true,
               },
             ]"
           />

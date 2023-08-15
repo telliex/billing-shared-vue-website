@@ -16,7 +16,7 @@ import { getAuthCache, setAuthCache } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 // import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
 import { loginApi, logoutApi } from '/@/api/sys/user';
-import { getUserInfo } from '/@/api/sys/system';
+import { getBillUserInfo } from '/@/api/sys/system';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -140,7 +140,7 @@ export const useUserStore = defineStore('user', {
         const data = await loginApi(loginParams, mode);
         const { token } = data;
         ls.set('TEMP_USER_INFO_KEY__', data); // leave out call getUserInfo();
-
+        ls.set('TEMP_USER_ID_KEY__', data.userId);
         // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(token);
         return this.afterLoginAction(goHome);
@@ -177,14 +177,14 @@ export const useUserStore = defineStore('user', {
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
-      // todo recovery == start
-      const userBillingInfo = await getUserInfo({
+
+      const userBillingInfo = await getBillUserInfo({
         trace_id: Guid.newGuid().toString(),
-        id: ls.get('TEMP_USER_ID_KEY__').value,
+        id: ls.get('TEMP_USER_ID_KEY__'),
       });
       console.log('Billing_user_info:', userBillingInfo);
       ls.set('TEMP_USER_BILLING_INFO_KEY__', userBillingInfo);
-      // todo recovery == end
+
       const userInfo = ls.get('TEMP_USER_INFO_KEY__');
 
       const { roles = [] } = userInfo;
@@ -202,7 +202,6 @@ export const useUserStore = defineStore('user', {
      * @description: logout , click left-top coner user avatar
      */
     async logout(goLogin = false) {
-      console.log('outoutout');
       if (this.getToken) {
         try {
           await logoutApi();
@@ -214,22 +213,13 @@ export const useUserStore = defineStore('user', {
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
-      // todo remove == start
+
       ls.set('TEMP_USER_ID_KEY__', null);
       ls.set('TEMP_USER_INFO_KEY__', null);
-      ls.set('TEMP_JSON_URL_KEY__', null);
-      // todo remove == end
-      console.log('PageEnum.BASE_LOGIN', PageEnum.BASE_LOGIN);
-      goLogin && router.push(PageEnum.BASE_LOGIN);
-      setTimeout(() => {
-        if (goLogin) {
-          console.log('redirect to old mgt');
-          console.log(import.meta.env.VITE_GLOB_OLD_MGT_URL + '/index.php?logout');
-          window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL + '/index.php?logout';
-        }
-      }, 10000);
+      ls.set('TEMP_USER_INFO_KEY__', null);
+      ls.set('TEMP_USER_BILLING_INFO_KEY__', null);
 
-      // router.push( import.meta.env.VITE_GLOB_OLD_MGT_URL+'/index.php?logout');
+      goLogin && router.push(PageEnum.BASE_LOGIN);
     },
 
     /**
