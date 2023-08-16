@@ -16,11 +16,11 @@ export const columns: BasicColumn[] = [
     dataIndex: 'nickname',
     width: 120,
   },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    width: 200,
-  },
+  // {
+  //   title: 'Email',
+  //   dataIndex: 'email',
+  //   width: 200,
+  // },
   {
     title: '狀態',
     dataIndex: 'status',
@@ -183,20 +183,21 @@ export const accountFormSchema: FormSchema[] = [
       };
     },
   },
-  {
-    field: 'dept',
-    label: '所屬部門',
-    component: 'TreeSelect',
-    componentProps: {
-      fieldNames: {
-        label: 'deptName',
-        key: 'id',
-        value: 'id',
-      },
-      getPopupContainer: () => document.body,
-    },
-    required: true,
-  },
+  // {
+  //   field: 'dept',
+  //   label: '所屬部門',
+  //   component: 'TreeSelect',
+  //   componentProps: {
+  //     disabled: true,
+  //     fieldNames: {
+  //       label: 'deptName',
+  //       key: 'id',
+  //       value: 'id',
+  //     },
+  //     getPopupContainer: () => document.body,
+  //   },
+  //   // required: true,
+  // },
   {
     field: 'status',
     label: '狀態',
@@ -209,12 +210,12 @@ export const accountFormSchema: FormSchema[] = [
       ],
     },
   },
-  {
-    label: 'Email',
-    field: 'email',
-    component: 'Input',
-    required: true,
-  },
+  // {
+  //   label: 'Email',
+  //   field: 'email',
+  //   component: 'Input',
+  //   required: true,
+  // },
 
   {
     label: '備註',

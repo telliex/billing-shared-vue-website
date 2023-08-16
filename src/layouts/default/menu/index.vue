@@ -1,6 +1,6 @@
 <script lang="tsx">
   import type { PropType, CSSProperties } from 'vue';
-  import { Icon } from '/@/components/Icon';
+  // import { Icon } from '/@/components/Icon';
   import { computed, defineComponent, unref, toRef } from 'vue';
   import { BasicMenu } from '/@/components/Menu';
   import { SimpleMenu } from '/@/components/SimpleMenu';
@@ -110,9 +110,9 @@
        * @param menu
        */
 
-      function gotoMGT() {
-        window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL;
-      }
+      // function gotoMGT() {
+      //   window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL;
+      // }
 
       function handleMenuClick(path: string) {
         go(path);
@@ -144,14 +144,10 @@
 
       function renderMenu() {
         const { menus, ...menuProps } = unref(getCommonProps);
-        const showString = `display:${unref(getCollapsed) ? 'none' : 'inline-block'}`;
+        // const showString = `display:${unref(getCollapsed) ? 'none' : 'inline-block'}`;
         if (!menus || !menus.length) return null;
         return !props.isHorizontal ? (
           <div>
-            <a-button type="text" style="color:#fff" onclick={gotoMGT}>
-              <Icon icon="ion:arrow-undo-sharp" />
-              <span style={showString}>MGT</span>
-            </a-button>
             <SimpleMenu {...menuProps} isSplitMenu={unref(getSplit)} items={menus} />
           </div>
         ) : (

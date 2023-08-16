@@ -102,6 +102,7 @@
 
           let template = {
             id: '',
+            dept: 'e5d64b67-f525-4b7e-af40-a019fb39c9ba',
             userName: '',
             realName: '',
             nickname: '',

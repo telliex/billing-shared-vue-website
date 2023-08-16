@@ -229,9 +229,28 @@ export const formSchema: FormSchema[] = [
     field: 'orderNo',
     label: '排序',
     component: 'InputNumber',
-    helpMessage: ['同層級，數字越小越靠上'],
+    helpMessage: ['同層級，數字越小越靠上。最大長度為 5'],
     required: true,
     labelWidth: 150,
+
+    componentProps: {
+      maxLength: 5,
+    },
+    rules: [
+      {
+        required: true,
+        // @ts-ignore
+        validator: async (rule, value) => {
+          const pattern = /^[0-9-]*$/;
+          console.log(pattern.test(value));
+          if (value && !pattern.test(value)) {
+            return Promise.reject('只能輸入整數');
+          }
+          return Promise.resolve();
+        },
+        trigger: 'change',
+      },
+    ],
   },
   {
     field: 'icon',
@@ -241,6 +260,9 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => !isButton(values.type),
     required: ({ values }) => {
       return values.type === 'catalog';
+    },
+    componentProps: {
+      disabled: true,
     },
   },
   {
@@ -260,8 +282,23 @@ export const formSchema: FormSchema[] = [
       '[站内-非第一級選單]: 首尾不加 "/"',
       '[站外]: 以 "http" 或 "https" 開頭',
     ],
-    required: true,
     ifShow: ({ values }) => !isButton(values.type),
+    required: true,
+    rules: [
+      {
+        required: true,
+        // @ts-ignore
+        validator: async (rule, value) => {
+          const pattern = /^[a-zA-Z0-9\/_-]*$/;
+          console.log(pattern.test(value));
+          if (value && !pattern.test(value)) {
+            return Promise.reject('值不符合路由規則');
+          }
+          return Promise.resolve();
+        },
+        trigger: 'change',
+      },
+    ],
   },
   {
     field: 'componentName',
@@ -272,12 +309,27 @@ export const formSchema: FormSchema[] = [
     dynamicDisabled: ({ values }) => {
       return values.type === 'page' && values.isExt === 1 ? true : false;
     },
+    rules: [
+      {
+        required: true,
+        // @ts-ignore
+        validator: async (rule, value) => {
+          const pattern = /^[0-9A-Za-z]*$/;
+          console.log(pattern.test(value));
+          if (value && !pattern.test(value)) {
+            return Promise.reject('只能輸入英文或數字');
+          }
+          return Promise.resolve();
+        },
+        trigger: 'change',
+      },
+    ],
   },
   {
     field: 'component',
     label: '組件路徑',
     labelWidth: 150,
-    helpMessage: ['[選單 page]: Vue 組件相對位置'],
+    helpMessage: [' Vue 組件相對位置'],
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
     dynamicDisabled: ({ values }) => {
@@ -302,6 +354,9 @@ export const formSchema: FormSchema[] = [
     helpMessage: ['[選單 page]: 首字母大寫'],
     component: 'Input',
     ifShow: ({ values }) => !isDir(values.type),
+    componentProps: {
+      disabled: true,
+    },
   },
   {
     field: 'status',
@@ -319,11 +374,10 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'isExt',
-    label: '是否外鏈',
+    label: '對外連結',
     labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
-    helpMessage: ['站外連結.組件路由名稱及組件路徑需設爲 "IFrame"'],
     componentProps: ({ formModel }) => {
       return {
         options: [

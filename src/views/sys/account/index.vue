@@ -1,7 +1,7 @@
 <template>
   <PageWrapper dense contentFullHeight contentClass="flex">
-    <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
-    <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
+    <!-- <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" /> -->
+    <BasicTable @register="registerTable" class="w-4/4 xl:w-5/5" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增帳號</a-button>
       </template>
@@ -44,7 +44,7 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getUserList, removeUserItem } from '/@/api/sys/system';
   import { PageWrapper } from '/@/components/Page';
-  import DeptTree from './DeptTree.vue';
+  // import DeptTree from './DeptTree.vue';
 
   import { useModal } from '/@/components/Modal';
   import UserModal from './UserModal.vue';
@@ -54,7 +54,7 @@
 
   export default defineComponent({
     name: 'User',
-    components: { BasicTable, PageWrapper, DeptTree, UserModal, TableAction },
+    components: { BasicTable, PageWrapper, UserModal, TableAction },
     setup() {
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
