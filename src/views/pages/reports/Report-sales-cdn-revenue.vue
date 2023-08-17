@@ -65,13 +65,13 @@
   let report: Report;
 
   // Handles the embed config response for embedding
-  export interface ConfigResponse {
-    Id: string;
-    EmbedUrl: string;
-    EmbedToken: {
-      Token: string;
-    };
-  }
+  // export interface ConfigResponse {
+  //   Id: string;
+  //   EmbedUrl: string;
+  //   EmbedToken: {
+  //     Token: string;
+  //   };
+  // }
 
   interface IEmbedConfigurationBaseExtended extends IEmbedConfigurationBase {
     filters?: any[];
@@ -369,6 +369,11 @@
     });
   });
 </script>
+<!-- <script lang="ts">
+  export default {
+    name: 'SalesCDNRevenue',
+  };
+</script> -->
 <style lang="less">
   .bar-content {
     display: none;

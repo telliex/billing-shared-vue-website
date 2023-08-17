@@ -369,6 +369,11 @@
     });
   });
 </script>
+<!-- <script lang="ts">
+  export default {
+    name: 'SalesMonthlyRevenue',
+  };
+</script> -->
 <style lang="less">
   .bar-content {
     display: none;

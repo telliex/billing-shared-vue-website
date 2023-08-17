@@ -306,3 +306,8 @@
     clearValidate();
   });
 </script>
+<script lang="ts">
+  export default {
+    name: 'DopCost',
+  };
+</script>

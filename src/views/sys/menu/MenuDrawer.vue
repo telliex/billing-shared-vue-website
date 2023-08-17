@@ -111,6 +111,7 @@
             parentId: '',
             iExt: 0,
             isCache: 0,
+            cacheName: '',
             isShow: 0,
             status: 1,
             addMaster: 0,

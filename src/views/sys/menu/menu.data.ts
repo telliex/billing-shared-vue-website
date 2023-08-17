@@ -305,6 +305,7 @@ export const formSchema: FormSchema[] = [
     label: '組件名稱',
     labelWidth: 150,
     component: 'Input',
+    helpMessage: ['以 PascalCase (大駝峰) 命名'],
     ifShow: ({ values }) => isMenu(values.type),
     dynamicDisabled: ({ values }) => {
       return values.type === 'page' && values.isExt === 1 ? true : false;
@@ -314,10 +315,10 @@ export const formSchema: FormSchema[] = [
         required: true,
         // @ts-ignore
         validator: async (rule, value) => {
-          const pattern = /^[0-9A-Za-z]*$/;
+          const pattern = /^[0-9A-Za-z-_]*$/;
           console.log(pattern.test(value));
           if (value && !pattern.test(value)) {
-            return Promise.reject('只能輸入英文或數字');
+            return Promise.reject('需以 PascalCase (大駝峰) 命名');
           }
           return Promise.resolve();
         },
@@ -351,7 +352,7 @@ export const formSchema: FormSchema[] = [
     field: 'permission',
     label: '權限標識',
     labelWidth: 150,
-    helpMessage: ['[選單 page]: 首字母大寫'],
+    helpMessage: ['首字母大寫'],
     component: 'Input',
     ifShow: ({ values }) => !isDir(values.type),
     componentProps: {
@@ -418,15 +419,46 @@ export const formSchema: FormSchema[] = [
     labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
-    componentProps: {
-      options: [
-        { label: '否', value: 0 },
-        { label: '是', value: 1 },
-      ],
+    componentProps: ({ formModel }) => {
+      return {
+        options: [
+          { label: '否', value: 0 },
+          { label: '是', value: 1 },
+        ],
+        onchange: () => {
+          if (formModel.isCache !== 1) {
+            formModel.cacheName = '';
+          }
+        },
+      };
     },
     ifShow: ({ values }) => isMenu(values.type),
   },
-
+  {
+    field: 'cacheName',
+    label: '緩存名稱',
+    component: 'Input',
+    helpMessage: ['以 PascalCase (大駝峰) 命名', '緩存條件: 名稱需與 vue 組件的 name 相同'],
+    labelWidth: 150,
+    ifShow: ({ values }) => values.isCache === 1,
+    required: ({ values }) => {
+      return values.isCache === 1;
+    },
+    rules: [
+      {
+        // @ts-ignore
+        validator: async (rule, value) => {
+          const pattern = /^[A-Z][a-zA-Z]*$/;
+          console.log(pattern.test(value));
+          if (value && !pattern.test(value)) {
+            return Promise.reject('需以 PascalCase (大駝峰) 命名');
+          }
+          return Promise.resolve();
+        },
+        trigger: 'change',
+      },
+    ],
+  },
   {
     field: 'isShow',
     label: '是否顯示',
