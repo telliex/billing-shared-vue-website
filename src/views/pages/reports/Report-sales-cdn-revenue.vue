@@ -55,6 +55,7 @@
   const ls = createLocalStorage();
   let currentPagePermissionId = null;
   let currentPageReportName = 'sales_cdn_revenue'; // need to change
+  let currentPageReportIdKey = 'POWERBI_CDN_REPORTId'; // need to change
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName}__container`;
   let currentUserId = ls.get('TEMP_USER_ID_KEY__');
@@ -170,6 +171,7 @@
       data: {
         userId: currentUserId,
         pageName: currentPageReportName,
+        pageIdKey: currentPageReportIdKey,
       },
     }).catch((err) => {
       console.log(err);

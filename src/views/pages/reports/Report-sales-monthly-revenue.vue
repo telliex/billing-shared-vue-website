@@ -55,6 +55,7 @@
   const ls = createLocalStorage();
   let currentPagePermissionId = null;
   let currentPageReportName = 'sales_monthly_revenue'; // need to change
+  let currentPageReportIdKey = 'POWERBI_REVENUEREPORT_REPORTId'; // need to change
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName}__container`;
   let currentUserId = ls.get('TEMP_USER_ID_KEY__');
@@ -65,13 +66,13 @@
   let report: Report;
 
   // Handles the embed config response for embedding
-  export interface ConfigResponse {
-    Id: string;
-    EmbedUrl: string;
-    EmbedToken: {
-      Token: string;
-    };
-  }
+  // export interface ConfigResponse {
+  //   Id: string;
+  //   EmbedUrl: string;
+  //   EmbedToken: {
+  //     Token: string;
+  //   };
+  // }
 
   interface IEmbedConfigurationBaseExtended extends IEmbedConfigurationBase {
     filters?: any[];
@@ -170,6 +171,7 @@
       data: {
         userId: currentUserId,
         pageName: currentPageReportName,
+        pageIdKey: currentPageReportIdKey,
       },
     }).catch((err) => {
       console.log(err);

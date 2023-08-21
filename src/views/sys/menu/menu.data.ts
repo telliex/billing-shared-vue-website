@@ -315,7 +315,7 @@ export const formSchema: FormSchema[] = [
         required: true,
         // @ts-ignore
         validator: async (rule, value) => {
-          const pattern = /^[0-9A-Za-z-_]*$/;
+          const pattern = /^[A-Z][a-zA-Z]*$/;
           console.log(pattern.test(value));
           if (value && !pattern.test(value)) {
             return Promise.reject('需以 PascalCase (大駝峰) 命名');
