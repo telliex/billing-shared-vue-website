@@ -139,7 +139,7 @@ const setting: ProjectConfig = {
   // [Multi-label tab]
   multiTabsSetting: {
     // 刷新後是否保留已經打開的標簽頁
-    cache: false,
+    cache: true,
     // Turn on
     show: true,
     // Is it possible to drag and drop sorting tabs
