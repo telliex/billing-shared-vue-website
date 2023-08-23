@@ -24,3 +24,18 @@ export function clearAuthCache(immediate = true) {
   const fn = isLocal ? Persistent.clearLocal : Persistent.clearSession;
   return fn(immediate);
 }
+
+export async function stringToHSA265(password: string) {
+  const passwordBuffer = new TextEncoder().encode(password);
+  const passwordHashBuffer = await crypto.subtle.digest('SHA-256', passwordBuffer);
+  const passwordHashArray = Array.from(new Uint8Array(passwordHashBuffer));
+  const passwordHashHex = passwordHashArray
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
+  return passwordHashHex;
+}
+
+export function isSHA256Format(input) {
+  const sha256Regex = /^[0-9a-fA-F]{64}$/;
+  return sha256Regex.test(input);
+}

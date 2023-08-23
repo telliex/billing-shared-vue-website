@@ -12,7 +12,7 @@ import {
   COMPANY_KEY,
   USER_KEY,
 } from '/@/enums/cacheEnum';
-import { getAuthCache, setAuthCache } from '/@/utils/auth';
+import { getAuthCache, isSHA256Format, setAuthCache, stringToHSA265 } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 // import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
 import { loginApi, logoutApi } from '/@/api/sys/user';
@@ -136,7 +136,10 @@ export const useUserStore = defineStore('user', {
       try {
         const { goHome = true, mode, ...loginParams } = params;
         // 1、調用登錄接口
-
+        // check password is SHA256 format
+        if (!isSHA256Format(loginParams.password)) {
+          loginParams.password = await stringToHSA265(loginParams.password);
+        }
         const data = await loginApi(loginParams, mode);
         const { token } = data;
         ls.set('TEMP_USER_INFO_KEY__', data); // leave out call getUserInfo();
@@ -148,6 +151,7 @@ export const useUserStore = defineStore('user', {
         return Promise.reject(error);
       }
     },
+
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
       // 3、獲取用户信息
