@@ -124,9 +124,25 @@ export const formSchema: FormSchema[] = [
   {
     field: 'orderNo',
     label: '排序',
-    required: true,
-    defaultValue: 100,
     component: 'Input',
+    componentProps: {
+      maxLength: 5,
+    },
+    rules: [
+      {
+        required: true,
+        // @ts-ignore
+        validator: async (rule, value) => {
+          const pattern = /^[0-9-]*$/;
+          console.log(pattern.test(value));
+          if (value && !pattern.test(value)) {
+            return Promise.reject('只能輸入整數');
+          }
+          return Promise.resolve();
+        },
+        trigger: 'change',
+      },
+    ],
   },
   {
     field: 'status',

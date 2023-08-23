@@ -232,7 +232,6 @@ export const formSchema: FormSchema[] = [
     helpMessage: ['同層級，數字越小越靠上。最大長度為 5'],
     required: true,
     labelWidth: 150,
-
     componentProps: {
       maxLength: 5,
     },
@@ -262,7 +261,7 @@ export const formSchema: FormSchema[] = [
       return values.type === 'catalog';
     },
     componentProps: {
-      disabled: true,
+      // disabled: true,
     },
   },
   {
