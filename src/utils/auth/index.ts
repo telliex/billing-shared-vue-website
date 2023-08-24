@@ -2,6 +2,7 @@ import { Persistent, BasicKeys } from '/@/utils/cache/persistent';
 import { CacheTypeEnum } from '/@/enums/cacheEnum';
 import projectSetting from '/@/settings/projectSetting';
 import { TOKEN_KEY } from '/@/enums/cacheEnum';
+import CryptoJS from 'crypto-js';
 
 const { permissionCacheType } = projectSetting;
 const isLocal = permissionCacheType === CacheTypeEnum.LOCAL;
@@ -26,13 +27,20 @@ export function clearAuthCache(immediate = true) {
 }
 
 export async function stringToHSA265(password: string) {
-  const passwordBuffer = new TextEncoder().encode(password);
-  const passwordHashBuffer = await crypto.subtle.digest('SHA-256', passwordBuffer);
-  const passwordHashArray = Array.from(new Uint8Array(passwordHashBuffer));
-  const passwordHashHex = passwordHashArray
-    .map((byte) => byte.toString(16).padStart(2, '0'))
-    .join('');
-  return passwordHashHex;
+  // const passwordBuffer = new TextEncoder().encode(password);
+  // const passwordHashBuffer = await crypto.subtle.digest('SHA-256', passwordBuffer);
+  // const passwordHashArray = Array.from(new Uint8Array(passwordHashBuffer));
+  // const passwordHashHex = passwordHashArray
+  //   .map((byte) => byte.toString(16).padStart(2, '0'))
+  //   .join('');
+
+  // 将用户输入的密码字符串进行 SHA-256 哈希编码
+  const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+
+  // 现在 `hashedPassword` 变量中包含了密码的 SHA-256 哈希值
+  console.log('Hashed Password:', hashedPassword);
+  return hashedPassword;
+  // return passwordHashHex;
 }
 
 export function isSHA256Format(input) {
