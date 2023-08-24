@@ -58,7 +58,6 @@
             menuName: null,
             alias: null,
           })) as any as TreeItem[];
-          console.log();
         }
         // put here to avoid the display required warning
         resetFields();
