@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { getAllRoleList, isUserExist } from '/@/api/sys/system';
+import { getAllRoleList } from '/@/api/sys/system';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 import { BasicColumn } from '/@/components/Table';
@@ -9,7 +9,7 @@ export const columns: BasicColumn[] = [
   {
     title: '用戶名',
     dataIndex: 'userName',
-    width: 120,
+    width: 200,
   },
   {
     title: '暱稱',
@@ -95,7 +95,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'userName',
     label: '用戶名',
-    helpMessage: ['不可重複', '英文小寫，名.姓'],
+    labelWidth: 60,
     component: 'Input',
     colProps: { span: 8 },
   },
@@ -119,6 +119,7 @@ export const accountFormSchema: FormSchema[] = [
     label: '用戶名',
     component: 'Input',
     componentProps: {
+      disabled: true,
       onChange: (e: any) => {
         console.log(e);
       },
@@ -152,12 +153,18 @@ export const accountFormSchema: FormSchema[] = [
     label: '名稱',
     required: true,
     component: 'Input',
+    componentProps: {
+      disabled: true,
+    },
   },
   {
     field: 'nickname',
     label: '暱稱',
     component: 'Input',
     required: true,
+    componentProps: {
+      disabled: true,
+    },
   },
   {
     field: 'pwd',
@@ -204,6 +211,7 @@ export const accountFormSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: 1,
     componentProps: {
+      disabled: true,
       options: [
         { label: '啟用', value: 1 },
         { label: '停用', value: 0 },
@@ -221,5 +229,8 @@ export const accountFormSchema: FormSchema[] = [
     label: '備註',
     field: 'remark',
     component: 'InputTextArea',
+    componentProps: {
+      disabled: true,
+    },
   },
 ];

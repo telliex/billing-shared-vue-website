@@ -40,7 +40,7 @@
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
 
-        const treeData = await getNavTreeListOnlyCatalog({
+        let treeData = await getNavTreeListOnlyCatalog({
           status: 1,
           alias: null,
           menuName: null,
@@ -52,7 +52,11 @@
             ...data.record,
           });
         }
-
+        console.log('data.record:', data.record);
+        if (data.record.type === 'catalog') {
+          treeData = treeData.filter((item) => item.title !== data.record.alias);
+        }
+        console.log('treeData:', treeData);
         updateSchema({
           field: 'parentMenu',
           componentProps: { treeData },

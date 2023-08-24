@@ -3,7 +3,7 @@
     <!-- <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" /> -->
     <BasicTable @register="registerTable" class="w-4/4 xl:w-5/5" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增帳號</a-button>
+        <a-button type="primary" @click="handleCreate" disabled>新增帳號</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -24,6 +24,7 @@
                 icon: 'ant-design:delete-twotone',
                 // color: 'error',
                 tooltip: '刪除此帳號',
+                disabled: true,
                 popConfirm: {
                   title: '是否確認刪除',
                   placement: 'left',

@@ -103,8 +103,8 @@ export const getNavTreeListWithButton = (params: FilterItems) =>
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
-          const resObj = JSON.parse(data);
-
+          // TODO remove the button node . Need to recover.
+          const resObj = JSON.parse(data).filter((item: any) => item.type != 'button');
           if (isArray(resObj)) {
             const expectedResult = buildNestedStructure(resObj);
             return correntReturn(expectedResult);

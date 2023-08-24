@@ -58,6 +58,7 @@
             menuName: null,
             alias: null,
           })) as any as TreeItem[];
+          console.log();
         }
         // put here to avoid the display required warning
         resetFields();
@@ -101,7 +102,6 @@
             let result = Object.assign(template, values);
             await createRoleItem(result);
           } else {
-            console.log('99999', Object.assign(template, record.value, values));
             await updateRoleItem(Object.assign(template, record.value, values));
           }
           closeDrawer();

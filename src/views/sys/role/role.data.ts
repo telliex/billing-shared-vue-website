@@ -1,9 +1,10 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
-import { Switch } from 'ant-design-vue';
-import { setRoleStatus } from '/@/api/sys/system';
-import { useMessage } from '/@/hooks/web/useMessage';
+import { Tag } from 'ant-design-vue';
+// import { Switch } from 'ant-design-vue';
+// import { setRoleStatus } from '/@/api/sys/system';
+// import { useMessage } from '/@/hooks/web/useMessage';
 import moment from 'moment';
 
 export const columns: BasicColumn[] = [
@@ -27,32 +28,39 @@ export const columns: BasicColumn[] = [
     dataIndex: 'status',
     width: 120,
     customRender: ({ record }) => {
-      if (!Reflect.has(record, 'pendingStatus')) {
-        record.pendingStatus = false;
-      }
-      return h(Switch, {
-        checked: record.status === 1,
-        checkedChildren: '已啟用',
-        unCheckedChildren: '已禁用',
-        loading: record.pendingStatus,
-        onChange(checked: boolean) {
-          record.pendingStatus = true;
-          const newStatus = checked ? 1 : 0;
-          const { createMessage } = useMessage();
-          setRoleStatus(record.id, { status: newStatus })
-            .then(() => {
-              record.status = newStatus;
-              createMessage.success(`已成功修改角色狀態`);
-            })
-            .catch(() => {
-              createMessage.error('修改角色狀態失敗');
-            })
-            .finally(() => {
-              record.pendingStatus = false;
-            });
-        },
-      });
+      const status = record.status;
+      const enable = ~~status === 1;
+      const color = enable ? 'green' : 'red';
+      const text = enable ? '啟用' : '停用';
+      return h(Tag, { color: color }, () => text);
     },
+    // customRender: ({ record }) => {
+    //   if (!Reflect.has(record, 'pendingStatus')) {
+    //     record.pendingStatus = false;
+    //   }
+    //   return h(Switch, {
+    //     checked: record.status === 1,
+    //     checkedChildren: '已啟用',
+    //     unCheckedChildren: '已禁用',
+    //     loading: record.pendingStatus,
+    //     onChange(checked: boolean) {
+    //       record.pendingStatus = true;
+    //       const newStatus = checked ? 1 : 0;
+    //       const { createMessage } = useMessage();
+    //       setRoleStatus(record.id, { status: newStatus })
+    //         .then(() => {
+    //           record.status = newStatus;
+    //           createMessage.success(`已成功修改角色狀態`);
+    //         })
+    //         .catch(() => {
+    //           createMessage.error('修改角色狀態失敗');
+    //         })
+    //         .finally(() => {
+    //           record.pendingStatus = false;
+    //         });
+    //     },
+    //   });
+    // },
   },
   {
     title: '備註',
@@ -91,6 +99,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'roleName',
     label: '角色名稱',
+    labelWidth: 75,
     component: 'Input',
     colProps: { span: 8 },
   },

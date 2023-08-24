@@ -162,7 +162,7 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'status',
     label: '狀態',
-    labelWidth: 50,
+    labelWidth: 45,
     component: 'Select',
     componentProps: {
       options: [

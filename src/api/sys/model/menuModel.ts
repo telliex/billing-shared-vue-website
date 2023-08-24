@@ -30,6 +30,7 @@ export interface RouteItem {
   component: any;
   meta: RouteMeta;
   name?: string;
+  title?: string;
   alias?: string | string[];
   redirect?: string;
   caseSensitive?: boolean;

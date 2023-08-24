@@ -69,6 +69,7 @@
           showResetButton: false,
           labelWidth: 120,
           schemas: searchFormSchema,
+          autoSubmitOnEnter: true,
           submitButtonOptions: {
             postIcon: 'ant-design:search-outlined',
             iconSize: 12,
@@ -78,7 +79,7 @@
           //   iconSize: 12,
           // },
         },
-        showTableSetting: true,
+        showTableSetting: false,
         isTreeTable: true,
         pagination: false,
         striped: false,
