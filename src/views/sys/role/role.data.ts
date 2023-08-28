@@ -90,7 +90,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'changeTime',
     width: 180,
     customRender: ({ record }) => {
-      return moment(record.addTime).format('YYYY-MM-DD h:mm:ss');
+      return moment(record.changeTime).format('YYYY-MM-DD h:mm:ss');
     },
   },
 ];
