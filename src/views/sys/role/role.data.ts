@@ -131,7 +131,7 @@ export const formSchema: FormSchema[] = [
     required: true,
     component: 'Input',
     componentProps: {
-      disabled: true,
+      // disabled: true,
     },
   },
   {

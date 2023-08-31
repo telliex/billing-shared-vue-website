@@ -16,7 +16,7 @@
               {
                 icon: 'ant-design:delete-twotone',
                 // color: 'error',
-                disabled: true,
+                // disabled: true,
                 popConfirm: {
                   title: 'Are you sure to delete',
                   placement: 'left',

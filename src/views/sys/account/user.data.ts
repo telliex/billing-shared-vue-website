@@ -52,7 +52,7 @@ export const columns: BasicColumn[] = [
           h(
             Tag,
             { style: { color: rolesColorList[0], marginRight: '5px', marginBottom: '5px' } },
-            () => item.option.roleValue,
+            () => item.label,
           ),
         ),
       );

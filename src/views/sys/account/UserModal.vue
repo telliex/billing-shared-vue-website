@@ -97,7 +97,7 @@
             createMessage.error('User name already exists');
             return;
           }
-
+          values.rolesArray = values.rolesArray.map(({ ['option']: _, ...rest }) => rest);
           values.rolesString = JSON.stringify(values.rolesArray);
 
           let template = {

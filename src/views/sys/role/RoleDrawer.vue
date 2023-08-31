@@ -31,7 +31,7 @@
   import { createRoleItem, updateRoleItem } from '/@/api/sys/system';
   import { getNavTreeListWithButton } from '/@/api/sys/menu';
   import { RoleListItem } from '/@/api/sys/model/systemModel';
-
+  import { getNavList } from '/@/api/sys/menu';
   export default defineComponent({
     name: 'RoleDrawer',
     components: { BasicDrawer, BasicForm, BasicTree },
@@ -73,12 +73,23 @@
       async function handleSubmit() {
         try {
           const values = await validate();
-          console.log('999999999', values);
           setDrawerProps({ confirmLoading: true });
-          console.log('role item values', values);
+          let menuList: any = await getNavList({
+            menuName: null,
+            alias: null,
+            status: 1,
+          });
+          let menuIdList = menuList.map((item) => item.id);
           // TODO custom api
           // transform values
           values.menuPermissionArray = values.menuPermissionArray ? values.menuPermissionArray : [];
+
+          if (values.menuPermissionArray.length !== 0) {
+            values.menuPermissionArray = values.menuPermissionArray.filter((item) =>
+              menuIdList.includes(item),
+            );
+          }
+
           values.menuPermission = values.menuPermissionArray.length
             ? values.menuPermissionArray.join(',')
             : '';
@@ -102,7 +113,8 @@
             let result = Object.assign(template, values);
             await createRoleItem(result);
           } else {
-            await updateRoleItem(Object.assign(template, record.value, values));
+            let result = Object.assign(template, record.value, values);
+            await updateRoleItem(result);
           }
           closeDrawer();
           emit('success');
