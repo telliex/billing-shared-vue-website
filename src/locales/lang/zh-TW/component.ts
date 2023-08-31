@@ -70,7 +70,7 @@ export default {
 
     index: '序號',
 
-    total: '共 {total} 條數據',
+    total: '共 {total} 筆資料',
   },
   time: {
     before: '前',

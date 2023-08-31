@@ -16,7 +16,7 @@
           checkable
           :height="300"
           toolbar
-          title="選單分配"
+          title="Permissions"
         />
       </template>
     </BasicForm>
@@ -68,11 +68,12 @@
         }
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增角色' : '編輯角色'));
+      const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Edit'));
 
       async function handleSubmit() {
         try {
           const values = await validate();
+          console.log('999999999', values);
           setDrawerProps({ confirmLoading: true });
           console.log('role item values', values);
           // TODO custom api

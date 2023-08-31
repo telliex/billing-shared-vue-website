@@ -3,7 +3,7 @@
     <!-- <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" /> -->
     <BasicTable @register="registerTable" class="w-4/4 xl:w-5/5" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" disabled>新增帳號</a-button>
+        <a-button type="primary" @click="handleCreate" disabled>Create</a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -11,22 +11,23 @@
             :actions="[
               {
                 icon: 'ant-design:info-circle-twotone',
-                tooltip: '查看用戶詳情',
+                tooltip: 'View',
+                ifShow: false,
                 onClick: handleView.bind(null, record),
                 disabled: true,
               },
               {
                 icon: 'ant-design:edit-twotone',
-                tooltip: '編輯用戶資料',
+                tooltip: 'Edit',
                 onClick: handleEdit.bind(null, record),
               },
               {
                 icon: 'ant-design:delete-twotone',
                 // color: 'error',
-                tooltip: '刪除此帳號',
+                tooltip: 'Delete',
                 disabled: true,
                 popConfirm: {
-                  title: '是否確認刪除',
+                  title: 'Are you sure to delete',
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
@@ -61,7 +62,7 @@
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
-        title: '帳號列表',
+        title: 'Account List',
         api: getUserList,
         rowKey: 'id',
         columns,
@@ -69,7 +70,7 @@
           showResetButton: false,
           labelWidth: 120,
           schemas: searchFormSchema,
-          autoSubmitOnEnter: true,
+          // autoSubmitOnEnter: true,
           submitButtonOptions: {
             postIcon: 'ant-design:search-outlined',
             iconSize: 12,
@@ -87,7 +88,7 @@
         },
         actionColumn: {
           width: 120,
-          title: '操作',
+          title: 'Setting',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
         },
@@ -118,9 +119,12 @@
           // 注意：updateTableDataRecord要求表格的rowKey屬性為string並且存在於每一行的record的keys中
           const result = updateTableDataRecord(values.id, values);
           console.log('成功:', result);
-        } else {
-          reload();
         }
+        reload();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
 
       function handleSelect(deptId = '') {

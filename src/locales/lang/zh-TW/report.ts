@@ -9,7 +9,7 @@ export default {
   searchAreaTitle: '查詢欄位',
   queryText: '查詢',
   resetText: '清除',
-  exportFile: '導出',
+  exportFile: '匯出報表',
   autoFitHeight: '自適應高度',
   cancalFitHeight: '取消自適應',
   okText: '確認',

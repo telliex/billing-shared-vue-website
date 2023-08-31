@@ -2,7 +2,7 @@
   <div>
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增選單 </a-button>
+        <a-button type="primary" @click="handleCreate"> Create </a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -12,24 +12,25 @@
                 icon: 'ant-design:edit-twotone',
                 // label: '編輯',
                 onClick: handleEdit.bind(null, record),
-                tooltip: '編輯選單',
+                tooltip: 'Edit',
               },
               {
                 icon: 'ant-design:delete-twotone',
                 // label: '刪除',
                 // color: 'error',
                 popConfirm: {
-                  title: '是否確認刪除',
+                  title: 'Are you sure to delete',
                   placement: 'top',
                   confirm: handleDelete.bind(null, record),
                 },
-                tooltip: '刪除此選單',
+                tooltip: 'Delete',
               },
               {
                 icon: 'clarity:rack-server-line',
                 // label: '按鈕權限',
                 onClick: handleButtons.bind(null, record),
-                ifShow: record.type !== 'catalog',
+                // ifShow: record.type !== 'catalog',
+                ifShow: false,
                 tooltip: '編輯按鈕權限',
                 disabled: true,
               },
@@ -62,14 +63,14 @@
       // });
       const [registerButtonsDrawer, { openDrawer: openButtonsDrawer }] = useDrawer();
       const [registerTable, { reload, expandAll }] = useTable({
-        title: '選單列表',
+        title: 'Menu list',
         api: getNavList,
         columns,
         formConfig: {
           showResetButton: false,
           labelWidth: 120,
           schemas: searchFormSchema,
-          autoSubmitOnEnter: true,
+          // autoSubmitOnEnter: true,
           submitButtonOptions: {
             postIcon: 'ant-design:search-outlined',
             iconSize: 12,
@@ -89,7 +90,7 @@
         canResize: false,
         actionColumn: {
           width: 180,
-          title: '操作',
+          title: 'Setting',
           dataIndex: 'action',
           fixed: 'right',
         },
@@ -121,11 +122,11 @@
 
       function handleDelete(record: Recordable) {
         if (record.children && record.children.length > 0) {
-          createMessage.warning('包含子選單，無法刪除');
+          createMessage.warning('Contains submenus, cannot be deleted.');
           return;
         }
         if (record.menuButtons && record.menuButtons !== '') {
-          createMessage.warning('包含選單按鈕，無法刪除');
+          createMessage.warning('Contains menu buttons, cannot be removed.');
           return;
         }
         removeNavItem(record).then(() => {

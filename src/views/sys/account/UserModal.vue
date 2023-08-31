@@ -37,7 +37,7 @@
           span: 23,
         },
       });
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增帳號' : '編輯帳號'));
+      const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         setModalProps({ confirmLoading: false });
@@ -84,7 +84,7 @@
           setModalProps({ confirmLoading: true });
 
           if (!values) {
-            createMessage.error('必填欄位未填寫！');
+            createMessage.error('Required fields are missing！');
             return;
           }
 
@@ -94,7 +94,7 @@
           });
 
           if (!isUser) {
-            createMessage.error('用戶名已存在');
+            createMessage.error('User name already exists');
             return;
           }
 

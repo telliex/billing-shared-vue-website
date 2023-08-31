@@ -137,7 +137,7 @@ export const GetS3TargetUrl = (body: any) =>
               current_page: 0,
               results: [],
               status: 9999,
-              msg: 'No data resource on S3!!',
+              msg: 'No data !!',
               requested_time: '',
               responsed_time: '',
             };

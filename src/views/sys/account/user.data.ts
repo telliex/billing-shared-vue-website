@@ -7,12 +7,12 @@ import { FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
-    title: '用戶名',
+    title: 'User Name',
     dataIndex: 'userName',
     width: 200,
   },
   {
-    title: '暱稱',
+    title: 'Nickname',
     dataIndex: 'nickname',
     width: 120,
   },
@@ -22,19 +22,19 @@ export const columns: BasicColumn[] = [
   //   width: 200,
   // },
   {
-    title: '狀態',
+    title: 'Status',
     dataIndex: 'status',
     width: 80,
     customRender: ({ record }) => {
       const status = record.status;
       const enable = ~~status === 1;
       const color = enable ? 'green' : 'red';
-      const text = enable ? '啟用' : '停用';
+      const text = enable ? 'Enable' : 'Disable';
       return h(Tag, { color: color }, () => text);
     },
   },
   {
-    title: '角色',
+    title: 'Role',
     dataIndex: 'roles',
     width: 200,
     align: 'left',
@@ -60,16 +60,16 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '備註',
+    title: 'Remark',
     dataIndex: 'remark',
   },
   {
-    title: '創建人',
+    title: 'Creater',
     dataIndex: 'addMasterName',
-    width: 100,
+    width: 160,
   },
   {
-    title: '創建時間',
+    title: 'Create Time',
     dataIndex: 'addTime',
     width: 180,
     customRender: ({ record }) => {
@@ -77,12 +77,12 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '修改人',
+    title: 'Latest Modified User',
     dataIndex: 'changeMasterName',
-    width: 100,
+    width: 160,
   },
   {
-    title: '修改時間',
+    title: 'Latest Updated Date',
     dataIndex: 'changeTime',
     width: 180,
     customRender: ({ record }) => {
@@ -94,19 +94,23 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'userName',
-    label: '用戶名',
-    labelWidth: 60,
+    label: 'User Name',
+    labelWidth: 80,
     component: 'Input',
     colProps: { span: 8 },
+    componentProps: {
+      placeholder: 'Search User Name',
+    },
   },
   {
     field: 'status',
-    label: '狀態',
+    label: 'Status',
     component: 'Select',
     componentProps: {
+      placeholder: 'Search Status',
       options: [
-        { label: '啟用', value: 1 },
-        { label: '停用', value: 0 },
+        { label: 'active', value: 1 },
+        { label: 'stop', value: 0 },
       ],
     },
     colProps: { span: 8 },
@@ -116,7 +120,7 @@ export const searchFormSchema: FormSchema[] = [
 export const accountFormSchema: FormSchema[] = [
   {
     field: 'userName',
-    label: '用戶名',
+    label: 'User name',
     component: 'Input',
     componentProps: {
       disabled: true,
@@ -127,14 +131,14 @@ export const accountFormSchema: FormSchema[] = [
     rules: [
       {
         required: true,
-        message: '請輸入用戶名',
+        message: 'Please enter user name',
         trigger: 'change',
 
         validator(_, value) {
           if (!value) {
             /* eslint-disable-next-line */
-            console.log('值不能為空');
-            return Promise.reject('值不能為空');
+            console.log('Value cannot be empty');
+            return Promise.reject('Value cannot be empty');
           }
           return Promise.resolve();
           // return new Promise((resolve, reject) => {
@@ -150,7 +154,7 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     field: 'realName',
-    label: '名稱',
+    label: 'Real Name',
     required: true,
     component: 'Input',
     componentProps: {
@@ -159,7 +163,7 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     field: 'nickname',
-    label: '暱稱',
+    label: 'Nickname',
     component: 'Input',
     required: true,
     componentProps: {
@@ -168,14 +172,14 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     field: 'pwd',
-    label: '密碼',
+    label: 'Password',
     component: 'InputPassword',
     required: true,
     ifShow: false,
   },
   {
-    label: '角色',
     field: 'rolesArray',
+    label: 'Role',
     component: 'ApiSelect',
     componentProps: ({ formModel }) => {
       console.log('formModel========', formModel);
@@ -207,14 +211,14 @@ export const accountFormSchema: FormSchema[] = [
   // },
   {
     field: 'status',
-    label: '狀態',
+    label: 'Status',
     component: 'RadioButtonGroup',
     defaultValue: 1,
     componentProps: {
       disabled: true,
       options: [
-        { label: '啟用', value: 1 },
-        { label: '停用', value: 0 },
+        { label: 'Enable', value: 1 },
+        { label: 'Disable', value: 0 },
       ],
     },
   },
@@ -226,7 +230,7 @@ export const accountFormSchema: FormSchema[] = [
   // },
 
   {
-    label: '備註',
+    label: 'Remark',
     field: 'remark',
     component: 'InputTextArea',
     componentProps: {

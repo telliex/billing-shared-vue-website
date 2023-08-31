@@ -52,18 +52,18 @@
             ...data.record,
           });
         }
-        console.log('data.record:', data.record);
-        if (data.record.type === 'catalog') {
+
+        if (data.record && data.record.type === 'catalog') {
           treeData = treeData.filter((item) => item.title !== data.record.alias);
         }
-        console.log('treeData:', treeData);
+
         updateSchema({
           field: 'parentMenu',
           componentProps: { treeData },
         });
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增選單' : '編輯選單'));
+      const getTitle = computed(() => (!unref(isUpdate) ? 'Create Menu' : 'Update Menu'));
 
       async function handleSubmit() {
         try {

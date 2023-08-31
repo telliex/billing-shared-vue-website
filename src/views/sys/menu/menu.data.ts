@@ -9,48 +9,48 @@ import { useMessage } from '/@/hooks/web/useMessage';
 const { createMessage } = useMessage();
 export const columns: BasicColumn[] = [
   {
-    title: '選單名稱',
+    title: 'Menu name',
     dataIndex: 'menuName',
-    width: 200,
+    width: 300,
     align: 'left',
   },
   {
-    title: '類型',
+    title: 'Tyoe',
     dataIndex: 'type',
     width: 100,
     align: 'left',
   },
   {
-    title: '展示名稱',
+    title: 'Display name',
     dataIndex: 'alias',
     width: 200,
     align: 'left',
   },
   {
-    title: '狀態',
+    title: 'Status',
     dataIndex: 'status',
     width: 80,
     customRender: ({ record }) => {
       const status = record.status;
       const enable = status === 1;
       const color = enable ? 'green' : 'red';
-      const text = enable ? '啟用' : '停用';
+      const text = enable ? 'Enable' : 'Disable';
       return h(Tag, { color: color }, () => text);
     },
   },
   {
-    title: '路由地址',
+    title: 'Route path',
     dataIndex: 'routePath',
     align: 'left',
   },
   {
-    title: '描述',
+    title: 'Description',
     dataIndex: 'description',
     width: 200,
     align: 'left',
   },
   {
-    title: '圖標',
+    title: 'Icon',
     dataIndex: 'icon',
     width: 50,
     customRender: ({ record }) => {
@@ -58,69 +58,57 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '權限標識',
+    title: 'Permission',
     dataIndex: 'permission',
     width: 200,
     align: 'left',
   },
+  // {
+  //   title: 'Button Permission',
+  //   dataIndex: 'menuButtons',
+  //   width: 300,
+  //   align: 'left',
+  //   customRender: ({ record }) => {
+  //     const buttonList = record.menuButtons ? record.menuButtons.split(',') : [];
+  //     const buttonColorList = ['default'];
+  //     if (record.type === 'catalog' || !buttonList.length) {
+  //       return '';
+  //     } else {
+  //       return h(
+  //         'div',
+  //         buttonList.map((item) =>
+  //           h(
+  //             Tag,
+  //             { style: { color: buttonColorList[0], marginRight: '5px', marginBottom: '5px' } },
+  //             () => item,
+  //           ),
+  //         ),
+  //       );
+  //     }
+  //   },
+  // },
   {
-    title: '按鈕權限',
-    dataIndex: 'menuButtons',
-    width: 300,
-    align: 'left',
-    customRender: ({ record }) => {
-      const buttonList = record.menuButtons ? record.menuButtons.split(',') : [];
-      const buttonColorList = ['default'];
-      if (record.type === 'catalog' || !buttonList.length) {
-        return '';
-      } else {
-        return h(
-          'div',
-          buttonList.map((item) =>
-            h(
-              Tag,
-              { style: { color: buttonColorList[0], marginRight: '5px', marginBottom: '5px' } },
-              () => item,
-            ),
-          ),
-        );
-      }
-    },
-    // customRender: ({ record }) => {
-    //   const status = record.status;
-    //   const enable = status === 1;
-    //   const color = enable ? 'green' : 'red';
-    //   const text = enable ? '啟用' : '停用';
-    //   return h(
-    //     'div',
-    //     Array.from({ length: 20 }).map(() => {
-    //       return h('p', 'hi');
-    //     }),
-    //   );
-    // },
-  },
-  {
-    title: '組件名稱',
+    title: 'Component name',
     dataIndex: 'componentName',
     align: 'left',
   },
   {
-    title: '組件路徑',
+    title: 'Component',
     dataIndex: 'component',
     align: 'left',
   },
   {
-    title: '排序',
+    title: 'Order',
     dataIndex: 'orderNo',
-    width: 50,
+    width: 80,
   },
   {
-    title: '創建人',
+    title: 'Creater',
     dataIndex: 'addMasterName',
-    width: 100,
+    width: 160,
   },
   {
-    title: '創建時間',
+    title: 'Create Time',
     dataIndex: 'addTime',
     width: 180,
     customRender: ({ record }) => {
@@ -128,12 +116,12 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '修改人',
+    title: 'Latest Updated Date',
     dataIndex: 'changeMasterName',
-    width: 100,
+    width: 160,
   },
   {
-    title: '修改時間',
+    title: 'Latest Modified User',
     dataIndex: 'changeTime',
     width: 180,
     customRender: ({ record }) => {
@@ -161,13 +149,13 @@ export const searchFormSchema: FormSchema[] = [
   // },
   {
     field: 'status',
-    label: '狀態',
+    label: 'Status',
     labelWidth: 45,
     component: 'Select',
     componentProps: {
       options: [
-        { label: '啟用', value: 1 },
-        { label: '停用', value: 0 },
+        { label: 'Enable', value: 1 },
+        { label: 'Disable', value: 0 },
       ],
     },
     colProps: { span: 8 },
@@ -177,15 +165,15 @@ export const searchFormSchema: FormSchema[] = [
 export const formSchema: FormSchema[] = [
   {
     field: 'type',
-    label: '選單類型',
+    label: 'Type',
     labelWidth: 150,
     component: 'RadioButtonGroup',
-    helpMessage: ['第一級選單需為目錄 catalog'],
+    helpMessage: ['The first level menu must be Catalog'],
     defaultValue: 'catalog',
     componentProps: {
       options: [
-        { label: '目錄', value: 'catalog' },
-        { label: '選單', value: 'page' },
+        { label: 'Catalog', value: 'catalog' },
+        { label: 'Page', value: 'page' },
         // { label: '按鈕', value: 'button' },
       ],
     },
@@ -193,22 +181,22 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'menuName',
-    label: '選單名稱',
+    label: 'Menu name',
     component: 'Input',
     labelWidth: 150,
     required: true,
   },
   {
     field: 'alias',
-    label: '展示名稱',
+    label: 'Dispaly name',
     component: 'Input',
-    helpMessage: ['左側選單呈現文字'],
+    helpMessage: ['Display text in the left menu'],
     required: true,
     labelWidth: 150,
   },
   {
     field: 'parentMenu',
-    label: '上級選單',
+    label: 'Parent menu',
     labelWidth: 150,
     defaultValue: '',
     component: 'TreeSelect',
@@ -227,9 +215,9 @@ export const formSchema: FormSchema[] = [
 
   {
     field: 'orderNo',
-    label: '排序',
+    label: 'Order',
     component: 'InputNumber',
-    helpMessage: ['同層級，數字越小越靠上。最大長度為 5'],
+    helpMessage: ['Maximum length is 5'],
     required: true,
     labelWidth: 150,
     componentProps: {
@@ -243,7 +231,7 @@ export const formSchema: FormSchema[] = [
           const pattern = /^[0-9-]*$/;
           console.log(pattern.test(value));
           if (value && !pattern.test(value)) {
-            return Promise.reject('只能輸入整數');
+            return Promise.reject('Only integers');
           }
           return Promise.resolve();
         },
@@ -253,7 +241,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'icon',
-    label: '圖標',
+    label: 'Icon',
     labelWidth: 150,
     component: 'IconPicker',
     ifShow: ({ values }) => !isButton(values.type),
@@ -266,20 +254,20 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'description',
-    label: '描述',
+    label: 'Description',
     labelWidth: 150,
     component: 'Input',
   },
 
   {
     field: 'routePath',
-    label: '路由地址',
+    label: 'Route path',
     component: 'Input',
     labelWidth: 150,
     helpMessage: [
-      '[站内-第一級選單]: 以 "/" 開頭, 末尾不加 "/"',
-      '[站内-非第一級選單]: 首尾不加 "/"',
-      '[站外]: 以 "http" 或 "https" 開頭',
+      '[Internal-level 1 menu]: Start with "/", without "/" at the end',
+      '[Internal-non level 1 menu]: Without leading and trailing "/"',
+      '[External]: Start with "http" or "https"',
     ],
     ifShow: ({ values }) => !isButton(values.type),
     required: true,
@@ -291,7 +279,7 @@ export const formSchema: FormSchema[] = [
           const pattern = /^[a-zA-Z0-9\/_-]*$/;
           console.log(pattern.test(value));
           if (value && !pattern.test(value)) {
-            return Promise.reject('值不符合路由規則');
+            return Promise.reject('Value does not match routing rules');
           }
           return Promise.resolve();
         },
@@ -301,10 +289,10 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'componentName',
-    label: '組件名稱',
+    label: 'Component name',
     labelWidth: 150,
     component: 'Input',
-    helpMessage: ['以 PascalCase (大駝峰) 命名'],
+    helpMessage: ['PascalCase naming'],
     ifShow: ({ values }) => isMenu(values.type),
     dynamicDisabled: ({ values }) => {
       return values.type === 'page' && values.isExt === 1 ? true : false;
@@ -317,7 +305,7 @@ export const formSchema: FormSchema[] = [
           const pattern = /^[A-Z][a-zA-Z]*$/;
           console.log(pattern.test(value));
           if (value && !pattern.test(value)) {
-            return Promise.reject('需以 PascalCase (大駝峰) 命名');
+            return Promise.reject('PascalCase naming');
           }
           return Promise.resolve();
         },
@@ -327,9 +315,9 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'component',
-    label: '組件路徑',
+    label: 'Component',
     labelWidth: 150,
-    helpMessage: [' Vue 組件相對位置'],
+    helpMessage: ['Relative position of Vue components'],
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.type),
     dynamicDisabled: ({ values }) => {
@@ -340,7 +328,7 @@ export const formSchema: FormSchema[] = [
         onchange: () => {
           if (formModel.type === 'page' && formModel.component === 'LAYOUT') {
             // hack
-            createMessage.warning('LAYOUT 為 catalog 保留字，不可在此設置');
+            createMessage.warning('LAYOUT is a reserved word for catalog and cannot be set here');
             formModel.component = '';
           }
         },
@@ -349,9 +337,9 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'permission',
-    label: '權限標識',
+    label: 'Permission',
     labelWidth: 150,
-    helpMessage: ['首字母大寫'],
+    helpMessage: ['Capitalize'],
     component: 'Input',
     ifShow: ({ values }) => !isDir(values.type),
     componentProps: {
@@ -360,29 +348,29 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'status',
-    label: '狀態',
+    label: 'Status',
     labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
-    helpMessage: ['啓用 / 禁用'],
+    helpMessage: ['Enable / Disable'],
     componentProps: {
       options: [
-        { label: '啟用', value: 1 },
-        { label: '禁用', value: 0 },
+        { label: 'Enable', value: 1 },
+        { label: 'Disable', value: 0 },
       ],
     },
   },
   {
     field: 'isExt',
-    label: '對外連結',
+    label: 'External link',
     labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
     componentProps: ({ formModel }) => {
       return {
         options: [
-          { label: '否', value: 0 },
-          { label: '是', value: 1 },
+          { label: 'No', value: 0 },
+          { label: 'Yes', value: 1 },
         ],
         onchange: () => {
           if (formModel.isExt === 1) {
@@ -414,15 +402,15 @@ export const formSchema: FormSchema[] = [
 
   {
     field: 'isCache',
-    label: '是否緩存',
+    label: 'Cache',
     labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
     componentProps: ({ formModel }) => {
       return {
         options: [
-          { label: '否', value: 0 },
-          { label: '是', value: 1 },
+          { label: 'No', value: 0 },
+          { label: 'Yes', value: 1 },
         ],
         onchange: () => {
           if (formModel.isCache !== 1) {
@@ -435,9 +423,9 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'cacheName',
-    label: '緩存名稱',
+    label: 'Cache name',
     component: 'Input',
-    helpMessage: ['以 PascalCase (大駝峰) 命名', '緩存條件: 名稱需與 vue 組件的 name 相同'],
+    helpMessage: ['PascalCase naming'],
     labelWidth: 150,
     ifShow: ({ values }) => values.isCache === 1,
     required: ({ values }) => {
@@ -450,7 +438,7 @@ export const formSchema: FormSchema[] = [
           const pattern = /^[A-Z][a-zA-Z]*$/;
           console.log(pattern.test(value));
           if (value && !pattern.test(value)) {
-            return Promise.reject('需以 PascalCase (大駝峰) 命名');
+            return Promise.reject('PascalCase naming');
           }
           return Promise.resolve();
         },
@@ -460,13 +448,13 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'isShow',
-    label: '是否顯示',
+    label: 'Show',
     component: 'RadioButtonGroup',
     defaultValue: 1,
     componentProps: {
       options: [
-        { label: '否', value: 0 },
-        { label: '是', value: 1 },
+        { label: 'No', value: 0 },
+        { label: 'Yes', value: 1 },
       ],
     },
     ifShow: ({ values }) => isButton(values.type),

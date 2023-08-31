@@ -2,7 +2,7 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增角色 </a-button>
+        <a-button type="primary" @click="handleCreate"> Create </a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -11,17 +11,18 @@
               {
                 icon: 'ant-design:edit-twotone',
                 onClick: handleEdit.bind(null, record),
-                tooltip: '編輯此角色',
+                tooltip: 'Edit',
               },
               {
                 icon: 'ant-design:delete-twotone',
                 // color: 'error',
+                disabled: true,
                 popConfirm: {
-                  title: '是否確認刪除',
+                  title: 'Are you sure to delete',
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
-                tooltip: '刪除此角色',
+                tooltip: 'Delete',
               },
             ]"
           />
@@ -48,14 +49,14 @@
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
-        title: '角色列表',
+        title: 'Role List',
         api: getRoleListByPage,
         columns,
         formConfig: {
           showResetButton: false,
           labelWidth: 120,
           schemas: searchFormSchema,
-          autoSubmitOnEnter: true,
+          // autoSubmitOnEnter: true,
           submitButtonOptions: {
             postIcon: 'ant-design:search-outlined',
             iconSize: 12,
@@ -74,7 +75,7 @@
         canResize: false,
         actionColumn: {
           width: 80,
-          title: '操作',
+          title: 'Setting',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
           fixed: 'right',

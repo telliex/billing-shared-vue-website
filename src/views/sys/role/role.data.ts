@@ -9,29 +9,30 @@ import moment from 'moment';
 
 export const columns: BasicColumn[] = [
   {
-    title: '角色名稱',
+    title: 'Role name',
     dataIndex: 'roleName',
     width: 200,
   },
   {
-    title: '角色值',
+    title: 'Role Value',
     dataIndex: 'roleValue',
+    ifShow: false,
     width: 180,
   },
   {
-    title: '排序',
+    title: 'Order',
     dataIndex: 'orderNo',
-    width: 50,
+    width: 80,
   },
   {
-    title: '狀態',
+    title: 'Status',
     dataIndex: 'status',
     width: 120,
     customRender: ({ record }) => {
       const status = record.status;
       const enable = ~~status === 1;
       const color = enable ? 'green' : 'red';
-      const text = enable ? '啟用' : '停用';
+      const text = enable ? 'Enable' : 'Disable';
       return h(Tag, { color: color }, () => text);
     },
     // customRender: ({ record }) => {
@@ -63,17 +64,17 @@ export const columns: BasicColumn[] = [
     // },
   },
   {
-    title: '備註',
+    title: 'Remark',
     dataIndex: 'remark',
     align: 'left',
   },
   {
-    title: '創建人',
+    title: 'Creater',
     dataIndex: 'addMasterName',
-    width: 100,
+    width: 160,
   },
   {
-    title: '創建時間',
+    title: 'Create Time',
     dataIndex: 'addTime',
     width: 180,
     customRender: ({ record }) => {
@@ -81,12 +82,12 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '修改人',
+    title: 'Latest Modified User',
     dataIndex: 'changeMasterName',
-    width: 100,
+    width: 160,
   },
   {
-    title: '修改時間',
+    title: 'Latest Updated Date',
     dataIndex: 'changeTime',
     width: 180,
     customRender: ({ record }) => {
@@ -98,19 +99,19 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'roleName',
-    label: '角色名稱',
+    label: 'Role Name',
     labelWidth: 75,
     component: 'Input',
     colProps: { span: 8 },
   },
   {
     field: 'status',
-    label: '狀態',
+    label: 'Status',
     component: 'Select',
     componentProps: {
       options: [
-        { label: '啟用', value: 1 },
-        { label: '停用', value: 0 },
+        { label: 'Enable', value: 1 },
+        { label: 'Disable', value: 0 },
       ],
     },
     colProps: { span: 8 },
@@ -120,32 +121,39 @@ export const searchFormSchema: FormSchema[] = [
 export const formSchema: FormSchema[] = [
   {
     field: 'roleName',
-    label: '角色名稱',
+    label: 'Role name',
     required: true,
     component: 'Input',
   },
   {
     field: 'roleValue',
-    label: '角色值',
+    label: 'Role value',
     required: true,
     component: 'Input',
+    componentProps: {
+      disabled: true,
+    },
   },
   {
     field: 'orderNo',
-    label: '排序',
+    label: 'order',
     component: 'Input',
     componentProps: {
       maxLength: 5,
     },
+
     rules: [
       {
         required: true,
         // @ts-ignore
         validator: async (rule, value) => {
+          if (!value) {
+            return Promise.reject('Please enter order');
+          }
           const pattern = /^[0-9-]*$/;
           console.log(pattern.test(value));
           if (value && !pattern.test(value)) {
-            return Promise.reject('只能輸入整數');
+            return Promise.reject('Only integers');
           }
           return Promise.resolve();
         },
@@ -155,19 +163,19 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'status',
-    label: '狀態',
+    label: 'Status',
     component: 'RadioButtonGroup',
     defaultValue: 1,
     componentProps: {
       options: [
-        { label: '啟用', value: 1 },
-        { label: '停用', value: 0 },
+        { label: 'Enable', value: 1 },
+        { label: 'Disable', value: 0 },
       ],
     },
   },
   {
-    label: '備註',
     field: 'remark',
+    label: 'Remark',
     component: 'InputTextArea',
   },
   // {

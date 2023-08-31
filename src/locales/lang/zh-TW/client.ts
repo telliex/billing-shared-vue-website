@@ -147,7 +147,7 @@ export default {
   btnResetFields: '清除',
   btnRestoreDefault: 'Restore Default',
   btnDiscountCustomerList: '折扣優惠客戶清單',
-  btnExport: '導出',
+  btnExport: '匯出報表',
   btnFitTableHeight: '自適應高度',
   btnUnFitTableHeight: '取消自適應高度',
 };

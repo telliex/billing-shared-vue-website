@@ -15,9 +15,9 @@
       :dataSource="table.dataSource"
     >
       <template #toolbar>
-        <a-button type="primary" @click="toggleCanResize">
+        <!-- <a-button type="primary" @click="toggleCanResize">
           {{ !canResize ? t('report.autoFitHeight') : t('report.cancalFitHeight') }}
-        </a-button>
+        </a-button> -->
         <a-button type="primary" @click="openModal">{{ t('report.exportFile') }}</a-button>
       </template>
     </BasicTable>
@@ -42,7 +42,7 @@
   import { useModal } from '/@/components/Modal';
   // import { getBasicColumns, getBasicData } from './tableData';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import queryString from 'query-string';
+  // import queryString from 'query-string';
   import dayjs from 'dayjs';
   import * as XLSX from 'xlsx';
   import { dateUtil } from '/@/utils/dateUtil';
@@ -61,7 +61,7 @@
   let S3Bucket = 'data-platform-data-bucket-ecv-dev'; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
-  const canResize = ref(false);
+  // const canResize = ref(false);
   const tableListRef = ref<
     {
       title: string;
@@ -75,10 +75,11 @@
     YearMonth: '',
   });
 
-  const [registerForSearch, { setFieldsValue, clearValidate }] = useForm({
+  const [registerForSearch] = useForm({
     labelWidth: 100,
     size: 'small',
     autoFocusFirstItem: true,
+    // submitOnChange: true,
     schemas,
     actionColOptions: {
       span: 24,
@@ -87,6 +88,7 @@
       postIcon: 'ant-design:search-outlined',
       iconSize: 12,
     },
+    showResetButton: false,
     resetButtonOptions: {
       postIcon: 'ant-design:reload-outlined',
       iconSize: 12,
@@ -98,9 +100,9 @@
   const { createMessage } = useMessage();
 
   // control table height
-  function toggleCanResize() {
-    canResize.value = !canResize.value;
-  }
+  // function toggleCanResize() {
+  //   canResize.value = !canResize.value;
+  // }
   // export file
   function exportFile({ filename, bookType }: ExportModalResult) {
     // 默認Object.keys(data[0])作為header
@@ -297,13 +299,15 @@
     }
   }
 
-  onMounted(() => {
-    const parsed: any = queryString.parse(location.search.replace(/\//, ''));
-    setFieldsValue({
-      ReportType: reportType,
-      YearMonth: parsed.qdate ? dayjs(parsed.qdate).format('YYYY-MM') : null,
-    });
-    clearValidate();
+  onMounted(async () => {
+    // const parsed: any = queryString.parse(location.search.replace(/\//, ''));
+    // setFieldsValue({
+    //   ReportType: reportType,
+    //   YearMonth: parsed.qdate ? dayjs(parsed.qdate).format('YYYY-MM') : null,
+    // });
+    // setTimeout(() => {
+    //   clearValidate();
+    // }, 10);
   });
 </script>
 <script lang="ts">
