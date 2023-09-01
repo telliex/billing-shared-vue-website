@@ -323,7 +323,7 @@
       {
         $schema: 'http://powerbi.com/product/schema#basic',
         target: {
-          table: 'sales-revenue-report',
+          table: 'billing_dev_sales_revenue_report_module ecv_dev_new_col_daily_revenue_powerbi',
           column: 'ecloud_sales',
           report,
         },

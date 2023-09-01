@@ -323,7 +323,7 @@
       {
         $schema: 'http://powerbi.com/product/schema#basic',
         target: {
-          table: 'sales-revenue-report',
+          table: 'cdn-data',
           column: 'ecloud_sales',
           report,
         },
