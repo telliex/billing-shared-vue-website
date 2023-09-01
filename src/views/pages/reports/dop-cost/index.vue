@@ -119,7 +119,7 @@
     tableListRef.value = [];
     console.log(excelDataList);
     if (excelDataList[0].results.length == 0) {
-      createMessage.warning('該條件下未有資料！');
+      createMessage.warning('No data！');
     }
     for (const excelData of excelDataList) {
       const {

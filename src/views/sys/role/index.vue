@@ -37,6 +37,7 @@
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getRoleListByPage, removeRoleItem } from '/@/api/sys/system';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
@@ -48,6 +49,7 @@
     components: { BasicTable, RoleDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
+      const { createMessage } = useMessage();
       const [registerTable, { reload }] = useTable({
         title: 'Role List',
         api: getRoleListByPage,
@@ -96,10 +98,15 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
-        removeRoleItem(record).then(() => {
-          reload();
-        });
+        removeRoleItem(record)
+          .then(() => {
+            reload();
+          })
+          .catch(() => {
+            createMessage.warning(
+              "The role item has already sued. Please delete the user's role first",
+            );
+          });
       }
 
       function handleSuccess() {
