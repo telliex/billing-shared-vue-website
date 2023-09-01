@@ -104,7 +104,7 @@
           })
           .catch(() => {
             createMessage.warning(
-              "The role item has already sued. Please delete the user's role first",
+              "The role item has already used. Please delete the user's role first",
             );
           });
       }
