@@ -28,7 +28,7 @@
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
-  import { createRoleItem, updateRoleItem } from '/@/api/sys/system';
+  import { createRoleItem, getRoleListByPage, updateRoleItem } from '/@/api/sys/system';
   import { getNavTreeListWithButton } from '/@/api/sys/menu';
   import { RoleListItem } from '/@/api/sys/model/systemModel';
   import { getNavList } from '/@/api/sys/menu';
@@ -109,15 +109,25 @@
             changeMaster: 0,
             changeTime: '',
           };
+
+          let roleList = await getRoleListByPage({
+            roleName: null,
+            status: null,
+            page: null,
+            pageSize: null,
+          });
+          console.log('1111111:', values);
+          console.log('2222222:', roleList);
+
           if (!unref(isUpdate)) {
-            let result = Object.assign(template, values);
-            await createRoleItem(result);
+            // let result = Object.assign(template, values);
+            // await createRoleItem(result);
           } else {
-            let result = Object.assign(template, record.value, values);
-            await updateRoleItem(result);
+            // let result = Object.assign(template, record.value, values);
+            // await updateRoleItem(result);
           }
-          closeDrawer();
-          emit('success');
+          // closeDrawer();
+          // emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });
         }
