@@ -53,6 +53,7 @@
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
+        console.log('777777:', record.value);
         // 需要在setFieldsValue之前先填充treeData，否則Tree組件可能會報key not exist警告
         if (unref(treeData).length === 0) {
           treeData.value = (await getNavTreeListWithButton({
@@ -136,17 +137,17 @@
             page: null,
             pageSize: null,
           });
-          console.log('1111111:', values);
-          console.log('2222222:', roleList);
 
           if (!unref(isUpdate)) {
+            console.log('new role');
             let result = Object.assign(template, values);
             await createRoleItem(result);
           } else {
             let result = Object.assign(template, record.value, values);
+            console.log('result:', result);
             let checkRepeat = false;
-            roleList.results.forEach((item) => {
-              if (item.id !== result.id && item.roleName === result.roleName) {
+            roleList.forEach((item) => {
+              if (item.id !== result.id && item.roleValue === result.roleValue) {
                 checkRepeat = true;
               }
             });

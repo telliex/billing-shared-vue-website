@@ -377,7 +377,7 @@ export const getAllRoleList = (params: RolePageParams) => {
  * @description: table Role list
  */
 export const getRoleListByPage = (params: RolePageParams) => {
-  return defHttp.get<RolePageListGetResultModel>(
+  return defHttp.get(
     {
       url: `/api${version}${Api.RoleList}`,
       data: {},

@@ -147,7 +147,7 @@ export const formSchema: FormSchema[] = [
         required: true,
         // @ts-ignore
         validator: async (rule, value) => {
-          if (!value) {
+          if (!value && value !== 0) {
             return Promise.reject('Please enter order');
           }
           const pattern = /^[0-9-]*$/;
