@@ -32,6 +32,7 @@
   import { getNavTreeListWithButton } from '/@/api/sys/menu';
   import { RoleListItem } from '/@/api/sys/model/systemModel';
   import { getNavList } from '/@/api/sys/menu';
+  import { useMessage } from '/@/hooks/web/useMessage';
   export default defineComponent({
     name: 'RoleDrawer',
     components: { BasicDrawer, BasicForm, BasicTree },
@@ -40,6 +41,7 @@
       const isUpdate = ref(true);
       const treeData = ref<TreeItem[]>([]);
       const record = ref<RoleListItem | null>(null);
+      const { createMessage } = useMessage();
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 90,
         baseColProps: { span: 24 },
@@ -62,8 +64,26 @@
         // put here to avoid the display required warning
         resetFields();
         if (unref(isUpdate)) {
+          if (record.value) {
+            let menuList: any = await getNavList({
+              menuName: null,
+              alias: null,
+              status: 1,
+            });
+            let menuIdList = menuList.map((item) => item.id);
+            record.value.menuPermissionArray = record.value.menuPermissionArray
+              ? record.value.menuPermissionArray
+              : [];
+
+            if (record.value.menuPermissionArray.length !== 0) {
+              record.value.menuPermissionArray = record.value.menuPermissionArray.filter((item) =>
+                menuIdList.includes(item),
+              );
+            }
+          }
+
           setFieldsValue({
-            ...data.record,
+            ...record.value,
           });
         }
       });
@@ -74,21 +94,21 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          let menuList: any = await getNavList({
-            menuName: null,
-            alias: null,
-            status: 1,
-          });
-          let menuIdList = menuList.map((item) => item.id);
-          // TODO custom api
-          // transform values
-          values.menuPermissionArray = values.menuPermissionArray ? values.menuPermissionArray : [];
+          // let menuList: any = await getNavList({
+          //   menuName: null,
+          //   alias: null,
+          //   status: 1,
+          // });
+          // let menuIdList = menuList.map((item) => item.id);
+          // // TODO custom api
+          // // transform values
+          // values.menuPermissionArray = values.menuPermissionArray ? values.menuPermissionArray : [];
 
-          if (values.menuPermissionArray.length !== 0) {
-            values.menuPermissionArray = values.menuPermissionArray.filter((item) =>
-              menuIdList.includes(item),
-            );
-          }
+          // if (values.menuPermissionArray.length !== 0) {
+          //   values.menuPermissionArray = values.menuPermissionArray.filter((item) =>
+          //     menuIdList.includes(item),
+          //   );
+          // }
 
           values.menuPermission = values.menuPermissionArray.length
             ? values.menuPermissionArray.join(',')
@@ -120,14 +140,25 @@
           console.log('2222222:', roleList);
 
           if (!unref(isUpdate)) {
-            // let result = Object.assign(template, values);
-            // await createRoleItem(result);
+            let result = Object.assign(template, values);
+            await createRoleItem(result);
           } else {
-            // let result = Object.assign(template, record.value, values);
-            // await updateRoleItem(result);
+            let result = Object.assign(template, record.value, values);
+            let checkRepeat = false;
+            roleList.results.forEach((item) => {
+              if (item.id !== result.id && item.roleName === result.roleName) {
+                checkRepeat = true;
+              }
+            });
+            if (!checkRepeat) {
+              await updateRoleItem(result);
+            } else {
+              createMessage.error('Role Value already exists');
+              return false;
+            }
           }
-          // closeDrawer();
-          // emit('success');
+          closeDrawer();
+          emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });
         }
