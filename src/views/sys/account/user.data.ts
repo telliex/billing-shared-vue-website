@@ -109,8 +109,8 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       placeholder: 'Search Status',
       options: [
-        { label: 'active', value: 1 },
-        { label: 'stop', value: 0 },
+        { label: 'Enable', value: 1 },
+        { label: 'Disable', value: 0 },
       ],
     },
     colProps: { span: 8 },
