@@ -7,7 +7,9 @@
     width="50%"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm" />
+    <div ref="wrapEl">
+      <BasicForm @register="registerForm" />
+    </div>
   </BasicDrawer>
 </template>
 <script lang="ts">
@@ -17,6 +19,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { createNavItem, getNavTreeListOnlyCatalog, updateNavItem } from '/@/api/sys/menu';
   import { NavListItem } from '/@/api/sys/model/menuModel';
+  import { useLoading } from '/@/components/Loading';
 
   export default defineComponent({
     name: 'ButtonMenuDrawer',
@@ -35,6 +38,16 @@
         baseColProps: { lg: 12, md: 24 },
       });
 
+      // loading module
+      const wrapEl = ref<ElRef>(null);
+      const [openWrapLoading, closeWrapLoading] = useLoading({
+        target: wrapEl,
+        props: {
+          tip: 'Loading...',
+          absolute: true,
+        },
+      });
+
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
@@ -48,9 +61,11 @@
         // put here to avoid the display required warning
         resetFields();
         if (unref(isUpdate)) {
-          setFieldsValue({
+          openFnWrapLoading();
+          await setFieldsValue({
             ...data.record,
           });
+          closeWrapLoading();
         }
 
         if (data.record && data.record.type === 'catalog') {
@@ -138,8 +153,10 @@
           setDrawerProps({ confirmLoading: false });
         }
       }
-
-      return { registerDrawer, registerForm, getTitle, handleSubmit };
+      function openFnWrapLoading() {
+        openWrapLoading();
+      }
+      return { registerDrawer, registerForm, getTitle, handleSubmit, openFnWrapLoading, wrapEl };
     },
   });
 </script>

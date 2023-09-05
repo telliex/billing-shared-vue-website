@@ -33,16 +33,19 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, onMounted } from 'vue';
+  import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getRoleListByPage, removeRoleItem } from '/@/api/sys/system';
   import { useMessage } from '/@/hooks/web/useMessage';
-
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
-
   import { columns, searchFormSchema } from './role.data';
+
+  interface SearchItems {
+    roleName: string;
+    status: number;
+  }
 
   export default defineComponent({
     name: 'Role',
@@ -50,6 +53,7 @@
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const { createMessage } = useMessage();
+
       const [registerTable, { reload }] = useTable({
         title: 'Role List',
         api: getRoleListByPage,
@@ -116,7 +120,14 @@
         }, 200);
       }
 
-      onMounted(() => {});
+      function handleSearchReset() {
+        // formData.ReportType = reportType;
+        // formData.YearMonth = '';
+      }
+
+      async function handleSearchSubmit(values: SearchItems) {
+        console.log('values:', values);
+      }
 
       return {
         registerTable,
@@ -125,6 +136,9 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+
+        handleSearchReset,
+        handleSearchSubmit,
       };
     },
   });

@@ -7,7 +7,9 @@
     @ok="handleSubmit"
     :okButtonProps="{ loading: false }"
   >
-    <BasicForm @register="registerForm" />
+    <div ref="wrapEl">
+      <BasicForm @register="registerForm" />
+    </div>
   </BasicModal>
 </template>
 <script lang="ts">
@@ -18,6 +20,7 @@
   import { getDeptList, createUserItem, updateUserItem, isUserExist } from '/@/api/sys/system';
   import { UserItem } from '/@/api/sys/model/systemModel';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useLoading } from '/@/components/Loading';
 
   export default defineComponent({
     name: 'UserModal',
@@ -39,11 +42,20 @@
       });
       const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
 
+      // loading module
+      const wrapEl = ref<ElRef>(null);
+      const [openWrapLoading, closeWrapLoading] = useLoading({
+        target: wrapEl,
+        props: {
+          tip: 'Loading...',
+          absolute: true,
+        },
+      });
+
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
-        console.log('data.record:', data.record);
 
         if (record.value) {
           data.record['rolesArray'] = data.record['rolesString']
@@ -54,10 +66,12 @@
         resetFields();
         rowId.value = '';
         if (unref(isUpdate)) {
+          openFnWrapLoading();
           rowId.value = data.record.id;
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
+          closeWrapLoading();
         }
 
         const treeData = await getDeptList({
@@ -135,8 +149,10 @@
           setModalProps({ confirmLoading: false });
         }
       }
-
-      return { registerModal, registerForm, getTitle, handleSubmit };
+      function openFnWrapLoading() {
+        openWrapLoading();
+      }
+      return { registerModal, registerForm, getTitle, handleSubmit, wrapEl, openFnWrapLoading };
     },
   });
 </script>

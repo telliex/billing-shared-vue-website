@@ -7,19 +7,21 @@
     width="500px"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm">
-      <template #menu="{ model, field }">
-        <BasicTree
-          v-model:value="model[field]"
-          :treeData="treeData"
-          :fieldNames="{ title: 'title', key: 'id' }"
-          checkable
-          :height="300"
-          toolbar
-          title="Permissions"
-        />
-      </template>
-    </BasicForm>
+    <div ref="wrapEl">
+      <BasicForm @register="registerForm">
+        <template #menu="{ model, field }">
+          <BasicTree
+            v-model:value="model[field]"
+            :treeData="treeData"
+            :fieldNames="{ title: 'title', key: 'id' }"
+            checkable
+            :height="300"
+            toolbar
+            title="Permissions"
+          />
+        </template>
+      </BasicForm>
+    </div>
   </BasicDrawer>
 </template>
 <script lang="ts">
@@ -33,6 +35,8 @@
   import { RoleListItem } from '/@/api/sys/model/systemModel';
   import { getNavList } from '/@/api/sys/menu';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useLoading } from '/@/components/Loading';
+
   export default defineComponent({
     name: 'RoleDrawer',
     components: { BasicDrawer, BasicForm, BasicTree },
@@ -49,11 +53,21 @@
         showActionButtonGroup: false,
       });
 
+      // loading module
+      const wrapEl = ref<ElRef>(null);
+      const [openWrapLoading, closeWrapLoading] = useLoading({
+        target: wrapEl,
+        props: {
+          tip: 'Loading...',
+          absolute: true,
+        },
+      });
+
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
         setDrawerProps({ confirmLoading: false });
+
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
-        console.log('777777:', record.value);
         // 需要在setFieldsValue之前先填充treeData，否則Tree組件可能會報key not exist警告
         if (unref(treeData).length === 0) {
           treeData.value = (await getNavTreeListWithButton({
@@ -65,6 +79,7 @@
         // put here to avoid the display required warning
         resetFields();
         if (unref(isUpdate)) {
+          openFnWrapLoading();
           if (record.value) {
             let menuList: any = await getNavList({
               menuName: null,
@@ -83,9 +98,10 @@
             }
           }
 
-          setFieldsValue({
+          await setFieldsValue({
             ...record.value,
           });
+          closeWrapLoading();
         }
       });
 
@@ -165,12 +181,17 @@
         }
       }
 
+      function openFnWrapLoading() {
+        openWrapLoading();
+      }
       return {
         registerDrawer,
         registerForm,
         getTitle,
         handleSubmit,
         treeData,
+        openFnWrapLoading,
+        wrapEl,
       };
     },
   });

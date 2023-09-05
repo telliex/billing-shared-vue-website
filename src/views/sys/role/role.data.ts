@@ -131,8 +131,26 @@ export const formSchema: FormSchema[] = [
     required: true,
     component: 'Input',
     componentProps: {
-      // disabled: true,
+      maxLength: 10,
     },
+    rules: [
+      {
+        required: true,
+        // @ts-ignore
+        validator: async (rule, value) => {
+          if (!value && value !== 0) {
+            return Promise.reject('Please input role value');
+          }
+          const pattern = /^[0-9a-zA-Z_-]*$/;
+          console.log(pattern.test(value));
+          if (value && !pattern.test(value)) {
+            return Promise.reject('Letters and numbers only');
+          }
+          return Promise.resolve();
+        },
+        trigger: 'change',
+      },
+    ],
   },
   {
     field: 'orderNo',
@@ -148,7 +166,7 @@ export const formSchema: FormSchema[] = [
         // @ts-ignore
         validator: async (rule, value) => {
           if (!value && value !== 0) {
-            return Promise.reject('Please enter order');
+            return Promise.reject('Please input order');
           }
           const pattern = /^[0-9-]*$/;
           console.log(pattern.test(value));
