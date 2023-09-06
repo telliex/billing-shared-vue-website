@@ -9,6 +9,7 @@ export const columns: BasicColumn[] = [
   {
     title: 'User Name',
     dataIndex: 'userName',
+    // sorter: true,
     width: 200,
   },
   {
@@ -72,6 +73,7 @@ export const columns: BasicColumn[] = [
     title: 'Create Time',
     dataIndex: 'addTime',
     width: 180,
+    // sorter: true,
     customRender: ({ record }) => {
       return moment(record.addTime).format('YYYY-MM-DD h:mm:ss');
     },
@@ -84,6 +86,7 @@ export const columns: BasicColumn[] = [
   {
     title: 'Latest Updated Date',
     dataIndex: 'changeTime',
+    // sorter: true,
     width: 180,
     customRender: ({ record }) => {
       return moment(record.changeTime).format('YYYY-MM-DD h:mm:ss');

@@ -96,7 +96,7 @@
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { stringToHSA265 } from '/@/utils/auth';
+  // import { stringToHSA265 } from '/@/utils/auth';
 
   const ACol = Col;
   const ARow = Row;
@@ -156,7 +156,8 @@
         if (rememberMe.value) {
           localeStore.setLoginInfo({
             username: data.account,
-            password: await stringToHSA265(data.password),
+            // password: await stringToHSA265(data.password),
+            password: data.password,
             remeberMe: rememberMe.value,
           });
         } else {
