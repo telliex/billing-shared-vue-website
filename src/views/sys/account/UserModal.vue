@@ -114,9 +114,10 @@
           values.rolesArray = values.rolesArray.map(({ ['option']: _, ...rest }) => rest);
           values.rolesString = JSON.stringify(values.rolesArray);
 
+          // TODO: replace with deptId
           let template = {
             id: '',
-            dept: 'e5d64b67-f525-4b7e-af40-a019fb39c9ba',
+            dept: '80af73a3-972d-4ec0-8e1b-35235f3cb531',
             userName: '',
             realName: '',
             nickname: '',

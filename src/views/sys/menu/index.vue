@@ -52,7 +52,7 @@
   import MenuDrawer from './MenuDrawer.vue';
   import ButtonsDrawer from './ButtonsDrawer.vue';
   import { columns, searchFormSchema } from './menu.data';
-  // import { useI18n } from '/@/hooks/web/useI18n';
+  import { useI18n } from '/@/hooks/web/useI18n';
 
   export default defineComponent({
     name: 'Menu',
@@ -62,7 +62,7 @@
       // setDrawerProps({
       //   width: 800,
       // });
-      // const { t } = useI18n();
+      const { t } = useI18n();
       const [registerButtonsDrawer, { openDrawer: openButtonsDrawer }] = useDrawer();
       const [registerTable, { reload, expandAll }] = useTable({
         title: 'Menu list',
@@ -82,8 +82,7 @@
           //   iconSize: 12,
           // },
         },
-        // filterTitle: t('report.searchAreaTitle'),
-        filterTitle: 'Filter by',
+        filterTitle: t('report.searchAreaTitle'),
         showTableSetting: false,
         isTreeTable: true,
         pagination: false,
@@ -167,7 +166,7 @@
         handleDelete,
         handleSuccess,
         onFetchSuccess,
-        // t,
+        t,
       };
     },
   });

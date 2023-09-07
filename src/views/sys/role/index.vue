@@ -41,7 +41,7 @@
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
   import { columns, searchFormSchema } from './role.data';
-  // import { useI18n } from '/@/hooks/web/useI18n';
+  import { useI18n } from '/@/hooks/web/useI18n';
 
   interface SearchItems {
     roleName: string;
@@ -54,7 +54,7 @@
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const { createMessage } = useMessage();
-      // const { t } = useI18n();
+      const { t } = useI18n();
       const [registerTable, { reload }] = useTable({
         title: 'Role List',
         api: getRoleListByPage,
@@ -73,8 +73,7 @@
             iconSize: 12,
           },
         },
-        // filterTitle: t('report.searchAreaTitle'),
-        filterTitle: 'Filter by',
+        filterTitle: t('report.searchAreaTitle'),
         pagination: true,
         useSearchForm: true,
         striped: false,
@@ -139,7 +138,7 @@
         handleEdit,
         handleDelete,
         handleSuccess,
-        // t,
+        t,
         handleSearchReset,
         handleSearchSubmit,
       };
