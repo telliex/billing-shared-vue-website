@@ -50,7 +50,7 @@
 
   import { useModal } from '/@/components/Modal';
   import UserModal from './UserModal.vue';
-  import { useI18n } from '/@/hooks/web/useI18n';
+  // import { useI18n } from '/@/hooks/web/useI18n';
   import { columns, searchFormSchema } from './user.data';
   import { useGo } from '/@/hooks/web/usePage';
 
@@ -61,7 +61,7 @@
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
-      const { t } = useI18n();
+      // const { t } = useI18n();
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: 'Account List',
         api: getUserList,
@@ -81,7 +81,8 @@
             iconSize: 12,
           },
         },
-        filterTitle: t('report.searchAreaTitle'),
+        // filterTitle: t('report.searchAreaTitle'),
+        filterTitle: 'Filter by',
         useSearchForm: true,
         showTableSetting: false,
         bordered: true,
@@ -148,6 +149,7 @@
         handleSelect,
         handleView,
         searchInfo,
+        // t,
       };
     },
   });
