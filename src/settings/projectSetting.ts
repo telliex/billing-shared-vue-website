@@ -143,7 +143,7 @@ const setting: ProjectConfig = {
     // Turn on
     show: true,
     // Is it possible to drag and drop sorting tabs
-    canDrag: true,
+    canDrag: false,
     // Turn on quick actions
     showQuick: true,
     // Whether to show the refresh button

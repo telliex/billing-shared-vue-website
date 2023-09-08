@@ -124,6 +124,19 @@ export const formSchema: FormSchema[] = [
     label: 'Role name',
     required: true,
     component: 'Input',
+    rules: [
+      {
+        required: true,
+        // @ts-ignore
+        validator: async (rule, value) => {
+          if (!value) {
+            return Promise.reject('Please input role name');
+          }
+
+          return Promise.resolve();
+        },
+      },
+    ],
   },
   {
     field: 'roleValue',
