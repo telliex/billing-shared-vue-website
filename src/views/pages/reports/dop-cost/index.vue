@@ -27,6 +27,7 @@
 <script lang="ts" setup>
   import { ref, reactive, onMounted } from 'vue';
   import { GetS3TargetUrl } from '/@/api/sys/system';
+  import { getFinalActiveTime, writeFinalActiveTime } from '/@/api/sys/user';
   import { Guid } from 'js-guid';
   import { CollapseContainer } from '/@/components/Container';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form/index';
@@ -48,7 +49,8 @@
   import { dateUtil } from '/@/utils/dateUtil';
   import axios from 'axios';
   import { getFormSchema } from './formData';
-
+  import { checkLoginTimeout } from '/@/utils/tools';
+  import { logoutApi } from '/@/api/sys/user';
   const { t } = useI18n();
 
   //====Start========modify Area===========
@@ -95,7 +97,7 @@
     },
   });
   const [registerForExportFile, { openModal }] = useModal();
-
+  // const [registerForExportFile] = useModal();
   const loadingRef = ref<Boolean>(false);
   const { createMessage } = useMessage();
 
@@ -266,6 +268,21 @@
   }
 
   async function handleSearchSubmit(values: SearchItems) {
+    // deal with
+    let UserInfo = await getFinalActiveTime();
+    if (!UserInfo || UserInfo.length === 0) {
+      logoutApi();
+      return false;
+    }
+
+    let checkTimeout = checkLoginTimeout(UserInfo[0]);
+    if (checkTimeout) {
+      await writeFinalActiveTime();
+    } else {
+      logoutApi();
+      return false;
+    }
+
     // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3ReportClass = values.ReportType;
     let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`;

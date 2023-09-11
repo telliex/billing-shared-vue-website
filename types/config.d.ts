@@ -134,6 +134,8 @@ export interface ProjectConfig {
   closeMessageOnSwitch: boolean;
   // Whether to cancel the http request that has been sent but not responded when switching the interface.
   removeAllHttpPending: boolean;
+  // Logout after ? min of inactivity
+  loginTimeout: number;
 }
 
 export interface GlobConfig {

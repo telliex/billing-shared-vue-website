@@ -33,6 +33,7 @@
   import 'powerbi-report-authoring';
   import { Guid } from 'js-guid';
   import {
+    GetDictionaryItems,
     GetUserPermission,
     GetUserPermissionRoleList,
     // GetPowerBIFilterValue,
@@ -43,6 +44,8 @@
   const { createMessage } = useMessage();
   import { useLoading } from '/@/components/Loading';
   import axios from 'axios';
+  import { getFinalActiveTime, logoutApi, writeFinalActiveTime } from '/@/api/sys/user';
+  import { checkLoginTimeout } from '/@/utils/tools';
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
     target: wrapEl,
@@ -56,6 +59,7 @@
   let currentPagePermissionId = null;
   let currentPageReportName = 'sales_cdn_revenue'; // need to change
   let currentPageReportIdKey = 'POWERBI_CDN_REPORTId'; // need to change
+  let currentPageTableNameKey = 'POWERBI_CDN_TABLENAME'; // need to change
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName}__container`;
   let currentUserId = ls.get('TEMP_USER_ID_KEY__');
@@ -154,6 +158,21 @@
       createMessage.error('You do not have permission to view this report !');
       console.log('You do not have permission to view this report.');
       closeWrapLoading();
+      return;
+    }
+
+    // deal with
+    let UserInfo = await getFinalActiveTime();
+    if (!UserInfo || UserInfo.length === 0) {
+      logoutApi();
+      return;
+    }
+
+    let checkTimeout = checkLoginTimeout(UserInfo[0]);
+    if (checkTimeout) {
+      await writeFinalActiveTime();
+    } else {
+      logoutApi();
       return;
     }
 
@@ -319,11 +338,25 @@
     console.log('===report===');
     console.log(value);
 
+    let tableName = await GetDictionaryItems({
+      trace_id: Guid.newGuid().toString(),
+      request_items: [
+        {
+          item_type: 'PowerBI',
+          item_key: currentPageTableNameKey,
+          item_key2: '',
+        },
+      ],
+    });
+    if (!tableName) {
+      createMessage.error('Failed to fetch PowerBI Parameter Data.');
+    }
+
     value.config.filters = [
       {
         $schema: 'http://powerbi.com/product/schema#basic',
         target: {
-          table: 'cdn-data',
+          table: tableName[0].response_items[0].itemValue,
           column: 'ecloud_sales',
           report,
         },

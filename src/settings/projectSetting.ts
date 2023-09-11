@@ -203,6 +203,8 @@ const setting: ProjectConfig = {
   // 切換界面的時候是否取消已經發送但是未響應的http請求。
   // 如果開啟,想對單獨接口覆蓋。可以在單獨接口設置
   removeAllHttpPending: false,
+  // Logout after ? min of inactivity
+  loginTimeout: 3 * 60,
 };
 
 export default setting;

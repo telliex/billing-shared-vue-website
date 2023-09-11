@@ -3,10 +3,12 @@ import { defHttp } from '/@/utils/http/axios';
 
 // import { ErrorMessageMode } from '/#/axios';
 import { ErrorMessageMode } from '/#/axios';
-import { apiTransDataForHeader } from '/@/utils/tools';
+import { apiTransDataForHeader, correntReturn, errorReturn } from '/@/utils/tools';
+import { isArray } from 'xe-utils';
 enum Api {
   Login = '/auth/login',
   Logout = '/auth/logout',
+  finalActiveTimeURL = '/auth/finalActiveTime',
   // GetUserInfo = '/getUserInfo',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
@@ -127,3 +129,62 @@ export function testRetry() {
     },
   );
 }
+
+/**
+ * @description: final active time
+ */
+export const getFinalActiveTime = () =>
+  defHttp.get(
+    {
+      url: '/api' + version + Api.finalActiveTimeURL,
+      // data: body,
+      headers: apiTransDataForHeader(),
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          // Do whatever you want to transform the data
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
+  );
+
+export const writeFinalActiveTime = () =>
+  defHttp.post(
+    {
+      url: '/api' + version + Api.finalActiveTimeURL,
+      // data: body,
+      headers: apiTransDataForHeader(),
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          // Do whatever you want to transform the data
+          if (isArray(resObj)) {
+            return correntReturn(resObj);
+          } else {
+            return errorReturn(resObj);
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
+  );

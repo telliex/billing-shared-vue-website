@@ -17,7 +17,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './user.data';
-  import { getDeptList, createUserItem, updateUserItem, isUserExist } from '/@/api/sys/system';
+  import { createUserItem, updateUserItem, isUserExist } from '/@/api/sys/system';
   import { UserItem } from '/@/api/sys/model/systemModel';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useLoading } from '/@/components/Loading';
@@ -74,21 +74,21 @@
           closeWrapLoading();
         }
 
-        const treeData = await getDeptList({
-          deptName: null,
-          status: null,
-          page: null,
-          pageSize: null,
-        });
+        // const treeData = await getDeptList({
+        //   deptName: null,
+        //   status: null,
+        //   page: null,
+        //   pageSize: null,
+        // });
         updateSchema([
           {
             field: 'pwd',
             show: !unref(isUpdate),
           },
-          {
-            field: 'dept',
-            componentProps: { treeData },
-          },
+          // {
+          //   field: 'dept',
+          //   componentProps: { treeData },
+          // },
         ]);
       });
 

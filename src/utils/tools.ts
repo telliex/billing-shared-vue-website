@@ -1,6 +1,8 @@
 import { Guid } from 'js-guid';
 import { useUserStore } from '/@/store/modules/user';
 import dayjs from 'dayjs';
+import moment from 'moment';
+import projectSetting from '/@/settings/projectSetting';
 export function buildNestedStructure(data: any[]) {
   const map: any = {}; // 用來快速查找 id 對應的物件
   const result: any[] = []; // 最終的結果
@@ -100,4 +102,23 @@ export function errorReturn(error: any) {
     requested_time: '',
     responsed_time: new Date(),
   };
+}
+
+export function checkLoginTimeout(user: any) {
+  const { loginTimeout } = projectSetting;
+  let compareTime = '2021-01-01 00:00:00';
+  if (user.lastActiveTime) {
+    compareTime = user.lastActiveTime;
+  }
+  const idleDuration = moment(moment.utc().format('YYYY-MM-DD HH:mm:ss')).diff(
+    moment(compareTime),
+    'minutes',
+  );
+  // If idle duration exceeds 3 hours, log the user out
+  if (idleDuration >= loginTimeout) {
+    return false;
+    // Perform logout action, e.g., clear session
+  } else {
+    return true;
+  }
 }

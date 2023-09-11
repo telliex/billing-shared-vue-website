@@ -146,20 +146,6 @@ export default [
       return resultSuccess(codeList);
     },
   },
-  // {
-  //   url: '/basic-api/logout',
-  //   timeout: 200,
-  //   method: 'get',
-  //   response: (request: requestParams) => {
-  //     const token = getRequestToken(request);
-  //     if (!token) return resultError('Invalid token');
-  //     const checkUser = createFakeUserList().find((item) => item.token === token);
-  //     if (!checkUser) {
-  //       return resultError('Invalid token!');
-  //     }
-  //     return resultSuccess(undefined, { msg: 'Token has been destroyed' });
-  //   },
-  // },
   {
     url: '/basic-api/testRetry',
     statusCode: 405,
