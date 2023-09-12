@@ -74,7 +74,7 @@ export default {
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
-    signInTitle: '云端报表管理系统',
+    signInTitle: 'Metrics Analysis and Reporting System',
     signInDesc: '登入开始使用！',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,

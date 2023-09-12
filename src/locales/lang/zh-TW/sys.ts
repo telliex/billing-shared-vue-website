@@ -74,7 +74,7 @@ export default {
     signUpFormTitle: '注冊',
     forgetFormTitle: '重置密碼',
 
-    signInTitle: '雲端報表管理系統',
+    signInTitle: 'Metrics Analysis and Reporting System',
     signInDesc: '登入開始使用！',
     policy: '我同意xxx隱私政策',
     scanSign: `掃碼後點擊"確認"，即可完成登錄`,
