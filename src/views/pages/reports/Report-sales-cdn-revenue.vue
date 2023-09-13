@@ -187,7 +187,8 @@
 
     let tempRes: any = await axios({
       method: 'post',
-      url: 'https://rgoyovotjqogivdmoth4ut3dsm0jgyhl.lambda-url.us-west-2.on.aws/',
+      // url: 'https://rgoyovotjqogivdmoth4ut3dsm0jgyhl.lambda-url.us-west-2.on.aws/',
+      url: import.meta.env.VITE_GLOB_POWERBI_LAMBDA_API_URL,
       data: {
         userId: currentUserId,
         pageName: currentPageReportName,
