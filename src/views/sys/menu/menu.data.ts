@@ -230,6 +230,11 @@ export const formSchema: FormSchema[] = [
         validator: async (rule, value) => {
           const pattern = /^[0-9-]*$/;
           console.log(pattern.test(value));
+
+          if (!value) {
+            return Promise.reject('Required');
+          }
+
           if (value && !pattern.test(value)) {
             return Promise.reject('Only integers');
           }

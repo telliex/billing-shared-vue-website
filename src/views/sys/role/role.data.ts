@@ -129,6 +129,7 @@ export const formSchema: FormSchema[] = [
         required: true,
         // @ts-ignore
         validator: async (rule, value) => {
+          value = value.trim();
           if (!value) {
             return Promise.reject('Please input role name');
           }
@@ -151,6 +152,7 @@ export const formSchema: FormSchema[] = [
         required: true,
         // @ts-ignore
         validator: async (rule, value) => {
+          value = value.trim();
           if (!value && value !== 0) {
             return Promise.reject('Please input role value');
           }

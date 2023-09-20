@@ -92,7 +92,7 @@
         showIndexColumn: false,
         canResize: false,
         actionColumn: {
-          width: 180,
+          width: 100,
           title: 'Setting',
           dataIndex: 'action',
           fixed: 'right',
