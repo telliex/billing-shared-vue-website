@@ -8,7 +8,7 @@
     v-show="getShow"
     @keypress.enter="handleLogin"
   >
-    <FormItem name="company" class="enter-x">
+    <FormItem name="company" class="enter-x" v-if="false">
       <Select
         size="large"
         v-model:value="formData.company"

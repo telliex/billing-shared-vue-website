@@ -195,10 +195,15 @@
         pageIdKey: currentPageReportIdKey,
       },
     }).catch((err) => {
-      createMessage.error(err);
+      createMessage.error('Lambda api error!');
       closeWrapLoading();
       console.log(err);
     });
+
+    if (!tempRes) {
+      return;
+    }
+
     filterValueResult[0] = tempRes.data;
 
     if (!filterValueResult[0]?.ok) {
