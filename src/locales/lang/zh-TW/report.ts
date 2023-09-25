@@ -31,4 +31,46 @@ export default {
     searchAreaReportTypeOption: '特調成本',
     searchAreaYYYYMMLavel: '月份',
   },
+  cdnReport: {
+    tableAreaTitle: 'CDN報表',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'CDN',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  specialReport: {
+    tableAreaTitle: '特殊事項調整報表',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: '特殊事項調整',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  sapcnoReport: {
+    tableAreaTitle: 'SAP_CNO對照表',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'SAP_CNO對照',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  diffReport: {
+    tableAreaTitle: '帳號轉綁清單報表',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: '帳號轉綁清單',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  summeryReport: {
+    tableAreaTitle: 'Billing Summary Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing Summary',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  invcoiceReport: {
+    tableAreaTitle: 'Billing Invoice Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing Invoice',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  billingReport: {
+    tableAreaTitle: 'Billing List Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing List',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
 };

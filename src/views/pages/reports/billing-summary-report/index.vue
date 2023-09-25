@@ -58,7 +58,7 @@
     ReportType: string;
     YearMonth: string;
   }
-  let tableName = ref(t('report.dopCost.tableAreaTitle'));
+  let tableName = ref(t('report.summeryReport.tableAreaTitle'));
   let reportType = 'billing_summary_hk'; // report type & S3 prefix folder name,
   let S3Bucket = 'billing-dev-sync-data'; // S3 bucket name
   //====End========modify Area=============
@@ -285,7 +285,7 @@
 
     // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3ReportClass = values.ReportType;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.csv`;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
 
@@ -329,6 +329,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'DopCost',
+    name: 'SummeryReport',
   };
 </script>
