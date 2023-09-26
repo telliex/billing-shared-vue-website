@@ -276,21 +276,32 @@ export const formSchema: FormSchema[] = [
     ],
     ifShow: ({ values }) => !isButton(values.type),
     required: true,
-    rules: [
-      {
-        required: true,
-        // @ts-ignore
-        validator: async (rule, value) => {
-          const pattern = /^[a-zA-Z0-9\/_-]*$/;
-          console.log(pattern.test(value));
-          if (value && !pattern.test(value)) {
-            return Promise.reject('Value does not match routing rules');
-          }
-          return Promise.resolve();
+    dynamicRules: ({ values }) => {
+      return [
+        {
+          required: true,
+          validator: async (rule, value) => {
+            console.log(rule);
+            if (values.isExt === 1) {
+              const pattern = /^(https?):\/\/[^\s/$.?#].[^\s]*$/i;
+              console.log(pattern.test(value));
+              if (value && !pattern.test(value)) {
+                return Promise.reject('Value does not match http/https rules');
+              }
+            } else {
+              const pattern = /^[a-zA-Z0-9\/_-]*$/;
+              console.log(pattern.test(value));
+              if (value && !pattern.test(value)) {
+                return Promise.reject('Value does not match routing rules');
+              }
+            }
+
+            return Promise.resolve();
+          },
+          trigger: 'change',
         },
-        trigger: 'change',
-      },
-    ],
+      ];
+    },
   },
   {
     field: 'componentName',
