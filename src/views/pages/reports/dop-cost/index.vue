@@ -46,7 +46,7 @@
   import { logoutApi } from '/@/api/sys/user';
   const { t } = useI18n();
 
-  //====Start========modify Area===========
+  //====Start========modify Area=========== [for need to modify area]
   interface SearchItems {
     ReportType: string;
     YearMonth: string;
@@ -278,7 +278,7 @@
 
     // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3ReportClass = reportType;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`; // [for need to modify area]
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
 
@@ -286,7 +286,7 @@
       trace_id: Guid.newGuid().toString(),
       bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
       bucket_name: S3Bucket,
-      object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`,
+      object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`, // [for need to modify area]
       duration: '10',
     }).catch((err) => {
       console.log(err);
