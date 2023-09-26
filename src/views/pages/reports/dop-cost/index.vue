@@ -277,7 +277,7 @@
     }
 
     // createMessage.success('click search,values:' + JSON.stringify(values));
-    let S3ReportClass = values.ReportType;
+    let S3ReportClass = reportType;
     let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
