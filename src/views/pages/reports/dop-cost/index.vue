@@ -18,10 +18,9 @@
         <!-- <a-button type="primary" @click="toggleCanResize">
           {{ !canResize ? t('report.autoFitHeight') : t('report.cancalFitHeight') }}
         </a-button> -->
-        <a-button type="primary" @click="openModal">{{ t('report.exportFile') }}</a-button>
+        <a-button type="primary" @click="exportFile">{{ t('report.exportFile') }}</a-button>
       </template>
     </BasicTable>
-    <ExpExcelModal @register="registerForExportFile" @success="exportFile" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -33,14 +32,8 @@
   import { BasicForm, FormSchema, useForm } from '/@/components/Form/index';
   // hooks
   import { useI18n } from '/@/hooks/web/useI18n';
-  import {
-    jsonToSheetXlsx,
-    ExpExcelModal,
-    ExportModalResult,
-    ExcelData,
-  } from '/@/components/Excel';
+  import { jsonToSheetXlsx, ExcelData } from '/@/components/Excel';
   import { BasicTable, BasicColumn } from '/@/components/Table';
-  import { useModal } from '/@/components/Modal';
   // import { getBasicColumns, getBasicData } from './tableData';
   import { useMessage } from '/@/hooks/web/useMessage';
   // import queryString from 'query-string';
@@ -53,7 +46,7 @@
   import { logoutApi } from '/@/api/sys/user';
   const { t } = useI18n();
 
-  //====Start========modify Area===========
+  //====Start========modify Area=========== [for need to modify area]
   interface SearchItems {
     ReportType: string;
     YearMonth: string;
@@ -96,7 +89,6 @@
       iconSize: 12,
     },
   });
-  const [registerForExportFile, { openModal }] = useModal();
   // const [registerForExportFile] = useModal();
   const loadingRef = ref<Boolean>(false);
   const { createMessage } = useMessage();
@@ -106,13 +98,14 @@
   //   canResize.value = !canResize.value;
   // }
   // export file
-  function exportFile({ filename, bookType }: ExportModalResult) {
+  function exportFile() {
     // 默認Object.keys(data[0])作為header
+    let timeStamp = dayjs().format('YYYYMMDDHHmmss');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename,
+      filename: `dopcost-${timeStamp}.xlsx`,
       write2excelOpts: {
-        bookType,
+        bookType: 'xlsx',
       },
     });
   }
@@ -284,8 +277,8 @@
     }
 
     // createMessage.success('click search,values:' + JSON.stringify(values));
-    let S3ReportClass = values.ReportType;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`;
+    let S3ReportClass = reportType;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`; // [for need to modify area]
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
 
@@ -293,7 +286,7 @@
       trace_id: Guid.newGuid().toString(),
       bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
       bucket_name: S3Bucket,
-      object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`,
+      object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`, // [for need to modify area]
       duration: '10',
     }).catch((err) => {
       console.log(err);
