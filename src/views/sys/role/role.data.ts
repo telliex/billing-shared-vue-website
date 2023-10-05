@@ -6,6 +6,7 @@ import { Tag } from 'ant-design-vue';
 // import { setRoleStatus } from '/@/api/sys/system';
 // import { useMessage } from '/@/hooks/web/useMessage';
 import moment from 'moment';
+import { VxeFormItemProps, VxeGridPropTypes } from '/@/components/VxeTable';
 
 export const columns: BasicColumn[] = [
   {
@@ -221,5 +222,125 @@ export const formSchema: FormSchema[] = [
     field: 'menuPermissionArray',
     slot: 'menu',
     component: 'TreeSelect',
+  },
+];
+
+export const vxeTableColumns: VxeGridPropTypes.Columns = [
+  {
+    title: 'Role name',
+    field: 'roleName',
+    showOverflow: 'tooltip',
+    width: 200,
+  },
+  {
+    title: 'Role Value',
+    field: 'roleValue',
+    showOverflow: 'tooltip',
+    width: 180,
+  },
+  {
+    title: 'Order',
+    field: 'orderNo',
+    width: 80,
+  },
+  {
+    title: 'Status',
+    field: 'status',
+    width: 120,
+  },
+
+  {
+    title: 'Remark',
+    width: 150,
+    field: 'remark',
+    showOverflow: 'tooltip',
+    align: 'center',
+  },
+  {
+    title: 'Creater',
+    width: 160,
+    field: 'addMasterName',
+    showOverflow: 'tooltip',
+    align: 'center',
+  },
+  {
+    title: 'Create Time',
+    width: 180,
+    field: 'addTime',
+    showOverflow: 'tooltip',
+    align: 'center',
+  },
+  {
+    title: 'Latest Modified User',
+    width: 160,
+    field: 'changeMasterName',
+    showOverflow: 'tooltip',
+    align: 'center',
+  },
+  {
+    title: 'Latest Updated Date',
+    width: 160,
+    field: 'changeTime',
+    showOverflow: 'tooltip',
+    align: 'center',
+  },
+  {
+    width: 100,
+    title: 'Setting',
+    align: 'center',
+    slots: { default: 'action' },
+    fixed: 'right',
+  },
+];
+
+export const vxeTableFormSchema: VxeFormItemProps[] = [
+  {
+    field: 'roleName',
+    title: 'Role Name',
+    itemRender: {
+      defaultValue: null,
+      name: 'AInput',
+      props: {
+        clearable: true,
+      },
+    },
+    span: 6,
+  },
+  {
+    field: 'status',
+    title: 'Status',
+
+    itemRender: {
+      name: 'ASelect',
+      defaultValue: null,
+      props: {
+        clearable: true,
+        options: [
+          { label: 'Enable', value: 1 },
+          { label: 'Disable', value: 0 },
+        ],
+      },
+    },
+    span: 4,
+  },
+  {
+    span: 14,
+    align: 'right',
+    className: '!pr-0',
+    itemRender: {
+      name: 'AButtonGroup',
+      children: [
+        {
+          props: {
+            type: 'primary',
+            content: 'Search',
+            htmlType: 'submit',
+            postIcon: 'ant-design:search-outlined',
+          },
+          attrs: { class: 'mr-2' },
+        },
+        // { props: { type: 'default', htmlType: 'reset', content: '重置' } },
+      ],
+    },
   },
 ];
