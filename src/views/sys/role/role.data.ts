@@ -7,6 +7,7 @@ import { Tag } from 'ant-design-vue';
 // import { useMessage } from '/@/hooks/web/useMessage';
 import moment from 'moment';
 import { VxeFormItemProps, VxeGridPropTypes } from '/@/components/VxeTable';
+import XEUtils from 'xe-utils';
 
 export const columns: BasicColumn[] = [
   {
@@ -20,11 +21,11 @@ export const columns: BasicColumn[] = [
     ifShow: false,
     width: 180,
   },
-  {
-    title: 'Order',
-    dataIndex: 'orderNo',
-    width: 80,
-  },
+  // {
+  //   title: 'Order',
+  //   dataIndex: 'orderNo',
+  //   width: 80,
+  // },
   {
     title: 'Status',
     dataIndex: 'status',
@@ -231,22 +232,30 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'roleName',
     showOverflow: 'tooltip',
     width: 200,
+    sortable: true,
   },
   {
     title: 'Role Value',
     field: 'roleValue',
     showOverflow: 'tooltip',
     width: 180,
+    sortable: true,
   },
   {
     title: 'Order',
     field: 'orderNo',
     width: 80,
+    sortable: true,
   },
   {
     title: 'Status',
     field: 'status',
     width: 120,
+    sortable: true,
+    // formatter({ cellValue }) {
+    //   return cellValue === 1 ? 'Enable' : 'Disable';
+    // },
+    slots: { default: 'status' },
   },
 
   {
@@ -262,6 +271,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'addMasterName',
     showOverflow: 'tooltip',
     align: 'center',
+    sortable: true,
   },
   {
     title: 'Create Time',
@@ -269,6 +279,10 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'addTime',
     showOverflow: 'tooltip',
     align: 'center',
+    sortable: true,
+    formatter({ cellValue }) {
+      return XEUtils.toDateString(cellValue, 'yyyy-MM-dd HH:ss:mm');
+    },
   },
   {
     title: 'Latest Modified User',
@@ -276,6 +290,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'changeMasterName',
     showOverflow: 'tooltip',
     align: 'center',
+    sortable: true,
   },
   {
     title: 'Latest Updated Date',
@@ -283,6 +298,10 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'changeTime',
     showOverflow: 'tooltip',
     align: 'center',
+    sortable: true,
+    formatter({ cellValue }) {
+      return XEUtils.toDateString(cellValue, 'yyyy-MM-dd HH:ss:mm');
+    },
   },
   {
     width: 100,
@@ -295,6 +314,12 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
 
 export const vxeTableFormSchema: VxeFormItemProps[] = [
   {
+    span: 24,
+    align: 'right',
+    collapseNode: true,
+    itemRender: {},
+  },
+  {
     field: 'roleName',
     title: 'Role Name',
     itemRender: {
@@ -305,6 +330,7 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
       },
     },
     span: 6,
+    folding: true,
   },
   {
     field: 'status',
@@ -322,6 +348,7 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
       },
     },
     span: 4,
+    folding: true,
   },
   {
     span: 14,
@@ -342,5 +369,6 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
         // { props: { type: 'default', htmlType: 'reset', content: '重置' } },
       ],
     },
+    folding: true,
   },
 ];
