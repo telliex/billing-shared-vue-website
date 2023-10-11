@@ -7,7 +7,7 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'ReportType',
       component: 'Select',
-      label: `${t('report.invcoiceReport.searchAreaReportTypeLavel')}:`,
+      label: `${t('report.invoiceReport.searchAreaReportTypeLavel')}:`,
       show: false,
       componentProps: {
         options: [
@@ -25,11 +25,11 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'YearMonth',
       component: 'DatePicker',
-      label: `${t('report.invcoiceReport.searchAreaYYYYMMLavel')}:`,
+      label: `${t('report.invoiceReport.searchAreaYYYYMMLavel')}:`,
       labelWidth: 100,
       required: true,
       componentProps: {
-        picker: 'month',
+        picker: 'date',
       },
       colProps: {
         span: 6,

@@ -54,11 +54,11 @@ export default {
     searchAreaReportTypeOption: 'Billing Summary',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  invcoiceReport: {
+  invoiceReport: {
     tableAreaTitle: 'Billing Invoice Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing Invoice',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // Month
   },
   billingReport: {
     tableAreaTitle: 'Billing List Report',
