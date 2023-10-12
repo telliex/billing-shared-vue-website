@@ -15,6 +15,15 @@
           row.status === 1 ? 'Enable' : 'Disable'
         }}</Tag>
       </template>
+      <template #operate_item>
+        <vxe-checkbox
+          v-model="collapseStatus"
+          content="自定义展开/收起"
+          :checked-value="false"
+          :unchecked-value="true"
+          collapse-node
+        />
+      </template>
     </VxeBasicTable>
     <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
@@ -46,6 +55,7 @@
     pageSize: 10,
   });
 
+  const collapseStatus = ref(true);
   const tableRef = ref<VxeGridInstance>();
   const [registerDrawer, { openDrawer }] = useDrawer();
 
@@ -59,6 +69,20 @@
     proxySave() {
       console.log('数据代理保存事件');
     },
+  };
+  const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
+    console.log('zzzzzz:', currentPage, pageSize);
+    tablePage.currentPage = currentPage;
+    tablePage.pageSize = pageSize;
+    findList();
+  };
+
+  const findList = () => {
+    gridOptions.loading = true;
+    setTimeout(() => {
+      gridOptions.loading = false;
+      tablePage.total = 10;
+    }, 300);
   };
 
   const gridOptions = reactive<BasicTableProps>({
@@ -89,7 +113,7 @@
       layouts: ['Total', 'Number', 'Sizes'],
       currentPage: tablePage.currentPage,
       pageSize: tablePage.pageSize,
-      pageSizes: [5, 10, 15, 20, 50],
+      pageSizes: [10, 50, 80, 100],
       total: tablePage.total,
       autoHidden: false,
     },
@@ -130,7 +154,7 @@
       filter: true, // 启用筛选代理，当点击筛选时会自动触发 query 行为
       props: {
         result: 'results',
-        total: 'page.total',
+        total: 'total',
       },
       ajax: {
         query: async ({ page, sorts, filters, form }) => {
@@ -154,15 +178,19 @@
           });
           console.log('XEUtils.serialize(queryParams):', XEUtils.serialize(queryParams));
           console.log('777777-----:', result);
-
+          let tempResult = result.slice(
+            (page.currentPage - 1) * page.pageSize,
+            page.currentPage * page.pageSize,
+          );
           tablePage.total = result.length;
           tablePage.currentPage = page.currentPage;
           tablePage.pageSize = page.pageSize;
+          console.log('tablePage.total:', tablePage.total);
           return {
             trace_id: Guid.newGuid().toString(),
             total_pages: 1,
             current_page: 1,
-            results: result,
+            results: tempResult,
             status: 1000,
             msg: 'success',
             requested_time: '',
@@ -181,21 +209,6 @@
       },
     },
   });
-
-  const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
-    console.log('zzzzzz:', currentPage, pageSize);
-    tablePage.currentPage = currentPage;
-    tablePage.pageSize = pageSize;
-    findList();
-  };
-
-  const findList = () => {
-    gridOptions.loading = true;
-    setTimeout(() => {
-      gridOptions.loading = false;
-      tablePage.total = 10;
-    }, 300);
-  };
 
   const sortChangeEvent: VxeTableEvents.SortChange = ({ sortList }) => {
     console.info(sortList.map((item) => `${item.field},${item.order}`).join('; '));
@@ -257,4 +270,9 @@
     console.log('111111:', columns);
   });
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+  .vxe-form .vxe-form--item-inner > .align--right {
+    text-align: right;
+    border-bottom: 1px solid #333;
+  }
+</style>

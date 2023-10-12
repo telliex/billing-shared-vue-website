@@ -314,11 +314,15 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
 
 export const vxeTableFormSchema: VxeFormItemProps[] = [
   {
+    title: 'Filter by',
     span: 24,
     align: 'right',
     collapseNode: true,
-    itemRender: {},
+    itemRender: {
+      content: 'Collapse',
+    },
   },
+  // { slots: { default: 'operate_item' }, span: 24 },
   {
     field: 'roleName',
     title: 'Role Name',
