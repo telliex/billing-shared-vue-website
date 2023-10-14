@@ -60,6 +60,8 @@ export default {
       keepPopTitle: '保持选项',
       fixColumnTitle: '固定列',
       fixColumnPopTitle: '固定列选项',
+      sortDesc: 'Sort Descending',
+      sortAsc: 'Sort Ascending',
     },
     grid: {
       emptyText: '暂无数据',
@@ -98,6 +100,12 @@ export default {
     form: {
       unfolding: 'Unfolding',
       folding: 'Folding',
+    },
+    loading: {
+      text: 'Loading...',
+    },
+    error: {
+      notSlot: 'Slot {0} not found',
     },
   },
 };

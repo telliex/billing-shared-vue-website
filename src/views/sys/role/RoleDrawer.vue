@@ -126,6 +126,9 @@
           //     menuIdList.includes(item),
           //   );
           // }
+          values.menuPermissionArray = !values.menuPermissionArray
+            ? []
+            : values.menuPermissionArray;
 
           values.menuPermission = values.menuPermissionArray.length
             ? values.menuPermissionArray.join(',')
@@ -155,12 +158,10 @@
           });
 
           if (!unref(isUpdate)) {
-            console.log('new role');
             let result = Object.assign(template, values);
             await createRoleItem(result);
           } else {
             let result = Object.assign(template, record.value, values);
-            console.log('result:', result);
             let checkRepeat = false;
             roleList.forEach((item) => {
               if (item.id !== result.id && item.roleValue === result.roleValue) {

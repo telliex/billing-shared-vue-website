@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <PageWrapper>
     <VxeBasicTable
       ref="tableRef"
       v-bind="gridOptions"
@@ -15,32 +15,28 @@
           row.status === 1 ? 'Enable' : 'Disable'
         }}</Tag>
       </template>
-      <template #operate_item>
-        <vxe-checkbox
-          v-model="collapseStatus"
-          content="自定义展开/收起"
-          :checked-value="false"
-          :unchecked-value="true"
-          collapse-node
-        />
+      <template #folding_group>
+        <CollapseContainer title="Filter By" @click="collaposeChange" />
       </template>
     </VxeBasicTable>
     <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
-  </div>
+  </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { onMounted, reactive, ref } from 'vue';
+  import { reactive, ref } from 'vue';
   import { ActionItem, TableAction } from '/@/components/Table';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { vxeTableColumns, vxeTableFormSchema } from './role.data';
+  import { CollapseContainer } from '/@/components/Container';
   import {
     BasicTableProps,
     VxeBasicTable,
     VxeGridInstance,
     VxeGridListeners,
-    VxePagerEvents,
+    // VxePagerEvents,
     VxeTableEvents,
   } from '/@/components/VxeTable';
+  import { PageWrapper } from '/@/components/Page';
 
   import { Tag } from 'ant-design-vue';
   import { getRoleListByPage, removeRoleItem } from '/@/api/sys/system';
@@ -48,14 +44,13 @@
   import RoleDrawer from './RoleDrawer.vue';
   import { useDrawer } from '/@/components/Drawer';
   import { Guid } from 'js-guid/dist/guid';
-  import XEUtils from 'xe-utils';
   const tablePage = reactive({
     total: 0,
     currentPage: 1,
     pageSize: 10,
   });
 
-  const collapseStatus = ref(true);
+  let collapseStatus = ref(false);
   const tableRef = ref<VxeGridInstance>();
   const [registerDrawer, { openDrawer }] = useDrawer();
 
@@ -70,20 +65,30 @@
       console.log('数据代理保存事件');
     },
   };
-  const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
-    console.log('zzzzzz:', currentPage, pageSize);
-    tablePage.currentPage = currentPage;
-    tablePage.pageSize = pageSize;
-    findList();
+  // const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
+  //   console.log('zzzzzz:', currentPage, pageSize);
+  //   tablePage.currentPage = currentPage;
+  //   tablePage.pageSize = pageSize;
+  //   findList();
+  // };
+  const collaposeChange = (event) => {
+    console.log('9999999:', event.target.nodeName);
+    if (event.target.nodeName === 'svg') {
+      collapseStatus.value = !collapseStatus.value;
+      console.log('collapseStatus.value click:', collapseStatus.value);
+      if (gridOptions.formConfig) {
+        gridOptions.formConfig.collapseStatus = collapseStatus.value;
+      }
+    }
   };
 
-  const findList = () => {
-    gridOptions.loading = true;
-    setTimeout(() => {
-      gridOptions.loading = false;
-      tablePage.total = 10;
-    }, 300);
-  };
+  // const findList = () => {
+  //   gridOptions.loading = true;
+  //   setTimeout(() => {
+  //     gridOptions.loading = false;
+  //     tablePage.total = 10;
+  //   }, 300);
+  // };
 
   const gridOptions = reactive<BasicTableProps>({
     id: 'VxeTable',
@@ -145,6 +150,7 @@
       ],
     },
     formConfig: {
+      collapseStatus: collapseStatus.value,
       enabled: true,
       items: vxeTableFormSchema,
     },
@@ -164,7 +170,7 @@
           console.log('form:', form);
 
           const queryParams: any = Object.assign({}, form);
-          // 处理排序条件
+          // deal with sort
           const firstSort = sorts[0];
           if (firstSort) {
             queryParams.sort = firstSort.field;
@@ -176,8 +182,6 @@
             pageSize: page.pageSize || 10,
             ...form,
           });
-          console.log('XEUtils.serialize(queryParams):', XEUtils.serialize(queryParams));
-          console.log('777777-----:', result);
           let tempResult = result.slice(
             (page.currentPage - 1) * page.pageSize,
             page.currentPage * page.pageSize,
@@ -210,40 +214,55 @@
     },
   });
 
+  // columns sort change event
   const sortChangeEvent: VxeTableEvents.SortChange = ({ sortList }) => {
     console.info(sortList.map((item) => `${item.field},${item.order}`).join('; '));
   };
 
-  // 操作按钮（权限控制）
+  // Control buttons
   const createActions = (record) => {
     const actions: ActionItem[] = [
       {
         label: '',
         tooltip: 'Edit',
         icon: 'ant-design:edit-twotone',
-        onClick: () => {},
+        onClick: handleEdit.bind(null, record),
       },
       {
         label: '',
-        icon: 'ant-design:delete-twotone',
         tooltip: 'Delete',
+        icon: 'ant-design:delete-twotone',
         color: 'error',
         popConfirm: {
           title: 'Are you sure to delete?',
-          confirm: () => {
-            handleDelete.bind(null, record);
-          },
+          confirm: handleDelete.bind(null, record),
         },
       },
     ];
-
     return actions;
   };
 
+  const triggerProxy = (code: string) => {
+    const $grid = tableRef.value;
+    if ($grid) {
+      $grid.commitProxy(code);
+    }
+  };
+
+  // Edit item
+  function handleEdit(record: Recordable) {
+    console.log('aaaaaa');
+    openDrawer(true, {
+      record,
+      isUpdate: true,
+    });
+  }
+  // Delete item
   function handleDelete(record: Recordable) {
     removeRoleItem(record)
       .then(() => {
         // reload();
+        triggerProxy('query');
       })
       .catch(() => {
         createMessage.warning(
@@ -252,6 +271,7 @@
       });
   }
 
+  // Create item
   function handleCreate() {
     openDrawer(true, {
       isUpdate: false,
@@ -259,20 +279,10 @@
   }
 
   function handleSuccess() {
-    // reload();
+    // triggerProxy('query');
     setTimeout(() => {
       window.location.reload();
     }, 200);
   }
-
-  onMounted(() => {
-    const { columns } = gridOptions;
-    console.log('111111:', columns);
-  });
 </script>
-<style lang="less" scoped>
-  .vxe-form .vxe-form--item-inner > .align--right {
-    text-align: right;
-    border-bottom: 1px solid #333;
-  }
-</style>
+<style lang="less" scoped></style>

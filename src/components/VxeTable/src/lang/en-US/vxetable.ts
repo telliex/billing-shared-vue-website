@@ -60,6 +60,8 @@ export default {
       keepPopTitle: 'Keep Options',
       fixColumnTitle: 'Fixed Column',
       fixColumnPopTitle: 'Fixed Column Options',
+      sortDesc: 'Sort Descending',
+      sortAsc: 'Sort Ascending',
     },
     grid: {
       emptyText: 'No Data',
@@ -98,6 +100,12 @@ export default {
     form: {
       unfolding: 'Unfolding',
       folding: 'Folding',
+    },
+    loading: {
+      text: 'Loading...',
+    },
+    error: {
+      notSlot: 'Slot {0} not found',
     },
   },
 };

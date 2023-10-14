@@ -241,12 +241,12 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     width: 180,
     sortable: true,
   },
-  {
-    title: 'Order',
-    field: 'orderNo',
-    width: 80,
-    sortable: true,
-  },
+  // {
+  //   title: 'Order',
+  //   field: 'orderNo',
+  //   width: 80,
+  //   sortable: true,
+  // },
   {
     title: 'Status',
     field: 'status',
@@ -313,16 +313,16 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
 ];
 
 export const vxeTableFormSchema: VxeFormItemProps[] = [
-  {
-    title: 'Filter by',
-    span: 24,
-    align: 'right',
-    collapseNode: true,
-    itemRender: {
-      content: 'Collapse',
-    },
-  },
-  // { slots: { default: 'operate_item' }, span: 24 },
+  // {
+  //   title: 'Filter by',
+  //   span: 24,
+  //   align: 'right',
+  //   collapseNode: true,
+  //   itemRender: {
+  //     content: 'Collapse',
+  //   },
+  // },
+  { slots: { default: 'folding_group' }, span: 24 },
   {
     field: 'roleName',
     title: 'Role Name',
@@ -339,7 +339,6 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
   {
     field: 'status',
     title: 'Status',
-
     itemRender: {
       name: 'ASelect',
       defaultValue: null,
