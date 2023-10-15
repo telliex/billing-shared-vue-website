@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper>
+  <PageWrapper dense contentFullHeight>
     <VxeBasicTable
       ref="tableRef"
       v-bind="gridOptions"

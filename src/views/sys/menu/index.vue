@@ -1,173 +1,320 @@
 <template>
-  <div>
-    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
-      <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> Create </a-button>
+  <PageWrapper dense contentFullHeight>
+    <VxeBasicTable ref="tableRef" v-bind="gridOptions" v-on="gridEvent">
+      <template #action="{ row }">
+        <TableAction outside :actions="createActions(row)" />
       </template>
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'action'">
-          <TableAction
-            :actions="[
-              {
-                icon: 'ant-design:edit-twotone',
-                // label: '編輯',
-                onClick: handleEdit.bind(null, record),
-                tooltip: 'Edit',
-              },
-              {
-                icon: 'ant-design:delete-twotone',
-                // label: '刪除',
-                // color: 'error',
-                popConfirm: {
-                  title: 'Are you sure to delete',
-                  placement: 'top',
-                  confirm: handleDelete.bind(null, record),
-                },
-                tooltip: 'Delete',
-              },
-              {
-                icon: 'clarity:rack-server-line',
-                // label: '按鈕權限',
-                onClick: handleButtons.bind(null, record),
-                // ifShow: record.type !== 'catalog',
-                ifShow: false,
-                tooltip: '編輯按鈕權限',
-                disabled: true,
-              },
-            ]"
-          />
-        </template>
+      <template #status="{ row }">
+        <Tag :color="row.status === 1 ? 'green' : 'red'">{{
+          row.status === 1 ? 'Enable' : 'Disable'
+        }}</Tag>
       </template>
-    </BasicTable>
+      <template #folding_group>
+        <CollapseContainer title="Filter By" @click="collaposeChange" />
+      </template>
+      <template #icon="{ row }"> <Icon :icon="row.icon" /> </template>
+    </VxeBasicTable>
     <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
     <ButtonsDrawer @register="registerButtonsDrawer" @success="handleSuccess" />
-  </div>
+  </PageWrapper>
 </template>
-<script lang="ts">
-  import { defineComponent, nextTick, onMounted } from 'vue';
-  import { BasicTable, useTable, TableAction } from '/@/components/Table';
+<script lang="ts" setup>
+  import { reactive, ref } from 'vue';
+  import { ActionItem, TableAction } from '/@/components/Table';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { vxeTableColumns, vxeTableFormSchema } from './menu.data';
+  import { CollapseContainer } from '/@/components/Container';
+  import { Icon } from '/@/components/Icon';
+  import {
+    BasicTableProps,
+    VxeBasicTable,
+    VxeGridInstance,
+    VxeGridListeners,
+    // VxePagerEvents,
+    // VxeTableEvents,
+  } from '/@/components/VxeTable';
+  import { PageWrapper } from '/@/components/Page';
+
+  import { Tag } from 'ant-design-vue';
   import { getNavList, removeNavItem } from '/@/api/sys/menu';
-  import { useDrawer } from '/@/components/Drawer';
+  const { createMessage } = useMessage();
   import MenuDrawer from './MenuDrawer.vue';
   import ButtonsDrawer from './ButtonsDrawer.vue';
-  import { columns, searchFormSchema } from './menu.data';
-  import { useI18n } from '/@/hooks/web/useI18n';
+  import { useDrawer } from '/@/components/Drawer';
+  // import { Guid } from 'js-guid/dist/guid';
+  // const tablePage = reactive({
+  //   total: 0,
+  //   currentPage: 1,
+  //   pageSize: 10,
+  // });
 
-  export default defineComponent({
-    name: 'Menu',
-    components: { BasicTable, MenuDrawer, ButtonsDrawer, TableAction },
-    setup() {
-      const [registerDrawer, { openDrawer, setDrawerProps }] = useDrawer();
-      // setDrawerProps({
-      //   width: 800,
-      // });
-      const { t } = useI18n();
-      const [registerButtonsDrawer, { openDrawer: openButtonsDrawer }] = useDrawer();
-      const [registerTable, { reload, expandAll }] = useTable({
-        title: 'Menu list',
-        api: getNavList,
-        columns,
-        formConfig: {
-          showResetButton: false,
-          labelWidth: 120,
-          schemas: searchFormSchema,
-          // autoSubmitOnEnter: true,
-          submitButtonOptions: {
-            postIcon: 'ant-design:search-outlined',
-            iconSize: 12,
+  let collapseStatus = ref(false);
+  const tableRef = ref<VxeGridInstance>();
+  const [registerDrawer, { openDrawer, setDrawerProps }] = useDrawer();
+  const [registerButtonsDrawer, { openDrawer: openButtonsDrawer }] = useDrawer();
+
+  const gridEvent: VxeGridListeners = {
+    proxyQuery() {
+      console.log('数据代理查询事件');
+    },
+    proxyDelete() {
+      console.log('数据代理删除事件');
+    },
+    proxySave() {
+      console.log('数据代理保存事件');
+    },
+  };
+  // const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
+  //   console.log('zzzzzz:', currentPage, pageSize);
+  //   tablePage.currentPage = currentPage;
+  //   tablePage.pageSize = pageSize;
+  //   findList();
+  // };
+  const collaposeChange = (event) => {
+    if (event.target.nodeName === 'svg') {
+      collapseStatus.value = !collapseStatus.value;
+      console.log('collapseStatus.value click:', collapseStatus.value);
+      if (gridOptions.formConfig) {
+        gridOptions.formConfig.collapseStatus = collapseStatus.value;
+      }
+    }
+  };
+
+  // const findList = () => {
+  //   gridOptions.loading = true;
+  //   setTimeout(() => {
+  //     gridOptions.loading = false;
+  //     tablePage.total = 10;
+  //   }, 300);
+  // };
+
+  const gridOptions = reactive<BasicTableProps>({
+    id: 'VxeTable',
+    size: 'mini',
+    keepSource: true,
+    minHeight: 200,
+    height: 700,
+    showHeaderOverflow: true,
+    showOverflow: true,
+    border: true,
+    stripe: true,
+    treeConfig: {
+      transform: true,
+      rowField: 'id',
+      parentField: 'parentId',
+      indent: 20,
+    },
+    columnConfig: {
+      resizable: true, // column resizable
+    },
+    // editConfig: { trigger: 'click', mode: 'cell', showStatus: true },
+    columns: vxeTableColumns,
+    sortConfig: {
+      // trigger: 'cell',
+      // remote: true,
+    },
+    filterConfig: {
+      // remote: true,
+    },
+    pagerConfig: {
+      enabled: false, // hide pager
+      // background: true,
+      // layouts: ['Total', 'Number', 'Sizes'],
+      // currentPage: tablePage.currentPage,
+      // pageSize: tablePage.pageSize,
+      // pageSizes: [10, 50, 80, 100],
+      // total: tablePage.total,
+      // autoHidden: false,
+    },
+    toolbarConfig: {
+      className: 'toolbar',
+      export: false, // export button
+      import: false, // import button
+      print: false, // print button
+      refresh: false, // refresh button
+      custom: false, // custom button
+      zoom: false, // zoom button
+      buttons: [
+        {
+          content: 'Create',
+          buttonRender: {
+            name: 'AButton',
+            props: {
+              // size: 'small',
+              type: 'primary',
+              // preIcon: 'mdi:page-next-outline',
+            },
+            events: {
+              click: () => {
+                handleCreate();
+              },
+            },
           },
-          // resetButtonOptions: {
-          //   postIcon: 'ant-design:reload-outlined',
-          //   iconSize: 12,
-          // },
         },
-        filterTitle: t('report.searchAreaTitle'),
-        showTableSetting: false,
-        isTreeTable: true,
-        pagination: false,
-        striped: false,
-        useSearchForm: true,
-        bordered: true,
-        showIndexColumn: false,
-        canResize: false,
-        actionColumn: {
-          width: 100,
-          title: 'Setting',
-          dataIndex: 'action',
-          fixed: 'right',
+      ],
+    },
+    formConfig: {
+      collapseStatus: collapseStatus.value,
+      enabled: true,
+      items: vxeTableFormSchema,
+    },
+    proxyConfig: {
+      autoLoad: true,
+      sort: false, // 启用排序代理，当点击排序时会自动触发 query 行为
+      filter: false, // 启用筛选代理，当点击筛选时会自动触发 query 行为
+      props: {
+        result: 'results',
+        // total: 'total',
+      },
+      ajax: {
+        query: async ({ sorts, filters, form }) => {
+          console.log('page:', form);
+          console.log('sorts:', sorts);
+          console.log('filters:', filters);
+          console.log('form:', form);
+
+          // const queryParams: any = Object.assign({}, form);
+          // deal with sort
+          // const firstSort = sorts[0];
+          // if (firstSort) {
+          //   queryParams.sort = firstSort.field;
+          //   queryParams.order = firstSort.order;
+          // }
+
+          let result = await getNavList({
+            menuName: null,
+            alias: null,
+            status: form.status,
+          });
+
+          console.log('9999aaaa:', result);
+          // let tempResult = result.slice(
+          //   (page.currentPage - 1) * page.pageSize,
+          //   page.currentPage * page.pageSize,
+          // );
+          // tablePage.total = result.length;
+          // tablePage.currentPage = page.currentPage;
+          // tablePage.pageSize = page.pageSize;
+
+          return result;
+          // return {
+          //   trace_id: Guid.newGuid().toString(),
+          //   total_pages: 1,
+          //   current_page: 1,
+          //   results: result,
+          //   status: 1000,
+          //   msg: 'success',
+          //   requested_time: '',
+          //   responsed_time: '',
+          //   total: result.length,
+          // };
         },
-      });
-      const { createMessage } = useMessage();
-      function handleCreate() {
-        setDrawerProps({
-          width: 900,
-        });
-        openDrawer(true, {
-          isUpdate: false,
-        });
-      }
-
-      function handleEdit(record: Recordable) {
-        setDrawerProps({
-          width: 900,
-        });
-        openDrawer(true, {
-          record,
-          isUpdate: true,
-        });
-      }
-      function handleButtons(record: Recordable) {
-        openButtonsDrawer(true, {
-          record,
-        });
-      }
-
-      function handleDelete(record: Recordable) {
-        if (record.children && record.children.length > 0) {
-          createMessage.warning('Contains submenus, cannot be deleted.');
-          return;
-        }
-        if (record.menuButtons && record.menuButtons !== '') {
-          createMessage.warning('Contains menu buttons, cannot be removed.');
-          return;
-        }
-        removeNavItem(record).then(() => {
-          createMessage.info('Please reload page to update the menu ! ');
-          reload();
-          setTimeout(() => {
-            window.location.reload();
-          }, 200);
-        });
-      }
-
-      function handleSuccess() {
-        createMessage.info('Please reload page to update the menu ! ');
-        reload();
-        setTimeout(() => {
-          window.location.reload();
-        }, 200);
-      }
-
-      function onFetchSuccess() {
-        // 演示默認展開所有表項
-        nextTick(expandAll);
-      }
-
-      onMounted(() => {});
-
-      return {
-        registerTable,
-        registerDrawer,
-        registerButtonsDrawer,
-        handleButtons,
-        handleCreate,
-        handleEdit,
-        handleDelete,
-        handleSuccess,
-        onFetchSuccess,
-        t,
-      };
+        // queryAll: async ({ form }) => {
+        //   return await getRoleListByPage({
+        //     page: null,
+        //     pageSize: null,
+        //     roleName: form.roleName,
+        //     status: form.status,
+        //   });
+        // },
+      },
     },
   });
+
+  // Control buttons
+  const createActions = (record) => {
+    const actions: ActionItem[] = [
+      {
+        label: '',
+        tooltip: 'Edit',
+        icon: 'ant-design:edit-twotone',
+        onClick: handleEdit.bind(null, record),
+      },
+      {
+        label: '',
+        tooltip: 'Delete',
+        icon: 'ant-design:delete-twotone',
+        color: 'error',
+        popConfirm: {
+          title: 'Are you sure to delete?',
+          confirm: handleDelete.bind(null, record),
+        },
+      },
+      {
+        label: '',
+        tooltip: 'Button permission',
+        icon: 'clarity:rack-server-line',
+        onClick: handleButtons.bind(null, record),
+        disabled: true,
+        ifShow: false,
+      },
+    ];
+    return actions;
+  };
+
+  const triggerProxy = (code: string) => {
+    const $grid = tableRef.value;
+    if ($grid) {
+      $grid.commitProxy(code);
+    }
+  };
+
+  // Edit item
+  function handleEdit(record: Recordable) {
+    setDrawerProps({
+      width: 900,
+    });
+    openDrawer(true, {
+      record,
+      isUpdate: true,
+    });
+  }
+
+  function handleButtons(record: Recordable) {
+    openButtonsDrawer(true, {
+      record,
+    });
+  }
+  // Delete item
+  function handleDelete(record: Recordable) {
+    if (record.children && record.children.length > 0) {
+      createMessage.warning('Contains submenus, cannot be deleted.');
+      return;
+    }
+    if (record.menuButtons && record.menuButtons !== '') {
+      createMessage.warning('Contains menu buttons, cannot be removed.');
+      return;
+    }
+    removeNavItem(record).then(() => {
+      createMessage.info('Please reload page to update the menu ! ');
+      triggerProxy('query');
+      setTimeout(() => {
+        window.location.reload();
+      }, 200);
+    });
+  }
+
+  // Create item
+
+  function handleCreate() {
+    setDrawerProps({
+      width: 900,
+    });
+    openDrawer(true, {
+      isUpdate: false,
+    });
+  }
+  function handleSuccess() {
+    createMessage.info('Please reload page to update the menu ! ');
+    triggerProxy('query');
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
+  }
+
+  function onFetchSuccess() {
+    // 演示默認展開所有表項
+    nextTick(expandAll);
+  }
 </script>
+<style lang="less" scoped></style>

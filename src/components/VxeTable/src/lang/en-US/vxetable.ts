@@ -106,6 +106,7 @@ export default {
     },
     error: {
       notSlot: 'Slot {0} not found',
+      noTree: 'Tree structure not found',
     },
   },
 };

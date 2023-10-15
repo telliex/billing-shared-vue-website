@@ -2,10 +2,8 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-// import { Switch } from 'ant-design-vue';
-// import { setRoleStatus } from '/@/api/sys/system';
-// import { useMessage } from '/@/hooks/web/useMessage';
 import moment from 'moment';
+
 import { VxeFormItemProps, VxeGridPropTypes } from '/@/components/VxeTable';
 import XEUtils from 'xe-utils';
 
@@ -313,15 +311,6 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
 ];
 
 export const vxeTableFormSchema: VxeFormItemProps[] = [
-  // {
-  //   title: 'Filter by',
-  //   span: 24,
-  //   align: 'right',
-  //   collapseNode: true,
-  //   itemRender: {
-  //     content: 'Collapse',
-  //   },
-  // },
   { slots: { default: 'folding_group' }, span: 24 },
   {
     field: 'roleName',

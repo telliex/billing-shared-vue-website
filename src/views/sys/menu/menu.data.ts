@@ -6,6 +6,9 @@ import { Icon } from '/@/components/Icon';
 import moment from 'moment';
 import { useMessage } from '/@/hooks/web/useMessage';
 
+import { VxeFormItemProps, VxeGridPropTypes } from '/@/components/VxeTable';
+import XEUtils from 'xe-utils';
+
 const { createMessage } = useMessage();
 export const columns: BasicColumn[] = [
   {
@@ -474,5 +477,175 @@ export const formSchema: FormSchema[] = [
       ],
     },
     ifShow: ({ values }) => isButton(values.type),
+  },
+];
+
+export const vxeTableColumns: VxeGridPropTypes.Columns = [
+  {
+    title: 'Menu name',
+    field: 'menuName',
+    showOverflow: 'tooltip',
+    width: 300,
+    // sortable: true,
+  },
+  {
+    title: 'Tyoe',
+    field: 'type',
+    showOverflow: 'tooltip',
+    width: 100,
+    // sortable: true,
+  },
+  {
+    title: 'Display name',
+    field: 'alias',
+    width: 200,
+    // sortable: true,
+  },
+  {
+    title: 'Status',
+    field: 'status',
+    width: 100,
+    // sortable: true,
+    // formatter({ cellValue }) {
+    //   return cellValue === 1 ? 'Enable' : 'Disable';
+    // },
+    slots: { default: 'status' },
+  },
+  {
+    title: 'Route path',
+    width: 150,
+    field: 'routePath',
+    showOverflow: 'tooltip',
+    align: 'left',
+  },
+  {
+    title: 'Description',
+    width: 200,
+    field: 'description',
+    showOverflow: 'tooltip',
+    align: 'left',
+  },
+  {
+    title: 'Icon',
+    width: 50,
+    field: 'icon',
+    showOverflow: 'tooltip',
+    align: 'left',
+    slots: { default: 'icon' },
+  },
+  {
+    title: 'Permission',
+    width: 200,
+    field: 'permission',
+    showOverflow: 'tooltip',
+    align: 'left',
+  },
+  {
+    title: 'Component name',
+    width: 200,
+    field: 'componentName',
+    showOverflow: 'tooltip',
+    align: 'left',
+  },
+  {
+    title: 'Component',
+    width: 200,
+    field: 'component',
+    showOverflow: 'tooltip',
+    align: 'left',
+  },
+  {
+    title: 'Order',
+    width: 80,
+    field: 'orderNo',
+    showOverflow: 'tooltip',
+    align: 'center',
+  },
+  {
+    title: 'Creater',
+    width: 160,
+    field: 'addMasterName',
+    showOverflow: 'tooltip',
+    align: 'center',
+    // sortable: true,
+  },
+  {
+    title: 'Create Time',
+    width: 180,
+    field: 'addTime',
+    showOverflow: 'tooltip',
+    align: 'center',
+    // sortable: true,
+    formatter({ cellValue }) {
+      return XEUtils.toDateString(cellValue, 'yyyy-MM-dd HH:ss:mm');
+    },
+  },
+  {
+    title: 'Latest Modified User',
+    width: 160,
+    field: 'changeMasterName',
+    showOverflow: 'tooltip',
+    align: 'center',
+    // sortable: true,
+  },
+  {
+    title: 'Latest Updated Date',
+    width: 160,
+    field: 'changeTime',
+    showOverflow: 'tooltip',
+    align: 'center',
+    // sortable: true,
+    formatter({ cellValue }) {
+      return XEUtils.toDateString(cellValue, 'yyyy-MM-dd HH:ss:mm');
+    },
+  },
+  {
+    width: 100,
+    title: 'Setting',
+    align: 'center',
+    slots: { default: 'action' },
+    fixed: 'right',
+  },
+];
+
+export const vxeTableFormSchema: VxeFormItemProps[] = [
+  { slots: { default: 'folding_group' }, span: 24 },
+  {
+    field: 'status',
+    title: 'Status',
+    itemRender: {
+      name: 'ASelect',
+      defaultValue: null,
+      props: {
+        clearable: true,
+        options: [
+          { label: 'Enable', value: 1 },
+          { label: 'Disable', value: 0 },
+        ],
+      },
+    },
+    span: 4,
+    folding: true,
+  },
+  {
+    span: 20,
+    align: 'right',
+    className: '!pr-0',
+    itemRender: {
+      name: 'AButtonGroup',
+      children: [
+        {
+          props: {
+            type: 'primary',
+            content: 'Search',
+            htmlType: 'submit',
+            postIcon: 'ant-design:search-outlined',
+          },
+          attrs: { class: 'mr-2' },
+        },
+        // { props: { type: 'default', htmlType: 'reset', content: '重置' } },
+      ],
+    },
+    folding: true,
   },
 ];

@@ -1,9 +1,12 @@
-import moment from 'moment';
+import { BasicColumn } from '/@/components/Table';
+import { FormSchema } from '/@/components/Table';
 import { getAllRoleList } from '/@/api/sys/system';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
+import moment from 'moment';
+
+import { VxeFormItemProps, VxeGridPropTypes } from '/@/components/VxeTable';
+import XEUtils from 'xe-utils';
 
 export const columns: BasicColumn[] = [
   {
@@ -17,11 +20,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'nickname',
     width: 120,
   },
-  // {
-  //   title: 'Email',
-  //   dataIndex: 'email',
-  //   width: 200,
-  // },
+
   {
     title: 'Status',
     dataIndex: 'status',
@@ -239,5 +238,151 @@ export const accountFormSchema: FormSchema[] = [
     componentProps: {
       disabled: true,
     },
+  },
+];
+
+export const vxeTableColumns: VxeGridPropTypes.Columns = [
+  {
+    title: 'User Name',
+    field: 'userName',
+    showOverflow: 'tooltip',
+    width: 200,
+    sortable: true,
+  },
+  {
+    title: 'Nickname',
+    field: 'nickname',
+    showOverflow: 'tooltip',
+    width: 120,
+    sortable: true,
+  },
+  {
+    title: 'Status',
+    field: 'status',
+    width: 120,
+    sortable: true,
+    // formatter({ cellValue }) {
+    //   return cellValue === 1 ? 'Enable' : 'Disable';
+    // },
+    slots: { default: 'status' },
+  },
+  {
+    title: 'Role',
+    field: 'roles',
+    width: 120,
+    sortable: true,
+    // formatter({ cellValue }) {
+    //   return cellValue === 1 ? 'Enable' : 'Disable';
+    // },
+    slots: { default: 'roles' },
+  },
+
+  {
+    title: 'Remark',
+    width: 150,
+    field: 'remark',
+    showOverflow: 'tooltip',
+    align: 'center',
+  },
+  {
+    title: 'Creater',
+    width: 160,
+    field: 'addMasterName',
+    showOverflow: 'tooltip',
+    align: 'center',
+    sortable: true,
+  },
+  {
+    title: 'Create Time',
+    width: 180,
+    field: 'addTime',
+    showOverflow: 'tooltip',
+    align: 'center',
+    sortable: true,
+    formatter({ cellValue }) {
+      return XEUtils.toDateString(cellValue, 'yyyy-MM-dd HH:ss:mm');
+    },
+  },
+  {
+    title: 'Latest Modified User',
+    width: 160,
+    field: 'changeMasterName',
+    showOverflow: 'tooltip',
+    align: 'center',
+    sortable: true,
+  },
+  {
+    title: 'Latest Updated Date',
+    width: 160,
+    field: 'changeTime',
+    showOverflow: 'tooltip',
+    align: 'center',
+    sortable: true,
+    formatter({ cellValue }) {
+      return XEUtils.toDateString(cellValue, 'yyyy-MM-dd HH:ss:mm');
+    },
+  },
+  {
+    width: 100,
+    title: 'Setting',
+    align: 'center',
+    slots: { default: 'action' },
+    fixed: 'right',
+  },
+];
+
+export const vxeTableFormSchema: VxeFormItemProps[] = [
+  { slots: { default: 'folding_group' }, span: 24 },
+  {
+    field: 'userName',
+    title: 'User Name',
+    itemRender: {
+      defaultValue: null,
+      name: 'AInput',
+      props: {
+        clearable: true,
+        placeholder: 'Search User Name',
+      },
+    },
+    span: 8,
+    folding: true,
+  },
+  {
+    field: 'status',
+    title: 'Status',
+    itemRender: {
+      name: 'ASelect',
+      defaultValue: null,
+      props: {
+        clearable: true,
+        options: [
+          { label: 'Enable', value: 1 },
+          { label: 'Disable', value: 0 },
+        ],
+      },
+    },
+    span: 4,
+    folding: true,
+  },
+  {
+    span: 12,
+    align: 'right',
+    className: '!pr-0',
+    itemRender: {
+      name: 'AButtonGroup',
+      children: [
+        {
+          props: {
+            type: 'primary',
+            content: 'Search',
+            htmlType: 'submit',
+            postIcon: 'ant-design:search-outlined',
+          },
+          attrs: { class: 'mr-2' },
+        },
+        // { props: { type: 'default', htmlType: 'reset', content: '重置' } },
+      ],
+    },
+    folding: true,
   },
 ];

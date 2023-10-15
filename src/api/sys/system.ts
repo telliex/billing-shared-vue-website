@@ -17,7 +17,7 @@ import {
   DeptListModel,
   UserPageParams,
   UserItem,
-  UserListModel,
+  // UserListModel,
 } from './model/systemModel';
 
 import { apiTransDataForHeader, correntReturn, errorReturn } from '/@/utils/tools';
@@ -700,7 +700,7 @@ export const isUserExist = (params: any) => {
 };
 
 export const getUserList = (params: UserPageParams) => {
-  return defHttp.get<UserListModel>(
+  return defHttp.get(
     {
       url: `/api${version}${Api.UserList}`,
       data: {},
