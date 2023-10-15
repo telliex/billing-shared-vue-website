@@ -165,7 +165,7 @@ export const getNavTreeListOnlyCatalog = (params: FilterItems) =>
 
 // main table
 export const getNavList = (params: FilterItems) =>
-  defHttp.get<getNavListResultModel>(
+  defHttp.get(
     {
       url: `/api${version}${Api.NavList}`,
       data: {},

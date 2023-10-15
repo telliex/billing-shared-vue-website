@@ -25,6 +25,7 @@
   import { vxeTableColumns, vxeTableFormSchema } from './menu.data';
   import { CollapseContainer } from '/@/components/Container';
   import { Icon } from '/@/components/Icon';
+
   import {
     BasicTableProps,
     VxeBasicTable,
@@ -92,30 +93,31 @@
     id: 'VxeTable',
     size: 'mini',
     keepSource: true,
-    minHeight: 200,
-    height: 700,
+    minHeight: 500,
+
     showHeaderOverflow: true,
     showOverflow: true,
     border: true,
     stripe: true,
+
     treeConfig: {
       transform: true,
       rowField: 'id',
-      parentField: 'parentId',
-      indent: 20,
+      parentField: 'parentMenu',
+      expandAll: true,
     },
     columnConfig: {
       resizable: true, // column resizable
     },
     // editConfig: { trigger: 'click', mode: 'cell', showStatus: true },
     columns: vxeTableColumns,
-    sortConfig: {
-      // trigger: 'cell',
-      // remote: true,
-    },
-    filterConfig: {
-      // remote: true,
-    },
+    // sortConfig: {
+    //   trigger: 'cell',
+    //   remote: true,
+    // },
+    // filterConfig: {
+    //   remote: true,
+    // },
     pagerConfig: {
       enabled: false, // hide pager
       // background: true,
@@ -185,6 +187,12 @@
             menuName: null,
             alias: null,
             status: form.status,
+          });
+
+          result.forEach((item) => {
+            if (item.parentMenu === '') {
+              item.parentMenu = null;
+            }
           });
 
           console.log('9999aaaa:', result);
@@ -312,9 +320,9 @@
     }, 200);
   }
 
-  function onFetchSuccess() {
-    // 演示默認展開所有表項
-    nextTick(expandAll);
-  }
+  // function onFetchSuccess() {
+  //   // 演示默認展開所有表項
+  //   nextTick(expandAll);
+  // }
 </script>
 <style lang="less" scoped></style>

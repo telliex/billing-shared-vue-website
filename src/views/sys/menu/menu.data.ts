@@ -486,6 +486,8 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'menuName',
     showOverflow: 'tooltip',
     width: 300,
+    align: 'left',
+    treeNode: true,
     // sortable: true,
   },
   {
