@@ -51,8 +51,8 @@
     ReportType: string;
     YearMonth: string;
   }
-  let tableName = ref(t('report.cdnReport.tableAreaTitle'));
-  let reportType = 'mgt_cdn_report'; // report type & S3 prefix folder name,
+  let tableName = ref(t('report.costbylinkedReport.tableAreaTitle'));
+  let reportType = 'billing_costbylinked_report'; // report type & S3 prefix folder name,
   let S3Bucket = 'billing-dev-sync-data'; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
@@ -103,9 +103,9 @@
     let timeStamp = dayjs().format('YYYYMMDD');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename: `cdn_report_${timeStamp}.xlsx`,
+      filename: `costbylinked_${timeStamp}.xlsx`,
       write2excelOpts: {
-        bookType: 'xlsx'
+        bookType: 'xlsx',
       },
     });
   }
@@ -322,6 +322,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'CDNReport',
+    name: 'costbylinkedReport',
   };
 </script>

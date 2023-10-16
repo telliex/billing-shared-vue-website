@@ -34,7 +34,6 @@
   import { useI18n } from '/@/hooks/web/useI18n';
   mport { jsonToSheetXlsx, ExcelData } from '/@/components/Excel';
   import { BasicTable, BasicColumn } from '/@/components/Table';
-  import { useModal } from '/@/components/Modal';
   // import { getBasicColumns, getBasicData } from './tableData';
   import { useMessage } from '/@/hooks/web/useMessage';
   // import queryString from 'query-string';

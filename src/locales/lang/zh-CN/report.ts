@@ -66,4 +66,16 @@ export default {
     searchAreaReportTypeOption: 'Billing List',
     searchAreaYYYYMMLavel: '月份', // Month
   },
+  costbylinkedReport: {
+    tableAreaTitle: 'Cost By Linkedaccount Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Cost By Linkedaccount',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  costbyproductReport: {
+    tableAreaTitle: 'Cost By Product Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Cost By Product',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
 };
