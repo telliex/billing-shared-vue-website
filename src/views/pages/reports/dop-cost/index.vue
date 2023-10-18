@@ -15,43 +15,38 @@
       :dataSource="table.dataSource"
     >
       <template #toolbar>
-        <a-button type="primary" @click="toggleCanResize">
+        <!-- <a-button type="primary" @click="toggleCanResize">
           {{ !canResize ? t('report.autoFitHeight') : t('report.cancalFitHeight') }}
-        </a-button>
-        <a-button type="primary" @click="openModal">{{ t('report.exportFile') }}</a-button>
+        </a-button> -->
+        <a-button type="primary" @click="exportFile">{{ t('report.exportFile') }}</a-button>
       </template>
     </BasicTable>
-    <ExpExcelModal @register="registerForExportFile" @success="exportFile" />
   </div>
 </template>
 <script lang="ts" setup>
   import { ref, reactive, onMounted } from 'vue';
   import { GetS3TargetUrl } from '/@/api/sys/system';
+  import { getFinalActiveTime, writeFinalActiveTime } from '/@/api/sys/user';
   import { Guid } from 'js-guid';
   import { CollapseContainer } from '/@/components/Container';
   import { BasicForm, FormSchema, useForm } from '/@/components/Form/index';
   // hooks
   import { useI18n } from '/@/hooks/web/useI18n';
-  import {
-    jsonToSheetXlsx,
-    ExpExcelModal,
-    ExportModalResult,
-    ExcelData,
-  } from '/@/components/Excel';
+  import { jsonToSheetXlsx, ExcelData } from '/@/components/Excel';
   import { BasicTable, BasicColumn } from '/@/components/Table';
-  import { useModal } from '/@/components/Modal';
   // import { getBasicColumns, getBasicData } from './tableData';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import queryString from 'query-string';
+  // import queryString from 'query-string';
   import dayjs from 'dayjs';
   import * as XLSX from 'xlsx';
   import { dateUtil } from '/@/utils/dateUtil';
   import axios from 'axios';
   import { getFormSchema } from './formData';
-
+  import { checkLoginTimeout } from '/@/utils/tools';
+  import { logoutApi } from '/@/api/sys/user';
   const { t } = useI18n();
 
-  //====Start========modify Area===========
+  //====Start========modify Area=========== [for need to modify area]
   interface SearchItems {
     ReportType: string;
     YearMonth: string;
@@ -61,7 +56,7 @@
   let S3Bucket = 'data-platform-data-bucket-ecv-dev'; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
-  const canResize = ref(false);
+  // const canResize = ref(false);
   const tableListRef = ref<
     {
       title: string;
@@ -75,10 +70,11 @@
     YearMonth: '',
   });
 
-  const [registerForSearch, { setFieldsValue, clearValidate }] = useForm({
+  const [registerForSearch] = useForm({
     labelWidth: 100,
     size: 'small',
     autoFocusFirstItem: true,
+    // submitOnChange: true,
     schemas,
     actionColOptions: {
       span: 24,
@@ -87,28 +83,29 @@
       postIcon: 'ant-design:search-outlined',
       iconSize: 12,
     },
+    showResetButton: false,
     resetButtonOptions: {
       postIcon: 'ant-design:reload-outlined',
       iconSize: 12,
     },
   });
-  const [registerForExportFile, { openModal }] = useModal();
-
+  // const [registerForExportFile] = useModal();
   const loadingRef = ref<Boolean>(false);
   const { createMessage } = useMessage();
 
   // control table height
-  function toggleCanResize() {
-    canResize.value = !canResize.value;
-  }
+  // function toggleCanResize() {
+  //   canResize.value = !canResize.value;
+  // }
   // export file
-  function exportFile({ filename, bookType }: ExportModalResult) {
+  function exportFile() {
     // 默認Object.keys(data[0])作為header
+    let timeStamp = dayjs().format('YYYYMMDDHHmmss');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename,
+      filename: `dopcost-${timeStamp}.xlsx`,
       write2excelOpts: {
-        bookType,
+        bookType: 'xlsx',
       },
     });
   }
@@ -116,6 +113,9 @@
   function loadDataSuccess(excelDataList: ExcelData[]) {
     tableListRef.value = [];
     console.log(excelDataList);
+    if (excelDataList[0].results.length == 0) {
+      createMessage.warning('No data！');
+    }
     for (const excelData of excelDataList) {
       const {
         header,
@@ -261,9 +261,24 @@
   }
 
   async function handleSearchSubmit(values: SearchItems) {
-    createMessage.success('click search,values:' + JSON.stringify(values));
-    let S3ReportClass = values.ReportType;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`;
+    // deal with
+    let UserInfo = await getFinalActiveTime();
+    if (!UserInfo || UserInfo.length === 0) {
+      logoutApi();
+      return false;
+    }
+
+    let checkTimeout = checkLoginTimeout(UserInfo[0]);
+    if (checkTimeout) {
+      await writeFinalActiveTime();
+    } else {
+      logoutApi();
+      return false;
+    }
+
+    // createMessage.success('click search,values:' + JSON.stringify(values));
+    let S3ReportClass = reportType;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`; // [for need to modify area]
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
 
@@ -271,11 +286,11 @@
       trace_id: Guid.newGuid().toString(),
       bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
       bucket_name: S3Bucket,
-      object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`,
+      object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`, // [for need to modify area]
       duration: '10',
     }).catch((err) => {
       console.log(err);
-      createMessage.warning('該條件下未有資料！');
+      // createMessage.warning('該條件下未有資料！');
     });
 
     console.log('S3Location:', S3Location);
@@ -294,12 +309,19 @@
     }
   }
 
-  onMounted(() => {
-    const parsed: any = queryString.parse(location.search.replace(/\//, ''));
-    setFieldsValue({
-      ReportType: reportType,
-      YearMonth: parsed.qdate ? dayjs(parsed.qdate).format('YYYY-MM') : null,
-    });
-    clearValidate();
+  onMounted(async () => {
+    // const parsed: any = queryString.parse(location.search.replace(/\//, ''));
+    // setFieldsValue({
+    //   ReportType: reportType,
+    //   YearMonth: parsed.qdate ? dayjs(parsed.qdate).format('YYYY-MM') : null,
+    // });
+    // setTimeout(() => {
+    //   clearValidate();
+    // }, 10);
   });
+</script>
+<script lang="ts">
+  export default {
+    name: 'DopCost',
+  };
 </script>

@@ -1,7 +1,7 @@
 export default {
   searchAreaTitle: '查询栏位',
   queryText: '查询',
-  resetText: '重置',
+  resetText: '清除',
   exportFile: '导出',
   autoFitHeight: '自适应高度',
   cancalFitHeight: '取消自适应',

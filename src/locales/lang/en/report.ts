@@ -6,7 +6,7 @@
  * @LastEditTime: 2023-05-29 21:23:31
  */
 export default {
-  searchAreaTitle: 'Search',
+  searchAreaTitle: 'Filter by',
   queryText: 'Search',
   resetText: 'Reset',
   exportFile: 'export',
@@ -29,6 +29,6 @@ export default {
     tableAreaTitle: 'Drop Cost Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Drop Cost',
-    searchAreaYYYYMMLavel: 'Month',
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
 };

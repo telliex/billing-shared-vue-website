@@ -1,6 +1,6 @@
 <template>
   <div :class="[prefixCls, `${prefixCls}--${theme}`]">
-    <a-breadcrumb :routes="routes">
+    <a-breadcrumb :routes="routes" v-if="ifBreadcrumbShow">
       <template #itemRender="{ route, routes: routesMatched, paths }">
         <Icon :icon="getIcon(route)" v-if="getShowBreadCrumbIcon && getIcon(route)" />
         <span v-if="!hasRedirect(routesMatched, route)">
@@ -35,6 +35,7 @@
 
   import { REDIRECT_NAME } from '/@/router/constant';
   import { getAllParentPath } from '/@/router/helper/menuHelper';
+  import { PageEnum } from '/@/enums/pageEnum';
 
   export default defineComponent({
     name: 'LayoutBreadcrumb',
@@ -49,9 +50,17 @@
       const { getShowBreadCrumbIcon } = useRootSetting();
       const go = useGo();
 
+      let ifBreadcrumbShow = ref(true);
+
       const { t } = useI18n();
       watchEffect(async () => {
         if (currentRoute.value.name === REDIRECT_NAME) return;
+        // TODO hack
+        if (currentRoute.value.path === PageEnum.BASE_HOME) {
+          ifBreadcrumbShow.value = false;
+        } else {
+          ifBreadcrumbShow.value = true;
+        }
         const menus = await getMenus();
 
         const routeMatched = currentRoute.value.matched;
@@ -145,7 +154,16 @@
         return route.icon || route.meta?.icon;
       }
 
-      return { routes, t, prefixCls, getIcon, getShowBreadCrumbIcon, handleClick, hasRedirect };
+      return {
+        routes,
+        t,
+        prefixCls,
+        getIcon,
+        getShowBreadCrumbIcon,
+        handleClick,
+        hasRedirect,
+        ifBreadcrumbShow,
+      };
     },
   });
 </script>

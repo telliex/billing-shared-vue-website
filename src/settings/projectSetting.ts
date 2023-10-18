@@ -29,9 +29,9 @@ const setting: ProjectConfig = {
 
   // Permission mode
   // 權限模式,默認前端角色權限模式
-  // ROUTE_MAPPING: 前端模式（菜單由路由生成，默認）
-  // ROLE：前端模式（菜單路由分開）
-  permissionMode: PermissionModeEnum.ROUTE_MAPPING,
+  // ROUTE_MAPPING: 前端模式（選單由路由生成，默認）
+  // ROLE：前端模式（選單路由分開）
+  permissionMode: PermissionModeEnum.BACK,
 
   // Permission-related cache is stored in sessionStorage or localStorage
   permissionCacheType: CacheTypeEnum.LOCAL,
@@ -53,7 +53,7 @@ const setting: ProjectConfig = {
   colorWeak: false,
 
   // Whether to cancel the menu, the top, the multi-tab page display, for possible embedded in other systems
-  // 是否取消菜單,頂部,多標簽頁顯示, 用於可能內嵌在別的系統內
+  // 是否取消選單,頂部,多標簽頁顯示, 用於可能內嵌在別的系統內
   fullContent: false,
 
   // content mode
@@ -89,7 +89,7 @@ const setting: ProjectConfig = {
     //  (change)顯示消息中心按鈕
     showNotice: false,
     // Whether to display the menu search
-    //  (change)顯示菜單搜索按鈕
+    //  (change)顯示選單搜索按鈕
     showSearch: false,
   },
 
@@ -139,11 +139,11 @@ const setting: ProjectConfig = {
   // [Multi-label tab]
   multiTabsSetting: {
     // 刷新後是否保留已經打開的標簽頁
-    cache: false,
+    cache: true,
     // Turn on
     show: true,
     // Is it possible to drag and drop sorting tabs
-    canDrag: true,
+    canDrag: false,
     // Turn on quick actions
     showQuick: true,
     // Whether to show the refresh button
@@ -171,7 +171,7 @@ const setting: ProjectConfig = {
 
   // Whether to enable KeepAlive cache is best to close during development, otherwise the cache needs to be cleared every time
   //  (change)是否開啟 KeepAlive緩存  開發時候最好關閉,不然每次都需要清除緩存
-  openKeepAlive: false,
+  openKeepAlive: true,
 
   // Automatic screen lock time, 0 does not lock the screen. Unit minute default 0
   // 自動鎖屏時間，為0不鎖屏。 單位分鐘 默認1個小時
@@ -203,6 +203,8 @@ const setting: ProjectConfig = {
   // 切換界面的時候是否取消已經發送但是未響應的http請求。
   // 如果開啟,想對單獨接口覆蓋。可以在單獨接口設置
   removeAllHttpPending: false,
+  // Logout after ? min of inactivity
+  loginTimeout: 3 * 60,
 };
 
 export default setting;

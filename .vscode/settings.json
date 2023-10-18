@@ -92,7 +92,12 @@
       "source.fixAll.stylelint": true
     }
   },
-  "i18n-ally.localesPaths": ["src/locales/lang"],
+  "i18n-ally.localesPaths": [
+    "src/locales",
+    "src/locales/lang",
+    "public/resource/tinymce/langs",
+    "src/components/VxeTable/src/lang"
+  ],
   "i18n-ally.keystyle": "nested",
   "i18n-ally.sortKeys": true,
   "i18n-ally.namespace": true,

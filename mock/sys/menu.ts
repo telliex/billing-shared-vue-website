@@ -236,8 +236,9 @@ const linkRoute = {
 };
 
 export default [
+  // not use , need to delete
   {
-    url: '/basic-api/getMenuList',
+    url: '/basic-api/getMenuList_fail',
     timeout: 1000,
     method: 'get',
     response: (request: requestParams) => {

@@ -33,15 +33,19 @@
   import 'powerbi-report-authoring';
   import { Guid } from 'js-guid';
   import {
+    GetDictionaryItems,
     GetUserPermission,
     GetUserPermissionRoleList,
-    GetPowerBIFilterValue,
+    // GetPowerBIFilterValue,
   } from '/@/api/sys/system';
   import { PowerBIReportEmbed } from 'powerbi-client-vue-js';
   import { createLocalStorage } from '/@/utils/cache';
   import { useMessage } from '/@/hooks/web/useMessage';
   const { createMessage } = useMessage();
   import { useLoading } from '/@/components/Loading';
+  import axios from 'axios';
+  import { getFinalActiveTime, logoutApi, writeFinalActiveTime } from '/@/api/sys/user';
+  import { checkLoginTimeout } from '/@/utils/tools';
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
     target: wrapEl,
@@ -54,6 +58,8 @@
   const ls = createLocalStorage();
   let currentPagePermissionId = null;
   let currentPageReportName = 'sales_cdn_revenue'; // need to change
+  let currentPageReportIdKey = 'POWERBI_CDN_REPORTId'; // need to change
+  let currentPageTableNameKey = 'POWERBI_CDN_TABLENAME'; // need to change
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName}__container`;
   let currentUserId = ls.get('TEMP_USER_ID_KEY__');
@@ -64,13 +70,13 @@
   let report: Report;
 
   // Handles the embed config response for embedding
-  export interface ConfigResponse {
-    Id: string;
-    EmbedUrl: string;
-    EmbedToken: {
-      Token: string;
-    };
-  }
+  // export interface ConfigResponse {
+  //   Id: string;
+  //   EmbedUrl: string;
+  //   EmbedToken: {
+  //     Token: string;
+  //   };
+  // }
 
   interface IEmbedConfigurationBaseExtended extends IEmbedConfigurationBase {
     filters?: any[];
@@ -130,18 +136,19 @@
    */
   async function embedReport(): Promise<void> {
     openWrapLoading();
-    console.log(ls.get('TEMP_USER_ID_KEY__'));
-    console.log('Embed Report clicked');
 
     // get user permission list
     let permissionResult = await GetUserPermission({
       trace_id: Guid.newGuid().toString(),
       BillMasterId: currentUserId,
-    }).catch((err) => {
-      console.log('err:', err);
     });
 
-    console.log("Current User's permissionList:", permissionResult[0].data);
+    if (!permissionResult) {
+      createMessage.error('Get permission fail !');
+      console.log('Get permission fail.');
+      closeWrapLoading();
+      return;
+    }
 
     // check the page if the user has permission to view this report
     let isOnPermission = permissionResult[0].data.find(
@@ -155,20 +162,56 @@
       return;
     }
 
-    let filterValueResult = await GetPowerBIFilterValue({
-      userId: currentUserId,
-      pageName: currentPageReportName,
+    // deal with
+    let UserInfo = await getFinalActiveTime();
+    if (!UserInfo || UserInfo.length === 0) {
+      logoutApi();
+      return;
+    }
+
+    let checkTimeout = checkLoginTimeout(UserInfo[0]);
+    if (checkTimeout) {
+      await writeFinalActiveTime();
+    } else {
+      logoutApi();
+      return;
+    }
+
+    // let filterValueResult = await GetPowerBIFilterValue({
+    //   userId: currentUserId,
+    //   pageName: currentPageReportName,
+    // }).catch((err) => {
+    //   console.log(err);
+    // });
+    let filterValueResult: any[] = [];
+
+    let tempRes: any = await axios({
+      method: 'post',
+      // url: 'https://rgoyovotjqogivdmoth4ut3dsm0jgyhl.lambda-url.us-west-2.on.aws/',
+      url: import.meta.env.VITE_GLOB_POWERBI_LAMBDA_API_URL,
+      data: {
+        userId: currentUserId,
+        pageName: currentPageReportName,
+        pageIdKey: currentPageReportIdKey,
+      },
     }).catch((err) => {
+      createMessage.error('Lambda api error!');
+      closeWrapLoading();
       console.log(err);
     });
+
+    if (!tempRes) {
+      return;
+    }
+
+    filterValueResult[0] = tempRes.data;
+
     if (!filterValueResult[0]?.ok) {
       console.error(`Failed to fetch PowerBI Embed Data. `);
       createMessage.error('Failed to fetch PowerBI Embed Data.');
       closeWrapLoading();
       return;
     }
-
-    console.log('filterValueResult:', filterValueResult[0]);
 
     //[239,273,384]
     targetValue = filterValueResult[0].userNameList;
@@ -183,7 +226,6 @@
       embedUrl: embedUrl,
       accessToken: embedToken,
     };
-    console.log('currentReportConfig:', currentReportConfig);
 
     isEmbedded.value = true;
   }
@@ -205,6 +247,8 @@
     // Check if the pages are available
     if (pages.length === 0) {
       console.log('No pages found.');
+      createMessage.error('No pages found.');
+      closeWrapLoading();
       return;
     }
 
@@ -213,6 +257,8 @@
 
     if (!activePage) {
       console.log('No Active page found');
+      createMessage.error('No Active page found');
+      closeWrapLoading();
       return;
     }
 
@@ -221,7 +267,6 @@
       // For more information: https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/report-authoring-overview
       // Get the visual
       const preVisual = await activePage.getVisualByName('VisualContainer6');
-      console.log('1Visual:', preVisual);
       const response = await preVisual.changeType(type);
       const nextVisual = await activePage.getVisualByName('VisualContainer6');
       console.log('2Visual:', nextVisual);
@@ -230,8 +275,11 @@
     } catch (error) {
       if (error === 'PowerBIEntityNotFound') {
         console.log('No Visual found with that name');
+        createMessage.error('No Visual found with that name');
       } else {
         console.log(error);
+        createMessage.error('Please Contact Administrator');
+        closeWrapLoading();
       }
     }
   }
@@ -246,6 +294,7 @@
   ): Promise<IHttpPostMessageResponse<void> | undefined> {
     // Check whether Report is available or not
     if (!reportAvailable()) {
+      closeWrapLoading();
       return;
     }
 
@@ -277,6 +326,8 @@
       return response;
     } catch (error) {
       console.error(error);
+      createMessage.error('Please Contact Administrator');
+      closeWrapLoading();
       return;
     }
   }
@@ -302,11 +353,26 @@
     console.log('===report===');
     console.log(value);
 
+    let tableName = await GetDictionaryItems({
+      trace_id: Guid.newGuid().toString(),
+      request_items: [
+        {
+          item_type: 'PowerBI',
+          item_key: currentPageTableNameKey,
+          item_key2: '',
+        },
+      ],
+    });
+    if (!tableName) {
+      createMessage.error('Failed to fetch PowerBI Parameter Data.');
+      closeWrapLoading();
+    }
+
     value.config.filters = [
       {
         $schema: 'http://powerbi.com/product/schema#basic',
         target: {
-          table: 'sales-revenue-report',
+          table: tableName[0].response_items[0].itemValue,
           column: 'ecloud_sales',
           report,
         },
@@ -320,7 +386,6 @@
         },
       },
     ];
-    console.log(value);
     report = value;
   }
 
@@ -331,6 +396,7 @@
     if (!report) {
       // Prepare status message for Error
       console.log('Report not available.');
+      createMessage.error('Report not available.');
       return false;
     }
     return true;
@@ -341,9 +407,6 @@
       trace_id: Guid.newGuid().toString(),
       BillMasterId: currentUserId,
     }).then((res) => {
-      console.log('====Permission List======');
-      console.log('res1:', res[0].data);
-
       res[0].data.forEach((item) => {
         if (item.type === currentPageReportName) {
           currentPagePermissionId = item.read.permissionId;
@@ -354,6 +417,11 @@
     });
   });
 </script>
+<!-- <script lang="ts">
+  export default {
+    name: 'SalesCDNRevenue',
+  };
+</script> -->
 <style lang="less">
   .bar-content {
     display: none;

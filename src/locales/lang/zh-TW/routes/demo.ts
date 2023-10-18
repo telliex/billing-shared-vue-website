@@ -116,7 +116,7 @@ export default {
     tabs: '標簽頁操作',
     tabDetail: '標簽詳情頁',
     print: '打印',
-    contextMenu: '右鍵菜單',
+    contextMenu: '右鍵選單',
     download: '文件下載',
     clickOutSide: 'ClickOutSide組件',
     imgPreview: '圖片預覽',
@@ -162,7 +162,7 @@ export default {
     doc: '項目文檔(內嵌)',
     docExternal: '項目文檔(外鏈)',
   },
-  level: { level: '多級菜單' },
+  level: { level: '多級選單' },
   page: {
     page: '頁面',
 

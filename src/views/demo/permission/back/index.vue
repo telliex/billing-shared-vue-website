@@ -3,20 +3,20 @@
     title="後台權限示例"
     contentBackground
     contentClass="p-4"
-    content="目前mock了兩組數據， id為1 和 2 具體返回的菜單可以在mock/sys/menu.ts內查看"
+    content="目前mock了兩組數據， id為1 和 2 具體返回的選單可以在mock/sys/menu.ts內查看"
   >
     <CurrentPermissionMode />
 
-    <Alert class="mt-4" type="info" message="點擊後請查看左側菜單變化" show-icon />
+    <Alert class="mt-4" type="info" message="點擊後請查看左側選單變化" show-icon />
 
     <div class="mt-4">
       權限切換(請先切換權限模式為後台權限模式):
       <Space>
         <a-button @click="switchToken(1)" :disabled="!isBackPermissionMode">
-          獲取用戶id為1的菜單
+          獲取用戶id為1的選單
         </a-button>
         <a-button @click="switchToken(2)" :disabled="!isBackPermissionMode">
-          獲取用戶id為2的菜單
+          獲取用戶id為2的選單
         </a-button>
       </Space>
     </div>
@@ -49,7 +49,7 @@
         const token = 'fakeToken' + userId;
         userStore.setToken(token);
 
-        // 重新獲取用戶信息和菜單
+        // 重新獲取用戶信息和選單
         userStore.getUserInfoAction();
         refreshMenu();
       }

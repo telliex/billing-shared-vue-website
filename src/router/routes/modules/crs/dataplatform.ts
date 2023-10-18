@@ -47,7 +47,7 @@ const report: AppRouteModule = {
       meta: {
         title: 'Sales Monthly Revenue',
       },
-      component: () => import('/@/views/pages/reports/Report-sales_monthly_revenue.vue'),
+      component: () => import('/@/views/pages/reports/Report-sales-monthly-revenue.vue'),
     },
   ],
 };

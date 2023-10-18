@@ -9,7 +9,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './dept.data';
 
-  import { getDeptList } from '/@/api/demo/system';
+  import { getDeptList } from '/@/api/sys/system';
   export default defineComponent({
     name: 'DeptModal',
     components: { BasicModal, BasicForm },
@@ -34,7 +34,12 @@
             ...data.record,
           });
         }
-        const treeData = await getDeptList();
+        const treeData = await getDeptList({
+          deptName: null,
+          status: null,
+          page: null,
+          pageSize: null,
+        });
         updateSchema({
           field: 'parentDept',
           componentProps: { treeData },
