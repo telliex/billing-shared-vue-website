@@ -52,7 +52,7 @@
     YearMonth: string;
   }
   let tableName = ref(t('report.diffReport.tableAreaTitle'));
-  let reportType = 'linkedaccount_entity_differences_rpeort'; // report type & S3 prefix folder name,
+  let reportType = 'linkedaccount_entity_differences_report'; // report type & S3 prefix folder name,
   let S3Bucket = 'billing-dev-sync-data'; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
@@ -103,9 +103,9 @@
     let timeStamp = dayjs().format('YYYYMMDD');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename: `linked_diff_${timeStamp}.xlsx`,
+      filename: `linkedid_diff_${timeStamp}.xlsx`,
       write2excelOpts: {
-        bookType:'xlsx',
+        bookType: 'xlsx',
       },
     });
   }
@@ -278,7 +278,7 @@
 
     // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3ReportClass = reportType;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM05').toString()}.csv`;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.csv`;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
 

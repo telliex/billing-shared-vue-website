@@ -32,7 +32,7 @@
   import { BasicForm, FormSchema, useForm } from '/@/components/Form/index';
   // hooks
   import { useI18n } from '/@/hooks/web/useI18n';
-  mport { jsonToSheetXlsx, ExcelData } from '/@/components/Excel';
+  import { jsonToSheetXlsx, ExcelData } from '/@/components/Excel';
   import { BasicTable, BasicColumn } from '/@/components/Table';
   // import { getBasicColumns, getBasicData } from './tableData';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -103,7 +103,7 @@
     let timeStamp = dayjs().format('YYYYMMDD');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename: `sap_cno_report_${timeStamp}.xlsx`,
+      filename: `sap_cno_${timeStamp}.xlsx`,
       write2excelOpts: {
         bookType: 'xlsx',
       },
@@ -278,7 +278,7 @@
 
     // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3ReportClass = reportType;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM05').toString()}.csv`;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.csv`;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
 
@@ -322,6 +322,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'SapCnoReport',
+    name: 'SapcnoReport',
   };
 </script>
