@@ -1,51 +1,58 @@
 <template>
-  <BasicModal
-    width="800px"
-    :title="t('component.upload.upload')"
-    :okText="t('component.upload.save')"
-    v-bind="$attrs"
-    @register="register"
-    @ok="handleOk"
-    :closeFunc="handleCloseFunc"
-    :maskClosable="false"
-    :keyboard="false"
-    class="upload-modal"
-    :okButtonProps="getOkButtonProps"
-    :cancelButtonProps="{ disabled: isUploadingRef }"
-  >
-    <template #centerFooter>
-      <a-button
-        @click="handleStartUpload"
-        color="success"
-        :disabled="!getIsSelectFile"
-        :loading="isUploadingRef"
-      >
-        {{ getUploadBtnText }}
-      </a-button>
-    </template>
-
-    <div class="upload-modal-toolbar">
-      <Alert :message="getHelpText" type="info" banner class="upload-modal-toolbar__text" />
-
-      <Upload
-        :accept="getStringAccept"
-        :multiple="multiple"
-        :before-upload="beforeUpload"
-        :show-upload-list="false"
-        class="upload-modal-toolbar__btn"
-      >
-        <a-button type="primary">
-          {{ t('component.upload.choose') }}
+  <div>
+    <BasicModal
+      width="800px"
+      :title="t('component.upload.upload')"
+      :okText="t('component.upload.save')"
+      v-bind="$attrs"
+      @register="register"
+      @ok="handleOk"
+      :closeFunc="handleCloseFunc"
+      :maskClosable="false"
+      :keyboard="false"
+      class="upload-modal"
+      :okButtonProps="getOkButtonProps"
+      :cancelButtonProps="{ disabled: isUploadingRef }"
+      :canFullscreen="false"
+    >
+      <template #centerFooter>
+        <a-button
+          @click="handleStartUpload"
+          color="success"
+          :disabled="!getIsSelectFile"
+          :loading="isUploadingRef"
+        >
+          {{ getUploadBtnText }}
         </a-button>
-      </Upload>
-    </div>
-    <FileList :dataSource="fileListRef" :columns="columns" :actionColumn="actionColumn" />
-  </BasicModal>
+      </template>
+
+      <div class="upload-modal-toolbar" ref="wrapEl">
+        <Alert :message="getHelpText" type="info" banner class="upload-modal-toolbar__text" />
+
+        <Upload
+          :accept="getStringAccept"
+          :multiple="multiple"
+          :before-upload="beforeUpload"
+          :show-upload-list="false"
+          class="upload-modal-toolbar__btn"
+        >
+          <a-button type="primary">
+            {{ t('component.upload.choose') }}
+          </a-button>
+        </Upload>
+      </div>
+      <FileList :dataSource="fileListRef" :columns="columns" :actionColumn="actionColumn" />
+    </BasicModal>
+    <Modal @register="modalRegister" />
+  </div>
 </template>
 <script lang="ts">
   import { defineComponent, reactive, ref, toRefs, unref, computed, PropType } from 'vue';
   import { Upload, Alert } from 'ant-design-vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
+  import { useLoading } from '/@/components/Loading';
+  import Modal from './Modal.vue';
+  import { useModal } from '/@/components/Modal';
   //   import { BasicTable, useTable } from '/@/components/Table';
   // hooks
   import { useUploadType } from './useUpload';
@@ -61,9 +68,11 @@
   import { warn } from '/@/utils/log';
   import FileList from './FileList.vue';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import * as xlsx from 'xlsx';
+  import { upLoad2S3 } from '/@/api/sys/upload';
 
   export default defineComponent({
-    components: { BasicModal, Upload, Alert, FileList },
+    components: { BasicModal, Upload, Alert, FileList, Modal },
     props: {
       ...basicProps,
       previewFileList: {
@@ -76,6 +85,12 @@
       const state = reactive<{ fileList: FileItem[] }>({
         fileList: [],
       });
+
+      const selectedFile = ref<File | null>(null);
+      const workbook = ref<xlsx.WorkBook | null>(null);
+      const columnNames = ref<string[]>([]);
+
+      const [modalRegister, { openModal, setModalProps }] = useModal();
 
       //   是否正在上传
       const isUploadingRef = ref(false);
@@ -90,6 +105,17 @@
         helpTextRef: helpText,
         maxNumberRef: maxNumber,
         maxSizeRef: maxSize,
+      });
+
+      // loading module
+      const wrapEl = ref<ElRef>(null);
+      const [openWrapLoading, closeWrapLoading] = useLoading({
+        target: wrapEl,
+        props: {
+          tip: 'Loading...',
+          absolute: false,
+          theme: 'dark',
+        },
       });
 
       const { createMessage } = useMessage();
@@ -121,8 +147,97 @@
           : t('component.upload.startUpload');
       });
 
+      const handleFileUpload = async (file: File) => {
+        // selectedFile.value = event.target.files[0];
+
+        if (file) {
+          selectedFile.value = file;
+          return await checkColumnName();
+        } else {
+          return false;
+        }
+      };
+
+      function getElementsInBNotInA(A: string[], B: string[]) {
+        const result: string[] = [];
+
+        for (const element of B) {
+          if (!A.includes(element)) {
+            result.push(element);
+          }
+        }
+        closeWrapLoading();
+        return result;
+      }
+
+      // rules
+      const checkColumnName = () => {
+        if (selectedFile.value) {
+          const file = selectedFile.value;
+          const reader = new FileReader();
+
+          reader.onload = (e: ProgressEvent<FileReader>) => {
+            const data = e.target?.result as string | null;
+            if (data) {
+              workbook.value = xlsx.read(data, { type: 'binary' });
+              if (workbook.value) {
+                const sheet = workbook.value.Sheets[workbook.value.SheetNames[0]];
+                const parsedData = xlsx.utils.sheet_to_json(sheet, {
+                  header: 1,
+                });
+                if (Array.isArray(parsedData) && parsedData) {
+                  columnNames.value = parsedData[0] as []; // 转换为字符串数组
+                  console.log('A-file columns:', columnNames.value);
+                  console.log('B-props.requiredList:', props.requiredList);
+                  let cpmpareResult = getElementsInBNotInA(columnNames.value, props.requiredList);
+
+                  if (cpmpareResult.length === 0) {
+                    // alert(`perfect!`);
+                    createMessage.success('perfect!');
+                    return true;
+                  } else {
+                    //alert(`The ${cpmpareResult} column name isn't included in the file`);
+                    // setModalProps({ columns: cpmpareResult });
+                    openModal();
+                    // createMessage.error(
+                    //   `The ${cpmpareResult.join('|')} column${
+                    //     cpmpareResult.length === 1 ? '' : 's'
+                    //   } name isn't included in the file`,
+                    // );
+                    return false;
+                  }
+                } else {
+                  alert('Unable to parse column name');
+                  return false;
+                }
+              } else {
+                alert('Unable to parse worksheet');
+                return false;
+              }
+            } else {
+              alert('Unable to read file data');
+              return false;
+            }
+          };
+
+          reader.readAsBinaryString(file);
+        } else {
+          alert('请选择一个文件进行检查');
+        }
+      };
+
       // 上传前校验
-      function beforeUpload(file: File) {
+      async function beforeUpload(file: File) {
+        console.log('====props======:', props);
+        console.log('=======file=====:', file);
+        openWrapLoading();
+
+        if (props.required && props.requiredList.length !== 0) {
+          let result = await handleFileUpload(file);
+          console.log('result:', result);
+        }
+
+        return false;
         const { size, name } = file;
         const { maxSize } = props;
         // 设置最大值，则判断
@@ -210,30 +325,48 @@
         }
       }
 
+      function objectToFormData(obj) {
+        const formData = new FormData();
+
+        for (const key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            formData.append(key, obj[key]);
+          }
+        }
+
+        return formData;
+      }
+
       // 点击开始上传
       async function handleStartUpload() {
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxprops:', props);
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxfileListRef.value:', fileListRef.value);
         const { maxNumber } = props;
         if ((fileListRef.value.length + props.previewFileList?.length ?? 0) > maxNumber) {
           return createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
         }
-        try {
-          isUploadingRef.value = true;
-          // 只上传不是成功状态的
-          const uploadFileList =
-            fileListRef.value.filter((item) => item.status !== UploadResultStatus.SUCCESS) || [];
-          const data = await Promise.all(
-            uploadFileList.map((item) => {
-              return uploadApiByItem(item);
-            }),
-          );
-          isUploadingRef.value = false;
-          // 生产环境:抛出错误
-          const errorList = data.filter((item: any) => !item.success);
-          if (errorList.length > 0) throw errorList;
-        } catch (e) {
-          isUploadingRef.value = false;
-          throw e;
-        }
+        let temp = objectToFormData({ ...props.upLoadObject, file: fileListRef.value[0] });
+
+        let result = await upLoad2S3(temp);
+        console.log('result:', result);
+        // try {
+        //   isUploadingRef.value = true;
+        //   // 只上传不是成功状态的
+        //   const uploadFileList =
+        //     fileListRef.value.filter((item) => item.status !== UploadResultStatus.SUCCESS) || [];
+        //   const data = await Promise.all(
+        //     uploadFileList.map((item) => {
+        //       return uploadApiByItem(item);
+        //     }),
+        //   );
+        //   isUploadingRef.value = false;
+        //   // 生产环境:抛出错误
+        //   const errorList = data.filter((item: any) => !item.success);
+        //   if (errorList.length > 0) throw errorList;
+        // } catch (e) {
+        //   isUploadingRef.value = false;
+        //   throw e;
+        // }
       }
 
       //   点击保存
@@ -293,6 +426,8 @@
         getIsSelectFile,
         getUploadBtnText,
         t,
+        wrapEl,
+        modalRegister,
       };
     },
   });

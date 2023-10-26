@@ -118,6 +118,10 @@ export interface FormProps {
   showResetButton?: boolean;
   // Show confirmation button
   showSubmitButton?: boolean;
+  // Show prview button with upload component
+  showPreviewDrawer?: boolean;
+
+  upLoadObject?: any;
 
   resetFunc?: () => Promise<void>;
   submitFunc?: () => Promise<void>;
