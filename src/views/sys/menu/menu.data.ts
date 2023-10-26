@@ -507,6 +507,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     title: 'Status',
     field: 'status',
     width: 100,
+    showOverflow: false,
     // sortable: true,
     // formatter({ cellValue }) {
     //   return cellValue === 1 ? 'Enable' : 'Disable';
