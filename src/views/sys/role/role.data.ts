@@ -121,7 +121,7 @@ export const searchFormSchema: FormSchema[] = [
 export const formSchema: FormSchema[] = [
   {
     field: 'roleName',
-    label: 'Role name',
+    label: 'Role Name',
     required: true,
     component: 'Input',
     rules: [
@@ -141,7 +141,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'roleValue',
-    label: 'Role value',
+    label: 'Role Value',
     required: true,
     component: 'Input',
     componentProps: {
@@ -169,7 +169,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'orderNo',
-    label: 'order',
+    label: 'Order',
     component: 'Input',
     componentProps: {
       maxLength: 5,
@@ -226,7 +226,7 @@ export const formSchema: FormSchema[] = [
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
-    title: 'Role name',
+    title: 'Role Name',
     field: 'roleName',
     showOverflow: 'tooltip',
     width: 200,
