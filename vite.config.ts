@@ -69,7 +69,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       drop: VITE_DROP_CONSOLE ? ['console', 'debugger'] : [],
     },
     build: {
-      target: 'es2015',
+      target: 'es2022',
       cssTarget: 'chrome80',
       outDir: OUTPUT_DIR,
       // minify: 'terser',
