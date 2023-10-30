@@ -2,8 +2,8 @@
  * @Description:
  * @Anthor: Telliex
  * @Date: 2022-11-14 06:35:00
- * @LastEditors: Telliex
- * @LastEditTime: 2022-11-24 07:06:04
+ * @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
+ * @LastEditTime: 2023-08-02 20:53:15
  */
 
 export default {
@@ -144,10 +144,10 @@ export default {
   btnValidateForm: '手動校驗表單',
   btnResetValidate: '清空校驗信息',
   btnGetFormValues: '獲取表單值',
-  btnResetFields: '重置',
+  btnResetFields: '清除',
   btnRestoreDefault: 'Restore Default',
   btnDiscountCustomerList: '折扣優惠客戶清單',
-  btnExport: '導出',
+  btnExport: '匯出報表',
   btnFitTableHeight: '自適應高度',
   btnUnFitTableHeight: '取消自適應高度',
 };

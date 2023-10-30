@@ -18,7 +18,7 @@
   import { CollapseContainer } from '/@/components/Container';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { PageWrapper } from '/@/components/Page';
-  import { isAccountExist } from '/@/api/demo/system';
+  import { isUserExist } from '/@/api/sys/system';
 
   const schemas: FormSchema[] = [
     {
@@ -194,7 +194,7 @@
         {
           validator(_, value) {
             return new Promise((resolve, reject) => {
-              isAccountExist(value)
+              isUserExist(value)
                 .then(() => resolve())
                 .catch((err) => {
                   reject(err.message || '驗證失敗');

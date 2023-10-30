@@ -1,63 +1,74 @@
 <template>
   <div>
-    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
+    <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增菜單 </a-button>
+        <a-button type="primary" @click="handleCreate"> 新增部門 </a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <TableAction
             :actions="[
               {
-                icon: 'clarity:note-edit-line',
+                icon: 'ant-design:edit-twotone',
                 onClick: handleEdit.bind(null, record),
+                tooltip: '編輯此部門',
               },
               {
-                icon: 'ant-design:delete-outlined',
-                color: 'error',
+                icon: 'ant-design:delete-twotone',
+                // color: 'error',
                 popConfirm: {
                   title: '是否確認刪除',
                   placement: 'left',
                   confirm: handleDelete.bind(null, record),
                 },
+                tooltip: '刪除此部門',
               },
             ]"
           />
         </template>
       </template>
     </BasicTable>
-    <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
+    <DeptModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, nextTick } from 'vue';
+  import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuList } from '/@/api/demo/system';
+  import { getDeptList, removeDeptItem } from '/@/api/sys/system';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { useModal } from '/@/components/Modal';
+  import DeptModal from './DeptModal.vue';
 
-  import { useDrawer } from '/@/components/Drawer';
-  import MenuDrawer from './MenuDrawer.vue';
-
-  import { columns, searchFormSchema } from './menu.data';
+  import { columns, searchFormSchema } from './dept.data';
 
   export default defineComponent({
-    name: 'MenuManagement',
-    components: { BasicTable, MenuDrawer, TableAction },
+    name: 'Department',
+    components: { BasicTable, DeptModal, TableAction },
     setup() {
-      const [registerDrawer, { openDrawer }] = useDrawer();
-      const [registerTable, { reload, expandAll }] = useTable({
-        title: '菜單列表',
-        api: getMenuList,
+      const [registerModal, { openModal }] = useModal();
+      const { createMessage } = useMessage();
+      const [registerTable, { reload }] = useTable({
+        title: '部門列表',
+        api: getDeptList,
         columns,
         formConfig: {
+          showResetButton: false,
           labelWidth: 120,
           schemas: searchFormSchema,
+          submitButtonOptions: {
+            postIcon: 'ant-design:search-outlined',
+            iconSize: 12,
+          },
+          resetButtonOptions: {
+            postIcon: 'ant-design:reload-outlined',
+            iconSize: 12,
+          },
         },
-        isTreeTable: true,
         pagination: false,
         striped: false,
         useSearchForm: true,
-        showTableSetting: true,
+        showTableSetting: false,
         bordered: true,
         showIndexColumn: false,
         canResize: false,
@@ -66,44 +77,44 @@
           title: '操作',
           dataIndex: 'action',
           // slots: { customRender: 'action' },
-          fixed: undefined,
+          fixed: 'right',
         },
       });
 
       function handleCreate() {
-        openDrawer(true, {
+        openModal(true, {
           isUpdate: false,
         });
       }
 
       function handleEdit(record: Recordable) {
-        openDrawer(true, {
+        openModal(true, {
           record,
           isUpdate: true,
         });
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
+        if (record.children && record.children.length > 0) {
+          createMessage.error('含有子部門，無法刪除');
+          return;
+        }
+        removeDeptItem(record).then(() => {
+          reload();
+        });
       }
 
       function handleSuccess() {
         reload();
       }
 
-      function onFetchSuccess() {
-        // 演示默認展開所有表項
-        nextTick(expandAll);
-      }
-
       return {
         registerTable,
-        registerDrawer,
+        registerModal,
         handleCreate,
         handleEdit,
         handleDelete,
         handleSuccess,
-        onFetchSuccess,
       };
     },
   });

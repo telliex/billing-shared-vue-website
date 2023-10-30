@@ -65,7 +65,7 @@ export default {
     settingFixedLeft: 'Fixed Left',
     settingFixedRight: 'Fixed Right',
     settingFullScreen: 'Full Screen',
-    index: 'Index',
+    index: 'No',
     total: 'total of {total}',
   },
   time: {
@@ -79,9 +79,9 @@ export default {
   },
   tree: {
     selectAll: 'Select All',
-    unSelectAll: 'Cancel Select',
-    expandAll: 'Expand All',
-    unExpandAll: 'Collapse all',
+    unSelectAll: 'Unselect', // Cancel Select
+    expandAll: 'Expand', // Expand All
+    unExpandAll: 'Collapse', //  Collapse all
 
     checkStrictly: 'Hierarchical association',
     checkUnStrictly: 'Hierarchical independence',

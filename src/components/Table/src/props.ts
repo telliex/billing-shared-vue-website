@@ -105,6 +105,10 @@ export const basicProps = {
     type: Object as PropType<TableRowSelection | null>,
     default: null,
   },
+  filterTitle: {
+    type: [String, Function] as PropType<string | ((data: Recordable) => string)>,
+    default: null,
+  },
   title: {
     type: [String, Function] as PropType<string | ((data: Recordable) => string)>,
     default: null,

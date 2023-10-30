@@ -93,11 +93,28 @@ export function createPermissionGuard(router: Router) {
       next();
       return;
     }
-
     const routes = await permissionStore.buildRoutesAction();
-
+    console.log('routes:', routes);
     routes.forEach((route) => {
-      router.addRoute(route as unknown as RouteRecordRaw);
+      console.log(route);
+
+      let temp: any = {};
+      if (!route.id) {
+        temp = route;
+      } else {
+        temp = {
+          path: route.path,
+          name: route.name,
+          component: route.component,
+          children: route.children,
+          meta: route.meta,
+        };
+        if (route.redirect) {
+          temp.redirect = route.redirect;
+        }
+      }
+
+      router.addRoute(temp as unknown as RouteRecordRaw);
     });
 
     router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
@@ -105,7 +122,7 @@ export function createPermissionGuard(router: Router) {
     permissionStore.setDynamicAddedRoute(true);
 
     if (to.name === PAGE_NOT_FOUND_ROUTE.name) {
-      // 动态添加路由后，此处应当重定向到fullPath，否则会加载404页面内容
+      // 動態添加路由後，此處應當重定向到fullPath，否則會加載404頁面內容
       next({ path: to.fullPath, replace: true, query: to.query });
     } else {
       const redirectPath = (from.query.redirect || to.path) as string;

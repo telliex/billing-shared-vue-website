@@ -12,9 +12,11 @@ import {
   COMPANY_KEY,
   USER_KEY,
 } from '/@/enums/cacheEnum';
-import { getAuthCache, setAuthCache } from '/@/utils/auth';
+import { getAuthCache, isSHA256Format, setAuthCache, stringToHSA265 } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-// import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
+// import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
+import { loginApi, logoutApi } from '/@/api/sys/user';
+import { getBillUserInfo } from '/@/api/sys/system';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -24,6 +26,7 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 import { createLocalStorage } from '/@/utils/cache';
+import { Guid } from 'js-guid';
 
 const ls = createLocalStorage();
 interface UserState {
@@ -114,10 +117,13 @@ export const useUserStore = defineStore('user', {
     },
     resetState() {
       this.userInfo = null;
+      this.company = '';
+      this.system = '';
       this.token = '';
       this.roleList = [];
       this.sessionTimeout = false;
     },
+
     /**
      * @description: login
      */
@@ -129,32 +135,40 @@ export const useUserStore = defineStore('user', {
     ): Promise<GetUserInfoModel | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
-        // todo recovery == start
-        // const data = await loginApi(loginParams, mode);
-        // const { token } = data;
-        // todo recovery == end
-        // todo remove == start
-        const { token } = ls.get('TEMP_USER_INFO_KEY__');
-        // todo remove == end
-        // save token
+        // 1、調用登錄接口
+        // check password is SHA256 format
+        if (!isSHA256Format(loginParams.password)) {
+          loginParams.password = await stringToHSA265(loginParams.password);
+        }
+        const data = await loginApi(loginParams, mode);
+        const { token } = data;
+        ls.set('TEMP_USER_INFO_KEY__', data); // leave out call getUserInfo();
+        ls.set('TEMP_USER_ID_KEY__', data.userId);
+        // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(token);
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
       }
     },
+
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
-      console.log('77777777');
-      // get user info
+      // 3、獲取用户信息
       const userInfo = await this.getUserInfoAction();
+
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
+        console.log('sessionTimeout');
         this.setSessionTimeout(false);
       } else {
         const permissionStore = usePermissionStore();
+        console.log('permissionStore:', permissionStore);
         if (!permissionStore.isDynamicAddedRoute) {
+          console.log('動態添加路由配置');
+          // 4、獲取路由配置並動態添加路由配置
           const routes = await permissionStore.buildRoutesAction();
+          console.log('routes:', routes);
           routes.forEach((route) => {
             router.addRoute(route as unknown as RouteRecordRaw);
           });
@@ -167,9 +181,14 @@ export const useUserStore = defineStore('user', {
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
-      // todo recovery == start
-      // const userInfo = await getUserInfo();
-      // todo recovery == end
+
+      const userBillingInfo = await getBillUserInfo({
+        trace_id: Guid.newGuid().toString(),
+        id: ls.get('TEMP_USER_ID_KEY__'),
+      });
+      console.log('Billing_user_info:', userBillingInfo);
+      ls.set('TEMP_USER_BILLING_INFO_KEY__', userBillingInfo);
+
       const userInfo = ls.get('TEMP_USER_INFO_KEY__');
 
       const { roles = [] } = userInfo;
@@ -187,29 +206,24 @@ export const useUserStore = defineStore('user', {
      * @description: logout , click left-top coner user avatar
      */
     async logout(goLogin = false) {
-      // temp login 暫時 remove
-      // todo recovery == start
-      // if (this.getToken) {
-      //   try {
-      //     await doLogout();
-      //   } catch {
-      //     console.log('註銷Token失敗');
-      //   }
-      // }
-      // todo recovery == end
+      if (this.getToken) {
+        try {
+          await logoutApi();
+        } catch {
+          console.log('註銷 Token 失敗');
+        }
+      }
+
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);
-      // todo remove == start
+
       ls.set('TEMP_USER_ID_KEY__', null);
       ls.set('TEMP_USER_INFO_KEY__', null);
-      ls.set('TEMP_JSON_URL_KEY__', null);
-      // todo remove == end
-      // goLogin && router.push(PageEnum.BASE_LOGIN);
-      if (goLogin) {
-        window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL + '/index.php?logout';
-      }
-      // router.push( import.meta.env.VITE_GLOB_OLD_MGT_URL+'/index.php?logout');
+      ls.set('TEMP_USER_INFO_KEY__', null);
+      ls.set('TEMP_USER_BILLING_INFO_KEY__', null);
+
+      goLogin && router.push(PageEnum.BASE_LOGIN);
     },
 
     /**

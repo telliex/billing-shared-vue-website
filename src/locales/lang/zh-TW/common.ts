@@ -5,7 +5,7 @@ export default {
   loadingText: '加載中...',
   saveText: '保存',
   delText: '刪除',
-  resetText: '重置',
+  resetText: '清除',
   searchText: '搜索',
   queryText: '查詢',
 

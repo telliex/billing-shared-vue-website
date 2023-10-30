@@ -1,11 +1,11 @@
 export default {
-  okText: 'OK',
+  okText: 'Comfirm',
   closeText: 'Close',
   cancelText: 'Cancel',
   loadingText: 'Loading...',
   saveText: 'Save',
   delText: 'Delete',
-  resetText: 'Reset',
+  resetText: 'Clear', // Reset
   searchText: 'Search',
   queryText: 'Search',
 

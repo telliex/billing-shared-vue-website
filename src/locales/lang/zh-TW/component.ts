@@ -13,7 +13,7 @@ export default {
     uploadSuccess: '上傳成功',
     modalTitle: '頭像上傳',
     okText: '確認並上傳',
-    btn_reset: '重置',
+    btn_reset: '清除',
     btn_rotate_left: '逆時針旋轉',
     btn_rotate_right: '順時針旋轉',
     btn_scale_x: '水平翻轉',
@@ -46,7 +46,7 @@ export default {
     copy: '覆制圖標成功!',
   },
   menu: {
-    search: '菜單搜索',
+    search: '選單搜索',
   },
   modal: {
     cancelText: '關閉',
@@ -70,7 +70,7 @@ export default {
 
     index: '序號',
 
-    total: '共 {total} 條數據',
+    total: '共 {total} 筆資料',
   },
   time: {
     before: '前',

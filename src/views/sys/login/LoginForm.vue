@@ -8,17 +8,18 @@
     v-show="getShow"
     @keypress.enter="handleLogin"
   >
-    <!-- <FormItem name="company" class="enter-x">
+    <FormItem name="company" class="enter-x" v-if="false">
       <Select
         size="large"
         v-model:value="formData.company"
         :placeholder="t('sys.login.company')"
         class="fix-auto-fill"
         :options="options"
+        disabled
       />
-    </FormItem> -->
+    </FormItem>
     <FormItem name="account" class="enter-x">
-      <InputPassword
+      <Input
         size="large"
         v-model:value="formData.account"
         :placeholder="t('sys.login.userName')"
@@ -85,9 +86,8 @@
 </template>
 <script lang="ts" setup>
   import { reactive, ref, unref, computed, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { Checkbox, Form, Input, Row, Col, Button } from 'ant-design-vue';
-
+  import { Checkbox, Form, Input, Row, Col, Button, Select } from 'ant-design-vue';
+  import { useLocaleStoreWithOut } from '/@/store/modules/locale';
   import LoginFormTitle from './LoginFormTitle.vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -96,223 +96,101 @@
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
-  import { createLocalStorage } from '/@/utils/cache';
-  import { getS3JSON, getJSONURL } from '/@/utils/json';
-  import queryString from 'query-string';
-  // this imports a bare-bones version of S3 that exposes the .send operation
-  // import { S3, S3Client, AbortMultipartUploadCommand } from '@aws-sdk/client-s3';
-
-  // this imports just the getObject operation from S3
-  // import { GetObjectCommand } from '@aws-sdk/client-s3';
+  // import { stringToHSA265 } from '/@/utils/auth';
 
   const ACol = Col;
   const ARow = Row;
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
-  const { notification, createErrorModal, createMessage } = useMessage();
+  const { notification, createErrorModal } = useMessage();
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
-  const router = useRouter();
+
   const { getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
   const formRef = ref();
   const loading = ref(false);
   const rememberMe = ref(false);
-  let redirectUrl = ref<string | null>('');
-  const fromURL = import.meta.env.VITE_GLOB_OLD_MGT_URL;
-  // const fromURL = 'http://localhost:3131/';
+
   const formData = reactive({
     company: 'ECV',
     account: '',
     password: '',
   });
 
-  const ls = createLocalStorage();
-
-  let userList: any[] = reactive([]);
-  // const options = reactive([
-  //   {
-  //     label: 'ECV',
-  //     value: 'ECV',
-  //   },
-  //   {
-  //     label: 'ECR',
-  //     value: 'ECR',
-  //   },
-  //   {
-  //     label: 'CN',
-  //     value: 'CN',
-  //   },
-  // ]);
+  // let userList: any[] = reactive([]);
+  const options = reactive([
+    {
+      label: 'ECV',
+      value: 'ECV',
+    },
+    {
+      label: 'ECR',
+      value: 'ECR',
+    },
+    // {
+    //   label: 'CN',
+    //   value: 'CN',
+    // },
+  ]);
 
   const { validForm } = useFormValid(formRef);
 
-  //onKeyStroke('Enter', handleLogin);
-
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
-
-  // function handleChange(e: ChangeEvent) {
-  //   console.log(e);
-  //   // userStore.setCompany(e);
-  // }
-
-  // function handleConfirm(type: 'warning' | 'error' | 'success' | 'info') {
-  //   createConfirm({
-  //     iconType: type,
-  //     title: 'Tip',
-  //     content: 'content message...',
-  //   });
-  // }
 
   async function handleLogin() {
     const data = await validForm();
     if (!data) return;
     try {
       loading.value = true;
+      // call login api
       const userInfo = await userStore.login({
         password: data.password,
         username: data.account,
-        mode: 'none', //不要默认的错误提示
+        mode: 'none', //不要默認的錯誤提示
       });
-      // const userInfo = await userStore.login({
-      //   password: '123456',
-      //   username: 'billing',
-      //   mode: 'none', //不要默认的错误提示
-      // });
+
       if (userInfo) {
+        const localeStore = useLocaleStoreWithOut();
+        if (rememberMe.value) {
+          localeStore.setLoginInfo({
+            username: data.account,
+            // password: await stringToHSA265(data.password),
+            password: data.password,
+            remeberMe: rememberMe.value,
+          });
+        } else {
+          localeStore.setLoginInfo({
+            username: '',
+            password: '',
+            remeberMe: false,
+          });
+        }
+
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
           description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
           duration: 3,
         });
-
-        setTimeout(() => {
-          if (redirectUrl.value) {
-            console.log('====redirect url=====');
-            console.log(`${window.location.host}/#${redirectUrl.value}`);
-            router.push({ path: redirectUrl.value });
-          }
-        }, 2000);
       }
     } catch (error) {
+      console.log('have error:', error);
       createErrorModal({
         title: t('sys.api.errorTip'),
         content: (error as unknown as Error).message || t('sys.api.networkExceptionMsg'),
         getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
-        onOk: () => {
-          setTimeout(() => {
-            window.location.href = fromURL;
-          }, 3000);
-        },
       });
     } finally {
       loading.value = false;
     }
   }
+
   onMounted(async () => {
-    console.log('elu:', import.meta.env.VITE_GLOB_ELU_API_URL);
-    console.log('report:', import.meta.env.VITE_GLOB_REPORT_API_URL);
-    console.log('permission:', import.meta.env.VITE_GLOB_PERMISSION_API_URL);
-    // http://localhost:5151/?user=admin/#/login?redirect=/home
-    console.log('window.location.pathname:', window.location.pathname);
-    console.log('window.location.search:', window.location.search);
-    console.log('window.location.hash:', window.location.hash);
-    console.log('fromURL:', fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''));
-    console.log(
-      'document.referrer:',
-      document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''),
-    );
-
-    if (window.location.search) {
-      try {
-        // let parameterList = window.location.search.slice(1).replace(/\/$/, '').split('&');
-        let parameterList = queryString.parse(location.search.replace(/\//, ''));
-        console.log(parameterList);
-        // let userId = parameterList[0].split('=')[1].slice(0, -1) || null;
-        let userId = parameterList.user || null;
-        console.log('userId:', userId);
-
-        if (!userId) {
-          createMessage.error('登入出錯，請重新登入 MGT 平台 !');
-          setTimeout(() => {
-            window.location.href = fromURL;
-          }, 30000);
-          return;
-        }
-
-        ls.set('TEMP_USER_ID_KEY__', userId);
-
-        // 0. admin user 校驗
-        if (userId) {
-          // 此處統一獲取 S3 JSON
-          // [user.json]
-          let JSONInputArray = ['user'];
-          let JSONUrlList = await getJSONURL(JSONInputArray);
-
-          let userListURL = JSONUrlList['user'];
-          if (userListURL) {
-            userList = await getS3JSON(userListURL);
-            console.log('JSON UserList');
-            console.log(userList);
-          }
-
-          let checkUser = userList.find((item) => item.userId === userId?.toString());
-
-          // 1.校驗使用者
-          if (!checkUser) {
-            return createMessage.error('The corresponding user information was not obtained!');
-          }
-          console.log('User Login Pass !!');
-          console.log(checkUser);
-          ls.set('TEMP_USER_INFO_KEY__', checkUser);
-          userStore.setUserId(userId.toString());
-          let systemInfo = {
-            company: checkUser.company,
-            system: checkUser.system,
-          };
-          ls.set('TEMP_SYS_KEY__', systemInfo);
-
-          // redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
-          redirectUrl.value =
-            queryString.parse(window.location.hash)['/login?redirect']?.toString() || null;
-          console.log('redirectUrl:', redirectUrl.value);
-          console.log(queryString.parse(location.hash)['/login?redirect']);
-
-          // 2.跳轉校驗
-          // if (
-          //   document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
-          //   fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
-          // ) {
-          //   createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !');
-          //   setTimeout(() => {
-          //     window.location.href = fromURL;
-          //   }, 5000);
-          //   return;
-          // }
-
-          // 3.登入 password give
-          if (userId && redirectUrl) {
-            // 輸入登入 form
-            formData.account = checkUser.userId;
-            formData.password = checkUser.password;
-            handleLogin();
-          } else {
-            createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!');
-          }
-        }
-      } catch (e) {
-        createMessage.error('redirect 錯誤，請重新登入 MGT 平台 !!');
-        // setTimeout(() => {
-        //   window.location.href = fromURL;
-        // }, 5000);
-      }
-    } else {
-      createMessage.error('登入資訊錯誤，請重新登入 MGT 平台 !!!');
-      // setTimeout(() => {
-      //   userStore.setUserId('');
-      //   window.location.href = fromURL;
-      // }, 5000);
-    }
+    const localeStore = useLocaleStoreWithOut();
+    let loginInput = localeStore.getLogin;
+    formData.account = loginInput.username;
+    formData.password = loginInput.password;
+    rememberMe.value = loginInput.remeberMe;
   });
 </script>

@@ -17,3 +17,8 @@
     loading.value = false;
   }, 1500);
 </script>
+<script lang="ts">
+  export default {
+    name: 'Home',
+  };
+</script>

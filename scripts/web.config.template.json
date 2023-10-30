@@ -25,6 +25,7 @@
       "API_MGT_ELU": "/{{ENV}}/Billing/API/elu",
       "API_MGT_CONTRACT": "/{{ENV}}/Billing/API/contract",
       "API_MGT_REPORT": "/{{ENV}}/Billing/API/report",
+      "API_POWERBI_LAMBDA": "/{{ENV}}/Billing/API/power-bi-lambda",
       "SES_Ecloudrover_SENDER": "/{{ENV}}/Billing/SES/Ecloudrover/sender",
       "SES_Ecloudrover_HOST": "/{{ENV}}/Billing/SES/Ecloudrover/host",
       "SES_Ecloudrover_USER_NAME": "/{{ENV}}/Billing/SES/Ecloudrover/user",
