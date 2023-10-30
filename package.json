@@ -1,6 +1,6 @@
 {
   "name": "billing-dataplatform",
-  "version": "1.0.4.0",
+  "version": "1.0.4.4",
   "author": {
     "name": "gatherer",
     "email": "telliex.chiu@ecloudvalley.com",
@@ -89,7 +89,7 @@
     "vxe-table-plugin-export-xlsx": "^3.0.4",
     "xe-utils": "^3.5.7",
     "xlsx": "^0.18.5",
-    "@sentry/vue":"7.74.0"
+    "@sentry/vue": "7.74.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
