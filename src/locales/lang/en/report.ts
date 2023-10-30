@@ -26,9 +26,51 @@ export default {
   light: 'Light',
   dark: 'Dark',
   dopCost: {
-    tableAreaTitle: 'Drop Cost Report',
+    tableAreaTitle: 'Dop Cost Report',
     searchAreaReportTypeLavel: 'Repot Type',
-    searchAreaReportTypeOption: 'Drop Cost',
+    searchAreaReportTypeOption: 'Dop Cost',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  cdnReport: {
+    tableAreaTitle: 'CDN Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'CDN',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  specialReport: {
+    tableAreaTitle: 'Special Modification Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Special Modification',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  sapcnoReport: {
+    tableAreaTitle: 'Sap Cno Contrast Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Sap Cno Contrast',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  diffReport: {
+    tableAreaTitle: 'Linkedaccount Entity Difference Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Linkedaccount Entity Difference',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  summeryReport: {
+    tableAreaTitle: 'Billing Summary Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing Summary',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  invoiceReport: {
+    tableAreaTitle: 'Billing Invoice Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing Invoice',
+    searchAreaYYYYMMLavel: 'Date', // Month
+  },
+  billingReport: {
+    tableAreaTitle: 'Billing List Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing List',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
 };
