@@ -51,8 +51,8 @@
     ReportType: string;
     YearMonth: string;
   }
-  let tableName = ref(t('report.billingReport.tableAreaTitle'));
-  let reportType = 'billing_list_for_ecloudrover'; // report type & S3 prefix folder name,
+  let tableName = ref(t('report.costbyproductReport.tableAreaTitle'));
+  let reportType = 'billing_costbyproduct_report'; // report type & S3 prefix folder name,
   let S3Bucket = 'billing-dev-sync-data'; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
@@ -103,7 +103,7 @@
     let timeStamp = dayjs().format('YYYYMMDD');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename: `billing_list_ecr_${timeStamp}.xlsx`,
+      filename: `costbyproduct_${timeStamp}.xlsx`,
       write2excelOpts: {
         bookType: 'xlsx',
       },
@@ -322,6 +322,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'BillingReport',
+    name: 'costbyproductReport',
   };
 </script>

@@ -65,12 +65,24 @@ export default {
     tableAreaTitle: 'Billing Invoice Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing Invoice',
-    searchAreaYYYYMMLavel: 'Date', // Month
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   billingReport: {
     tableAreaTitle: 'Billing List Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing List',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  costbylinkedReport: {
+    tableAreaTitle: 'Cost By Linkedaccount Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Cost By Linkedaccount',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  costbyproductReport: {
+    tableAreaTitle: 'Cost By Product Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Cost By Product',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
 };

@@ -13,8 +13,8 @@ export function getFormSchema(): FormSchema[] {
         options: [
           {
             label: '轉綁清單',
-            value: 'linkedaccount_entity_differences_sql',
-            key: 'linkedaccount_entity_differences_sql',
+            value: 'linkedaccount_entity_differences_rpeort',
+            key: 'linkedaccount_entity_differences_rpeort',
           },
         ],
       },

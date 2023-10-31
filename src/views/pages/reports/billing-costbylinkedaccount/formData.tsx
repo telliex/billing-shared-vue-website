@@ -7,14 +7,14 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'ReportType',
       component: 'Select',
-      label: `${t('report.invoiceReport.searchAreaReportTypeLavel')}:`,
+      label: `${t('report.costbylinkedReport.searchAreaReportTypeLavel')}:`,
       show: false,
       componentProps: {
         options: [
           {
-            label: 'Invoice Report',
-            value: 'billing_invoice_report_hk',
-            key: 'billing_invoice_report_hk',
+            label: 'Cost By Linkedaccount',
+            value: 'billing_costbylinked_report',
+            key: 'billing_costbylinked_report',
           },
         ],
       },
@@ -25,7 +25,7 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'YearMonth',
       component: 'DatePicker',
-      label: `${t('report.invoiceReport.searchAreaYYYYMMLavel')}:`,
+      label: `${t('report.costbylinkedReport.searchAreaYYYYMMLavel')}:`,
       labelWidth: 100,
       required: true,
       componentProps: {

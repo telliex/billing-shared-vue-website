@@ -28,42 +28,54 @@ export default {
     tableAreaTitle: 'CDN报表',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'CDN',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: '月份', // Month
   },
   specialReport: {
     tableAreaTitle: '特殊事项调整报表',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: '特殊事项调整',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: '月份', // Month
   },
   sapcnoReport: {
     tableAreaTitle: 'SAP_CNO对照表',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'SAP_CNO对照',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: '月份', // Month
   },
   diffReport: {
     tableAreaTitle: '帐号转绑清单报表',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: '帐号转绑清单',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: '月份', // Month
   },
   summeryReport: {
     tableAreaTitle: 'Billing Summary Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing Summary',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: '月份', // Month
   },
   invoiceReport: {
     tableAreaTitle: 'Billing Invoice Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing Invoice',
-    searchAreaYYYYMMLavel: 'Date', // Month
+    searchAreaYYYYMMLavel: '月份', // Month
   },
   billingReport: {
     tableAreaTitle: 'Billing List Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing List',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  costbylinkedReport: {
+    tableAreaTitle: 'Cost By Linkedaccount Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Cost By Linkedaccount',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  costbyproductReport: {
+    tableAreaTitle: 'Cost By Product Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Cost By Product',
+    searchAreaYYYYMMLavel: '月份', // Month
   },
 };

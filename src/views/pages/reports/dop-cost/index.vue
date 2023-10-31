@@ -53,7 +53,7 @@
   }
   let tableName = ref(t('report.dopCost.tableAreaTitle'));
   let reportType = 'dop_cost_report'; // report type & S3 prefix folder name,
-  let S3Bucket = 'data-platform-data-bucket-ecv-dev'; // S3 bucket name
+  let S3Bucket = 'billing-dev-sync-data'; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
   // const canResize = ref(false);
@@ -286,7 +286,7 @@
       trace_id: Guid.newGuid().toString(),
       bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
       bucket_name: S3Bucket,
-      object_key: `report=${S3ReportClass}/yyyy=${S3Year}/mm=${S3Month}/${S3FileName}`, // [for need to modify area]
+      object_key: `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`, // [for need to modify area]
       duration: '10',
     }).catch((err) => {
       console.log(err);
