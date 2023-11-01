@@ -1,5 +1,5 @@
 # 基於 Ubuntu 映像構建 Docker 容器
-FROM ubuntu:latest as build-stage
+FROM ubuntu:20.04 as build-stage
 
 ARG DEBIAN_FRONTEND=noninteractive
 # 更新 Ubuntu 的套件庫

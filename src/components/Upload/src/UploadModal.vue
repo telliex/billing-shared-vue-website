@@ -147,17 +147,6 @@
           : t('component.upload.startUpload');
       });
 
-      const handleFileUpload = async (file: File) => {
-        // selectedFile.value = event.target.files[0];
-
-        if (file) {
-          selectedFile.value = file;
-          return await checkColumnName();
-        } else {
-          return false;
-        }
-      };
-
       function getElementsInBNotInA(A: string[], B: string[]) {
         const result: string[] = [];
 
@@ -171,7 +160,8 @@
       }
 
       // rules
-      const checkColumnName = () => {
+      const checkColumnName = async () => {
+        console.log('enter checkColumnName=====');
         if (selectedFile.value) {
           const file = selectedFile.value;
           const reader = new FileReader();
@@ -220,8 +210,9 @@
             }
           };
 
-          reader.readAsBinaryString(file);
+          return reader.readAsBinaryString(file);
         } else {
+          return false;
           alert('请选择一个文件进行检查');
         }
       };
@@ -230,14 +221,21 @@
       async function beforeUpload(file: File) {
         console.log('====props======:', props);
         console.log('=======file=====:', file);
-        openWrapLoading();
+        // openWrapLoading();
+        //let result;
+        // if (props.required && props.requiredList.length !== 0) {
+        //   if (file) {
+        //     console.log('have file');
+        //     selectedFile.value = file;
+        //     result = await checkColumnName();
+        //   } else {
+        //     console.log('not have file');
+        //     result = false;
+        //   }
+        // }
+        // console.log('result:', result);
 
-        if (props.required && props.requiredList.length !== 0) {
-          let result = await handleFileUpload(file);
-          console.log('result:', result);
-        }
-
-        return false;
+        // return false;
         const { size, name } = file;
         const { maxSize } = props;
         // 设置最大值，则判断
@@ -326,14 +324,16 @@
       }
 
       function objectToFormData(obj) {
-        const formData = new FormData();
+        console.log('aaaaa:', obj);
+        let formData = new FormData();
 
         for (const key in obj) {
           if (obj.hasOwnProperty(key)) {
+            console.log('key:', key, 'value:', obj[key]);
             formData.append(key, obj[key]);
           }
         }
-
+        console.log('bbbbbbb:', formData.get('BucketRegion'));
         return formData;
       }
 
@@ -346,7 +346,7 @@
           return createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
         }
         let temp = objectToFormData({ ...props.upLoadObject, file: fileListRef.value[0] });
-
+        console.log('temp111111:', temp);
         let result = await upLoad2S3(temp);
         console.log('result:', result);
         // try {

@@ -26,11 +26,15 @@ export function uploadApi(
   );
 }
 
-export const upLoad2S3 = (body: any) =>
-  defHttp.post(
+export const upLoad2S3 = (body: any) => {
+  console.log('api body======', body);
+  return defHttp.post(
     {
       url: '/aws' + version + Api.GetUploadFileToS3Value,
       data: body,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -71,3 +75,4 @@ export const upLoad2S3 = (body: any) =>
       },
     },
   );
+};
