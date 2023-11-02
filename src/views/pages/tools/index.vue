@@ -84,7 +84,6 @@
               });
 
               let jsonObj = await axios.get(S3Location);
-              console.log('BBBBBBBBBjsonObj:', jsonObj.data.columns);
               checkList.value = jsonObj.data.columns;
             } else {
               targetObj.value = {};
@@ -109,7 +108,7 @@
           maxSize: 30,
           maxNumber: 1,
           showPreviewDrawer: false,
-          accept: ['.csv', '.xlsx'],
+          accept: ['.csv'],
           required: true,
           requiredList: checkList.value,
           upLoadObject: targetObj.value,

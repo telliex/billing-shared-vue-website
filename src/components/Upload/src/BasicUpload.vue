@@ -59,7 +59,6 @@
     emits: ['change', 'delete', 'preview-delete', 'update:value'],
 
     setup(props, { emit, attrs }) {
-      console.log('props888888888', props);
       const { t } = useI18n();
       // upload modal
       const [registerUploadModal, { openModal: openUploadModal }] = useModal();

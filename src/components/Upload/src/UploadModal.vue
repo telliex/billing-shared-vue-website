@@ -14,6 +14,7 @@
       :okButtonProps="getOkButtonProps"
       :cancelButtonProps="{ disabled: isUploadingRef }"
       :canFullscreen="false"
+      :showOkBtn="false"
     >
       <template #centerFooter>
         <a-button
@@ -35,15 +36,16 @@
           :before-upload="beforeUpload"
           :show-upload-list="false"
           class="upload-modal-toolbar__btn"
+          :disabled="getIsSelectFile"
         >
-          <a-button type="primary">
+          <a-button type="primary" :disabled="getIsSelectFile">
             {{ t('component.upload.choose') }}
           </a-button>
         </Upload>
       </div>
       <FileList :dataSource="fileListRef" :columns="columns" :actionColumn="actionColumn" />
     </BasicModal>
-    <Modal @register="modalRegister" />
+    <Modal @register="errorModalRegister" />
   </div>
 </template>
 <script lang="ts">
@@ -64,12 +66,13 @@
   // utils
   import { checkImgType, getBase64WithFile } from './helper';
   import { buildUUID } from '/@/utils/uuid';
-  import { isFunction } from '/@/utils/is';
-  import { warn } from '/@/utils/log';
+  // import { isFunction } from '/@/utils/is';
+  // import { warn } from '/@/utils/log';
   import FileList from './FileList.vue';
   import { useI18n } from '/@/hooks/web/useI18n';
   import * as xlsx from 'xlsx';
   import { upLoad2S3 } from '/@/api/sys/upload';
+  import { useTabs } from '/@/hooks/web/useTabs';
 
   export default defineComponent({
     components: { BasicModal, Upload, Alert, FileList, Modal },
@@ -90,7 +93,7 @@
       const workbook = ref<xlsx.WorkBook | null>(null);
       const columnNames = ref<string[]>([]);
 
-      const [modalRegister, { openModal, setModalProps }] = useModal();
+      const [errorModalRegister, { openModal: openErrorModal }] = useModal();
 
       //   是否正在上传
       const isUploadingRef = ref(false);
@@ -99,6 +102,9 @@
 
       const { t } = useI18n();
       const [register, { closeModal }] = useModalInner();
+
+      // handle the tab reload
+      const { refreshPage } = useTabs();
 
       const { getStringAccept, getHelpText } = useUploadType({
         acceptRef: accept,
@@ -160,80 +166,88 @@
       }
 
       // rules
-      const checkColumnName = async () => {
-        console.log('enter checkColumnName=====');
-        if (selectedFile.value) {
-          const file = selectedFile.value;
-          const reader = new FileReader();
+      const checkColumnName = () => {
+        return new Promise((resolve, reject) => {
+          console.log('enter checkColumnName 1=====');
+          if (selectedFile.value) {
+            console.log('enter checkColumnName 2=====');
+            const file = selectedFile.value;
+            const reader = new FileReader();
 
-          reader.onload = (e: ProgressEvent<FileReader>) => {
-            const data = e.target?.result as string | null;
-            if (data) {
-              workbook.value = xlsx.read(data, { type: 'binary' });
-              if (workbook.value) {
-                const sheet = workbook.value.Sheets[workbook.value.SheetNames[0]];
-                const parsedData = xlsx.utils.sheet_to_json(sheet, {
-                  header: 1,
-                });
-                if (Array.isArray(parsedData) && parsedData) {
-                  columnNames.value = parsedData[0] as []; // 转换为字符串数组
-                  console.log('A-file columns:', columnNames.value);
-                  console.log('B-props.requiredList:', props.requiredList);
-                  let cpmpareResult = getElementsInBNotInA(columnNames.value, props.requiredList);
+            reader.onload = (e: ProgressEvent<FileReader>) => {
+              const data = e.target?.result as string | null;
+              if (data) {
+                workbook.value = xlsx.read(data, { type: 'binary' });
+                if (workbook.value) {
+                  const sheet = workbook.value.Sheets[workbook.value.SheetNames[0]];
+                  const parsedData = xlsx.utils.sheet_to_json(sheet, {
+                    header: 1,
+                  });
+                  if (Array.isArray(parsedData) && parsedData) {
+                    columnNames.value = parsedData[0] as []; // 转换为字符串数组
+                    console.log('A-file columns:', columnNames.value);
+                    console.log('B-props.requiredList:', props.requiredList);
+                    let cpmpareResult = getElementsInBNotInA(columnNames.value, props.requiredList);
 
-                  if (cpmpareResult.length === 0) {
-                    // alert(`perfect!`);
-                    createMessage.success('perfect!');
-                    return true;
+                    if (cpmpareResult.length === 0) {
+                      // alert(`perfect!`);
+                      createMessage.success('perfect!');
+                      resolve(true);
+                    } else {
+                      //alert(`The ${cpmpareResult} column name isn't included in the file`);
+
+                      openErrorModal(true, { columns: cpmpareResult });
+
+                      // createMessage.error(
+                      //   `The ${cpmpareResult.join('|')} column${
+                      //     cpmpareResult.length === 1 ? '' : 's'
+                      //   } name isn't included in the file`,
+                      // );
+                      resolve(false);
+                    }
                   } else {
-                    //alert(`The ${cpmpareResult} column name isn't included in the file`);
-                    // setModalProps({ columns: cpmpareResult });
-                    openModal();
-                    // createMessage.error(
-                    //   `The ${cpmpareResult.join('|')} column${
-                    //     cpmpareResult.length === 1 ? '' : 's'
-                    //   } name isn't included in the file`,
-                    // );
-                    return false;
+                    alert('Unable to parse column name');
+                    reject('Unable to parse column name');
                   }
                 } else {
-                  alert('Unable to parse column name');
-                  return false;
+                  alert('Unable to parse worksheet');
+                  reject('Unable to parse worksheet');
                 }
               } else {
-                alert('Unable to parse worksheet');
-                return false;
+                alert('Unable to read file data');
+                reject('Unable to read file data');
               }
-            } else {
-              alert('Unable to read file data');
-              return false;
-            }
-          };
+            };
 
-          return reader.readAsBinaryString(file);
-        } else {
-          return false;
-          alert('请选择一个文件进行检查');
-        }
+            reader.onerror = (error) => {
+              reject(error);
+            };
+
+            return reader.readAsBinaryString(file);
+          } else {
+            reject('请选择一个文件进行检查');
+            alert('请选择一个文件进行检查');
+          }
+        });
       };
 
       // 上传前校验
       async function beforeUpload(file: File) {
         console.log('====props======:', props);
         console.log('=======file=====:', file);
-        // openWrapLoading();
-        //let result;
-        // if (props.required && props.requiredList.length !== 0) {
-        //   if (file) {
-        //     console.log('have file');
-        //     selectedFile.value = file;
-        //     result = await checkColumnName();
-        //   } else {
-        //     console.log('not have file');
-        //     result = false;
-        //   }
-        // }
-        // console.log('result:', result);
+        openWrapLoading();
+        let result;
+        if (props.required && props.requiredList.length !== 0) {
+          if (file) {
+            console.log('have file');
+            selectedFile.value = file;
+            result = await checkColumnName();
+          } else {
+            console.log('not have file');
+            result = false;
+          }
+        }
+        console.log('result:', result);
 
         // return false;
         const { size, name } = file;
@@ -271,14 +285,14 @@
         return false;
       }
 
-      // 删除
+      // Action - Delete
       function handleRemove(record: FileItem) {
         const index = fileListRef.value.findIndex((item) => item.uuid === record.uuid);
         index !== -1 && fileListRef.value.splice(index, 1);
         emit('delete', record);
       }
 
-      // 预览
+      // Action - Preview
       // function handlePreview(record: FileItem) {
       //   const { thumbUrl = '' } = record;
       //   createImgPreview({
@@ -286,72 +300,80 @@
       //   });
       // }
 
-      async function uploadApiByItem(item: FileItem) {
-        const { api } = props;
-        if (!api || !isFunction(api)) {
-          return warn('upload api must exist and be a function');
-        }
-        try {
-          item.status = UploadResultStatus.UPLOADING;
-          const { data } = await props.api?.(
-            {
-              data: {
-                ...(props.uploadParams || {}),
-              },
-              file: item.file,
-              name: props.name,
-              filename: props.filename,
-            },
-            function onUploadProgress(progressEvent: ProgressEvent) {
-              const complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
-              item.percent = complete;
-            },
-          );
-          item.status = UploadResultStatus.SUCCESS;
-          item.responseData = data;
-          return {
-            success: true,
-            error: null,
-          };
-        } catch (e) {
-          console.log(e);
-          item.status = UploadResultStatus.ERROR;
-          return {
-            success: false,
-            error: e,
-          };
-        }
-      }
+      // async function uploadApiByItem(item: FileItem) {
+      //   const { api } = props;
+      //   if (!api || !isFunction(api)) {
+      //     return warn('upload api must exist and be a function');
+      //   }
+      //   try {
+      //     item.status = UploadResultStatus.UPLOADING;
+      //     const { data } = await props.api?.(
+      //       {
+      //         data: {
+      //           ...(props.uploadParams || {}),
+      //         },
+      //         file: item.file,
+      //         name: props.name,
+      //         filename: props.filename,
+      //       },
+      //       function onUploadProgress(progressEvent: ProgressEvent) {
+      //         const complete = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+      //         item.percent = complete;
+      //       },
+      //     );
+      //     item.status = UploadResultStatus.SUCCESS;
+      //     item.responseData = data;
+      //     return {
+      //       success: true,
+      //       error: null,
+      //     };
+      //   } catch (e) {
+      //     console.log(e);
+      //     item.status = UploadResultStatus.ERROR;
+      //     return {
+      //       success: false,
+      //       error: e,
+      //     };
+      //   }
+      // }
 
+      // JSON to FormData
       function objectToFormData(obj) {
-        console.log('aaaaa:', obj);
         let formData = new FormData();
-
         for (const key in obj) {
           if (obj.hasOwnProperty(key)) {
-            console.log('key:', key, 'value:', obj[key]);
             formData.append(key, obj[key]);
           }
         }
-        console.log('bbbbbbb:', formData.get('BucketRegion'));
         return formData;
       }
 
-      // 点击开始上传
+      // Click [Start upload] Button to upload
       async function handleStartUpload() {
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxprops:', props);
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxfileListRef.value:', fileListRef.value);
         const { maxNumber } = props;
         if ((fileListRef.value.length + props.previewFileList?.length ?? 0) > maxNumber) {
           return createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
         }
-        let temp = objectToFormData({ ...props.upLoadObject, file: fileListRef.value[0] });
-        console.log('temp111111:', temp);
-        let result = await upLoad2S3(temp);
-        console.log('result:', result);
+
+        let result = await upLoad2S3(
+          objectToFormData({ ...props.upLoadObject, file: fileListRef.value[0].file }),
+        );
+
+        if (result === 'success') {
+          createMessage.success('upload success');
+        } else {
+          createMessage.error('upload failed');
+        }
+
+        closeModal();
+        // reload the page
+        setTimeout(() => {
+          refreshPage();
+        }, 1000);
+
         // try {
         //   isUploadingRef.value = true;
-        //   // 只上传不是成功状态的
+        //   // only upload the file which status is not success
         //   const uploadFileList =
         //     fileListRef.value.filter((item) => item.status !== UploadResultStatus.SUCCESS) || [];
         //   const data = await Promise.all(
@@ -369,7 +391,7 @@
         // }
       }
 
-      //   点击保存
+      //  [x] Click [Save] Button to save
       function handleOk() {
         const { maxNumber } = props;
 
@@ -393,7 +415,6 @@
         }
         fileListRef.value = [];
         closeModal();
-        emit('change', fileList);
       }
 
       // 点击关闭：则所有操作不保存，包括上传的
@@ -408,6 +429,7 @@
       }
 
       return {
+        selectedFile,
         columns: createTableColumns() as any[],
         actionColumn: createActionColumn(handleRemove) as any,
         register,
@@ -427,7 +449,7 @@
         getUploadBtnText,
         t,
         wrapEl,
-        modalRegister,
+        errorModalRegister,
       };
     },
   });

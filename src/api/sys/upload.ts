@@ -27,7 +27,6 @@ export function uploadApi(
 }
 
 export const upLoad2S3 = (body: any) => {
-  console.log('api body======', body);
   return defHttp.post(
     {
       url: '/aws' + version + Api.GetUploadFileToS3Value,
@@ -45,7 +44,7 @@ export const upLoad2S3 = (body: any) => {
               trace_id: Guid.newGuid().toString(),
               total_pages: 0,
               current_page: 0,
-              results: [resObj.results],
+              results: 'success',
               status: 1000,
               msg: 'success',
               requested_time: '',
@@ -56,9 +55,9 @@ export const upLoad2S3 = (body: any) => {
               trace_id: Guid.newGuid().toString(),
               total_pages: 0,
               current_page: 0,
-              results: [],
+              results: 'fail',
               status: 9999,
-              msg: 'No data !!',
+              msg: 'fail',
               requested_time: '',
               responsed_time: '',
             };
