@@ -259,8 +259,9 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Status',
     field: 'status',
-    width: 120,
     sortable: true,
+    minWidth: 80,
+    showOverflow: false,
     // formatter({ cellValue }) {
     //   return cellValue === 1 ? 'Enable' : 'Disable';
     // },
@@ -269,7 +270,8 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Role',
     field: 'roles',
-    width: 120,
+    minWidth: 100,
+    showOverflow: false,
     sortable: true,
     // formatter({ cellValue }) {
     //   return cellValue === 1 ? 'Enable' : 'Disable';
