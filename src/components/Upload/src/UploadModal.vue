@@ -45,7 +45,7 @@
       </div>
       <FileList :dataSource="fileListRef" :columns="columns" :actionColumn="actionColumn" />
     </BasicModal>
-    <Modal @register="errorModalRegister" />
+    <Modal @register="errorModalRegister" @close="clearFile" />
   </div>
 </template>
 <script lang="ts">
@@ -225,8 +225,8 @@
 
             return reader.readAsBinaryString(file);
           } else {
-            reject('请选择一个文件进行检查');
-            alert('请选择一个文件进行检查');
+            reject('Please select a file to check');
+            alert('Please select a file to check');
           }
         });
       };
@@ -450,6 +450,9 @@
         t,
         wrapEl,
         errorModalRegister,
+        clearFile: () => {
+          fileListRef.value = [];
+        },
       };
     },
   });
