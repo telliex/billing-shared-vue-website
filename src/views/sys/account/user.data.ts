@@ -64,7 +64,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'remark',
   },
   {
-    title: 'Creater',
+    title: 'creator',
     dataIndex: 'addMasterName',
     width: 160,
   },
@@ -285,7 +285,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     field: 'remark',
     showOverflow: 'tooltip',
     align: 'center',
-  },
+  },creator
   {
     title: 'Creater',
     width: 160,

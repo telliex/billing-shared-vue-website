@@ -106,7 +106,7 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: 'Creater',
+    title: 'creator',
     dataIndex: 'addMasterName',
     width: 160,
   },
@@ -564,7 +564,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     showOverflow: 'tooltip',
     align: 'center',
   },
-  {
+  {creator
     title: 'Creater',
     width: 160,
     field: 'addMasterName',
