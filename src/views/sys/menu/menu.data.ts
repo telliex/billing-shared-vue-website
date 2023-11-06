@@ -482,7 +482,7 @@ export const formSchema: FormSchema[] = [
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
-    title: 'Menu name',
+    title: 'Menu Name',
     field: 'menuName',
     showOverflow: 'tooltip',
     width: 300,
@@ -491,14 +491,14 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     // sortable: true,
   },
   {
-    title: 'Tyoe',
+    title: 'Type',
     field: 'type',
     showOverflow: 'tooltip',
     width: 100,
     // sortable: true,
   },
   {
-    title: 'Display name',
+    title: 'Display Name',
     field: 'alias',
     width: 200,
     // sortable: true,
@@ -506,7 +506,8 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Status',
     field: 'status',
-    width: 100,
+    minWidth: 80,
+    showOverflow: false,
     // sortable: true,
     // formatter({ cellValue }) {
     //   return cellValue === 1 ? 'Enable' : 'Disable';
@@ -514,7 +515,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     slots: { default: 'status' },
   },
   {
-    title: 'Route path',
+    title: 'Route Path',
     width: 150,
     field: 'routePath',
     showOverflow: 'tooltip',
@@ -543,7 +544,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     align: 'left',
   },
   {
-    title: 'Component name',
+    title: 'Component Name',
     width: 200,
     field: 'componentName',
     showOverflow: 'tooltip',
