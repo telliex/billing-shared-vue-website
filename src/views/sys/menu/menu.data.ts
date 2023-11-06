@@ -106,7 +106,7 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: 'Creater',
+    title: 'Creator',
     dataIndex: 'addMasterName',
     width: 160,
   },
@@ -506,7 +506,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Status',
     field: 'status',
-    width: 100,
+    minWidth: 80,
     showOverflow: false,
     // sortable: true,
     // formatter({ cellValue }) {
@@ -565,7 +565,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     align: 'center',
   },
   {
-    title: 'Creater',
+    title: 'Creator',
     width: 160,
     field: 'addMasterName',
     showOverflow: 'tooltip',
@@ -620,6 +620,7 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
       name: 'ASelect',
       defaultValue: null,
       props: {
+        placeholder: 'Please choose',
         clearable: true,
         options: [
           { label: 'Enable', value: 1 },

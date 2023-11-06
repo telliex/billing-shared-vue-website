@@ -41,7 +41,7 @@
       render: commonTagRender('blue'),
     },
     {
-      label: 'Last Update Date',
+      label: 'Last Update Date (UTC+0)',
       field: 'lastBuildTime',
       render: commonTagRender('blue'),
     },

@@ -1,7 +1,12 @@
 <template>
   <div>
     <Space>
-      <a-button type="primary" @click="openUploadModal" preIcon="carbon:cloud-upload">
+      <a-button
+        type="primary"
+        @click="openUploadModal"
+        preIcon="carbon:cloud-upload"
+        :disabled="disabledUpLoadBtn"
+      >
         {{ t('component.upload.upload') }}
       </a-button>
       <Tooltip placement="bottom" v-if="showPreview">
@@ -11,7 +16,7 @@
             {{ fileList.length }}
           </template>
         </template>
-        <a-button @click="openPreviewModal">
+        <a-button @click="openPreviewModal" v-if="showPreviewDrawer">
           <Icon icon="bi:eye" />
           <template v-if="fileList.length && showPreviewNumber">
             {{ fileList.length }}
@@ -55,10 +60,10 @@
 
     setup(props, { emit, attrs }) {
       const { t } = useI18n();
-      // 上传modal
+      // upload modal
       const [registerUploadModal, { openModal: openUploadModal }] = useModal();
 
-      //   预览modal
+      // preview modal
       const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
 
       const fileList = ref<string[]>([]);
@@ -72,6 +77,12 @@
       const bindValue = computed(() => {
         const value = { ...attrs, ...props };
         return omit(value, 'onChange');
+      });
+
+      // if disable upLoader button
+      const disabledUpLoadBtn = computed(() => {
+        const { disabled } = props;
+        return disabled;
       });
 
       watch(
@@ -116,6 +127,8 @@
         bindValue,
         handleDelete,
         handlePreviewDelete,
+        showPreviewDrawer: props.showPreviewDrawer,
+        disabledUpLoadBtn,
         t,
       };
     },

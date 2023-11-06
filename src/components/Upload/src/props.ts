@@ -25,6 +25,26 @@ export const basicProps = {
     type: Boolean as PropType<boolean>,
     default: true,
   },
+  // if show preview button to open drawer
+  showPreviewDrawer: {
+    type: Boolean as PropType<boolean>,
+    default: true,
+  },
+  // need file header name check
+  required: {
+    type: Boolean as PropType<boolean>,
+    default: true,
+  },
+  // file header name check rule
+  requiredList: {
+    type: Array as PropType<string[]>,
+    default: () => [],
+  },
+  // upload obcject
+  upLoadObject: {
+    type: Object as PropType<any>,
+    default: () => ({}),
+  },
   uploadParams: {
     type: Object as PropType<any>,
     default: () => ({}),
@@ -41,6 +61,10 @@ export const basicProps = {
   filename: {
     type: String as PropType<string>,
     default: null,
+  },
+  disabled: {
+    type: Boolean as PropType<boolean>,
+    default: false,
   },
 };
 
