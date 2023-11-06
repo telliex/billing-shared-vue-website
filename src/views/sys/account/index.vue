@@ -27,7 +27,7 @@
     <UserModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="User">
   import { reactive, ref } from 'vue';
   import { ActionItem, TableAction } from '/@/components/Table';
   import { vxeTableColumns, vxeTableFormSchema } from './user.data';

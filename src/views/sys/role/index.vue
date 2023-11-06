@@ -22,7 +22,7 @@
     <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
   </PageWrapper>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="Role">
   import { reactive, ref } from 'vue';
   import { ActionItem, TableAction } from '/@/components/Table';
   import { useMessage } from '/@/hooks/web/useMessage';
