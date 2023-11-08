@@ -1,6 +1,6 @@
 <template>
-  <PageWrapper title="UpLoader">
-    <a-card title="UpLoad file to S3" :bordered="false">
+  <PageWrapper title="Uploader">
+    <a-card title="Upload File" :bordered="false">
       <BasicForm @register="register" class="my-5" />
     </a-card>
   </PageWrapper>

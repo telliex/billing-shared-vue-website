@@ -108,11 +108,11 @@ export default {
     maxNumber: 'Only upload up to {0} files',
 
     legend: 'Legend',
-    fileName: 'File name',
-    fileSize: 'File size',
-    fileStatue: 'File status',
+    fileName: 'File Name',
+    fileSize: 'File Size',
+    fileStatue: 'File Status',
 
-    startUpload: 'Start upload',
+    startUpload: 'Upload',
     uploadSuccess: 'Upload successfully',
     uploadError: 'Upload failed',
     uploading: 'Uploading',

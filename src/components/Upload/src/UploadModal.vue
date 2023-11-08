@@ -191,7 +191,7 @@
 
                     if (cpmpareResult.length === 0) {
                       // alert(`perfect!`);
-                      createMessage.success('perfect!');
+                      createMessage.success('Success');
                       resolve(true);
                     } else {
                       //alert(`The ${cpmpareResult} column name isn't included in the file`);
