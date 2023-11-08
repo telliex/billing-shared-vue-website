@@ -122,7 +122,7 @@ export const searchFormSchema: FormSchema[] = [
 export const accountFormSchema: FormSchema[] = [
   {
     field: 'userName',
-    label: 'User name',
+    label: 'User Name',
     component: 'Input',
     componentProps: {
       disabled: true,

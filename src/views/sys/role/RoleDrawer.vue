@@ -105,7 +105,7 @@
         }
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Edit'));
+      const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
 
       async function handleSubmit() {
         try {

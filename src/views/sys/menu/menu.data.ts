@@ -12,7 +12,7 @@ import XEUtils from 'xe-utils';
 const { createMessage } = useMessage();
 export const columns: BasicColumn[] = [
   {
-    title: 'Menu name',
+    title: 'Menu Name',
     dataIndex: 'menuName',
     width: 300,
     align: 'left',
@@ -24,7 +24,7 @@ export const columns: BasicColumn[] = [
     align: 'left',
   },
   {
-    title: 'Display name',
+    title: 'Display Name',
     dataIndex: 'alias',
     width: 200,
     align: 'left',
@@ -42,7 +42,7 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: 'Route path',
+    title: 'Route Path',
     dataIndex: 'routePath',
     align: 'left',
   },
@@ -91,7 +91,7 @@ export const columns: BasicColumn[] = [
   //   },
   // },
   {
-    title: 'Component name',
+    title: 'Component Name',
     dataIndex: 'componentName',
     align: 'left',
   },
@@ -184,14 +184,14 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'menuName',
-    label: 'Menu name',
+    label: 'Menu Name',
     component: 'Input',
     labelWidth: 150,
     required: true,
   },
   {
     field: 'alias',
-    label: 'Dispaly name',
+    label: 'Dispaly Name',
     component: 'Input',
     helpMessage: ['Display text in the left menu'],
     required: true,
@@ -199,7 +199,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'parentMenu',
-    label: 'Parent menu',
+    label: 'Parent Menu',
     labelWidth: 150,
     defaultValue: '',
     component: 'TreeSelect',
@@ -269,7 +269,7 @@ export const formSchema: FormSchema[] = [
 
   {
     field: 'routePath',
-    label: 'Route path',
+    label: 'Route Path',
     component: 'Input',
     labelWidth: 150,
     helpMessage: [
@@ -308,7 +308,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'componentName',
-    label: 'Component name',
+    label: 'Component Name',
     labelWidth: 150,
     component: 'Input',
     helpMessage: ['PascalCase naming'],
@@ -381,7 +381,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'isExt',
-    label: 'External link',
+    label: 'External Link',
     labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
@@ -442,7 +442,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'cacheName',
-    label: 'Cache name',
+    label: 'Cache Name',
     component: 'Input',
     helpMessage: ['PascalCase naming'],
     labelWidth: 150,
