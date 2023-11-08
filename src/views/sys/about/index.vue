@@ -41,7 +41,7 @@
       render: commonTagRender('blue'),
     },
     {
-      label: 'Last Build Time',
+      label: 'Last Update Date (UTC+0)',
       field: 'lastBuildTime',
       render: commonTagRender('blue'),
     },
@@ -93,7 +93,7 @@
   // });
 
   const [infoRegister] = useDescription({
-    title: 'information',
+    title: 'Information',
     data: infoData,
     schema: infoSchema,
     column: 2,

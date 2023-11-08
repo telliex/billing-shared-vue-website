@@ -12,7 +12,7 @@ import XEUtils from 'xe-utils';
 const { createMessage } = useMessage();
 export const columns: BasicColumn[] = [
   {
-    title: 'Menu name',
+    title: 'Menu Name',
     dataIndex: 'menuName',
     width: 300,
     align: 'left',
@@ -24,7 +24,7 @@ export const columns: BasicColumn[] = [
     align: 'left',
   },
   {
-    title: 'Display name',
+    title: 'Display Name',
     dataIndex: 'alias',
     width: 200,
     align: 'left',
@@ -42,7 +42,7 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: 'Route path',
+    title: 'Route Path',
     dataIndex: 'routePath',
     align: 'left',
   },
@@ -91,7 +91,7 @@ export const columns: BasicColumn[] = [
   //   },
   // },
   {
-    title: 'Component name',
+    title: 'Component Name',
     dataIndex: 'componentName',
     align: 'left',
   },
@@ -106,7 +106,7 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
-    title: 'Creater',
+    title: 'Creator',
     dataIndex: 'addMasterName',
     width: 160,
   },
@@ -184,14 +184,14 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'menuName',
-    label: 'Menu name',
+    label: 'Menu Name',
     component: 'Input',
     labelWidth: 150,
     required: true,
   },
   {
     field: 'alias',
-    label: 'Dispaly name',
+    label: 'Dispaly Name',
     component: 'Input',
     helpMessage: ['Display text in the left menu'],
     required: true,
@@ -199,7 +199,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'parentMenu',
-    label: 'Parent menu',
+    label: 'Parent Menu',
     labelWidth: 150,
     defaultValue: '',
     component: 'TreeSelect',
@@ -269,7 +269,7 @@ export const formSchema: FormSchema[] = [
 
   {
     field: 'routePath',
-    label: 'Route path',
+    label: 'Route Path',
     component: 'Input',
     labelWidth: 150,
     helpMessage: [
@@ -308,7 +308,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'componentName',
-    label: 'Component name',
+    label: 'Component Name',
     labelWidth: 150,
     component: 'Input',
     helpMessage: ['PascalCase naming'],
@@ -381,7 +381,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'isExt',
-    label: 'External link',
+    label: 'External Link',
     labelWidth: 150,
     component: 'RadioButtonGroup',
     defaultValue: 0,
@@ -442,7 +442,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'cacheName',
-    label: 'Cache name',
+    label: 'Cache Name',
     component: 'Input',
     helpMessage: ['PascalCase naming'],
     labelWidth: 150,
@@ -482,7 +482,7 @@ export const formSchema: FormSchema[] = [
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
-    title: 'Menu name',
+    title: 'Menu Name',
     field: 'menuName',
     showOverflow: 'tooltip',
     width: 300,
@@ -491,14 +491,14 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     // sortable: true,
   },
   {
-    title: 'Tyoe',
+    title: 'Type',
     field: 'type',
     showOverflow: 'tooltip',
     width: 100,
     // sortable: true,
   },
   {
-    title: 'Display name',
+    title: 'Display Name',
     field: 'alias',
     width: 200,
     // sortable: true,
@@ -506,7 +506,8 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Status',
     field: 'status',
-    width: 100,
+    minWidth: 80,
+    showOverflow: false,
     // sortable: true,
     // formatter({ cellValue }) {
     //   return cellValue === 1 ? 'Enable' : 'Disable';
@@ -514,7 +515,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     slots: { default: 'status' },
   },
   {
-    title: 'Route path',
+    title: 'Route Path',
     width: 150,
     field: 'routePath',
     showOverflow: 'tooltip',
@@ -543,7 +544,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     align: 'left',
   },
   {
-    title: 'Component name',
+    title: 'Component Name',
     width: 200,
     field: 'componentName',
     showOverflow: 'tooltip',
@@ -564,7 +565,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     align: 'center',
   },
   {
-    title: 'Creater',
+    title: 'Creator',
     width: 160,
     field: 'addMasterName',
     showOverflow: 'tooltip',
@@ -619,6 +620,7 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
       name: 'ASelect',
       defaultValue: null,
       props: {
+        placeholder: 'Please choose',
         clearable: true,
         options: [
           { label: 'Enable', value: 1 },

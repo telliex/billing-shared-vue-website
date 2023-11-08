@@ -105,7 +105,7 @@
         }
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Edit'));
+      const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
 
       async function handleSubmit() {
         try {
@@ -156,22 +156,48 @@
             page: null,
             pageSize: null,
           });
-
+          let msg = 'The data already exists';
           if (!unref(isUpdate)) {
             let result = Object.assign(template, values);
-            await createRoleItem(result);
-          } else {
-            let result = Object.assign(template, record.value, values);
+
             let checkRepeat = false;
             roleList.forEach((item) => {
               if (item.id !== result.id && item.roleValue === result.roleValue) {
                 checkRepeat = true;
+                msg = 'Role Value already exists';
+              }
+              if (item.id !== result.id && item.roleName === result.roleName) {
+                checkRepeat = true;
+                msg = 'Role Name already exists';
               }
             });
+
+            if (!checkRepeat) {
+              await createRoleItem(result);
+            } else {
+              createMessage.error(msg);
+              return false;
+            }
+          } else {
+            let result = Object.assign(template, record.value, values);
+
+            let checkRepeat = false;
+
+            roleList.forEach((item) => {
+              if (item.id !== result.id && item.roleValue === result.roleValue) {
+                checkRepeat = true;
+                msg = 'Role Value already exists';
+              }
+              if (item.id !== result.id && item.roleName === result.roleName) {
+                checkRepeat = true;
+                msg = 'Role Name already exists';
+              }
+            });
+
             if (!checkRepeat) {
               await updateRoleItem(result);
             } else {
-              createMessage.error('Role Value already exists');
+              createMessage.error(msg);
               return false;
             }
           }

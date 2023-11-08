@@ -69,7 +69,7 @@ export const columns: BasicColumn[] = [
     align: 'left',
   },
   {
-    title: 'Creater',
+    title: 'Creator',
     dataIndex: 'addMasterName',
     width: 160,
   },
@@ -121,7 +121,7 @@ export const searchFormSchema: FormSchema[] = [
 export const formSchema: FormSchema[] = [
   {
     field: 'roleName',
-    label: 'Role name',
+    label: 'Role Name',
     required: true,
     component: 'Input',
     rules: [
@@ -141,7 +141,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'roleValue',
-    label: 'Role value',
+    label: 'Role Value',
     required: true,
     component: 'Input',
     componentProps: {
@@ -169,7 +169,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'orderNo',
-    label: 'order',
+    label: 'Order',
     component: 'Input',
     componentProps: {
       maxLength: 5,
@@ -226,7 +226,7 @@ export const formSchema: FormSchema[] = [
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
-    title: 'Role name',
+    title: 'Role Name',
     field: 'roleName',
     showOverflow: 'tooltip',
     width: 200,
@@ -248,7 +248,8 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Status',
     field: 'status',
-    width: 120,
+    minWidth: 80,
+    showOverflow: false,
     sortable: true,
     // formatter({ cellValue }) {
     //   return cellValue === 1 ? 'Enable' : 'Disable';
@@ -264,7 +265,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     align: 'center',
   },
   {
-    title: 'Creater',
+    title: 'Creator',
     width: 160,
     field: 'addMasterName',
     showOverflow: 'tooltip',
@@ -319,6 +320,7 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
       defaultValue: null,
       name: 'AInput',
       props: {
+        placeholder: 'Please enter role name',
         clearable: true,
       },
     },

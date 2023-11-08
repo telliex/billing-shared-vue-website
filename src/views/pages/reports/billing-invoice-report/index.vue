@@ -46,13 +46,13 @@
   import { logoutApi } from '/@/api/sys/user';
   const { t } = useI18n();
 
-  //====Start========modify Area=========== [for need to modify area]
+  //====Start========modify Area===========
   interface SearchItems {
     ReportType: string;
     YearMonth: string;
   }
-  let tableName = ref(t('report.dopCost.tableAreaTitle'));
-  let reportType = 'dop_cost_report'; // report type & S3 prefix folder name,
+  let tableName = ref(t('report.invoiceReport.tableAreaTitle'));
+  let reportType = 'billing_invoice_report_hk'; // report type & S3 prefix folder name,
   let S3Bucket = 'billing-dev-sync-data'; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
@@ -100,10 +100,10 @@
   // export file
   function exportFile() {
     // 默認Object.keys(data[0])作為header
-    let timeStamp = dayjs().format('YYYYMMDDHHmmss');
+    let timeStamp = dayjs().format('YYYYMMDD');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename: `dopcost-${timeStamp}.xlsx`,
+      filename: `invoice_report_${timeStamp}.xlsx`,
       write2excelOpts: {
         bookType: 'xlsx',
       },
@@ -278,7 +278,7 @@
 
     // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3ReportClass = reportType;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`; // [for need to modify area]
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.csv`;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
 
@@ -286,7 +286,7 @@
       trace_id: Guid.newGuid().toString(),
       bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
       bucket_name: S3Bucket,
-      object_key: `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`, // [for need to modify area]
+      object_key: `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`,
       duration: '10',
     }).catch((err) => {
       console.log(err);
@@ -322,6 +322,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'DopCost',
+    name: 'InvoiceReport',
   };
 </script>

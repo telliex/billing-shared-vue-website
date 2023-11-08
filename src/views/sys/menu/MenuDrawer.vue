@@ -78,7 +78,7 @@
         });
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? 'Create Menu' : 'Update Menu'));
+      const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
 
       async function handleSubmit() {
         try {

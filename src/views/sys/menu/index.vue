@@ -186,7 +186,7 @@
           let result = await getNavList({
             menuName: null,
             alias: null,
-            status: form.status,
+            status: form.status === undefined ? null : form.status,
           });
 
           result.forEach((item) => {

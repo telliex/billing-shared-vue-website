@@ -64,7 +64,7 @@ export const columns: BasicColumn[] = [
     dataIndex: 'remark',
   },
   {
-    title: 'Creater',
+    title: 'Creator',
     dataIndex: 'addMasterName',
     width: 160,
   },
@@ -122,7 +122,7 @@ export const searchFormSchema: FormSchema[] = [
 export const accountFormSchema: FormSchema[] = [
   {
     field: 'userName',
-    label: 'User name',
+    label: 'User Name',
     component: 'Input',
     componentProps: {
       disabled: true,
@@ -259,8 +259,9 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Status',
     field: 'status',
-    width: 120,
     sortable: true,
+    minWidth: 80,
+    showOverflow: false,
     // formatter({ cellValue }) {
     //   return cellValue === 1 ? 'Enable' : 'Disable';
     // },
@@ -269,7 +270,8 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Role',
     field: 'roles',
-    width: 120,
+    minWidth: 100,
+    showOverflow: false,
     sortable: true,
     // formatter({ cellValue }) {
     //   return cellValue === 1 ? 'Enable' : 'Disable';
@@ -285,7 +287,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     align: 'center',
   },
   {
-    title: 'Creater',
+    title: 'Creator',
     width: 160,
     field: 'addMasterName',
     showOverflow: 'tooltip',
@@ -341,7 +343,7 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
       name: 'AInput',
       props: {
         clearable: true,
-        placeholder: 'Search User Name',
+        placeholder: 'Please enter user name',
       },
     },
     span: 8,
@@ -355,6 +357,7 @@ export const vxeTableFormSchema: VxeFormItemProps[] = [
       defaultValue: null,
       props: {
         clearable: true,
+        placeholder: 'Please choose',
         options: [
           { label: 'Enable', value: 1 },
           { label: 'Disable', value: 0 },
