@@ -25,7 +25,7 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="SalesMonthlyRevenue">
   import { ref, reactive, onMounted } from 'vue';
   import type { IEmbedConfigurationBase } from 'powerbi-models';
   import { models, Report, IReportEmbedConfiguration, Page, service, Embed } from 'powerbi-client';
@@ -225,6 +225,11 @@
       id: reportId,
       embedUrl: embedUrl,
       accessToken: embedToken,
+      settings: {
+        // filterPaneEnabled: false,
+        // navContentPaneEnabled: false,
+        autoLoad: false, // 防止自动重新加载
+      },
     };
 
     isEmbedded.value = true;
@@ -403,6 +408,7 @@
   }
 
   onMounted(async () => {
+    console.log('ggggggggg');
     GetUserPermissionRoleList({
       trace_id: Guid.newGuid().toString(),
       BillMasterId: currentUserId,
