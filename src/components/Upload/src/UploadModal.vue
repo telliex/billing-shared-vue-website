@@ -115,10 +115,26 @@
 
       // loading module
       const wrapEl = ref<ElRef>(null);
-      const [openWrapLoading, closeWrapLoading] = useLoading({
+      // const [openWrapLoading, closeWrapLoading] = useLoading({
+      //   target: wrapEl,
+      //   props: {
+      //     tip: 'Loading...',
+      //     absolute: false,
+      //     theme: 'dark',
+      //   },
+      // });
+      const [openCheckLoading, closeCheckLoading] = useLoading({
         target: wrapEl,
         props: {
-          tip: 'Loading...',
+          tip: 'Checking...',
+          absolute: false,
+          theme: 'dark',
+        },
+      });
+      const [openUploadLoading, closeUploadLoading] = useLoading({
+        target: wrapEl,
+        props: {
+          tip: 'Uploading...',
           absolute: false,
           theme: 'dark',
         },
@@ -161,7 +177,7 @@
             result.push(element);
           }
         }
-        closeWrapLoading();
+        closeCheckLoading();
         return result;
       }
 
@@ -191,7 +207,7 @@
 
                     if (cpmpareResult.length === 0) {
                       // alert(`perfect!`);
-                      createMessage.success('perfect!');
+                      createMessage.success('Success');
                       resolve(true);
                     } else {
                       //alert(`The ${cpmpareResult} column name isn't included in the file`);
@@ -235,7 +251,7 @@
       async function beforeUpload(file: File) {
         console.log('====props======:', props);
         console.log('=======file=====:', file);
-        openWrapLoading();
+        openCheckLoading();
         let result;
         if (props.required && props.requiredList.length !== 0) {
           if (file) {
@@ -350,6 +366,7 @@
 
       // Click [Start upload] Button to upload
       async function handleStartUpload() {
+        openUploadLoading();
         const { maxNumber } = props;
         if ((fileListRef.value.length + props.previewFileList?.length ?? 0) > maxNumber) {
           return createMessage.warning(t('component.upload.maxNumber', [maxNumber]));
@@ -364,6 +381,7 @@
         } else {
           createMessage.error('upload failed');
         }
+        closeUploadLoading();
 
         closeModal();
         // reload the page

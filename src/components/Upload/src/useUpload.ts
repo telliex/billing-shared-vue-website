@@ -54,7 +54,7 @@ export function useUploadType({
     if (maxNumber && maxNumber !== Infinity) {
       helpTexts.push(t('component.upload.maxNumber', [maxNumber]));
     }
-    return helpTexts.join('，');
+    return helpTexts.join(' ');
   });
   return { getAccept, getStringAccept, getHelpText };
 }
