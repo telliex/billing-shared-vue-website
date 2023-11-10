@@ -101,11 +101,11 @@ export default {
     preview: 'Preview',
     choose: 'Select the file',
 
-    accept: 'Support {0} format',
-    acceptUpload: 'Only upload files in {0} format',
-    maxSize: 'A single file does not exceed {0}MB ',
+    accept: 'Support {0} format.',
+    acceptUpload: 'Only upload files in {0} format.',
+    maxSize: 'A single file does not exceed {0}MB. ',
     maxSizeMultiple: 'Only upload files up to {0}MB!',
-    maxNumber: 'Only upload up to {0} files',
+    maxNumber: 'Only upload up to {0} files.',
 
     legend: 'Legend',
     fileName: 'File Name',
