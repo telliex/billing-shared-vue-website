@@ -141,7 +141,7 @@ const setting: ProjectConfig = {
     // 刷新後是否保留已經打開的標簽頁
     cache: true,
     // Turn on
-    show: true,
+    show: false,
     // Is it possible to drag and drop sorting tabs
     canDrag: false,
     // Turn on quick actions

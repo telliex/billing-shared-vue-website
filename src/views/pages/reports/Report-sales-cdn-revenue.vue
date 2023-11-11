@@ -1,37 +1,41 @@
 <template>
-  <div class="p-4 powerbi-wrap" ref="wrapEl">
-    <div class="container">
-      <div class="controls">
-        <template v-if="isEmbedded">
-          <button @click="changeVisualType('columnChart')" v-if="false">columnChart type</button>
-          <button @click="changeVisualType('lineChart')" v-if="false">lineChart type</button>
-          <button @click="hideFilterPane(true)" v-if="false">Hide filter pane</button>
-          <button @click="hideFilterPane(false)" v-if="false">Show filter pane</button>
-          <button @click="setDataSelectedEvent()" v-if="false">Set event</button>
-        </template>
-        <template v-else>
-          <button @click="embedReport()" class="embed-report">Embed Report</button>
-        </template>
-
-        <PowerBIReportEmbed
-          v-if="isEmbedded"
-          :embed-config="currentReportConfig"
-          :phased-embedding="phasedEmbeddingFlag"
-          :css-class-name="reportClass"
-          :event-handlers="eventHandlersMap"
-          @report-obj="setReportObj"
-        />
+  <PageWrapper dense contentFullHeight>
+    <div class="p-4 powerbi-wrap" ref="wrapEl" style="background-color: #fff; height: 100%">
+      <div class="container">
+        <div class="controls">
+          <template v-if="isEmbedded">
+            <button @click="changeVisualType('columnChart')" v-if="false">columnChart type</button>
+            <button @click="changeVisualType('lineChart')" v-if="false">lineChart type</button>
+            <button @click="hideFilterPane(true)" v-if="false">Hide filter pane</button>
+            <button @click="hideFilterPane(false)" v-if="false">Show filter pane</button>
+            <button @click="setDataSelectedEvent()" v-if="false">Set event</button>
+          </template>
+          <template v-else>
+            <button @click="embedReport()" class="embed-report">Embed Report</button>
+          </template>
+          <keep-alive>
+            <PowerBIReportEmbed
+              v-if="isEmbedded"
+              :embed-config="currentReportConfig"
+              :phased-embedding="phasedEmbeddingFlag"
+              :css-class-name="reportClass"
+              :event-handlers="eventHandlersMap"
+              @report-obj="setReportObj"
+            />
+          </keep-alive>
+        </div>
       </div>
     </div>
-  </div>
+  </PageWrapper>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="SalesMonthlyRevenue">
   import { ref, reactive, onMounted } from 'vue';
   import type { IEmbedConfigurationBase } from 'powerbi-models';
   import { models, Report, IReportEmbedConfiguration, Page, service, Embed } from 'powerbi-client';
   import { IHttpPostMessageResponse } from 'http-post-message';
   import 'powerbi-report-authoring';
   import { Guid } from 'js-guid';
+  import { PageWrapper } from '/@/components/Page';
   import {
     GetDictionaryItems,
     GetUserPermission,
@@ -46,6 +50,7 @@
   import axios from 'axios';
   import { getFinalActiveTime, logoutApi, writeFinalActiveTime } from '/@/api/sys/user';
   import { checkLoginTimeout } from '/@/utils/tools';
+
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
     target: wrapEl,
@@ -225,8 +230,13 @@
       id: reportId,
       embedUrl: embedUrl,
       accessToken: embedToken,
+      settings: {
+        filterPaneEnabled: true,
+        navContentPaneEnabled: true,
+      },
     };
 
+    console.log('currentReportConfig:', currentReportConfig);
     isEmbedded.value = true;
   }
 
@@ -417,11 +427,6 @@
     });
   });
 </script>
-<!-- <script lang="ts">
-  export default {
-    name: 'SalesCDNRevenue',
-  };
-</script> -->
 <style lang="less">
   .bar-content {
     display: none;
