@@ -53,7 +53,7 @@
   }
   let tableName = ref(t('report.sapcnoReport.tableAreaTitle'));
   let reportType = 'sap_cno_contrast_table'; // report type & S3 prefix folder name,
-  let S3Bucket = 'billing-dev-sync-data'; // S3 bucket name
+  let S3Bucket = import.meta.env.VITE_GLOB_S3_REPORT; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
   // const canResize = ref(false);
