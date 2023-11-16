@@ -15,7 +15,7 @@ import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configImageminPlugin } from './imagemin';
 import { configSvgIconsPlugin } from './svgSprite';
-import vueSetupExtend from 'vite-plugin-vue-setup-extend' // 引入插件
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'; // 引入插件
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -38,7 +38,6 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     VitePluginCertificate({
       source: 'coding',
     }),
-
   ];
 
   // vite-plugin-windicss
