@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-4" ref="wrapEl">
     <CollapseContainer :title="t('report.searchAreaTitle')">
       <BasicForm
         @register="registerForSearch"
@@ -23,7 +23,7 @@
     </BasicTable>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts" setup name="Costbyproduct">
   import { ref, reactive, onMounted } from 'vue';
   import { GetS3TargetUrl } from '/@/api/sys/system';
   import { getFinalActiveTime, writeFinalActiveTime } from '/@/api/sys/user';
@@ -44,7 +44,18 @@
   import { getFormSchema } from './formData';
   import { checkLoginTimeout } from '/@/utils/tools';
   import { logoutApi } from '/@/api/sys/user';
+  import { useLoading } from '/@/components/Loading';
   const { t } = useI18n();
+
+  // loading module
+  const wrapEl = ref<ElRef>(null);
+  const [openWrapLoading, closeWrapLoading] = useLoading({
+    target: wrapEl,
+    props: {
+      tip: 'Loading...',
+      absolute: true,
+    },
+  });
 
   //====Start========modify Area===========
   interface SearchItems {
@@ -261,6 +272,7 @@
   }
 
   async function handleSearchSubmit(values: SearchItems) {
+    openWrapLoading();
     // deal with
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
@@ -306,6 +318,11 @@
         createMessage.warning('檔案解析錯誤！');
       });
       readerData(fileData.data);
+      setTimeout(() => {
+      closeWrapLoading()
+      }, 10000);
+    } else {
+      closeWrapLoading();
     }
   }
 
