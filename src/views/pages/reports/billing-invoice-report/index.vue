@@ -53,7 +53,7 @@
   }
   let tableName = ref(t('report.invoiceReport.tableAreaTitle'));
   let reportType = 'billing_invoice_report_hk'; // report type & S3 prefix folder name,
-  let S3Bucket = 'billing-dev-sync-data'; // S3 bucket name
+  let S3Bucket = import.meta.env.VITE_GLOB_S3_REPORT; // S3 bucket name
   //====End========modify Area=============
   const schemas: FormSchema[] = getFormSchema();
   // const canResize = ref(false);
