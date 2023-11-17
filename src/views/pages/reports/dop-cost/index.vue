@@ -318,7 +318,9 @@
         createMessage.warning('檔案解析錯誤！');
       });
       readerData(fileData.data);
-      closeWrapLoading();
+      setTimeout(() => {
+      closeWrapLoading()
+      }, 1000);
     } else {
       closeWrapLoading();
     }
