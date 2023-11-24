@@ -85,4 +85,76 @@ export default {
     searchAreaReportTypeOption: 'Cost By Product',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
+  internaloporcr: {
+    tableAreaTitle: 'Internal OPOR CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Internal OPOR CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  internalpor1cr: {
+    tableAreaTitle: 'Internal POR1 CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Internal POR1 CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  customeroporcr: {
+    tableAreaTitle: 'Customer OPOR CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer OPOR CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  customerpor1cr: {
+    tableAreaTitle: 'Customer POR1 CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer POR1 CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  customerordrcr: {
+    tableAreaTitle: 'Customer ORDR CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer ORDR CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  customerrdr1cr: {
+    tableAreaTitle: 'Customer RDR1 CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer RDR1 CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  internaloporc3: {
+    tableAreaTitle: 'Internal OPOR C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Internal OPOR C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  internalpor1c3: {
+    tableAreaTitle: 'Internal POR1 C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Internal POR1 C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  customeroporc3: {
+    tableAreaTitle: 'Customer OPOR C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer OPOR C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  customerpor1c3: {
+    tableAreaTitle: 'Customer POR1 C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer POR1 C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  customerordrc3: {
+    tableAreaTitle: 'Customer ORDR C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer ORDR C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  customerrdr1c3: {
+    tableAreaTitle: 'Customer RDR1 C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer RDR1 C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
 };

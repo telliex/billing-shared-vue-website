@@ -78,4 +78,76 @@ export default {
     searchAreaReportTypeOption: 'Cost By Product',
     searchAreaYYYYMMLavel: '月份', // Month
   },
+  internaloporcr: {
+    tableAreaTitle: 'CR內部帐本OPOR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'CR內部帐本OPOR',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  internalpor1cr: {
+    tableAreaTitle: 'CR內部帐本POR1',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'CR內部帐本POR1',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  customeroporcr: {
+    tableAreaTitle: 'CR客戶帐本OPOR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'CR客戶帐本OPOR',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  customerpor1cr: {
+    tableAreaTitle: 'CR客戶帐本POR1',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'CR客戶帐本POR1',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  customerordrcr: {
+    tableAreaTitle: 'CR客戶帐本ORDR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Customer ORDR CR',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  customerrdr1cr: {
+    tableAreaTitle: 'CR客戶帐本RDR1',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'CR客戶帐本RDR1',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  internaloporc3: {
+    tableAreaTitle: 'C3內部帐本OPOR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'C3內部帐本OPOR',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  internalpor1c3: {
+    tableAreaTitle: 'C3內部帐本POR1',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'C3內部帐本POR1',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  customeroporc3: {
+    tableAreaTitle: 'C3客戶帐本OPOR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'C3客戶帐本OPOR',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  customerpor1c3: {
+    tableAreaTitle: 'C3客戶帐本POR1',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'C3客戶帐本POR1',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  customerordrc3: {
+    tableAreaTitle: 'C3客戶帐本ORDR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'C3客戶帐本ORDR',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  customerrdr1c3: {
+    tableAreaTitle: 'C3客戶帐本RDR1',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'C3客戶帐本RDR1',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
 };
