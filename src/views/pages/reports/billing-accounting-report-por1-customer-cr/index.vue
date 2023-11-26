@@ -23,7 +23,7 @@
     </BasicTable>
   </div>
 </template>
-<script lang="ts" setup name="CustomerPOR1CR">
+<script lang="ts" setup name="CustomerPORCR">
   import { ref, reactive, onMounted } from 'vue';
   import { GetS3TargetUrl } from '/@/api/sys/system';
   import { getFinalActiveTime, writeFinalActiveTime } from '/@/api/sys/user';
@@ -62,7 +62,7 @@
     ReportType: string;
     YearMonth: string;
   }
-  let tableName = ref(t('report.customerpor1cr.tableAreaTitle'));
+  let tableName = ref(t('report.customerporcr.tableAreaTitle'));
   let reportType = 'c8'; // report type & S3 prefix folder name,
   let S3Bucket = import.meta.env.VITE_GLOB_S3_ACCOUNT_REPORT; // S3 bucket name
   //====End========modify Area=============
@@ -339,6 +339,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'customerpor1cr',
+    name: 'customerporcr',
   };
 </script>

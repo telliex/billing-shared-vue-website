@@ -7,7 +7,7 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'ReportType',
       component: 'Select',
-      label: `${t('report.customerrdr1cr.searchAreaReportTypeLavel')}:`,
+      label: `${t('report.customerrdrcr.searchAreaReportTypeLavel')}:`,
       show: false,
       componentProps: {
         options: [
@@ -25,7 +25,7 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'YearMonth',
       component: 'DatePicker',
-      label: `${t('report.customerrdr1cr.searchAreaYYYYMMLavel')}:`,
+      label: `${t('report.customerrdrcr.searchAreaYYYYMMLavel')}:`,
       labelWidth: 100,
       required: true,
       componentProps: {
