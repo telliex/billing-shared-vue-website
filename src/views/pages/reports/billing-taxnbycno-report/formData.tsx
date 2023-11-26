@@ -7,14 +7,14 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'ReportType',
       component: 'Select',
-      label: `${t('report.customerpor1cr.searchAreaReportTypeLavel')}:`,
+      label: `${t('report.taxbycnoReport.searchAreaReportTypeLavel')}:`,
       show: false,
       componentProps: {
         options: [
           {
-            label: 'Customer POR1 CR',
-            value: 'c8',
-            key: 'c8',
+            label: 'Local Billing稅額資料報表',
+            value: 'tax_by_cno',
+            key: 'tax_by_cno',
           },
         ],
       },
@@ -25,7 +25,7 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'YearMonth',
       component: 'DatePicker',
-      label: `${t('report.customerpor1cr.searchAreaYYYYMMLavel')}:`,
+      label: `${t('report.taxbycnoReport.searchAreaYYYYMMLavel')}:`,
       labelWidth: 100,
       required: true,
       componentProps: {

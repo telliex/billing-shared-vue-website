@@ -114,7 +114,7 @@
     let timeStamp = dayjs().format('YYYYMMDD');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename: `costbylinked_${timeStamp}.xlsx`,
+      filename: `c8_0_rdr1_${timeStamp}.xlsx`,
       write2excelOpts: {
         bookType: 'xlsx',
       },

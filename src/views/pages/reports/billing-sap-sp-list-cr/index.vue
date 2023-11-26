@@ -23,7 +23,7 @@
     </BasicTable>
   </div>
 </template>
-<script lang="ts" setup name="InternalPOR1CR">
+<script lang="ts" setup name="BillingspListCR">
   import { ref, reactive, onMounted } from 'vue';
   import { GetS3TargetUrl } from '/@/api/sys/system';
   import { getFinalActiveTime, writeFinalActiveTime } from '/@/api/sys/user';
@@ -62,7 +62,7 @@
     ReportType: string;
     YearMonth: string;
   }
-  let tableName = ref(t('report.internalpor1cr.tableAreaTitle'));
+  let tableName = ref(t('report.billingsplistcr.tableAreaTitle'));
   let reportType = 'c8'; // report type & S3 prefix folder name,
   let S3Bucket = import.meta.env.VITE_GLOB_S3_ACCOUNT_REPORT; // S3 bucket name
   //====End========modify Area=============
@@ -114,7 +114,7 @@
     let timeStamp = dayjs().format('YYYYMMDD');
     jsonToSheetXlsx({
       data: tableListRef.value[0].dataSource || [],
-      filename: `c8_1_por1_${timeStamp}.xlsx`,
+      filename: `sp_list_cr_${timeStamp}.xlsx`,
       write2excelOpts: {
         bookType: 'xlsx',
       },
@@ -290,7 +290,7 @@
 
     // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3ReportClass = reportType;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}_30_1_migration_por1.csv`;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}_5_sap_sp_list.csv`;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
 
@@ -298,7 +298,7 @@
       trace_id: Guid.newGuid().toString(),
       bucket_region: import.meta.env.VITE_GLOB_S3_REGION,
       bucket_name: S3Bucket,
-      object_key: `ym=${S3Year}${S3Month}/leadger_country=${S3ReportClass}/report_type=1/${S3FileName}`,
+      object_key: `ym=${S3Year}${S3Month}/leadger_country=${S3ReportClass}/report_type=5/${S3FileName}`,
       duration: '10',
     }).catch((err) => {
       console.log(err);
@@ -339,6 +339,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'internalpor1cr',
+    name: 'billingsplistcr',
   };
 </script>

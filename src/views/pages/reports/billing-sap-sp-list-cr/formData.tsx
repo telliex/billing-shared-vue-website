@@ -7,12 +7,12 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'ReportType',
       component: 'Select',
-      label: `${t('report.customerpor1cr.searchAreaReportTypeLavel')}:`,
+      label: `${t('report.billingsplistcr.searchAreaReportTypeLavel')}:`,
       show: false,
       componentProps: {
         options: [
           {
-            label: 'Customer POR1 CR',
+            label: 'Billing SP List CR',
             value: 'c8',
             key: 'c8',
           },
@@ -25,7 +25,7 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'YearMonth',
       component: 'DatePicker',
-      label: `${t('report.customerpor1cr.searchAreaYYYYMMLavel')}:`,
+      label: `${t('report.billingsplistcr.searchAreaYYYYMMLavel')}:`,
       labelWidth: 100,
       required: true,
       componentProps: {

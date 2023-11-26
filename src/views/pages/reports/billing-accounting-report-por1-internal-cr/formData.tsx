@@ -12,7 +12,7 @@ export function getFormSchema(): FormSchema[] {
       componentProps: {
         options: [
           {
-            label: 'Internal POR1',
+            label: 'Internal POR1 CR',
             value: 'c8',
             key: 'c8',
           },

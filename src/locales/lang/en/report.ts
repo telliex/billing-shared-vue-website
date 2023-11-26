@@ -157,4 +157,64 @@ export default {
     searchAreaReportTypeOption: 'Customer RDR1 C3',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
+  billingsplistcr: {
+    tableAreaTitle: 'Billing SP List CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing SP List CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  billingspusagecr: {
+    tableAreaTitle: 'Billing SP Usage CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing SP Usage CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  billinrilistcr: {
+    tableAreaTitle: 'Billing RI List CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing RI List CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  billingriusagecr: {
+    tableAreaTitle: 'Billing RI Usage CR',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing RI Usage CR',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  invoicecontrastReport: {
+    tableAreaTitle: 'Invoice Contrast Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Invoice Contrast Report',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  taxbycnoReport: {
+    tableAreaTitle: 'Tax by CNO Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Tax by CNO Report',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  costallocateReport: {
+    tableAreaTitle: 'Cost allocate Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Cost allocate Report',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  creditownerReportbu: {
+    tableAreaTitle: 'Credit Owner Report for BU',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Credit Owner Report for BU',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  creditownerReportaccountant: {
+    tableAreaTitle: 'Credit Owner Report for Accountant',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Credit Owner Report for Accountant',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  creditownerReportsales: {
+    tableAreaTitle: 'Credit Owner Report for Sales',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Credit Owner Report for Sales',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
 };

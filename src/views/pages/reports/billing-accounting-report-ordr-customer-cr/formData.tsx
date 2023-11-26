@@ -12,7 +12,7 @@ export function getFormSchema(): FormSchema[] {
       componentProps: {
         options: [
           {
-            label: 'Customer ORDR',
+            label: 'Customer ORDR CR',
             value: 'c8',
             key: 'c8',
           },
