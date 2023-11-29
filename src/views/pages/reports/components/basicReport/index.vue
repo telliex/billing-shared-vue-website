@@ -222,6 +222,7 @@
       let results = XLSX.utils.sheet_to_json(worksheet, {
         raw: true,
         dateNF: dateFormat, //Not worked
+        rawNumbers: false, // no need to remove the 0 of the number
       }) as object[];
 
       results = results.map((row: object) => {
@@ -263,6 +264,7 @@
           // console.log(workbook);
           /* DO SOMETHING WITH workbook HERE */
           const excelData = getExcelData(workbook);
+
           loadDataSuccess(excelData);
           // emit('success', excelData);
           resolve('');
@@ -298,9 +300,7 @@
       logoutApi();
       return false;
     }
-    console.log('values11111111:', values);
     const result = props.childFormValue(values);
-    console.log('result11111111:', result);
     let S3Location = await GetS3TargetUrl({
       trace_id: Guid.newGuid().toString(),
       bucket_region: props.bucketRegion,
