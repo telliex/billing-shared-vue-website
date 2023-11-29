@@ -83,18 +83,21 @@
   const props = defineProps<{
     formDataObject: FormDataObject;
     tableName: string;
-    reportType: string;
+    // reportType: string;
     s3Bucket: string;
     formData: any;
-    s3YearOfDayjsFormat: string;
-    s3MonthOfDayjsFormat: string;
-    s3FileNameOfDayjsFormat: string;
+    objectKeyString: string;
     bucketRegion: string;
     searchResetFn: Function;
+    childFormValue: Function;
   }>();
+
+  // const emit = defineEmits(['childFormValue']);
+
   let tableName = ref(props.tableName);
-  let reportType = ref(props.reportType);
+  // let reportType = ref(props.reportType);
   let s3Bucket = ref(props.s3Bucket);
+  let objectKey = ref(props.objectKeyString);
 
   // const canResize = ref(false);
   const tableListRef = ref<
@@ -220,6 +223,7 @@
         raw: true,
         dateNF: dateFormat, //Not worked
       }) as object[];
+
       results = results.map((row: object) => {
         for (let field in row) {
           if (row[field] instanceof Date) {
@@ -273,7 +277,7 @@
       reader.readAsArrayBuffer(rawFile);
     });
   }
-  // TODO
+
   function handleSearchReset() {
     props.searchResetFn();
   }
@@ -294,20 +298,14 @@
       logoutApi();
       return false;
     }
-
-    // createMessage.success('click search,values:' + JSON.stringify(values));
-    let S3ReportClass = reportType.value;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth)
-      .format(props.s3FileNameOfDayjsFormat)
-      .toString()}.xlsx`; // [for need to modify area]
-    let S3Month = dayjs(values.YearMonth).format(props.s3MonthOfDayjsFormat).toString();
-    let S3Year = dayjs(values.YearMonth).format(props.s3YearOfDayjsFormat).toString();
-
+    console.log('values11111111:', values);
+    const result = props.childFormValue(values);
+    console.log('result11111111:', result);
     let S3Location = await GetS3TargetUrl({
       trace_id: Guid.newGuid().toString(),
       bucket_region: props.bucketRegion,
       bucket_name: s3Bucket.value,
-      object_key: `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`, // [for need to modify area]
+      object_key: result, // [for need to modify area]
       duration: '10',
     }).catch((err) => {
       console.log(err);
@@ -348,19 +346,14 @@
       return false;
     }
 
-    // createMessage.success('click search,values:' + JSON.stringify(values));
-    let S3ReportClass = reportType.value;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth)
-      .format(props.s3FileNameOfDayjsFormat)
-      .toString()}.xlsx`; // [for need to modify area]
-    let S3Month = dayjs(values.YearMonth).format(props.s3MonthOfDayjsFormat).toString();
-    let S3Year = dayjs(values.YearMonth).format(props.s3YearOfDayjsFormat).toString();
+    const result = props.childFormValue(values);
 
+    // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3Location = await GetS3TargetUrl({
       trace_id: Guid.newGuid().toString(),
       bucket_region: props.bucketRegion,
       bucket_name: s3Bucket.value,
-      object_key: `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`, // [for need to modify area]
+      object_key: result, // [for need to modify area]
       duration: '10',
     }).catch((err) => {
       console.log(err);

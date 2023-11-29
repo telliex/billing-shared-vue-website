@@ -65,6 +65,7 @@
     currentPageReportIdKey: string;
     currentPageTableNameKey: string;
     powerBILambdaURL: string;
+    targetColumn: string;
   }>();
 
   const ls = createLocalStorage();
@@ -73,6 +74,7 @@
   let currentPageReportIdKey = ref(props.currentPageReportIdKey);
   let currentPageTableNameKey = ref(props.currentPageTableNameKey);
   let powerBILambdaURL = ref(props.powerBILambdaURL);
+  let targetColumn = ref(props.targetColumn);
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName.value}__container`;
   let currentUserId = ls.get('TEMP_USER_ID_KEY__');
@@ -382,7 +384,7 @@
         $schema: 'http://powerbi.com/product/schema#basic',
         target: {
           table: tableName[0].response_items[0].itemValue,
-          column: 'ecloud_sales',
+          column: targetColumn.value,
           report,
         },
         operator: 'In',

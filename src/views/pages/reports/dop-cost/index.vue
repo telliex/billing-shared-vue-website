@@ -6,11 +6,10 @@
       :reportType="reportType"
       :s3Bucket="s3Bucket"
       :formData="formData"
-      :s3YearOfDayjsFormat="s3YearOfDayjsFormat"
-      :s3MonthOfDayjsFormat="s3MonthOfDayjsFormat"
-      :s3FileNameOfDayjsFormat="s3FileNameOfDayjsFormat"
       :bucketRegion="bucketRegion"
       :searchResetFn="handleSearchReset"
+      :childFormValue="handleChildFormValue"
+      :objectKeyString="objectKeyString"
     />
   </div>
 </template>
@@ -21,6 +20,7 @@
   import { FormSchema } from '/@/components/Form/index';
   import { useI18n } from '/@/hooks/web/useI18n';
   const { t } = useI18n();
+  import dayjs from 'dayjs';
   const schemas: FormSchema[] = getFormSchema();
   //====Start========modify Area=========== [for need to modify area]
 
@@ -42,7 +42,7 @@
       postIcon: 'ant-design:search-outlined',
       iconSize: 12,
     },
-    showCustomButton: true,
+    showCustomButton: true, // download
     customButtonOptions: {
       postIcon: 'ant-design:cloud-download-outlined',
       iconSize: 12,
@@ -54,21 +54,27 @@
     },
   });
   let tableName = ref(t('report.dopCost.tableAreaTitle'));
-  let reportType = 'dop_cost_report'; // [M] report type & S3 prefix folder name,
+  let reportType = ref('dop_cost_report'); // [M] report type & S3 prefix folder name,
   let s3Bucket = import.meta.env.VITE_GLOB_S3_REPORT; // [M] S3 bucket name
 
   let formData = reactive<SearchItems>({
-    ReportType: reportType,
+    ReportType: reportType.value,
     YearMonth: '',
   });
 
-  const s3YearOfDayjsFormat = 'YYYY';
-  const s3MonthOfDayjsFormat = 'MM';
-  const s3FileNameOfDayjsFormat = 'YYYYMM';
   const bucketRegion = import.meta.env.VITE_GLOB_S3_REGION;
+  const objectKeyString = ref('');
   //====End========modify Area=============
   function handleSearchReset() {
-    formData.ReportType = reportType;
+    formData.ReportType = reportType.value;
     formData.YearMonth = '';
+  }
+  function handleChildFormValue(values: SearchItems) {
+    let S3ReportClass = reportType.value;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}.xlsx`; // [for need to modify area]
+    let S3Month = dayjs(values.YearMonth).format('MM').toString();
+    let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
+    objectKeyString.value = `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`;
+    return objectKeyString.value;
   }
 </script>
