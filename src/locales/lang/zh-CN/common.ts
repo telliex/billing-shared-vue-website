@@ -8,7 +8,7 @@ export default {
   resetText: '清除',
   searchText: '搜索',
   queryText: '查询',
-
+  customText: '下载',
   inputText: '请输入',
   chooseText: '请选择',
 

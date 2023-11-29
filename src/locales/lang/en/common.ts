@@ -8,7 +8,7 @@ export default {
   resetText: 'Clear', // Reset
   searchText: 'Search',
   queryText: 'Search',
-
+  customText: 'Download',
   inputText: 'Please enter',
   chooseText: 'Please choose',
 
