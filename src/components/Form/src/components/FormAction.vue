@@ -24,6 +24,16 @@
           {{ getSubmitBtnOptions.text }}
         </Button>
 
+        <Button
+          type="primary"
+          class="mr-2"
+          v-bind="getCustomBtnOptions"
+          @click="customAction"
+          v-if="showCustomButton"
+        >
+          {{ getCustomBtnOptions.text }}
+        </Button>
+
         <slot name="advanceBefore"></slot>
         <Button
           type="link"
@@ -64,12 +74,17 @@
       showActionButtonGroup: propTypes.bool.def(true),
       showResetButton: propTypes.bool.def(true),
       showSubmitButton: propTypes.bool.def(true),
+      showCustomButton: propTypes.bool.def(true),
       showAdvancedButton: propTypes.bool.def(true),
       resetButtonOptions: {
         type: Object as PropType<ButtonOptions>,
         default: () => ({}),
       },
       submitButtonOptions: {
+        type: Object as PropType<ButtonOptions>,
+        default: () => ({}),
+      },
+      customButtonOptions: {
         type: Object as PropType<ButtonOptions>,
         default: () => ({}),
       },
@@ -118,6 +133,15 @@
         );
       });
 
+      const getCustomBtnOptions = computed(() => {
+        return Object.assign(
+          {
+            text: t('common.customText'),
+          },
+          props.customButtonOptions,
+        );
+      });
+
       function toggleAdvanced() {
         emit('toggle-advanced');
       }
@@ -127,6 +151,7 @@
         actionColOpt,
         getResetBtnOptions,
         getSubmitBtnOptions,
+        getCustomBtnOptions,
         toggleAdvanced,
         ...useFormContext(),
       };
