@@ -181,6 +181,30 @@ export default {
     searchAreaReportTypeOption: 'Billing RI Usage CR',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
+  billingsplistcc: {
+    tableAreaTitle: 'Billing SP List C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing SP List C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  billingspusagecc: {
+    tableAreaTitle: 'Billing SP Usage C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing SP Usage C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  billinrilistcc: {
+    tableAreaTitle: 'Billing RI List C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing RI List C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
+  billingriusagecc: {
+    tableAreaTitle: 'Billing RI Usage C3',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing RI Usage C3',
+    searchAreaYYYYMMLavel: 'Month', // Month
+  },
   invoicecontrastReport: {
     tableAreaTitle: 'Invoice Contrast Report',
     searchAreaReportTypeLavel: 'Repot Type',

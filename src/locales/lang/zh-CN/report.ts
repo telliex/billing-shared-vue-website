@@ -174,6 +174,30 @@ export default {
     searchAreaReportTypeOption: 'Billing RI Usage CR',
     searchAreaYYYYMMLavel: '月份', // Month
   }, 
+  billingsplistcc: {
+    tableAreaTitle: 'Billing SP List C3',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: 'Billing SP List C3',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  billingspusagecc: {
+    tableAreaTitle: 'Billing SP Usage C3',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: 'Billing SP Usage C3',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  billinrilistcc: {
+    tableAreaTitle: 'Billing RI List C3',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: 'Billing RI List C3',
+    searchAreaYYYYMMLavel: '月份', // Month
+  },
+  billingriusagecc: {
+    tableAreaTitle: 'Billing RI Usage C3',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: 'Billing RI Usage C3',
+    searchAreaYYYYMMLavel: '月份', // Month
+  }, 
   invoicecontrastReport: {
     tableAreaTitle: '帐单发票对照表',
     searchAreaReportTypeLavel: '报表种类',

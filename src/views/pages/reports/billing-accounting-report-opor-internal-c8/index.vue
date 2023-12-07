@@ -13,7 +13,7 @@
     />
   </div>
 </template>
-<script lang="ts" setup name="DiffReport">
+<script lang="ts" setup name="InternalOPORCR">
   import { ref, reactive } from 'vue';
   import BasicReport from '../components/basicReport/index.vue';
   import { getFormSchema } from './formData';

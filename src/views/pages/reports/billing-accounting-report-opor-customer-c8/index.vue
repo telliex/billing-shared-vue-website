@@ -13,7 +13,7 @@
     />
   </div>
 </template>
-<script lang="ts" setup name="InternalOPORCR">
+<script lang="ts" setup name="CustomerOPORCR">
   import { ref, reactive } from 'vue';
   import BasicReport from '../components/basicReport/index.vue';
   import { getFormSchema } from './formData';
@@ -53,7 +53,7 @@
       iconSize: 12,
     },
   });
-  let tableName = ref(t('report.internaloporcr.tableAreaTitle'));
+  let tableName = ref(t('report.customeroporcr.tableAreaTitle'));
   let reportType = ref('c8'); // [M] report type & S3 prefix folder name,
   let s3Bucket = import.meta.env.VITE_GLOB_S3_ACCOUNT_REPORT; // [M] S3 bucket name
   let formData = reactive<SearchItems>({
@@ -70,10 +70,10 @@
   }
   function handleChildFormValue(values: SearchItems) {
     let S3ReportClass = reportType.value;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}_30_1_migration_opor.csv`; // [for need to modify area]
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}_30_0_migration_opor.csv`; // [for need to modify area]
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
-    objectKeyString.value = `ym=${S3Year}${S3Month}/leadger_country=${S3ReportClass}/report_type=1/${S3FileName}`;
+    objectKeyString.value = `ym=${S3Year}${S3Month}/leadger_country=${S3ReportClass}/report_type=0/${S3FileName}`;
     return objectKeyString.value;
   }
 </script>
