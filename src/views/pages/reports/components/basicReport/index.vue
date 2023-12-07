@@ -15,9 +15,11 @@
       :columns="table.columns"
       :dataSource="table.dataSource"
     >
-      <template #toolbar>
-        <a-button type="primary" @click="exportFile">{{ t('report.exportFile') }}</a-button>
-      </template>
+      <!-- <template #toolbar>
+        <a-button type="primary" @click="exportFile" style="display: none">{{
+          t('report.exportFile')
+        }}</a-button>
+      </template> -->
     </BasicTable>
   </div>
 </template>
