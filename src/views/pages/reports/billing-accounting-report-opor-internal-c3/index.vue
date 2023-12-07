@@ -23,7 +23,7 @@
     </BasicTable>
   </div>
 </template>
-<script lang="ts" setup name="InternalOPORC3">
+<script lang="ts" setup name="InternalOPORCC">
   import { ref, reactive, onMounted } from 'vue';
   import { GetS3TargetUrl } from '/@/api/sys/system';
   import { getFinalActiveTime, writeFinalActiveTime } from '/@/api/sys/user';
@@ -62,7 +62,7 @@
     ReportType: string;
     YearMonth: string;
   }
-  let tableName = ref(t('report.internaloporc3.tableAreaTitle'));
+  let tableName = ref(t('report.internaloporcc.tableAreaTitle'));
   let reportType = 'c3'; // report type & S3 prefix folder name,
   let S3Bucket = import.meta.env.VITE_GLOB_S3_ACCOUNT_REPORT; // S3 bucket name
   //====End========modify Area=============
@@ -339,6 +339,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'internaloporc3',
+    name: 'internaloporcc',
   };
 </script>

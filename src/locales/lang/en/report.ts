@@ -121,37 +121,37 @@ export default {
     searchAreaReportTypeOption: 'Customer RDR1 CR',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  internaloporc3: {
+  internaloporcc: {
     tableAreaTitle: 'Internal OPOR C3',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Internal OPOR C3',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  internalpor1c3: {
+  internalpor1cc: {
     tableAreaTitle: 'Internal POR1 C3',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Internal POR1 C3',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  customeroporc3: {
+  customeroporcc: {
     tableAreaTitle: 'Customer OPOR C3',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Customer OPOR C3',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  customerpor1c3: {
+  customerpor1cc: {
     tableAreaTitle: 'Customer POR1 C3',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Customer POR1 C3',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  customerordrc3: {
+  customerordrcc: {
     tableAreaTitle: 'Customer ORDR C3',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Customer ORDR C3',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  customerrdr1c3: {
+  customerrdr1cc: {
     tableAreaTitle: 'Customer RDR1 C3',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Customer RDR1 C3',
@@ -199,22 +199,16 @@ export default {
     searchAreaReportTypeOption: 'Cost allocate Report',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  creditownerReportbu: {
-    tableAreaTitle: 'Credit Owner Report for BU',
-    searchAreaReportTypeLavel: 'Repot Type',
-    searchAreaReportTypeOption: 'Credit Owner Report for BU',
-    searchAreaYYYYMMLavel: 'Month', // Month
-  },
   creditownerReportaccountant: {
     tableAreaTitle: 'Credit Owner Report for Accountant',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Credit Owner Report for Accountant',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // Date
   },
   creditownerReportsales: {
     tableAreaTitle: 'Credit Owner Report for Sales',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Credit Owner Report for Sales',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // Date
   },
 };

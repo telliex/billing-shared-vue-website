@@ -121,37 +121,37 @@ export default {
     searchAreaReportTypeOption: 'CR客戶帳本RDR1',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  internaloporc3: {
+  internaloporcc: {
     tableAreaTitle: 'C3內部帳本OPOR',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'C3內部帳本OPOR',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  internalpor1c3: {
+  internalpor1cc: {
     tableAreaTitle: 'C3內部帳本POR1',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'C3內部帳本POR1',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  customeroporc3: {
+  customeroporcc: {
     tableAreaTitle: 'C3客戶帳本OPOR',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'C3客戶帳本OPOR',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  customerpor1c3: {
+  customerpor1cc: {
     tableAreaTitle: 'C3客戶帳本POR1',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'C3客戶帳本POR1',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  customerordrc3: {
+  customerordrcc: {
     tableAreaTitle: 'C3客戶帳本ORDR',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'C3客戶帳本ORDR',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  customerrdr1c3: {
+  customerrdr1cc: {
     tableAreaTitle: 'C3客戶帳本RDR1',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'C3客戶帳本RDR1',
@@ -199,22 +199,16 @@ export default {
     searchAreaReportTypeOption: '測試帳號成本報表',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  creditownerReportbu: {
-    tableAreaTitle: 'Credit Owner Report for BU',
-    searchAreaReportTypeLavel: '報表種類',
-    searchAreaReportTypeOption: 'Credit Owner Report for BU',
-    searchAreaYYYYMMLavel: '月份', // Month
-  },
   creditownerReportaccountant: {
     tableAreaTitle: 'Credit Owner Report for Accountant',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'Credit Owner Report for Accountant',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // 日期
   },
   creditownerReportsales: {
     tableAreaTitle: 'Credit Owner Report for Sales',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'Credit Owner Report for Sales',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // 日期
   },
 };
