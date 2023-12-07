@@ -71,11 +71,11 @@
   }
   function handleChildFormValue(values: SearchItems) {
     let S3ReportClass = reportType.value;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM05').toString()}.xlsx`; // [for need to modify area]
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
-    let lastMonth = dayjs(values.YearMonth).subtract(1, 'month').format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
-    objectKeyString.value = `sync_report/monthly/${S3ReportClass}/${S3Year}${lastMonth}/${S3FileName}`;
+    let fileMonth = dayjs(values.YearMonth).add(1, 'month').format('YYYYMM05').toString();
+    let S3FileName = `${S3ReportClass}_${fileMonth}.xlsx`; // [for need to modify area]
+    objectKeyString.value = `sync_report/monthly/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`;
     return objectKeyString.value;
   }
 </script>

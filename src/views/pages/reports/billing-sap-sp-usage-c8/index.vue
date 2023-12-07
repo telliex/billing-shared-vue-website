@@ -13,7 +13,7 @@
     />
   </div>
 </template>
-<script lang="ts" setup name="DopCost">
+<script lang="ts" setup name="BillingspUsageCR">
   import { ref, reactive } from 'vue';
   import BasicReport from '../components/basicReport/index.vue';
   import { getFormSchema } from './formData';
@@ -53,10 +53,9 @@
       iconSize: 12,
     },
   });
-  let tableName = ref(t('report.dopCost.tableAreaTitle'));
-  let reportType = ref('dop_cost_report'); // [M] report type & S3 prefix folder name,
-  let s3Bucket = import.meta.env.VITE_GLOB_S3_REPORT; // [M] S3 bucket name
-
+  let tableName = ref(t('report.billingspusagecr.tableAreaTitle'));
+  let reportType = ref('c8'); // [M] report type & S3 prefix folder name,
+  let s3Bucket = import.meta.env.VITE_GLOB_S3_ACCOUNT_REPORT; // [M] S3 bucket name
   let formData = reactive<SearchItems>({
     ReportType: reportType.value,
     YearMonth: '',
@@ -71,11 +70,10 @@
   }
   function handleChildFormValue(values: SearchItems) {
     let S3ReportClass = reportType.value;
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}_6_sap_ri_usage.csv`; // [for need to modify area]
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
-    let fileMonth = dayjs(values.YearMonth).format('YYYYMM').toString(); 
-    let S3FileName = `${S3ReportClass}_${fileMonth}.xlsx`; // [for need to modify area] // [for need to modify area]
-    objectKeyString.value = `sync_report/monthly/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`;
+    objectKeyString.value = `ym=${S3Year}${S3Month}/leadger_country=${S3ReportClass}/report_type=6/${S3FileName}`;
     return objectKeyString.value;
   }
 </script>

@@ -7,14 +7,14 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'ReportType',
       component: 'Select',
-      label: `${t('report.creditownerReportaccountant.searchAreaReportTypeLavel')}:`,
+      label: `${t('report.billingsplistcc.searchAreaReportTypeLavel')}:`,
       show: false,
       componentProps: {
         options: [
           {
-            label: 'Credit Owner Report for Accountant',
-            value: 'billing_credit_report_accountant',
-            key: 'billing_credit_report_accountant',
+            label: 'Billing SP List CR',
+            value: 'c8',
+            key: 'c8',
           },
         ],
       },
@@ -25,11 +25,11 @@ export function getFormSchema(): FormSchema[] {
     {
       field: 'YearMonth',
       component: 'DatePicker',
-      label: `${t('report.creditownerReportaccountant.searchAreaYYYYMMLavel')}:`,
+      label: `${t('report.billingsplistcc.searchAreaYYYYMMLavel')}:`,
       labelWidth: 100,
       required: true,
       componentProps: {
-        picker: 'date',
+        picker: 'month',
       },
       colProps: {
         span: 6,
