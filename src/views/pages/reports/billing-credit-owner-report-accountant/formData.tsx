@@ -29,7 +29,7 @@ export function getFormSchema(): FormSchema[] {
       labelWidth: 100,
       required: true,
       componentProps: {
-        picker: 'date',
+        picker: 'month',
       },
       colProps: {
         span: 6,
