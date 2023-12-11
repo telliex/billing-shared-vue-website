@@ -8,7 +8,7 @@ export default {
   resetText: '清除',
   searchText: '搜索',
   queryText: '查詢',
-
+  customText: '下載',
   inputText: '請輸入',
   chooseText: '請選擇',
 

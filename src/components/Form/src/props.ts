@@ -79,9 +79,15 @@ export const basicProps = {
   // 确认按钮配置
   submitButtonOptions: Object as PropType<Partial<ButtonProps>>,
 
+  // 显示 custom 按钮
+  showCustomButton: propTypes.bool.def(false),
+  // cusom按钮配置
+  customButtonOptions: Object as PropType<Partial<ButtonProps>>,
+
   // 自定义重置函数
   resetFunc: Function as PropType<() => Promise<void>>,
   submitFunc: Function as PropType<() => Promise<void>>,
+  customFunc: Function as PropType<() => Promise<void>>,
 
   // 以下为默认props
   hideRequiredMark: propTypes.bool,

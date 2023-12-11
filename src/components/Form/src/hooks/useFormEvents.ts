@@ -321,8 +321,33 @@ export function useFormEvents({
     }
   }
 
+  /**
+   * @description: Form custom submission
+   */
+  async function handleCustomAction(e?: Event): Promise<void> {
+    e && e.preventDefault();
+    const { customFunc } = unref(getProps);
+    if (customFunc && isFunction(customFunc)) {
+      await customFunc();
+      return;
+    }
+    const formEl = unref(formElRef);
+    if (!formEl) return;
+    try {
+      const values = await validate();
+      const res = handleFormValues(values);
+      emit('custom', res);
+    } catch (error: any) {
+      if (error?.outOfDate === false && error?.errorFields) {
+        return;
+      }
+      throw new Error(error);
+    }
+  }
+
   return {
     handleSubmit,
+    handleCustomAction,
     clearValidate,
     validate,
     validateFields,

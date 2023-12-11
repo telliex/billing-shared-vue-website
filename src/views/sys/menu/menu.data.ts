@@ -321,7 +321,7 @@ export const formSchema: FormSchema[] = [
         required: true,
         // @ts-ignore
         validator: async (rule, value) => {
-          const pattern = /^[A-Z][a-zA-Z]*$/;
+          const pattern = /^[A-Z][a-zA-Z0-9]*$/;
           console.log(pattern.test(value));
           if (value && !pattern.test(value)) {
             return Promise.reject('PascalCase naming');
