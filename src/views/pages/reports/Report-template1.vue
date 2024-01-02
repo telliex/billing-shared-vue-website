@@ -7,7 +7,7 @@
 -->
 <template>
   <div class="p-4">
-    <CollapseContainer title="查詢欄位">
+    <CollapseContainer title="Filter by">
       <BasicForm @register="register" @submit="handleSearchSubmit" @reset="handleReset" />
     </CollapseContainer>
     <BasicTable

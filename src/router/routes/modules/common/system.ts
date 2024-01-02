@@ -2,8 +2,8 @@
  * @Description:
  * @Anthor: Telliex
  * @Date: 2022-09-30 08:02:54
- * @LastEditors: Telliex
- * @LastEditTime: 2022-12-20 02:52:03
+ * @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
+ * @LastEditTime: 2023-07-21 04:17:38
  */
 import type { AppRouteModule } from '/@/router/types';
 import { RoleEnum } from '/@/enums/roleEnum';
@@ -28,19 +28,21 @@ const system: AppRouteModule = {
       meta: {
         title: t('routes.demo.system.account'),
         ignoreKeepAlive: false,
+        hideMenu: true,
       },
-      component: () => import('/@/views/demo/system/account/index.vue'),
+      component: () => import('/@/views/sys/account/index.vue'),
     },
     {
       path: 'account_detail/:id',
-      name: 'AccountDetail',
+      name: 'UserDetail',
       meta: {
         title: t('routes.demo.system.account_detail'),
         ignoreKeepAlive: true,
         showMenu: false,
         currentActiveMenu: '/system/account',
+        hideMenu: true,
       },
-      component: () => import('/@/views/demo/system/account/AccountDetail.vue'),
+      component: () => import('/@/views/sys/account/AccountDetail.vue'),
     },
     {
       path: 'role',
@@ -49,7 +51,7 @@ const system: AppRouteModule = {
         title: t('routes.demo.system.role'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/demo/system/role/index.vue'),
+      component: () => import('/@/views/sys/role/index.vue'),
     },
 
     {
@@ -59,7 +61,7 @@ const system: AppRouteModule = {
         title: t('routes.demo.system.menu'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/demo/system/menu/index.vue'),
+      component: () => import('/@/views/sys/menu/index.vue'),
     },
     {
       path: 'dept',
@@ -67,8 +69,9 @@ const system: AppRouteModule = {
       meta: {
         title: t('routes.demo.system.dept'),
         ignoreKeepAlive: true,
+        hideMenu: true,
       },
-      component: () => import('/@/views/demo/system/dept/index.vue'),
+      component: () => import('/@/views/sys/dept/index.vue'),
     },
     {
       path: 'changePassword',
@@ -76,8 +79,9 @@ const system: AppRouteModule = {
       meta: {
         title: t('routes.demo.system.password'),
         ignoreKeepAlive: true,
+        hideMenu: true,
       },
-      component: () => import('/@/views/demo/system/password/index.vue'),
+      component: () => import('/@/views/sys/password/index.vue'),
     },
   ],
 };

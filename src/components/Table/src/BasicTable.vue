@@ -1,20 +1,21 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
-    <BasicForm
-      ref="formRef"
-      submitOnReset
-      v-bind="getFormProps"
-      v-if="getBindValues.useSearchForm"
-      :tableAction="tableAction"
-      @register="registerForm"
-      @submit="handleSearchInfoChange"
-      @advanced-change="redoHeight"
-    >
-      <template #[replaceFormSlotKey(item)]="data" v-for="item in getFormSlotKeys">
-        <slot :name="item" v-bind="data || {}"></slot>
-      </template>
-    </BasicForm>
-
+    <CollapseContainer :title="filterTitle">
+      <BasicForm
+        ref="formRef"
+        submitOnReset
+        v-bind="getFormProps"
+        v-if="getBindValues.useSearchForm"
+        :tableAction="tableAction"
+        @register="registerForm"
+        @submit="handleSearchInfoChange"
+        @advanced-change="redoHeight"
+      >
+        <template #[replaceFormSlotKey(item)]="data" v-for="item in getFormSlotKeys">
+          <slot :name="item" v-bind="data || {}"></slot>
+        </template>
+      </BasicForm>
+    </CollapseContainer>
     <Table
       ref="tableElRef"
       v-bind="getBindValues"
@@ -46,7 +47,7 @@
     ColumnChangeParam,
   } from './types/table';
 
-  import { defineComponent, ref, computed, unref, toRaw, inject, watchEffect } from 'vue';
+  import { defineComponent, ref, computed, unref, toRaw, inject, watchEffect, watch } from 'vue';
   import { Table } from 'ant-design-vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { PageWrapperFixedHeightKey } from '/@/components/Page';
@@ -68,7 +69,7 @@
   import { useTableFooter } from './hooks/useTableFooter';
   import { useTableForm } from './hooks/useTableForm';
   import { useDesign } from '/@/hooks/web/useDesign';
-
+  import { CollapseContainer } from '/@/components/Container';
   import { omit } from 'lodash-es';
   import { basicProps } from './props';
   import { isFunction } from '/@/utils/is';
@@ -80,6 +81,7 @@
       Table,
       BasicForm,
       HeaderCell,
+      CollapseContainer,
     },
     props: basicProps,
     emits: [
@@ -113,6 +115,12 @@
 
       const getProps = computed(() => {
         return { ...props, ...unref(innerPropsRef) } as BasicTableProps;
+      });
+
+      let filterTitle = ref('');
+      watch(getProps, async (newQuestion) => {
+        console.log('newQuestion:', newQuestion);
+        filterTitle.value = newQuestion.filterTitle as string;
       });
 
       const isFixedHeightPage = inject(PageWrapperFixedHeightKey, false);
@@ -331,6 +339,8 @@
       emit('register', tableAction, formActions);
 
       return {
+        filterTitle,
+        getProps,
         formRef,
         tableElRef,
         getBindValues,

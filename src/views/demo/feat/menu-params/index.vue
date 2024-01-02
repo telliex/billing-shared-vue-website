@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper title="帶參數菜單（路由）" content="支持多級參數">
+  <PageWrapper title="帶參數選單（路由）" content="支持多級參數">
     當前參數：{{ params }}
     <br />
     輸入參數切換路由：
@@ -9,7 +9,7 @@
     切換路由後
     <ul>
       <li>可刷新頁面測試路由參數情況是否正常。</li>
-      <li>可於左側菜單中展開子菜單，點擊測試參數是否攜帶正常。</li>
+      <li>可於左側選單中展開子選單，點擊測試參數是否攜帶正常。</li>
     </ul>
   </PageWrapper>
 </template>

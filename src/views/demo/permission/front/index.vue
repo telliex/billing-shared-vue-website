@@ -10,7 +10,7 @@
     <p>
       當前角色: <a> {{ userStore.getRoleList }} </a>
     </p>
-    <Alert class="mt-4" type="info" message="點擊後請查看左側菜單變化" show-icon />
+    <Alert class="mt-4" type="info" message="點擊後請查看左側選單變化" show-icon />
 
     <div class="mt-4">
       權限切換(請先切換權限模式為前端角色權限模式):

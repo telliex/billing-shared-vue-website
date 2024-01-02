@@ -3,7 +3,7 @@ import type { LocaleSetting, LocaleType } from '/#/config';
 import { defineStore } from 'pinia';
 import { store } from '/@/store';
 
-import { LOCALE_KEY } from '/@/enums/cacheEnum';
+import { LOCALE_KEY, LOGIN_KEY } from '/@/enums/cacheEnum';
 import { createLocalStorage } from '/@/utils/cache';
 import { localeSetting } from '/@/settings/localeSetting';
 
@@ -13,12 +13,18 @@ const lsLocaleSetting = (ls.get(LOCALE_KEY) || localeSetting) as LocaleSetting;
 
 interface LocaleState {
   localInfo: LocaleSetting;
+  loginInfo: {
+    username: string;
+    password: string;
+    remeberMe: boolean;
+  };
 }
 
 export const useLocaleStore = defineStore({
   id: 'app-locale',
   state: (): LocaleState => ({
     localInfo: lsLocaleSetting,
+    loginInfo: ls.get(LOGIN_KEY) || {},
   }),
   getters: {
     getShowPicker(state): boolean {
@@ -26,6 +32,9 @@ export const useLocaleStore = defineStore({
     },
     getLocale(state): LocaleType {
       return state.localInfo?.locale ?? 'zh_TW';
+    },
+    getLogin(state): { username: string; password: string; remeberMe: boolean } {
+      return state.loginInfo;
     },
   },
   actions: {
@@ -37,6 +46,10 @@ export const useLocaleStore = defineStore({
       this.localInfo = { ...this.localInfo, ...info };
       ls.set(LOCALE_KEY, this.localInfo);
     },
+    setLoginInfo(info: { username: string; password: string; remeberMe: boolean }) {
+      this.loginInfo = { ...this.loginInfo, ...info };
+      ls.set(LOGIN_KEY, this.loginInfo);
+    },
     /**
      * Initialize multilingual information and load the existing configuration from the local cache
      */
@@ -44,6 +57,7 @@ export const useLocaleStore = defineStore({
       this.setLocaleInfo({
         ...localeSetting,
         ...this.localInfo,
+        ...this.loginInfo,
       });
     },
   },

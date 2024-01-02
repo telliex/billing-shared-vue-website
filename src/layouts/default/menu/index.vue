@@ -1,7 +1,7 @@
 <script lang="tsx">
   import type { PropType, CSSProperties } from 'vue';
-  import { Icon } from '/@/components/Icon';
-  import { computed, defineComponent, unref, toRef } from 'vue';
+  // import { Icon } from '/@/components/Icon';
+  import { computed, defineComponent, unref, toRef, onMounted, onUnmounted, ref } from 'vue';
   import { BasicMenu } from '/@/components/Menu';
   import { SimpleMenu } from '/@/components/SimpleMenu';
   import { AppLogo } from '/@/components/Application';
@@ -39,6 +39,7 @@
     },
     setup(props) {
       const go = useGo();
+      const ctrlPressed = ref(false);
 
       const {
         getMenuMode,
@@ -110,11 +111,28 @@
        * @param menu
        */
 
-      function gotoMGT() {
-        window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL;
+      // [Ctrl + click] to open in a new tab
+      function handleKeyDown() {
+        if (!ctrlPressed.value) {
+          console.log('handleKeyDown');
+          ctrlPressed.value = true;
+        }
+      }
+
+      // [Ctrl + click] to open in a new tab
+      function handleKeyUp() {
+        if (ctrlPressed.value) {
+          ctrlPressed.value = false;
+          console.log('handleKeyUp');
+        }
       }
 
       function handleMenuClick(path: string) {
+        // click menu item with ctrl button will open in a new tab
+        if (ctrlPressed.value) {
+          window.open('/#' + path, '_blank');
+          return;
+        }
         go(path);
       }
 
@@ -144,14 +162,10 @@
 
       function renderMenu() {
         const { menus, ...menuProps } = unref(getCommonProps);
-        // console.log(menus);
+        // const showString = `display:${unref(getCollapsed) ? 'none' : 'inline-block'}`;
         if (!menus || !menus.length) return null;
         return !props.isHorizontal ? (
           <div>
-            <a-button type="text" style="color:#fff" onclick={gotoMGT}>
-              <Icon icon="ion:arrow-undo-sharp" />
-              MGT
-            </a-button>
             <SimpleMenu {...menuProps} isSplitMenu={unref(getSplit)} items={menus} />
           </div>
         ) : (
@@ -165,6 +179,16 @@
           />
         );
       }
+      // [Ctrl + click] to open in a new tab
+      onMounted(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+      });
+      // [Ctrl + click] to open in a new tab
+      onUnmounted(() => {
+        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('keyup', handleKeyUp);
+      });
 
       return () => {
         return (

@@ -98,7 +98,7 @@ export const baseComponentControlAttrs: Omit<IBaseFormAttrs, 'tag'>[] = [
   },
   {
     name: 'dropdownMatchSelectWidth',
-    label: '下拉菜單和選擇器同寬',
+    label: '下拉選單和選擇器同寬',
     component: 'Checkbox',
     includes: ['Select', 'TreeSelect', 'AutoComplete'],
   },
@@ -159,7 +159,7 @@ export const baseComponentCommonAttrs: Omit<IBaseFormAttrs, 'tag'>[] = [
   },
   {
     name: 'open',
-    label: '一直展開下拉菜單',
+    label: '一直展開下拉選單',
     component: 'RadioGroup',
     componentProps: {
       options: [
@@ -193,7 +193,7 @@ const componentAttrs: IBaseComponentProps = {
     },
     {
       name: 'defaultOpen',
-      label: '是否默認展開下拉菜單',
+      label: '是否默認展開下拉選單',
       component: 'Checkbox',
     },
   ],
@@ -519,7 +519,7 @@ const componentAttrs: IBaseComponentProps = {
     },
     {
       name: 'defaultOpen',
-      label: '默認展開下拉菜單',
+      label: '默認展開下拉選單',
       component: 'Checkbox',
     },
   ],
@@ -908,10 +908,10 @@ const componentAttrs: IBaseComponentProps = {
     },
     {
       name: 'dropdownClassName',
-      label: '下拉菜單的 className 屬性',
+      label: '下拉選單的 className 屬性',
       component: 'Input',
       componentProps: {
-        placeholder: '請輸入下拉菜單的 className 屬性',
+        placeholder: '請輸入下拉選單的 className 屬性',
       },
     },
 

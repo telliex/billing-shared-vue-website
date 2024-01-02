@@ -6,10 +6,10 @@
  * @LastEditTime: 2023-05-02 01:34:59
 -->
 <template>
-  <PageWrapper title="關於">
+  <PageWrapper title="About">
     <template #headerContent>
       <div class="flex justify-between items-center">
-        <span class="flex-1"> CRS 是基於......的平台。 </span>
+        <span class="flex-1"> MARS ...... </span>
       </div>
     </template>
     <Description @register="infoRegister" class="enter-y" />
@@ -36,12 +36,12 @@
 
   const infoSchema: DescItem[] = [
     {
-      label: '版本',
+      label: 'Version',
       field: 'version',
       render: commonTagRender('blue'),
     },
     {
-      label: '最後編譯時間',
+      label: 'Last Update Date (UTC+0)',
       field: 'lastBuildTime',
       render: commonTagRender('blue'),
     },
@@ -93,7 +93,7 @@
   // });
 
   const [infoRegister] = useDescription({
-    title: '項目信息',
+    title: 'Information',
     data: infoData,
     schema: infoSchema,
     column: 2,

@@ -137,27 +137,13 @@ export default [
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
-      if (!checkUser) {
-        return resultError('Invalid token!');
-      }
-      const codeList = fakeCodeList[checkUser.userId];
+      // const checkUser = createFakeUserList().find((item) => item.token === token);
+      // if (!checkUser) {
+      //   return resultError('Invalid token!');
+      // }
+      const codeList = fakeCodeList[0];
 
       return resultSuccess(codeList);
-    },
-  },
-  {
-    url: '/basic-api/logout',
-    timeout: 200,
-    method: 'get',
-    response: (request: requestParams) => {
-      const token = getRequestToken(request);
-      if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
-      if (!checkUser) {
-        return resultError('Invalid token!');
-      }
-      return resultSuccess(undefined, { msg: 'Token has been destroyed' });
     },
   },
   {

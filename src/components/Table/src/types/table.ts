@@ -198,7 +198,6 @@ export interface BasicTableProps<T = any> {
   canResize?: boolean;
   // 自适应高度偏移， 计算结果-偏移量
   resizeHeightOffset?: number;
-
   // 在分页改变的时候清空选项
   clearSelectOnPageChange?: boolean;
   //
@@ -331,6 +330,12 @@ export interface BasicTableProps<T = any> {
    * @type Function | ScopedSlot
    */
   title?: VNodeChild | JSX.Element | string | ((data: Recordable) => string);
+
+  /**
+   * Table title renderer
+   * @type Function | ScopedSlot
+   */
+  filterTitle?: VNodeChild | JSX.Element | string | ((data: Recordable) => string);
 
   /**
    * Set props on per header row

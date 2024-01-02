@@ -69,7 +69,7 @@
     name: 'BasicForm',
     components: { FormItem, Form, Row, FormAction },
     props: basicProps,
-    emits: ['advanced-change', 'reset', 'submit', 'register', 'field-value-change'],
+    emits: ['advanced-change', 'reset', 'submit', 'custom', 'register', 'field-value-change'],
     setup(props, { emit, attrs }) {
       const formModel = reactive<Recordable>({});
       const modalFn = useModalContext();
@@ -167,6 +167,7 @@
 
       const {
         handleSubmit,
+        handleCustomAction,
         setFieldsValue,
         clearValidate,
         validate,
@@ -192,6 +193,7 @@
       createFormContext({
         resetAction: resetFields,
         submitAction: handleSubmit,
+        customAction: handleCustomAction,
       });
 
       watch(
@@ -275,6 +277,7 @@
         validateFields,
         validate,
         submit: handleSubmit,
+        handleCustomAction,
         scrollToField: scrollToField,
       };
 
@@ -286,6 +289,7 @@
       return {
         getBindValue,
         handleToggleAdvanced,
+
         handleEnterPress,
         formModel,
         defaultValueRef,

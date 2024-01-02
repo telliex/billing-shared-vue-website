@@ -38,6 +38,7 @@ export function checkStatus(
       break;
     case 403:
       errMessage = t('sys.api.errMsg403');
+      userStore.logout(true);
       break;
     // 404请求不存在
     case 404:

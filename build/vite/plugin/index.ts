@@ -15,6 +15,7 @@ import { configVisualizerConfig } from './visualizer';
 import { configThemePlugin } from './theme';
 import { configImageminPlugin } from './imagemin';
 import { configSvgIconsPlugin } from './svgSprite';
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'; // 引入插件
 
 export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const {
@@ -28,6 +29,8 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const vitePlugins: (PluginOption | PluginOption[])[] = [
     // have to
     vue(),
+    // in order to use "name" to cache page
+    vueSetupExtend(),
     // have to
     vueJsx(),
     // support name

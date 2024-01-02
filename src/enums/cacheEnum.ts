@@ -1,3 +1,6 @@
+// login key
+export const LOGIN_KEY = 'LOGIN__';
+
 // user key
 export const USER_KEY = 'USER__';
 

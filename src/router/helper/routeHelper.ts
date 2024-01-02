@@ -62,13 +62,13 @@ function dynamicImport(
     );
     return;
   } else {
-    warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 请自行创建!');
+    warn('在src/views/下找不到`' + component + '.vue` 或 `' + component + '.tsx`, 請自行創建!');
     return EXCEPTION_COMPONENT;
   }
 }
 
 // Turn background objects into routing objects
-// 将背景对象变成路由对象
+// 將背景對象變成路由對象
 export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModule[]): T[] {
   routeList.forEach((route) => {
     const component = route.component as string;
@@ -86,7 +86,7 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
         route.meta = meta;
       }
     } else {
-      warn('请正确配置路由：' + route?.name + '的component属性');
+      warn('請正確配置路由：' + route?.name + '的component屬性');
     }
     route.children && asyncImportRoute(route.children);
   });
@@ -95,46 +95,46 @@ export function transformObjToRoute<T = AppRouteModule>(routeList: AppRouteModul
 
 /**
  * Convert multi-level routing to level 2 routing
- * 将多级路由转换为 2 级路由
+ * 將多級路由轉換為 2 級路由
  */
 export function flatMultiLevelRoutes(routeModules: AppRouteModule[]) {
   const modules: AppRouteModule[] = cloneDeep(routeModules);
 
   for (let index = 0; index < modules.length; index++) {
     const routeModule = modules[index];
-    // 判断级别是否 多级 路由
+    // 判斷級別是否 多級 路由
     if (!isMultipleRoute(routeModule)) {
-      // 声明终止当前循环， 即跳过此次循环，进行下一轮
+      // 聲明終止當前循環， 即跳過此次循環，進行下一輪
       continue;
     }
-    // 路由等级提升
+    // 路由等級提升
     promoteRouteLevel(routeModule);
   }
   return modules;
 }
 
 // Routing level upgrade
-// 路由等级提升
+// 路由等級提升
 function promoteRouteLevel(routeModule: AppRouteModule) {
   // Use vue-router to splice menus
-  // 使用vue-router拼接菜单
-  // createRouter 创建一个可以被 Vue 应用程序使用的路由实例
+  // 使用vue-router拼接菜單
+  // createRouter 創建一個可以被 Vue 應用程序使用的路由實例
   let router: Router | null = createRouter({
     routes: [routeModule as unknown as RouteRecordNormalized],
     history: createWebHashHistory(),
   });
-  // getRoutes： 获取所有 路由记录的完整列表。
+  // getRoutes： 獲取所有 路由記錄的完整列表。
   const routes = router.getRoutes();
-  // 将所有子路由添加到二级路由
+  // 將所有子路由添加到二級路由
   addToChildren(routes, routeModule.children || [], routeModule);
   router = null;
 
-  // omit lodash的函数 对传入的item对象的children进行删除
+  // omit lodash的函數 對傳入的item對象的children進行刪除
   routeModule.children = routeModule.children?.map((item) => omit(item, 'children'));
 }
 
 // Add all sub-routes to the secondary route
-// 将所有子路由添加到二级路由
+// 將所有子路由添加到二級路由
 function addToChildren(
   routes: RouteRecordNormalized[],
   children: AppRouteRecordRaw[],
@@ -157,9 +157,9 @@ function addToChildren(
 }
 
 // Determine whether the level exceeds 2 levels
-// 判断级别是否超过2级
+// 判斷級別是否超過2級
 function isMultipleRoute(routeModule: AppRouteModule) {
-  // Reflect.has 与 in 操作符 相同, 用于检查一个对象(包括它原型链上)是否拥有某个属性
+  // Reflect.has 與 in 操作符 相同, 用於檢查一個對象(包括它原型鏈上)是否擁有某個屬性
   if (!routeModule || !Reflect.has(routeModule, 'children') || !routeModule.children?.length) {
     return false;
   }

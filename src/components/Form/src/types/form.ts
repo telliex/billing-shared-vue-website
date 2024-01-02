@@ -26,6 +26,7 @@ export interface ButtonProps extends AntdButtonProps {
 
 export interface FormActionType {
   submit: () => Promise<void>;
+  handleCustomAction: () => Promise<void>;
   setFieldsValue: (values: Recordable) => Promise<void>;
   resetFields: () => Promise<void>;
   getFieldsValue: () => Recordable;
@@ -110,6 +111,8 @@ export interface FormProps {
 
   // Confirm button configuration
   submitButtonOptions?: Partial<ButtonProps>;
+  // Custom button
+  customButtonOptions?: Partial<ButtonProps>;
 
   // Operation column configuration
   actionColOptions?: Partial<ColEx>;
@@ -118,9 +121,16 @@ export interface FormProps {
   showResetButton?: boolean;
   // Show confirmation button
   showSubmitButton?: boolean;
+  // Show custom button
+  showCustomButton?: boolean;
+  // Show prview button with upload component
+  showPreviewDrawer?: boolean;
+
+  upLoadObject?: any;
 
   resetFunc?: () => Promise<void>;
   submitFunc?: () => Promise<void>;
+  customFunc?: () => Promise<void>;
   transformDateFunc?: (date: any) => string;
   colon?: boolean;
 }
