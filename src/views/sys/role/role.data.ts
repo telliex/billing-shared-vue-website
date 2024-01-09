@@ -232,13 +232,13 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     width: 200,
     sortable: true,
   },
-  {
-    title: 'Role Value',
-    field: 'roleValue',
-    showOverflow: 'tooltip',
-    width: 180,
-    sortable: true,
-  },
+  // {
+  //   title: 'Role Value',
+  //   field: 'roleValue',
+  //   showOverflow: 'tooltip',
+  //   width: 180,
+  //   sortable: true,
+  // },
   // {
   //   title: 'Order',
   //   field: 'orderNo',

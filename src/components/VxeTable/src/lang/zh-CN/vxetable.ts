@@ -107,6 +107,10 @@ export default {
     error: {
       notSlot: 'Slot {0} not found',
       noTree: 'Tree structure not found',
+      notProp: 'Column property {0} not found',
+    },
+    base: {
+      pleaseSelect: 'Please Select',
     },
   },
 };

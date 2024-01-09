@@ -7,25 +7,25 @@ import {
   ButtonItem,
 } from './model/menuModel';
 
+import { API_CONFIG } from '/@/settings/apiSetting';
+
 import {
   buildNestedStructure,
   buildMenuNestedStructure,
   apiTransDataForHeader,
-  correntReturn,
+  correctReturn,
   errorReturn,
 } from '/@/utils/tools';
 import { isArray } from 'xe-utils';
 
 enum Api {
-  GetDynamicNavList = '/system/menu/nav',
+  GetDynamicNavList = '/system/menu/dynamicNav',
   NavTreeList = '/system/menu/tree',
-  NavList = '/system/menu',
-  ButtonsList = '/system/menu-buttons',
+  MenuList = '/system/menu',
+  ButtonsList = '/system/menu/buttons',
 }
 
 interface FilterItems {
-  menuName: string | null;
-  alias: string | null;
   status: number | null;
 }
 
@@ -34,8 +34,12 @@ interface FilterButtonItems {
   status: number | null;
 }
 
-const version = '/v1.0';
-
+/**
+ * 將提供的數據項處理為適合前端顯示的格式。
+ * 如果項目是目錄類型且不是外部鏈接且沒有子項目，則將其隱藏。
+ * 如果項目有子項目，則遞歸處理這些子項目。
+ * @param data 需要處理的數據項數組。
+ */
 const processItems = (data: any[]) => {
   data.forEach((item) => {
     // Check if isExt is 0 and children is an empty array
@@ -56,13 +60,14 @@ const processItems = (data: any[]) => {
 };
 
 /**
- * @description: Get user menu based on id
+ * 獲取動態導航列表。
+ * 從服務器請求導航數據，並進行處理以適應前端顯示。
+ * @returns 處理後的導航數據。
  */
-
 export const getDynamicNavList = () =>
   defHttp.get(
     {
-      url: '/api' + version + Api.GetDynamicNavList,
+      url: `/api${API_CONFIG.VERSION}${Api.GetDynamicNavList}`,
       data: {},
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -70,30 +75,30 @@ export const getDynamicNavList = () =>
           const resObj = JSON.parse(data);
           console.log('======dynamic menu resObj=======', resObj);
 
-          if (isArray(resObj)) {
-            processItems(resObj);
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          // if (isArray(resObj)) {
+          //   processItems(resObj);
+          //   return correctReturn(resObj);
+          // } else {
+          //   return errorReturn(resObj);
+          // }
+          return resObj;
         },
       ],
     },
-    {
-      apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
-    },
+    // {
+    //   apiUrl: '/sys-api',
+    //   retryRequest: {
+    //     isOpenRetry: false,
+    //     count: 1,
+    //     waitTime: 3000,
+    //   },
+    // },
   );
 
-// system menu===========
-export const getNavTreeListWithButton = (params: FilterItems) =>
+export const getNavWholeTreeNode = (params: FilterItems) =>
   defHttp.get<getNavListResultModel>(
     {
-      url: `/api${version}${Api.NavTreeList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.NavTreeList}`,
       data: {},
       params: {
         menuName: params.menuName,
@@ -107,7 +112,7 @@ export const getNavTreeListWithButton = (params: FilterItems) =>
           const resObj = JSON.parse(data).filter((item: any) => item.type != 'button');
           if (isArray(resObj)) {
             const expectedResult = buildNestedStructure(resObj);
-            return correntReturn(expectedResult);
+            return correctReturn(expectedResult);
           } else {
             return errorReturn(resObj);
           }
@@ -124,10 +129,10 @@ export const getNavTreeListWithButton = (params: FilterItems) =>
     },
   );
 
-export const getNavTreeListOnlyCatalog = (params: FilterItems) =>
+export const getNavTreeNodeOnlyCatalog = (params: FilterItems) =>
   defHttp.get<getNavListResultModel>(
     {
-      url: `/api${version}${Api.NavTreeList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.NavTreeList}`,
       data: {},
       params: {
         menuName: params.menuName,
@@ -142,7 +147,7 @@ export const getNavTreeListOnlyCatalog = (params: FilterItems) =>
             resObj = resObj.filter((item: any) => item.type == 'catalog');
 
             const expectedResult = buildNestedStructure(resObj);
-            return correntReturn(expectedResult);
+            return correctReturn(expectedResult);
           } else {
             return errorReturn(resObj);
           }
@@ -167,44 +172,48 @@ export const getNavTreeListOnlyCatalog = (params: FilterItems) =>
 export const getNavList = (params: FilterItems) =>
   defHttp.get(
     {
-      url: `/api${version}${Api.NavList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.MenuList}`,
       data: {},
       params: {
-        menuName: params.menuName,
-        alias: params.alias,
         status: params.status,
       },
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
-          let resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            if (typeof params.status === 'undefined') {
-              resObj = buildMenuNestedStructure(resObj);
-            }
-            return correntReturn(resObj);
-          } else {
-            console.log('errorrrrrrrr');
-            return errorReturn(resObj);
-          }
+          const resObj = JSON.parse(data);
+          let temp: any[] = [];
+          console.log('aaaaaa:', resObj);
+          // if (isArray(resObj)) {
+          // if (typeof params.status === 'undefined') {
+          temp = buildMenuNestedStructure(resObj.results.items);
+          // }
+          console.log('88888888:', temp);
+          resObj.results.items = temp;
+          console.log('bbbbbb:', resObj);
+          return resObj;
+          // } else {
+          //   console.log('error');
+          //   return errorReturn(resObj);
+          // }
         },
       ],
     },
-    {
-      apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
-    },
+    // TODO: recover the area below.
+    // {
+    //   apiUrl: '/sys-api',
+    //   retryRequest: {
+    //     isOpenRetry: false,
+    //     count: 1,
+    //     waitTime: 3000,
+    //   },
+    // },
   );
 
 export const getNavItem = (params: NavParams) => {
   console.log('params=========', params);
   return defHttp.get<NavListResultModel>(
     {
-      url: `/api${version}${Api.NavList}/${params.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.MenuList}/${params.id}`,
       data: params,
       headers: apiTransDataForHeader(),
     },
@@ -222,14 +231,14 @@ export const getNavItem = (params: NavParams) => {
 export const removeNavItem = (params: any) =>
   defHttp.delete<NavListResultModel>(
     {
-      url: `/api${version}${Api.NavList}/${params.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.MenuList}/${params.id}`,
       data: params,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }
@@ -249,7 +258,7 @@ export const removeNavItem = (params: any) =>
 export const updateNavItem = (params: any) =>
   defHttp.patch<NavListResultModel>(
     {
-      url: `/api${version}${Api.NavList}/${params.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.MenuList}/${params.id}`,
       data: params,
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -257,7 +266,7 @@ export const updateNavItem = (params: any) =>
           const resObj = JSON.parse(data);
 
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }
@@ -277,7 +286,7 @@ export const updateNavItem = (params: any) =>
 export const createNavItem = (body: any) => {
   return defHttp.post<NavListResultModel>(
     {
-      url: `/api${version}${Api.NavList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.MenuList}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -285,7 +294,7 @@ export const createNavItem = (body: any) => {
           const resObj = JSON.parse(data);
 
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }
@@ -306,7 +315,7 @@ export const createNavItem = (body: any) => {
 export const getButtonList = (params: FilterButtonItems) =>
   defHttp.get<getButtonListResultModel>(
     {
-      url: `/api${version}${Api.ButtonsList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.ButtonsList}`,
       data: {},
       params: {
         belongMenuId: params.belongMenuId,
@@ -317,7 +326,7 @@ export const getButtonList = (params: FilterButtonItems) =>
         function (data) {
           const resObj = JSON.parse(data);
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }
@@ -337,14 +346,14 @@ export const getButtonList = (params: FilterButtonItems) =>
 export const updateButtonItem = (params: any) =>
   defHttp.patch<ButtonItem>(
     {
-      url: `/api${version}${Api.ButtonsList}/${params.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.ButtonsList}/${params.id}`,
       data: params,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }
@@ -364,7 +373,7 @@ export const updateButtonItem = (params: any) =>
 export const createButtonItem = (body: any) => {
   return defHttp.post<ButtonItem>(
     {
-      url: `/api${version}${Api.ButtonsList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.ButtonsList}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -372,7 +381,7 @@ export const createButtonItem = (body: any) => {
           const resObj = JSON.parse(data);
 
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }
@@ -393,14 +402,14 @@ export const createButtonItem = (body: any) => {
 export const removeButtonItem = (params: any) =>
   defHttp.delete<ButtonItem>(
     {
-      url: `/api${version}${Api.ButtonsList}/${params.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.ButtonsList}/${params.id}`,
       data: params,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }

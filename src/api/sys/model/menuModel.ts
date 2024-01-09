@@ -1,7 +1,9 @@
 import type { RouteMeta } from 'vue-router';
 import { BasicFetchResult } from '/@/api/model/baseModel';
 
-export interface NavListItem {
+import { ItemAdditionInfo } from '/@/api/sys/model/normalModel';
+
+export interface NavListItem extends ItemAdditionInfo {
   id: string;
   type: string;
   menuName: string;
@@ -11,35 +13,32 @@ export interface NavListItem {
   component: string;
   componentName: string;
   routePath: string;
-  orderNo: number;
+  sortNo: number;
   icon: string;
   parentMenu: string;
   iExt: number;
-  isCache: number;
   isShow: number;
   status: number;
-  addMaster: number;
-  addTime: string;
-  addMasterName: string;
-  changeMaster: number;
-  changeMasterName: string;
-  changeTime: string;
 }
+
 export interface RouteItem {
+  id: string;
   path: string;
-  component: any;
+  type: number;
+  component: string;
+  componentName: string;
   meta: RouteMeta;
-  name?: string;
-  title?: string;
-  alias?: string | string[];
+  name: string;
+  isExt: number;
+  parentMenu: string;
+  caseSensitive: boolean;
   redirect?: string;
-  caseSensitive?: boolean;
   children?: RouteItem[];
 }
 
 export type NavParams = {
-  id?: string;
-  status?: number;
+  roleName?: string | null;
+  status?: number | null;
 };
 
 /**
@@ -49,7 +48,7 @@ export type NavParams = {
 export type getNavListResultModel = RouteItem[];
 export type NavListResultModel = BasicFetchResult<NavListItem>;
 
-export interface ButtonItem {
+export interface ButtonItem extends ItemAdditionInfo {
   id: string;
   buttonName: string;
   description: string;
@@ -57,12 +56,6 @@ export interface ButtonItem {
   permission: string;
   isShow: number;
   status: number;
-  addMaster: number;
-  addMasterName: string;
-  addTime: string;
-  changeMaster: number;
-  changeMasterName: string;
-  changeTime: string;
 }
 
 export type getButtonListResultModel = ButtonItem[];

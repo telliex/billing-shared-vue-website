@@ -16,9 +16,7 @@
         }}</Tag>
       </template>
       <template #roles="{ row }">
-        <Tag v-for="item in row.rolesString ? JSON.parse(row.rolesString) : []" :key="item.key">{{
-          item.label
-        }}</Tag>
+        <Tag v-for="item in row.roles ? row.roles : []" :key="item.value">{{ item.roleName }}</Tag>
       </template>
       <template #folding_group>
         <CollapseContainer title="Filter By" @click="collaposeChange" />
@@ -182,16 +180,17 @@
           }
 
           let result = await getUserList({
-            page: page.currentPage,
+            currentPage: page.currentPage,
             pageSize: page.pageSize || 10,
             ...form,
           });
-          console.log('result:', result);
-          let tempResult = result.slice(
+          console.log('user list results =========:', result);
+          // TODO remove fake pagination
+          let tempResult = result.items.slice(
             (page.currentPage - 1) * page.pageSize,
             page.currentPage * page.pageSize,
           );
-          tablePage.total = result.length;
+          tablePage.total = result.total;
           tablePage.currentPage = page.currentPage;
           tablePage.pageSize = page.pageSize;
           console.log('tablePage.total:', tablePage.total);
@@ -204,7 +203,7 @@
             msg: 'success',
             requested_time: '',
             responsed_time: '',
-            total: result.length,
+            total: result.total,
           };
         },
         // queryAll: async ({ form }) => {

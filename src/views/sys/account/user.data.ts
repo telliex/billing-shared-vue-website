@@ -244,18 +244,18 @@ export const accountFormSchema: FormSchema[] = [
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'User Name',
-    field: 'userName',
+    field: 'displayName',
     showOverflow: 'tooltip',
     width: 200,
     sortable: true,
   },
-  {
-    title: 'Nickname',
-    field: 'nickname',
-    showOverflow: 'tooltip',
-    width: 120,
-    sortable: true,
-  },
+  // {
+  //   title: 'Nickname',
+  //   field: 'nickname',
+  //   showOverflow: 'tooltip',
+  //   width: 120,
+  //   sortable: true,
+  // },
   {
     title: 'Status',
     field: 'status',
@@ -270,7 +270,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   {
     title: 'Role',
     field: 'roles',
-    minWidth: 100,
+    minWidth: 200,
     showOverflow: false,
     sortable: true,
     // formatter({ cellValue }) {

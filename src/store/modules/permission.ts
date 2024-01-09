@@ -106,8 +106,9 @@ export const usePermissionStore = defineStore({
     },
     async changePermissionCode() {
       // depend on user id to get permission code list
+
       const codeList = await getPermCode();
-      this.setPermCodeList(codeList);
+      this.setPermCodeList(codeList.items);
     },
 
     // 構建路由
@@ -223,11 +224,14 @@ export const usePermissionStore = defineStore({
           // 模擬從後台獲取權限碼，
           // this function may only need to be executed once, and the actual project can be put at the right time by itself
           // 這個功能可能只需要執行一次，實際項目可以自己放在合適的時間
-          let routeListOri: AppRouteRecordRaw[] = [];
+          // let routeListOri: AppRouteRecordRaw[] = [];
+          let routeListOri: any[] = [];
           try {
             // write Permission codes to pinia
             await this.changePermissionCode();
-            routeListOri = (await getDynamicNavList()) as AppRouteRecordRaw[];
+
+            const temp = await getDynamicNavList();
+            routeListOri = temp.items;
           } catch (error) {
             console.error(error);
           }

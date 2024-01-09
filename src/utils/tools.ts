@@ -78,7 +78,7 @@ export function apiTransDataForHeader() {
   };
 }
 
-export function correntReturn(obj: any) {
+export function correctReturn(obj: any) {
   return {
     trace_id: Guid.newGuid().toString(),
     total_pages: 1,

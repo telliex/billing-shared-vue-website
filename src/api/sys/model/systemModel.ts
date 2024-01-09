@@ -1,13 +1,6 @@
 import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
 
-interface ItemAdditionInfo {
-  addMaster: number;
-  addMasterName: string;
-  addTime: string;
-  changeMaster: number;
-  changeMasterName: string;
-  changeTime: string;
-}
+import { ItemAdditionInfo } from '/@/api/sys/model/normalModel';
 
 export interface GetDictionaryModel {
   trace_id: string;
@@ -96,24 +89,15 @@ export interface GetBillCodeValueBackModel {
 export interface RoleListItem extends ItemAdditionInfo {
   id: string;
   roleName: string;
-  roleValue: string;
   status: number;
-  orderNo: number;
+  sortNo: number;
   remark: string;
-  menuPermission: string;
-  menuPermissionArray: Array<string>;
-  // addMaster: number;
-  // addTime: string;
-  // changeMaster: number;
-  // changeTime: string;
 }
 
-export type RoleParams = {
+export type RolePageParams = BasicPageParams & {
   roleName?: string | null;
   status?: number | null;
 };
-
-export type RolePageParams = BasicPageParams & RoleParams;
 
 export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
 
@@ -122,7 +106,9 @@ export type RoleListGetResultModel = RoleListItem[];
 // == Department ==
 export interface DeptItem extends ItemAdditionInfo {
   id: string;
-  orderNo: string;
+  parentDept: string;
+  deptName: string;
+  sortNo: string;
   remark: string;
   status: number;
 }
@@ -131,24 +117,33 @@ export type DeptPageParams = BasicPageParams & {
   deptName?: string | null;
   status?: number | null;
 };
-export type DeptListModel = BasicFetchResult<DeptItem>;
+
+export type DeptPageListGetResultModel = BasicFetchResult<DeptItem>;
+
+export type DeptListGetResultModel = DeptItem[];
 
 // == User ==
 export interface UserItem extends ItemAdditionInfo {
   id: string;
-  userName: string;
-  realName: string;
-  nickname: string;
+  displayName: string;
+  avatar: string;
+  apiToken: string;
+  sex: string;
+  birthday: string;
+  tel: string;
+  address: string;
+  country: string;
   email: string;
   remark: string;
-  roles: string;
+  roles: any[];
   status: number;
 }
 
 export type UserPageParams = BasicPageParams & {
   userName?: string;
   status?: string;
-  dept?: string;
 };
 
-export type UserListModel = BasicFetchResult<UserItem>;
+export type UserPageListGetResultModel = BasicFetchResult<UserItem>;
+
+export type UserListGetResultModel = UserItem[];

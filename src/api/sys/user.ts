@@ -1,28 +1,33 @@
 import { defHttp } from '/@/utils/http/axios';
 // import { GetUserInfoModel } from './model/userModel';
 
+import { API_CONFIG } from '/@/settings/apiSetting';
+
 // import { ErrorMessageMode } from '/#/axios';
 import { ErrorMessageMode } from '/#/axios';
-import { apiTransDataForHeader, correntReturn, errorReturn } from '/@/utils/tools';
+import { apiTransDataForHeader, correctReturn, errorReturn } from '/@/utils/tools';
 import { isArray } from 'xe-utils';
 enum Api {
   Login = '/auth/login',
   Logout = '/auth/logout',
-  finalActiveTimeURL = '/auth/finalActiveTime',
+  finalActiveTimeURL = '/auth/userFinalActiveTime',
   // GetUserInfo = '/getUserInfo',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
 }
 
-const version = '/v1.0';
+interface LoginApiObject {
+  username: string;
+  password: string;
+}
 
 /**
  * @description: user login api
  */
-export const loginApi = (body: any, mode: ErrorMessageMode = 'modal') =>
-  defHttp.post(
+export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal') => {
+  return defHttp.post(
     {
-      url: '/api' + version + Api.Login,
+      url: `/api${API_CONFIG.VERSION}${Api.Login}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -32,11 +37,7 @@ export const loginApi = (body: any, mode: ErrorMessageMode = 'modal') =>
 
           // Do whatever you want to transform the data
           // if (resObj.type === 'success') {
-          return {
-            ...resObj,
-            total_pages: 0,
-            current_page: 0,
-          };
+          return resObj;
           // } else {
           //   return {
           //     ...resObj,
@@ -49,16 +50,18 @@ export const loginApi = (body: any, mode: ErrorMessageMode = 'modal') =>
         },
       ],
     },
-    {
-      errorMessageMode: mode,
-      apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
-    },
+    // TODO: recover
+    // {
+    //   errorMessageMode: mode,
+    //   apiUrl: '/sys-api',
+    //   retryRequest: {
+    //     isOpenRetry: false,
+    //     count: 1,
+    //     waitTime: 3000,
+    //   },
+    // },
   );
+};
 
 /**
  * @description: user logout api
@@ -66,7 +69,7 @@ export const loginApi = (body: any, mode: ErrorMessageMode = 'modal') =>
 export const logoutApi = () =>
   defHttp.get(
     {
-      url: '/api' + version + Api.Logout,
+      url: `/api${API_CONFIG.VERSION}${Api.Logout}`,
       // data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -74,21 +77,22 @@ export const logoutApi = () =>
           console.log('=========logout======');
           const resObj = JSON.parse(data);
           // Do whatever you want to transform the data
-          if (resObj.type === 'success') {
-            return {
-              ...resObj,
-              total_pages: 0,
-              current_page: 0,
-            };
-          } else {
-            return {
-              ...resObj,
-              results: resObj.results !== '' ? resObj.results : null,
-              total_pages: 0,
-              current_page: 0,
-              status: 1000,
-            };
-          }
+          // if (resObj.type === 'success') {
+          //   return {
+          //     ...resObj,
+          //     total_pages: 0,
+          //     current_page: 0,
+          //   };
+          // } else {
+          //   return {
+          //     ...resObj,
+          //     results: resObj.results !== '' ? resObj.results : null,
+          //     total_pages: 0,
+          //     current_page: 0,
+          //     status: 1000,
+          //   };
+          // }
+          return resObj;
         },
       ],
     },
@@ -110,7 +114,29 @@ export const logoutApi = () =>
 // }
 
 export function getPermCode() {
-  return defHttp.get<string[]>({ url: Api.GetPermCode });
+  return defHttp.get({
+    url: `${Api.GetPermCode}`,
+    headers: apiTransDataForHeader(),
+    transformResponse: [
+      function (data) {
+        const resObj = JSON.parse(data);
+        console.log('getPermCode:', resObj);
+
+        // Do whatever you want to transform the data
+        // if (resObj.type === 'success') {
+        return resObj;
+        // } else {
+        //   return {
+        //     ...resObj,
+        //     results: resObj.results !== '' ? resObj.results : null,
+        //     total_pages: 0,
+        //     current_page: 0,
+        //     status: 1000,
+        //   };
+        // }
+      },
+    ],
+  });
 }
 
 // export function doLogout() {
@@ -131,12 +157,12 @@ export function testRetry() {
 }
 
 /**
- * @description: final active time
+ * @description: get user final active time
  */
 export const getFinalActiveTime = () =>
   defHttp.get(
     {
-      url: '/api' + version + Api.finalActiveTimeURL,
+      url: `/api${API_CONFIG.VERSION}${Api.finalActiveTimeURL}`,
       // data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -144,7 +170,7 @@ export const getFinalActiveTime = () =>
           const resObj = JSON.parse(data);
           // Do whatever you want to transform the data
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }
@@ -160,11 +186,13 @@ export const getFinalActiveTime = () =>
       },
     },
   );
-
+/**
+ * @description: write user final react time
+ */
 export const writeFinalActiveTime = () =>
   defHttp.post(
     {
-      url: '/api' + version + Api.finalActiveTimeURL,
+      url: `/api${API_CONFIG.VERSION}${Api.finalActiveTimeURL}`,
       // data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -172,7 +200,7 @@ export const writeFinalActiveTime = () =>
           const resObj = JSON.parse(data);
           // Do whatever you want to transform the data
           if (isArray(resObj)) {
-            return correntReturn(resObj);
+            return correctReturn(resObj);
           } else {
             return errorReturn(resObj);
           }
