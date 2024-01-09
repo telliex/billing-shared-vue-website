@@ -16,26 +16,26 @@ export interface RoleInfo {
   value: string;
 }
 
-export interface GetUserInfoModel {
-  roles: RoleInfo[];
-  // 用户id
-  userId: string | number;
-  // 用户名
-  username: string;
-  // 真實名字
-  realName: string;
-  // 頭像
-  avatar: string;
-  // 介紹
-  remark?: string;
-  // 系統
-  system?: string;
-  // 公司
-  company?: string;
-  password?: string;
-  token?: string;
-  homePath?: string;
-}
+// export interface GetUserInfoModel {
+//   roles: RoleInfo[];
+//   // 用户id
+//   userId: string | number;
+//   // 用户名
+//   username: string;
+//   // 真實名字
+//   realName: string;
+//   // 頭像
+//   avatar: string;
+//   // 介紹
+//   remark?: string;
+//   // 系統
+//   system?: string;
+//   // 公司
+//   company?: string;
+//   password?: string;
+//   token?: string;
+//   homePath?: string;
+// }
 
 export interface GetBillingUserInfoModel {
   roles: RoleInfo[];

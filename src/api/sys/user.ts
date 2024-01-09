@@ -120,7 +120,6 @@ export function getPermCode() {
     transformResponse: [
       function (data) {
         const resObj = JSON.parse(data);
-        console.log('getPermCode:', resObj);
 
         // Do whatever you want to transform the data
         // if (resObj.type === 'success') {

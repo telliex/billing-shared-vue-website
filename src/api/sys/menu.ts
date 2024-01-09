@@ -181,20 +181,10 @@ export const getNavList = (params: FilterItems) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          let temp: any[] = [];
-          console.log('aaaaaa:', resObj);
-          // if (isArray(resObj)) {
-          // if (typeof params.status === 'undefined') {
-          temp = buildMenuNestedStructure(resObj.results.items);
-          // }
-          console.log('88888888:', temp);
-          resObj.results.items = temp;
-          console.log('bbbbbb:', resObj);
+
+          console.log('menu data from API:', resObj);
+
           return resObj;
-          // } else {
-          //   console.log('error');
-          //   return errorReturn(resObj);
-          // }
         },
       ],
     },

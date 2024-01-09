@@ -154,9 +154,11 @@ export const useUserStore = defineStore('user', {
     },
 
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
+      console.log('check token', this.getToken);
       if (!this.getToken) return null;
       // 3、獲取用户信息
       const userInfo = await this.getUserInfoAction();
+      console.log('get user info:', userInfo);
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
         console.log('sessionTimeout');
@@ -193,7 +195,7 @@ export const useUserStore = defineStore('user', {
 
       const { roles = [] } = userInfo;
       if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        const roleList = roles.map((item) => item.roleName);
         this.setRoleList(roleList);
       } else {
         userInfo.roles = [];

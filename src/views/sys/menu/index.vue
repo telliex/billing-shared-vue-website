@@ -165,10 +165,10 @@
       autoLoad: true,
       sort: false, // 启用排序代理，当点击排序时会自动触发 query 行为
       filter: false, // 启用筛选代理，当点击筛选时会自动触发 query 行为
-      props: {
-        result: 'results',
-        // total: 'total',
-      },
+      // props: {
+      //   result: 'results.items',
+      //   // total: 'total',
+      // },
       ajax: {
         query: async ({ sorts, filters, form }) => {
           console.log('page:', form);
@@ -180,29 +180,15 @@
             status: form.status === undefined || form.status === null ? null : form.status,
           });
 
-          console.log('11111111:', result);
-
           result.items.forEach((item) => {
             if (item.parentMenu === '') {
               item.parentMenu = null;
             }
           });
 
-          return {
-            trace_id: Guid.newGuid().toString(),
-            total_pages: null,
-            current_page: null,
-            results: {
-              total: result.total,
-              currentPage: result.currentPage,
-              pageSize: result.pageSize,
-              items: result.items,
-            },
-            status: 1000,
-            msg: 'success',
-            requested_time: '',
-            responsed_time: '',
-          };
+          console.log('menu list data :', result);
+
+          return result.items;
         },
         // queryAll: async ({ form }) => {
         //   return await getRoleListByPage({

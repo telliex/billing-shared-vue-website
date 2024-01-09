@@ -97,7 +97,7 @@ export default {
     diffPwd: 'The two passwords are inconsistent',
 
     company: 'Company',
-    userName: 'Username',
+    userName: 'User Email',
     password: 'Password',
     confirmPassword: 'Confirm Password',
     email: 'Email',
