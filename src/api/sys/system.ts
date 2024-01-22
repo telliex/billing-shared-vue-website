@@ -350,19 +350,19 @@ export const getAllRoleList = (params: RolePageParams) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
+          console.log('========role resObj from API=========:', resObj);
           return resObj;
         },
       ],
     },
-    // TODO
-    // {
-    //   apiUrl: '/sys-api',
-    //   retryRequest: {
-    //     isOpenRetry: false,
-    //     count: 1,
-    //     waitTime: 3000,
-    //   },
-    // },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
   );
 };
 
@@ -384,19 +384,19 @@ export const getRoleListByPage = (params: RolePageParams) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
+          console.log('888888888:', resObj);
           return resObj;
         },
       ],
     },
-    // TODO recover here
-    // {
-    //   apiUrl: '/sys-api',
-    //   retryRequest: {
-    //     isOpenRetry: false,
-    //     count: 1,
-    //     waitTime: 3000,
-    //   },
-    // },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
   );
 };
 
@@ -692,10 +692,11 @@ export const getUserList = (params: UserPageParams) => {
       url: `/api${API_CONFIG.VERSION}${Api.UserList}`,
       data: {},
       params: {
-        userName: params.userName,
+        displayName: params.displayName || null,
         status: params.status,
-        currentPage: params.currentPage,
-        pageSize: params.pageSize,
+        currentPage: params.currentPage || 1,
+        pageSize: params.pageSize || 10,
+        sortBy: params.sortBy || 'ace',
       },
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -716,15 +717,14 @@ export const getUserList = (params: UserPageParams) => {
         },
       ],
     },
-    // TODO: recover here
-    // {
-    //   apiUrl: '/sys-api',
-    //   retryRequest: {
-    //     isOpenRetry: false,
-    //     count: 1,
-    //     waitTime: 3000,
-    //   },
-    // },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
   );
 };
 
@@ -758,6 +758,7 @@ export const createUserItem = (body: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
+          console.log('1111111:', resObj);
 
           if (isArray(resObj)) {
             return correctReturn(resObj);

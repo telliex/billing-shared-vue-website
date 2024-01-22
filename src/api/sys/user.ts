@@ -50,16 +50,16 @@ export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal')
         },
       ],
     },
-    // TODO: recover
-    // {
-    //   errorMessageMode: mode,
-    //   apiUrl: '/sys-api',
-    //   retryRequest: {
-    //     isOpenRetry: false,
-    //     count: 1,
-    //     waitTime: 3000,
-    //   },
-    // },
+
+    {
+      errorMessageMode: mode,
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
   );
 };
 

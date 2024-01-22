@@ -17,7 +17,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { createNavItem, getNavTreeListOnlyCatalog, updateNavItem } from '/@/api/sys/menu';
+  import { createNavItem, getNavTreeNodeOnlyCatalog, updateNavItem } from '/@/api/sys/menu';
   import { NavListItem } from '/@/api/sys/model/menuModel';
   import { useLoading } from '/@/components/Loading';
 
@@ -53,7 +53,7 @@
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
 
-        let treeData = await getNavTreeListOnlyCatalog({
+        let treeData = await getNavTreeNodeOnlyCatalog({
           status: 1,
           alias: null,
           menuName: null,

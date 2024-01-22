@@ -140,8 +140,9 @@ export interface UserItem extends ItemAdditionInfo {
 }
 
 export type UserPageParams = BasicPageParams & {
-  userName?: string;
-  status?: string;
+  displayName: string;
+  status: number;
+  sortBy?: string;
 };
 
 export type UserPageListGetResultModel = BasicFetchResult<UserItem>;

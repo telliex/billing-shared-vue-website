@@ -323,32 +323,32 @@ const fakeCodeList: any = {
 };
 export default [
   // mock user login
-  {
-    url: '/basic-api/api/v1.0/auth/login',
-    timeout: 200,
-    method: 'post',
-    response: ({ body }) => {
-      const { username, password } = body;
-      console.log('username:', username);
-      console.log('password:', password);
-      const checkUser = createFakeUserList().find(
-        (item) => item.email === username && password === item.password,
-      );
-      if (!checkUser) {
-        return resultError(null, { msg: 'Incorrect account or password！' });
-      }
+  // {
+  //   url: '/basic-api/api/v1.0/auth/login',
+  //   timeout: 200,
+  //   method: 'post',
+  //   response: ({ body }) => {
+  //     const { username, password } = body;
+  //     console.log('username:', username);
+  //     console.log('password:', password);
+  //     const checkUser = createFakeUserList().find(
+  //       (item) => item.email === username && password === item.password,
+  //     );
+  //     if (!checkUser) {
+  //       return resultError(null, { msg: 'Incorrect account or password！' });
+  //     }
 
-      return resultSuccess([checkUser]);
-    },
-  },
-  {
-    url: '/basic-api/api/v1.0/system/user',
-    timeout: 200,
-    method: 'get',
-    response: () => {
-      return resultSuccess(createFakeUserList());
-    },
-  },
+  //     return resultSuccess([checkUser]);
+  //   },
+  // },
+  // {
+  //   url: '/basic-api/api/v1.0/system/user',
+  //   timeout: 200,
+  //   method: 'get',
+  //   response: () => {
+  //     return resultSuccess(createFakeUserList());
+  //   },
+  // },
   {
     url: '/basic-api/getPermCode',
     timeout: 200,

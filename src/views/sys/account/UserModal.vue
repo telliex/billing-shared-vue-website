@@ -14,6 +14,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
+
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './user.data';
@@ -116,27 +117,25 @@
 
           // TODO: replace with deptId
           let template = {
-            id: '',
-            dept: '80af73a3-972d-4ec0-8e1b-35235f3cb531',
-            userName: '',
-            realName: '',
-            nickname: '',
-            password: `default`,
-            email: '',
+            displayName: '',
+            avatar: null,
+            password: null,
             remark: '',
-            rolesString: '',
-            roles: [],
             status: 1,
-            addMaster: 0,
-            addTime: '',
-            changeMaster: 0,
-            changeTime: '',
+            sex: null,
+            birthday: null,
+            tel: null,
+            mobile: null,
+            email: null,
+            address: null,
+            country: null,
           };
 
           if (isUser) {
             if (!unref(isUpdate)) {
               let result = Object.assign(template, values);
               console.log('resultnew:', result);
+              return;
               await createUserItem(result);
             } else {
               console.log('resultold:', Object.assign(template, record.value, values));
@@ -153,7 +152,14 @@
       function openFnWrapLoading() {
         openWrapLoading();
       }
-      return { registerModal, registerForm, getTitle, handleSubmit, wrapEl, openFnWrapLoading };
+      return {
+        registerModal,
+        registerForm,
+        getTitle,
+        handleSubmit,
+        wrapEl,
+        openFnWrapLoading,
+      };
     },
   });
 </script>

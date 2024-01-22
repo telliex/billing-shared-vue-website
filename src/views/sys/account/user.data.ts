@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import { VxeFormItemProps, VxeGridPropTypes } from '/@/components/VxeTable';
 import XEUtils from 'xe-utils';
+import { countryOptionsListApi } from '/@/api/normal/select';
 
 export const columns: BasicColumn[] = [
   {
@@ -121,14 +122,16 @@ export const searchFormSchema: FormSchema[] = [
 
 export const accountFormSchema: FormSchema[] = [
   {
-    field: 'userName',
+    field: 'displayName',
     label: 'User Name',
     component: 'Input',
-    componentProps: {
-      disabled: true,
-      onChange: (e: any) => {
-        console.log(e);
-      },
+    componentProps: ({ formModel, schema }) => {
+      console.log('formMode88888888l========', formModel);
+      console.log('schema========', schema);
+      return {
+        disabled: true,
+        placeholder: 'Please enter user name',
+      };
     },
     rules: [
       {
@@ -154,30 +157,30 @@ export const accountFormSchema: FormSchema[] = [
       },
     ],
   },
-  {
-    field: 'realName',
-    label: 'Real Name',
-    required: true,
-    component: 'Input',
-    componentProps: {
-      disabled: true,
-    },
-  },
-  {
-    field: 'nickname',
-    label: 'Nickname',
-    component: 'Input',
-    required: true,
-    componentProps: {
-      disabled: true,
-    },
-  },
+  // {
+  //   field: 'realName',
+  //   label: 'Real Name',
+  //   required: true,
+  //   component: 'Input',
+  //   componentProps: {
+  //     disabled: true,
+  //   },
+  // },
+  // {
+  //   field: 'nickname',
+  //   label: 'Nickname',
+  //   component: 'Input',
+  //   required: true,
+  //   componentProps: {
+  //     disabled: true,
+  //   },
+  // },
   {
     field: 'pwd',
     label: 'Password',
     component: 'InputPassword',
     required: true,
-    ifShow: false,
+    // ifShow: false,
   },
   {
     field: 'rolesArray',
@@ -217,26 +220,110 @@ export const accountFormSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: 1,
     componentProps: {
-      disabled: true,
+      // disabled: true,
       options: [
         { label: 'Enable', value: 1 },
         { label: 'Disable', value: 0 },
       ],
     },
   },
-  // {
-  //   label: 'Email',
-  //   field: 'email',
-  //   component: 'Input',
-  //   required: true,
-  // },
-
   {
     label: 'Remark',
     field: 'remark',
     component: 'InputTextArea',
     componentProps: {
+      // disabled: true,
+    },
+  },
+  {
+    label: 'Birthday',
+    field: 'birthday',
+    component: 'DatePicker',
+    componentProps: {
       disabled: true,
+    },
+  },
+  {
+    label: 'Email',
+    field: 'email',
+    component: 'Input',
+  },
+  {
+    label: 'Sex',
+    field: 'sex',
+    component: 'RadioGroup',
+    componentProps: {
+      disabled: true,
+      options: [
+        {
+          label: 'Male',
+          value: 'M',
+        },
+        {
+          label: 'Female',
+          value: 'F',
+        },
+      ],
+    },
+  },
+  {
+    label: 'Tel',
+    field: 'tel',
+    component: 'Input',
+    componentProps: {
+      disabled: true,
+    },
+  },
+  {
+    label: 'Mobile',
+    field: 'mobile',
+    component: 'Input',
+    componentProps: {
+      disabled: true,
+    },
+  },
+  {
+    label: 'Address',
+    field: 'address',
+    component: 'Input',
+    componentProps: {
+      disabled: true,
+    },
+  },
+  {
+    label: 'Country',
+    field: 'country',
+    component: 'ApiSelect',
+    componentProps: ({ formModel }) => {
+      return {
+        // more details see /src/components/Form/src/components/ApiSelect.vue
+        api: countryOptionsListApi,
+        // api: async (para) => {
+        //   console.log('aaaaa', para);
+        //   const temp = await countryOptionsListApi(para);
+        //   console.log('88888888:', temp);
+        //   return new Promise((resolve) => {
+        //     resolve(temp);
+        //   });
+        // },
+        params: {
+          which: 'country',
+        },
+
+        // use name as label
+        labelField: 'label',
+        // use id as value
+        valueField: 'label',
+        // not request untill to select
+        immediate: false,
+        onChange: (e, v) => {
+          console.log('ApiSelect====>:', e, v);
+        },
+        // atfer request callback
+        onOptionsChange: (options) => {
+          console.log('get options', options.length, options);
+        },
+      };
     },
   },
 ];
@@ -268,7 +355,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     slots: { default: 'status' },
   },
   {
-    title: 'Role',
+    title: 'Roles',
     field: 'roles',
     minWidth: 200,
     showOverflow: false,
@@ -325,7 +412,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     },
   },
   {
-    width: 100,
+    width: 130,
     title: 'Setting',
     align: 'center',
     slots: { default: 'action' },
@@ -336,7 +423,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
 export const vxeTableFormSchema: VxeFormItemProps[] = [
   { slots: { default: 'folding_group' }, span: 24 },
   {
-    field: 'userName',
+    field: 'displayName',
     title: 'User Name',
     itemRender: {
       defaultValue: null,

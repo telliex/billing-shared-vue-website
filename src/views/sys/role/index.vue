@@ -44,6 +44,9 @@
   import RoleDrawer from './RoleDrawer.vue';
   import { useDrawer } from '/@/components/Drawer';
   import { Guid } from 'js-guid/dist/guid';
+
+  import { BasicResult } from '/@/api/model/baseModel';
+  import { RoleListItem } from '/@/api/model/sysModel';
   const tablePage = reactive({
     total: 0,
     currentPage: 1,
@@ -158,10 +161,10 @@
       autoLoad: true,
       sort: true, // 启用排序代理，当点击排序时会自动触发 query 行为
       filter: true, // 启用筛选代理，当点击筛选时会自动触发 query 行为
-      props: {
-        result: 'results',
-        total: 'total',
-      },
+      // props: {
+      //   result: 'results',
+      //   total: 'total',
+      // },
       ajax: {
         query: async ({ page, sorts, filters, form }) => {
           console.log('page:', form);
@@ -178,29 +181,21 @@
           }
 
           let result = await getRoleListByPage({
-            page: page.currentPage,
+            currentPage: page.currentPage,
             pageSize: page.pageSize || 10,
             ...form,
           });
-          let tempResult = result.slice(
-            (page.currentPage - 1) * page.pageSize,
-            page.currentPage * page.pageSize,
-          );
-          tablePage.total = result.length;
-          tablePage.currentPage = page.currentPage;
-          tablePage.pageSize = page.pageSize;
-          console.log('tablePage.total:', tablePage.total);
-          return {
-            trace_id: Guid.newGuid().toString(),
-            total_pages: 1,
-            current_page: 1,
-            results: tempResult,
-            status: 1000,
-            msg: 'success',
-            requested_time: '',
-            responsed_time: '',
-            total: result.length,
-          };
+
+          console.log('role result:', result);
+          // let tempResult = result.items.slice(
+          //   (page.currentPage - 1) * page.pageSize,
+          //   page.currentPage * page.pageSize,
+          // );
+          // tablePage.total = result.total;
+          // tablePage.currentPage = page.currentPage;
+          // tablePage.pageSize = page.pageSize;
+          // console.log('tablePage.total:', tablePage.total);
+          return result;
         },
         // queryAll: async ({ form }) => {
         //   return await getRoleListByPage({

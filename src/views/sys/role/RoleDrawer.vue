@@ -31,7 +31,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
   import { createRoleItem, getRoleListByPage, updateRoleItem } from '/@/api/sys/system';
-  import { getNavTreeListWithButton } from '/@/api/sys/menu';
+  import { getNavWholeTreeNode } from '/@/api/sys/menu';
   import { RoleListItem } from '/@/api/sys/model/systemModel';
   import { getNavList } from '/@/api/sys/menu';
   import { useMessage } from '/@/hooks/web/useMessage';
@@ -70,7 +70,7 @@
         record.value = data?.record || null;
         // 需要在setFieldsValue之前先填充treeData，否則Tree組件可能會報key not exist警告
         if (unref(treeData).length === 0) {
-          treeData.value = (await getNavTreeListWithButton({
+          treeData.value = (await getNavWholeTreeNode({
             status: 1,
             menuName: null,
             alias: null,

@@ -74,7 +74,6 @@
   //   findList();
   // };
   const collaposeChange = (event) => {
-    console.log('9999999:', event.target.nodeName);
     if (event.target.nodeName === 'svg') {
       collapseStatus.value = !collapseStatus.value;
       console.log('collapseStatus.value click:', collapseStatus.value);
@@ -180,16 +179,18 @@
           }
 
           let result = await getUserList({
-            currentPage: page.currentPage,
+            currentPage: page.currentPage || 1,
             pageSize: page.pageSize || 10,
-            ...form,
+            sortBy: 'asc',
+            status: form.status,
+            displayName: form.displayName,
           });
           console.log('user list results =========:', result);
           // TODO remove fake pagination
-          let tempResult = result.items.slice(
-            (page.currentPage - 1) * page.pageSize,
-            page.currentPage * page.pageSize,
-          );
+          // let tempResult = result.items.slice(
+          //   (page.currentPage - 1) * page.pageSize,
+          //   page.currentPage * page.pageSize,
+          // );
           tablePage.total = result.total;
           tablePage.currentPage = page.currentPage;
           tablePage.pageSize = page.pageSize;
@@ -198,7 +199,7 @@
             trace_id: Guid.newGuid().toString(),
             total_pages: 1,
             current_page: 1,
-            results: tempResult,
+            results: result.items,
             status: 1000,
             msg: 'success',
             requested_time: '',
@@ -242,6 +243,12 @@
           confirm: handleDelete.bind(null, record),
         },
       },
+      {
+        label: '',
+        tooltip: 'password reset',
+        icon: 'ant-design:lock-outlined',
+        onClick: handleResetPassword.bind(null, record),
+      },
     ];
     return actions;
   };
@@ -266,6 +273,10 @@
       // reload();
       triggerProxy('query');
     });
+  }
+
+  function handleResetPassword(record: Recordable) {
+    console.log('handleResetPassword:', record);
   }
 
   // Create item

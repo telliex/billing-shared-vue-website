@@ -108,6 +108,11 @@ export default {
       notSlot: 'Slot {0} not found',
       noTree: 'Tree structure not found',
       notProp: 'Column property {0} not found',
+      notFunc: 'Method {0} not found',
+      notPage: 'Page property {0} not found',
+      error: 'Error',
+      requestError: 'Request Error',
+      coverProp: 'The property {0} is covered by the table props',
     },
     base: {
       pleaseSelect: 'Please Select',

@@ -19,3 +19,10 @@ export interface BasicFetchResult<T> {
   requestedTime: string;
   responsedTime: string;
 }
+
+export interface BasicResult<T> {
+  total: number;
+  currentPage: number;
+  pageSize: number;
+  items: T[];
+}

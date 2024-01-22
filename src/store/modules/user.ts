@@ -142,9 +142,9 @@ export const useUserStore = defineStore('user', {
         }
         const data = await loginApi(loginParams, mode);
         console.log('login data:', data);
-        const { apiToken } = data.items[0];
-        ls.set('TEMP_USER_INFO_KEY__', data.items[0]); // leave out call getUserInfo();
-        ls.set('TEMP_USER_ID_KEY__', data.items[0].id);
+        const { apiToken } = data[0];
+        ls.set('TEMP_USER_INFO_KEY__', data[0]); // leave out call getUserInfo();
+        ls.set('TEMP_USER_ID_KEY__', data[0].id);
         // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(apiToken);
         return this.afterLoginAction(goHome);

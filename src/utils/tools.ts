@@ -59,7 +59,7 @@ export function buildMenuNestedStructure(data: any[]) {
 
 export function apiTransDataForHeader() {
   const userStore = useUserStore();
-  const who = userStore.getUserInfo?.userId;
+  const who = userStore.getUserInfo?.id;
 
   const timeTemp = dayjs().utcOffset();
   let timeZon = '';
@@ -75,6 +75,7 @@ export function apiTransDataForHeader() {
     'User-Id': who,
     'Time-Zone': timeZon,
     Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
+    'Trace-Id': Guid.newGuid().toString(),
   };
 }
 
