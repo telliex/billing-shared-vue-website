@@ -228,4 +228,10 @@ export default {
     searchAreaReportTypeOption: 'Credit Owner Report for Sales',
     searchAreaYYYYMMLavel: '日期', // 日期
   },
+  mpdf: {
+    tableAreaTitle: 'M0100 pdf',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'M0100 pdf',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
 };
