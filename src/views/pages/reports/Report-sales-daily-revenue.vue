@@ -48,7 +48,12 @@
   const { createMessage } = useMessage();
   import { useLoading } from '/@/components/Loading';
   import axios from 'axios';
-  import { getFinalActiveTime, logoutApi, writeFinalActiveTime } from '/@/api/sys/user';
+  import {
+    getFinalActiveTime,
+    logoutApi,
+    writeFinalActiveTime,
+    JWTlogoutApi,
+  } from '/@/api/sys/user';
   import { checkLoginTimeout } from '/@/utils/tools';
 
   const wrapEl = ref<ElRef>(null);
@@ -171,6 +176,7 @@
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
       logoutApi();
+      JWTlogoutApi();
       return;
     }
 
@@ -179,6 +185,7 @@
       await writeFinalActiveTime();
     } else {
       logoutApi();
+      JWTlogoutApi();
       return;
     }
 

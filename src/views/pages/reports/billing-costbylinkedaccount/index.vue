@@ -43,11 +43,11 @@
   import axios from 'axios';
   import { getFormSchema } from './formData';
   import { checkLoginTimeout } from '/@/utils/tools';
-  import { logoutApi } from '/@/api/sys/user';
+  import { logoutApi, JWTlogoutApi } from '/@/api/sys/user';
   import { useLoading } from '/@/components/Loading';
   const { t } = useI18n();
 
-   // loading module
+  // loading module
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
     target: wrapEl,
@@ -277,6 +277,7 @@
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
       logoutApi();
+      JWTlogoutApi();
       return false;
     }
 
@@ -285,6 +286,7 @@
       await writeFinalActiveTime();
     } else {
       logoutApi();
+      JWTlogoutApi();
       return false;
     }
 
@@ -319,7 +321,7 @@
       });
       readerData(fileData.data);
       setTimeout(() => {
-      closeWrapLoading()
+        closeWrapLoading();
       }, 5000);
     } else {
       closeWrapLoading();
@@ -339,6 +341,6 @@
 </script>
 <script lang="ts">
   export default {
-    name: 'costbylinkedReport',
+    name: 'CostbylinkedReport',
   };
 </script>

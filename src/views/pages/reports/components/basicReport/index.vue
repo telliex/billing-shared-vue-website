@@ -42,7 +42,7 @@
   import { dateUtil } from '/@/utils/dateUtil';
   import axios from 'axios';
   import { checkLoginTimeout } from '/@/utils/tools';
-  import { logoutApi } from '/@/api/sys/user';
+  import { logoutApi, JWTlogoutApi } from '/@/api/sys/user';
   import { useLoading } from '/@/components/Loading';
   const { t } = useI18n();
 
@@ -292,6 +292,7 @@
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
       logoutApi();
+      JWTlogoutApi();
       return false;
     }
 
@@ -300,6 +301,7 @@
       await writeFinalActiveTime();
     } else {
       logoutApi();
+      JWTlogoutApi();
       return false;
     }
     const result = props.childFormValue(values);
@@ -337,6 +339,7 @@
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
       logoutApi();
+      JWTlogoutApi();
       return false;
     }
 
@@ -345,6 +348,7 @@
       await writeFinalActiveTime();
     } else {
       logoutApi();
+      JWTlogoutApi();
       return false;
     }
 
