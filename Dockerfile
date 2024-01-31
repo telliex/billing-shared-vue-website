@@ -51,6 +51,7 @@ ENV S3_JSON billing-dev-website-resource
 ENV API_POWERBI_LAMBDA $A_API_POWERBI_LAMBDA
 ENV S3_REPORT billing-dev-sync-data-test
 ENV S3_ACCOUNT_REPORT billing-dev-accounting-report
+ENV S3_INVOICE_REPORT billing-dev-bill-invoice
 
 # ENV ENV dev
 # ENV REGION us-west-2
