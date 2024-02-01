@@ -13,12 +13,12 @@ export const columns: BasicColumn[] = [
     dataIndex: 'roleName',
     width: 200,
   },
-  {
-    title: 'Role Value',
-    dataIndex: 'roleValue',
-    ifShow: false,
-    width: 180,
-  },
+  // {
+  //   title: 'Role Value',
+  //   dataIndex: 'roleValue',
+  //   ifShow: false,
+  //   width: 180,
+  // },
   // {
   //   title: 'Order',
   //   dataIndex: 'orderNo',
@@ -139,61 +139,61 @@ export const formSchema: FormSchema[] = [
       },
     ],
   },
-  {
-    field: 'roleValue',
-    label: 'Role Value',
-    required: true,
-    component: 'Input',
-    componentProps: {
-      maxLength: 10,
-    },
-    rules: [
-      {
-        required: true,
-        // @ts-ignore
-        validator: async (rule, value) => {
-          value = value.trim();
-          if (!value && value !== 0) {
-            return Promise.reject('Please input role value');
-          }
-          const pattern = /^[0-9a-zA-Z_-]*$/;
-          console.log(pattern.test(value));
-          if (value && !pattern.test(value)) {
-            return Promise.reject('Letters and numbers only');
-          }
-          return Promise.resolve();
-        },
-        trigger: 'change',
-      },
-    ],
-  },
-  {
-    field: 'orderNo',
-    label: 'Order',
-    component: 'Input',
-    componentProps: {
-      maxLength: 5,
-    },
+  // {
+  //   field: 'roleValue',
+  //   label: 'Role Value',
+  //   required: true,
+  //   component: 'Input',
+  //   componentProps: {
+  //     maxLength: 10,
+  //   },
+  //   rules: [
+  //     {
+  //       required: true,
+  //       // @ts-ignore
+  //       validator: async (rule, value) => {
+  //         value = value.trim();
+  //         if (!value && value !== 0) {
+  //           return Promise.reject('Please input role value');
+  //         }
+  //         const pattern = /^[0-9a-zA-Z_-]*$/;
+  //         console.log(pattern.test(value));
+  //         if (value && !pattern.test(value)) {
+  //           return Promise.reject('Letters and numbers only');
+  //         }
+  //         return Promise.resolve();
+  //       },
+  //       trigger: 'change',
+  //     },
+  //   ],
+  // },
+  // {
+  //   field: 'orderNo',
+  //   label: 'Order',
+  //   component: 'Input',
+  //   componentProps: {
+  //     maxLength: 5,
+  //   },
 
-    rules: [
-      {
-        required: true,
-        // @ts-ignore
-        validator: async (rule, value) => {
-          if (!value && value !== 0) {
-            return Promise.reject('Please input order');
-          }
-          const pattern = /^[0-9-]*$/;
-          console.log(pattern.test(value));
-          if (value && !pattern.test(value)) {
-            return Promise.reject('Only integers');
-          }
-          return Promise.resolve();
-        },
-        trigger: 'change',
-      },
-    ],
-  },
+  //   rules: [
+  //     {
+  //       required: true,
+  //       // @ts-ignore
+  //       validator: async (rule, value) => {
+  //         if (!value && value !== 0) {
+  //           return Promise.reject('Please input order');
+  //         }
+  //         const pattern = /^[0-9-]*$/;
+  //         console.log(pattern.test(value));
+  //         if (value && !pattern.test(value)) {
+  //           return Promise.reject('Only integers');
+  //         }
+  //         return Promise.resolve();
+  //       },
+  //       trigger: 'change',
+  //     },
+  //   ],
+  // },
   {
     field: 'status',
     label: 'Status',

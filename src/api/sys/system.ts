@@ -45,6 +45,7 @@ enum Api {
   DeptList = '/system/department',
   UserList = '/system/user',
   IsUserExist = '/system/user/exist',
+  ChangePassword = '/system/user/changePassword',
 }
 
 // =====/elu-api=====
@@ -375,10 +376,11 @@ export const getRoleListByPage = (params: RolePageParams) => {
       url: `/api${API_CONFIG.VERSION}${Api.RoleList}`,
       data: {},
       params: {
-        roleName: params.roleName,
+        roleName: params.roleName || null,
         status: params.status,
         currentPage: params.currentPage || 1,
         pageSize: params.pageSize || 10,
+        sortBy: params.sortBy || 'ace',
       },
       headers: apiTransDataForHeader(),
       transformResponse: [
@@ -409,11 +411,7 @@ export const setRoleStatus = (id: string, body: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -437,11 +435,7 @@ export const removeRoleItem = (body: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -463,12 +457,7 @@ export const updateRoleItem = (body: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -491,12 +480,7 @@ export const createRoleItem = (body: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -560,12 +544,7 @@ export const createDeptItem = (body: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -589,12 +568,7 @@ export const updateDeptItem = (body: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -617,11 +591,7 @@ export const removeDeptItem = (body: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -649,29 +619,8 @@ export const isUserExist = (params: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (!resObj) {
-            return {
-              trace_id: Guid.newGuid().toString(),
-              total_pages: 1,
-              current_page: 1,
-              results: [],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: new Date(),
-            };
-          } else {
-            return {
-              trace_id: Guid.newGuid().toString(),
-              total_pages: 1,
-              current_page: 1,
-              results: null,
-              status: 1000,
-              msg: '帳號已存在',
-              requested_time: '',
-              responsed_time: new Date(),
-            };
-          }
+          console.log('========isUserExist=========:', resObj);
+          return resObj;
         },
       ],
     },
@@ -728,6 +677,31 @@ export const getUserList = (params: UserPageParams) => {
   );
 };
 
+export const changePassword = (body: any) => {
+  const header = apiTransDataForHeader();
+  return defHttp.patch<UserItem>(
+    {
+      url: `/api${API_CONFIG.VERSION}${Api.ChangePassword}/${header['User-Id']}`,
+      data: body,
+      headers: header,
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          console.log('change password:', resObj);
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
+  );
+};
+
 export const removeUserItem = (body: any) =>
   defHttp.delete<UserItem>(
     {
@@ -737,11 +711,7 @@ export const removeUserItem = (body: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -760,11 +730,7 @@ export const createUserItem = (body: any) => {
           const resObj = JSON.parse(data);
           console.log('1111111:', resObj);
 
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -789,11 +755,7 @@ export const updateUserItem = (body: any) =>
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },

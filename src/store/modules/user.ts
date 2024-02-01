@@ -15,7 +15,7 @@ import {
 import { getAuthCache, isSHA256Format, setAuthCache, stringToHSA265 } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 // import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
-import { loginApi, logoutApi } from '/@/api/sys/user';
+import { loginApi, logoutApi, JWTLoginApi, JWTlogoutApi } from '/@/api/sys/user';
 // import { getBillUserInfo } from '/@/api/sys/system';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -26,6 +26,10 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 import { createLocalStorage } from '/@/utils/cache';
+import { useLoginState, LoginStateEnum } from '/@/views/sys/login/useLogin';
+import { checkLogin3MonthsTimeout } from '/@/utils/tools';
+
+const { setLoginState } = useLoginState();
 // import { Guid } from 'js-guid';
 
 const ls = createLocalStorage();
@@ -140,21 +144,36 @@ export const useUserStore = defineStore('user', {
         if (!isSHA256Format(loginParams.password)) {
           loginParams.password = await stringToHSA265(loginParams.password);
         }
-        const data = await loginApi(loginParams, mode);
-        console.log('login data:', data);
-        const { apiToken } = data[0];
-        ls.set('TEMP_USER_INFO_KEY__', data[0]); // leave out call getUserInfo();
-        ls.set('TEMP_USER_ID_KEY__', data[0].id);
+
+        const token = await JWTLoginApi({ email: loginParams.username });
+        ls.set('USER_TOKEN_OBJECT_KEY__', token[0]);
+        console.log('token obj =====:', token[0]);
+        const { apiToken } = token[0];
         // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(apiToken);
-        return this.afterLoginAction(goHome);
+        console.log('888888:', loginParams);
+        const data = await loginApi(loginParams, mode);
+        console.log('login data:', data);
+
+        //let checkPasswordLimit =
+        if (
+          data[0].items[0].isInitPassowrd === true ||
+          checkLogin3MonthsTimeout(data[0].items[0].passwordTime)
+        ) {
+          setLoginState(LoginStateEnum.SET_PASSWORD);
+
+          return null;
+        } else {
+          ls.set('TEMP_USER_INFO_KEY__', data[0].items[0]); // leave out call getUserInfo();
+          ls.set('TEMP_USER_ID_KEY__', data[0].items[0].id);
+          return this.afterLoginAction(goHome);
+        }
       } catch (error) {
         return Promise.reject(error);
       }
     },
 
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
-      console.log('check token', this.getToken);
       if (!this.getToken) return null;
       // 3、獲取用户信息
       const userInfo = await this.getUserInfoAction();
@@ -211,6 +230,7 @@ export const useUserStore = defineStore('user', {
       if (this.getToken) {
         try {
           await logoutApi();
+          await JWTlogoutApi();
         } catch {
           console.log('註銷 Token 失敗');
         }

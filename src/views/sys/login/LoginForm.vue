@@ -97,7 +97,7 @@
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
   // import { stringToHSA265 } from '/@/utils/auth';
-
+  const { getLoginState } = useLoginState();
   const ACol = Col;
   const ARow = Row;
   const FormItem = Form.Item;
@@ -107,7 +107,6 @@
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
 
-  const { getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
   const formRef = ref();
   const loading = ref(false);

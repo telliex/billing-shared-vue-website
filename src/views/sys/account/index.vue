@@ -160,7 +160,7 @@
       sort: true, // 启用排序代理，当点击排序时会自动触发 query 行为
       filter: true, // 启用筛选代理，当点击筛选时会自动触发 query 行为
       props: {
-        result: 'results',
+        result: 'results.items',
         total: 'total',
       },
       ajax: {
@@ -191,7 +191,7 @@
           //   (page.currentPage - 1) * page.pageSize,
           //   page.currentPage * page.pageSize,
           // );
-          tablePage.total = result.total;
+          tablePage.total = result[0].total;
           tablePage.currentPage = page.currentPage;
           tablePage.pageSize = page.pageSize;
           console.log('tablePage.total:', tablePage.total);
@@ -199,12 +199,12 @@
             trace_id: Guid.newGuid().toString(),
             total_pages: 1,
             current_page: 1,
-            results: result.items,
+            results: result[0].items,
             status: 1000,
             msg: 'success',
             requested_time: '',
             responsed_time: '',
-            total: result.total,
+            total: result[0].total,
           };
         },
         // queryAll: async ({ form }) => {
@@ -243,12 +243,12 @@
           confirm: handleDelete.bind(null, record),
         },
       },
-      {
-        label: '',
-        tooltip: 'password reset',
-        icon: 'ant-design:lock-outlined',
-        onClick: handleResetPassword.bind(null, record),
-      },
+      // {
+      //   label: '',
+      //   tooltip: 'password reset',
+      //   icon: 'ant-design:lock-outlined',
+      //   onClick: handleResetPassword.bind(null, record),
+      // },
     ];
     return actions;
   };

@@ -1853,12 +1853,12 @@ export default [
       return resultSuccess(testMenu);
     },
   },
-  {
-    url: '/basic-api/api/v1.0/system/menu',
-    timeout: 1000,
-    method: 'get',
-    response: (request: requestParams) => {
-      return resultSuccess(testMenuItemList);
-    },
-  },
+  // {
+  //   url: '/basic-api/api/v1.0/system/menu',
+  //   timeout: 1000,
+  //   method: 'get',
+  //   response: (request: requestParams) => {
+  //     return resultSuccess(testMenuItemList);
+  //   },
+  // },
 ] as MockMethod[];

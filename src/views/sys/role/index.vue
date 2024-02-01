@@ -75,7 +75,6 @@
   //   findList();
   // };
   const collaposeChange = (event) => {
-    console.log('9999999:', event.target.nodeName);
     if (event.target.nodeName === 'svg') {
       collapseStatus.value = !collapseStatus.value;
       console.log('collapseStatus.value click:', collapseStatus.value);
@@ -161,10 +160,10 @@
       autoLoad: true,
       sort: true, // 启用排序代理，当点击排序时会自动触发 query 行为
       filter: true, // 启用筛选代理，当点击筛选时会自动触发 query 行为
-      // props: {
-      //   result: 'results',
-      //   total: 'total',
-      // },
+      props: {
+        result: 'results',
+        total: 'total',
+      },
       ajax: {
         query: async ({ page, sorts, filters, form }) => {
           console.log('page:', form);
@@ -181,21 +180,28 @@
           }
 
           let result = await getRoleListByPage({
-            currentPage: page.currentPage,
+            currentPage: page.currentPage || 1,
             pageSize: page.pageSize || 10,
-            ...form,
+            sortBy: 'asc',
+            status: form.status,
+            roleName: form.displayName,
           });
-
-          console.log('role result:', result);
-          // let tempResult = result.items.slice(
-          //   (page.currentPage - 1) * page.pageSize,
-          //   page.currentPage * page.pageSize,
-          // );
-          // tablePage.total = result.total;
-          // tablePage.currentPage = page.currentPage;
-          // tablePage.pageSize = page.pageSize;
-          // console.log('tablePage.total:', tablePage.total);
-          return result;
+          console.log('role list results =========:', result);
+          tablePage.total = result[0].total;
+          tablePage.currentPage = page.currentPage;
+          tablePage.pageSize = page.pageSize;
+          console.log('tablePage.total:', tablePage.total);
+          return {
+            trace_id: Guid.newGuid().toString(),
+            total_pages: 1,
+            current_page: 1,
+            results: result[0].items,
+            status: 1000,
+            msg: 'success',
+            requested_time: '',
+            responsed_time: '',
+            total: result[0].total,
+          };
         },
         // queryAll: async ({ form }) => {
         //   return await getRoleListByPage({
@@ -246,7 +252,6 @@
 
   // Edit item
   function handleEdit(record: Recordable) {
-    console.log('aaaaaa');
     openDrawer(true, {
       record,
       isUpdate: true,

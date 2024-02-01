@@ -167,7 +167,7 @@
       filter: false, // 启用筛选代理，当点击筛选时会自动触发 query 行为
       // props: {
       //   result: 'results.items',
-      //   // total: 'total',
+      //   total: 'total',
       // },
       ajax: {
         query: async ({ sorts, filters, form }) => {
@@ -180,7 +180,7 @@
             status: form.status === undefined || form.status === null ? null : form.status,
           });
 
-          result.items.forEach((item) => {
+          result[0].items.forEach((item) => {
             if (item.parentMenu === '') {
               item.parentMenu = null;
             }
@@ -188,7 +188,7 @@
 
           console.log('menu list data :', result);
 
-          return result.items;
+          return result[0].items;
         },
         // queryAll: async ({ form }) => {
         //   return await getRoleListByPage({

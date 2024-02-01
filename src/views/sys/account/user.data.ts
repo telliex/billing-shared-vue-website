@@ -122,6 +122,15 @@ export const searchFormSchema: FormSchema[] = [
 
 export const accountFormSchema: FormSchema[] = [
   {
+    label: 'id',
+    field: 'id',
+    component: 'Input',
+    ifShow: false,
+    componentProps: {
+      // disabled: true,
+    },
+  },
+  {
     field: 'displayName',
     label: 'User Name',
     component: 'Input',
@@ -129,7 +138,7 @@ export const accountFormSchema: FormSchema[] = [
       console.log('formMode88888888l========', formModel);
       console.log('schema========', schema);
       return {
-        disabled: true,
+        disabled: formModel.id ? true : false,
         placeholder: 'Please enter user name',
       };
     },
@@ -191,7 +200,20 @@ export const accountFormSchema: FormSchema[] = [
       return {
         mode: 'multiple',
         labelInValue: true,
-        api: getAllRoleList,
+        // api: getAllRoleList,
+        api: async () => {
+          const results = await getAllRoleList({
+            roleName: '',
+            status: 1,
+            currentPage: null,
+            pageSize: null,
+          });
+          return new Promise((resolve) => {
+            console.log('results:', results);
+            resolve(results[0].items);
+          });
+        },
+        resultField: 'items',
         labelField: 'roleName',
         // valueField: '{key: roleName, label: id}',
         valueField: 'id',
@@ -247,6 +269,29 @@ export const accountFormSchema: FormSchema[] = [
     label: 'Email',
     field: 'email',
     component: 'Input',
+    rules: [
+      {
+        required: true,
+        message: 'Please enter email',
+        trigger: 'change',
+
+        validator(_, value) {
+          if (!value) {
+            /* eslint-disable-next-line */
+            console.log('Value cannot be empty');
+            return Promise.reject('Value cannot be empty');
+          }
+          return Promise.resolve();
+          // return new Promise((resolve, reject) => {
+          //   isUserExist(value)
+          //     .then(() => resolve())
+          //     .catch((err) => {
+          //       reject(err.message || '驗證失敗');
+          //     });
+          // });
+        },
+      },
+    ],
   },
   {
     label: 'Sex',
@@ -294,8 +339,9 @@ export const accountFormSchema: FormSchema[] = [
     label: 'Country',
     field: 'country',
     component: 'ApiSelect',
-    componentProps: ({ formModel }) => {
+    componentProps: () => {
       return {
+        disabled: true,
         // more details see /src/components/Form/src/components/ApiSelect.vue
         api: countryOptionsListApi,
         // api: async (para) => {
@@ -412,7 +458,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     },
   },
   {
-    width: 130,
+    width: 90,
     title: 'Setting',
     align: 'center',
     slots: { default: 'action' },

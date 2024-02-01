@@ -110,12 +110,7 @@ export const getNavWholeTreeNode = (params: FilterItems) =>
         function (data) {
           // TODO remove the button node . Need to recover.
           const resObj = JSON.parse(data).filter((item: any) => item.type != 'button');
-          if (isArray(resObj)) {
-            const expectedResult = buildNestedStructure(resObj);
-            return correctReturn(expectedResult);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -189,14 +184,14 @@ export const getNavList = (params: FilterItems) =>
       ],
     },
     // TODO: recover the area below.
-    // {
-    //   apiUrl: '/sys-api',
-    //   retryRequest: {
-    //     isOpenRetry: false,
-    //     count: 1,
-    //     waitTime: 3000,
-    //   },
-    // },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
   );
 
 export const getNavItem = (params: NavParams) => {

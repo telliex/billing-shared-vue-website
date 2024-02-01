@@ -97,6 +97,7 @@ export interface RoleListItem extends ItemAdditionInfo {
 export type RolePageParams = BasicPageParams & {
   roleName?: string | null;
   status?: number | null;
+  sortBy?: string;
 };
 
 export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;

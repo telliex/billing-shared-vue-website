@@ -496,13 +496,22 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     showOverflow: 'tooltip',
     width: 100,
     // sortable: true,
+    formatter({ cellValue }) {
+      let target = '';
+      if (cellValue === 0) {
+        target = 'Catalog';
+      } else {
+        target = 'Page';
+      }
+      return target;
+    },
   },
-  {
-    title: 'Display Name',
-    field: 'alias',
-    width: 200,
-    // sortable: true,
-  },
+  // {
+  //   title: 'Display Name',
+  //   field: 'alias',
+  //   width: 200,
+  //   // sortable: true,
+  // },
   {
     title: 'Status',
     field: 'status',
@@ -557,13 +566,13 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     showOverflow: 'tooltip',
     align: 'left',
   },
-  {
-    title: 'Order',
-    width: 80,
-    field: 'orderNo',
-    showOverflow: 'tooltip',
-    align: 'center',
-  },
+  // {
+  //   title: 'Order',
+  //   width: 80,
+  //   field: 'orderNo',
+  //   showOverflow: 'tooltip',
+  //   align: 'center',
+  // },
   {
     title: 'Creator',
     width: 160,

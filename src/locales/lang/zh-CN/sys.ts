@@ -73,7 +73,7 @@ export default {
     qrSignInFormTitle: '二维码登录',
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
-
+    setFormContent: '第一次登录或是已使用超过3个月的密码，需重新修改密码',
     signInTitle: 'Metrics Analysis and Reporting System',
     signInDesc: '登入开始使用！',
     policy: '我同意xxx隐私政策',
@@ -83,6 +83,7 @@ export default {
     registerButton: '注册',
     rememberMe: '记住我',
     forgetPassword: '忘记密码?',
+    setPassword: '设置密码',
     otherSignIn: '其他登录方式',
 
     // notify
@@ -100,6 +101,9 @@ export default {
     company: '公司',
     userName: '账号',
     password: '密码',
+    oldPassword: '旧密码',
+    newPassword: '新密码',
+    checkPassword: '确认密码',
     confirmPassword: '确认密码',
     email: '邮箱',
     smsCode: '短信验证码',

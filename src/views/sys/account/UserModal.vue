@@ -14,7 +14,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
-
+  import { stringToHSA265 } from '/@/utils/auth';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './user.data';
@@ -104,16 +104,17 @@
           }
 
           let isUser = await isUserExist({
-            id: rowId.value,
-            userName: values.userName,
+            // id: rowId.value,
+            email: values.email,
           });
 
           if (!isUser) {
             createMessage.error('User name already exists');
             return;
           }
-          values.rolesArray = values.rolesArray.map(({ ['option']: _, ...rest }) => rest);
-          values.rolesString = JSON.stringify(values.rolesArray);
+          // values.rolesArray = values.rolesArray.map(({ ['option']: _, ...rest }) => rest);
+          // values.rolesString = JSON.stringify(values.rolesArray);
+          values.password = await stringToHSA265(values.password);
 
           // TODO: replace with deptId
           let template = {
