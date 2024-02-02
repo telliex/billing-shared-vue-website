@@ -73,7 +73,8 @@ export default {
     qrSignInFormTitle: '二維碼登錄',
     signUpFormTitle: '注冊',
     forgetFormTitle: '重置密碼',
-    setFormContent: '第一次登入或是已使用超過3個月的密碼，需重新修改密碼',
+    setFormContent:
+      '第一次登入或是已使用超過3個月的密碼，需重新修改密碼。英文字母大小寫+數字+特殊符號，至少八字元，請注意大小寫有區別。',
     signInTitle: 'Metrics Analysis and Reporting System',
     signInDesc: '登入開始使用！',
     policy: '我同意xxx隱私政策',

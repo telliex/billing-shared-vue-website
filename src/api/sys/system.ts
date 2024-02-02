@@ -24,6 +24,8 @@ import { API_CONFIG } from '/@/settings/apiSetting';
 import { apiTransDataForHeader, correctReturn, errorReturn } from '/@/utils/tools';
 import { isArray } from 'xe-utils';
 import { Guid } from 'js-guid';
+import { createLocalStorage } from '/@/utils/cache';
+const ls = createLocalStorage();
 
 enum Api {
   GetUserOwnMenu = '/admin/get-menu-query',
@@ -679,15 +681,19 @@ export const getUserList = (params: UserPageParams) => {
 
 export const changePassword = (body: any) => {
   const header = apiTransDataForHeader();
+  const userId = ls.get('TEMP_USER_ID_KEY__');
+
+  header['User-Id'] = userId; // 5519695a-5397-475a-9925-da817107bcfd
   return defHttp.patch<UserItem>(
     {
-      url: `/api${API_CONFIG.VERSION}${Api.ChangePassword}/${header['User-Id']}`,
+      url: `/api${API_CONFIG.VERSION}${Api.ChangePassword}/${userId}`,
       data: body,
       headers: header,
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
           console.log('change password:', resObj);
+          return resObj;
         },
       ],
     },

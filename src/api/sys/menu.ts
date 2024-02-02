@@ -98,18 +98,19 @@ export const getDynamicNavList = () =>
 export const getNavWholeTreeNode = (params: FilterItems) =>
   defHttp.get<getNavListResultModel>(
     {
-      url: `/api${API_CONFIG.VERSION}${Api.NavTreeList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.MenuList}`,
       data: {},
       params: {
-        menuName: params.menuName,
-        alias: params.alias,
         status: params.status,
       },
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
-          // TODO remove the button node . Need to recover.
-          const resObj = JSON.parse(data).filter((item: any) => item.type != 'button');
+          const resObj = JSON.parse(data);
+          console.log('menu tree data from API:', resObj.results[0].items);
+          const res = buildNestedStructure(resObj.results[0].items);
+          //console.log('menu tree data from API:', res);
+          resObj.results[0].items = res;
           return resObj;
         },
       ],
@@ -183,7 +184,6 @@ export const getNavList = (params: FilterItems) =>
         },
       ],
     },
-    // TODO: recover the area below.
     {
       apiUrl: '/sys-api',
       retryRequest: {
@@ -222,11 +222,7 @@ export const removeNavItem = (params: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -249,12 +245,7 @@ export const updateNavItem = (params: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -278,11 +269,7 @@ export const createNavItem = (body: any) => {
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -310,11 +297,7 @@ export const getButtonList = (params: FilterButtonItems) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -337,11 +320,7 @@ export const updateButtonItem = (params: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -364,12 +343,7 @@ export const createButtonItem = (body: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -393,11 +367,7 @@ export const removeButtonItem = (params: any) =>
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correctReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },

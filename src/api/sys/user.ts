@@ -68,7 +68,7 @@ export const JWTLoginApi = (body: JWTLoginApiObject, mode: ErrorMessageMode = 'm
  * @description: Get JWT token
  */
 export const JWTRefreshApi = () => {
-  return defHttp.post(
+  return defHttp.get(
     {
       url: `/api${API_CONFIG.VERSION}${Api.JWTRefresh}`,
       // data: body,
@@ -101,7 +101,7 @@ export const JWTRefreshApi = () => {
  * @description: Get JWT token
  */
 export const JWTlogoutApi = () => {
-  return defHttp.post(
+  return defHttp.get(
     {
       url: `/api${API_CONFIG.VERSION}${Api.JWTLogout}`,
       // data: body,
@@ -135,15 +135,7 @@ export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal')
     {
       url: `/api${API_CONFIG.VERSION}${Api.Login}`,
       data: body,
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlY3YtYmlsbGluZy1jbXAiLCJzdWIiOiJ0ZWxsaWV4LmNoaXVAZWNsb3VkdmFsbGV5LmNvbSIsImF1ZCI6IkVDViBCaWxsaW5nIE1vZHVsZSIsImV4cCI6MTcwNjY3MzI2NCwiaWF0IjoxNzA2NjcxNDY0LCJqdGkiOiJhMWMyZmQ4Ny0wN2I2LTQ3N2QtODUzMy0xM2I5OTQzNjVkMzciLCJvdXQiOiI4MmVjMGFhMjQ3NzI0YjYwYjFiZjE2NzYwYTY4ODg1NCIsIm5iZiI6MTcwNjY3MTQ2NH0.xBWglNdgT8Fj-RMyWmYTHOsjS6Y2MLZMgXc4zPzQgJo',
-        'Content-Type': 'application/json',
-        'User-Id': '5519695a-5397-475a-9925-da817107bcfd',
-        'Time-Zone': 'UTC+0',
-        'Trace-Id': 'e75c1610-b1d5-491f-8e6c-3239e899e00f',
-        'X-Api-Key': '484CD16940B64F878DC9CCE2E79EA08E',
-      },
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);

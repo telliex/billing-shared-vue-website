@@ -59,8 +59,17 @@
         record.value = data?.record || null;
 
         if (record.value) {
-          data.record['rolesArray'] = data.record['rolesString']
-            ? JSON.parse(data.record['rolesString'])
+          data.record['rolesArray'] = data.record['roles']
+            ? data.record['roles'].map((item: any) => {
+                return {
+                  roleName: item.roleName,
+                  value: item.value,
+                  originLabel: item.roleName,
+                  id: item.value,
+                  key: item.value,
+                  label: item.roleName,
+                };
+              })
             : [];
         }
 
@@ -69,23 +78,18 @@
         if (unref(isUpdate)) {
           openFnWrapLoading();
           rowId.value = data.record.id;
+          data.record['password'] = '';
           await setFieldsValue({
             ...data.record,
           });
           closeWrapLoading();
         }
 
-        // const treeData = await getDeptList({
-        //   deptName: null,
-        //   status: null,
-        //   page: null,
-        //   pageSize: null,
-        // });
         updateSchema([
-          {
-            field: 'pwd',
-            show: !unref(isUpdate),
-          },
+          // {
+          //   field: 'pwd',
+          //   show: !unref(isUpdate),
+          // },
           // {
           //   field: 'dept',
           //   componentProps: { treeData },
@@ -97,14 +101,14 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-
+          console.log('values:', values);
           if (!values) {
             createMessage.error('Required fields are missing！');
             return;
           }
 
           let isUser = await isUserExist({
-            // id: rowId.value,
+            displayName: values.displayName,
             email: values.email,
           });
 
@@ -112,10 +116,17 @@
             createMessage.error('User name already exists');
             return;
           }
-          // values.rolesArray = values.rolesArray.map(({ ['option']: _, ...rest }) => rest);
-          // values.rolesString = JSON.stringify(values.rolesArray);
-          values.password = await stringToHSA265(values.password);
 
+          values.password = await stringToHSA265(values.password);
+          values.roles = [];
+          values.rolesArray.forEach((item: any) => {
+            item.id = item.value;
+            item.roleName = item.label;
+            values.roles.push({
+              roleName: item.roleName,
+              value: item.value,
+            });
+          });
           // TODO: replace with deptId
           let template = {
             displayName: '',
@@ -130,13 +141,14 @@
             email: null,
             address: null,
             country: null,
+            roles: [],
           };
 
           if (isUser) {
             if (!unref(isUpdate)) {
               let result = Object.assign(template, values);
               console.log('resultnew:', result);
-              return;
+
               await createUserItem(result);
             } else {
               console.log('resultold:', Object.assign(template, record.value, values));

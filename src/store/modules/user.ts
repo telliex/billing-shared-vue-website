@@ -155,6 +155,8 @@ export const useUserStore = defineStore('user', {
         const data = await loginApi(loginParams, mode);
         console.log('login data:', data);
 
+        ls.set('TEMP_USER_ID_KEY__', data[0].items[0].id);
+
         //let checkPasswordLimit =
         if (
           data[0].items[0].isInitPassowrd === true ||
@@ -165,7 +167,6 @@ export const useUserStore = defineStore('user', {
           return null;
         } else {
           ls.set('TEMP_USER_INFO_KEY__', data[0].items[0]); // leave out call getUserInfo();
-          ls.set('TEMP_USER_ID_KEY__', data[0].items[0].id);
           return this.afterLoginAction(goHome);
         }
       } catch (error) {

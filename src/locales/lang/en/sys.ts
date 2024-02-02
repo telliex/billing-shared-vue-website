@@ -73,7 +73,7 @@ export default {
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',
     setFormContent: `If you log in for the first time or use a password that has been used for more than 3 months,
-    you need to change the password again.`,
+    you need to change the password again.English letters in uppercase and lowercase + numbers + special symbols, at least eight characters. Please note that there is a difference in uppercase and lowercase letters.`,
     signInTitle: 'Metrics Analysis and Reporting System',
     signInDesc: 'Enter your personal details and get started!',
     policy: 'I agree to the xxx Privacy Policy',

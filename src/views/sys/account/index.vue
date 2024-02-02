@@ -160,7 +160,7 @@
       sort: true, // 启用排序代理，当点击排序时会自动触发 query 行为
       filter: true, // 启用筛选代理，当点击筛选时会自动触发 query 行为
       props: {
-        result: 'results.items',
+        result: 'results',
         total: 'total',
       },
       ajax: {

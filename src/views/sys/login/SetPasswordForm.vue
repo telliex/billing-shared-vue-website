@@ -1,7 +1,6 @@
 <template>
   <template v-if="getShow">
     <LoginFormContent class="enter-x" />
-    <p>※英文字母大小寫+數字+特殊符號，至少八字元，請注意大小寫有別</p>
     <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
       <FormItem name="password" class="enter-x">
         <InputPassword
@@ -72,7 +71,6 @@
   async function handleSet() {
     const form = unref(formRef);
     if (!form) return;
-    console.log('form', form);
 
     if (
       formData.newPassword == '' ||
@@ -98,13 +96,14 @@
       oldPassword: await stringToHSA265(formData.oldPassword),
       newPassword: await stringToHSA265(formData.newPassword),
     };
-    console.log('finalPassword', finalPassword);
 
-    await changePassword(finalPassword);
-
-    // await stringToHSA265(formData.oldPassword);
-    await form.resetFields();
-    setLoginState(LoginStateEnum.LOGIN);
+    let res = await changePassword(finalPassword);
+    if (res === null) {
+      createMessage.success('Password changed successfully');
+      // await stringToHSA265(formData.oldPassword);
+      await form.resetFields();
+      setLoginState(LoginStateEnum.LOGIN);
+    }
   }
 
   function validatePassword(password) {

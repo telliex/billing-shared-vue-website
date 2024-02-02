@@ -92,6 +92,8 @@ export interface RoleListItem extends ItemAdditionInfo {
   status: number;
   sortNo: number;
   remark: string;
+  menus: any[];
+  menuPermissionArray: string[];
 }
 
 export type RolePageParams = BasicPageParams & {

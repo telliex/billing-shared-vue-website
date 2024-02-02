@@ -73,7 +73,8 @@ export default {
     qrSignInFormTitle: '二维码登录',
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
-    setFormContent: '第一次登录或是已使用超过3个月的密码，需重新修改密码',
+    setFormContent:
+      '第一次登录或是已使用超过3个月的密码，需重新修改密码。英文字母大小写+数字+特殊符号，至少八字元，请注意大小写有区别。',
     signInTitle: 'Metrics Analysis and Reporting System',
     signInDesc: '登入开始使用！',
     policy: '我同意xxx隐私政策',

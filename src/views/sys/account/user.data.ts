@@ -201,6 +201,7 @@ export const accountFormSchema: FormSchema[] = [
         mode: 'multiple',
         labelInValue: true,
         // api: getAllRoleList,
+        immediate: false,
         api: async () => {
           const results = await getAllRoleList({
             roleName: '',
@@ -261,6 +262,8 @@ export const accountFormSchema: FormSchema[] = [
     label: 'Birthday',
     field: 'birthday',
     component: 'DatePicker',
+    defaultValue: null,
+    ifShow: false,
     componentProps: {
       disabled: true,
     },
@@ -297,6 +300,8 @@ export const accountFormSchema: FormSchema[] = [
     label: 'Sex',
     field: 'sex',
     component: 'RadioGroup',
+    defaultValue: null,
+    ifShow: false,
     componentProps: {
       disabled: true,
       options: [
@@ -315,6 +320,8 @@ export const accountFormSchema: FormSchema[] = [
     label: 'Tel',
     field: 'tel',
     component: 'Input',
+    defaultValue: null,
+    ifShow: false,
     componentProps: {
       disabled: true,
     },
@@ -323,6 +330,8 @@ export const accountFormSchema: FormSchema[] = [
     label: 'Mobile',
     field: 'mobile',
     component: 'Input',
+    defaultValue: null,
+    ifShow: false,
     componentProps: {
       disabled: true,
     },
@@ -331,6 +340,8 @@ export const accountFormSchema: FormSchema[] = [
     label: 'Address',
     field: 'address',
     component: 'Input',
+    defaultValue: null,
+    ifShow: false,
     componentProps: {
       disabled: true,
     },
@@ -339,6 +350,8 @@ export const accountFormSchema: FormSchema[] = [
     label: 'Country',
     field: 'country',
     component: 'ApiSelect',
+    defaultValue: null,
+    ifShow: false,
     componentProps: () => {
       return {
         disabled: true,

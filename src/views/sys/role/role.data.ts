@@ -241,7 +241,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
   // },
   // {
   //   title: 'Order',
-  //   field: 'orderNo',
+  //   field: 'sortNo',
   //   width: 80,
   //   sortable: true,
   // },
