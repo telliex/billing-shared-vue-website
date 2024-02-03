@@ -126,27 +126,24 @@ export const getNavWholeTreeNode = (params: FilterItems) =>
   );
 
 export const getNavTreeNodeOnlyCatalog = (params: FilterItems) =>
-  defHttp.get<getNavListResultModel>(
+  defHttp.get(
     {
-      url: `/api${API_CONFIG.VERSION}${Api.NavTreeList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.MenuList}`,
       data: {},
       params: {
-        menuName: params.menuName,
-        alias: params.alias,
         status: params.status,
       },
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
-          let resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            resObj = resObj.filter((item: any) => item.type == 'catalog');
-
-            const expectedResult = buildNestedStructure(resObj);
-            return correctReturn(expectedResult);
-          } else {
-            return errorReturn(resObj);
-          }
+          const resObj = JSON.parse(data);
+          console.log('menu tree data from API:', resObj.results[0].items);
+          const res = buildNestedStructure(
+            resObj.results[0].items.filter((item: any) => item.type === 0),
+          );
+          //console.log('menu tree data from API:', res);
+          resObj.results[0].items = res;
+          return resObj;
         },
       ],
     },

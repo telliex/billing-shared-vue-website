@@ -52,12 +52,14 @@
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
+        console.log('data========:', data);
 
         let treeData = await getNavTreeNodeOnlyCatalog({
           status: 1,
-          alias: null,
-          menuName: null,
         });
+
+        console.log('treeData========:', treeData);
+        console.log('data.record========:', data.record);
         // put here to avoid the display required warning
         resetFields();
         if (unref(isUpdate)) {
@@ -68,14 +70,16 @@
           closeWrapLoading();
         }
 
-        if (data.record && data.record.type === 'catalog') {
-          treeData = treeData.filter((item) => item.title !== data.record.alias);
-        }
+        // if (data.record && data.record.type === 'catalog') {
+        //   treeData = treeData.filter((item) => item.title !== data.record.alias);
+        // }
 
-        updateSchema({
-          field: 'parentMenu',
-          componentProps: { treeData },
-        });
+        // updateSchema({
+        //   field: 'parentMenu',
+        //   componentProps: () => {
+        //     return {};
+        //   },
+        // });
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
@@ -92,14 +96,14 @@
           // avoid the path warning
           if (values.isExt === 0) {
             // non-external link
-            if (values.type === 'catalog') {
+            if (values.type === 0) {
               values.routePath = '/' + values.routePath.replace(/^\/+|\/+$/g, '');
             } else {
               values.routePath = values.routePath.replace(/^\/+|\/+$/g, '');
             }
           }
 
-          if (values.type === 'catalog') {
+          if (values.type === 0) {
             if (values.isExt === 1) {
               values.component = 'IFrame';
               values.componentName = 'IFrame';

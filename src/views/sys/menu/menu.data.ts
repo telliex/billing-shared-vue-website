@@ -133,9 +133,9 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-const isDir = (type: string) => type === 'catalog';
-const isMenu = (type: string) => type === 'page';
-const isButton = (type: string) => type === 'button';
+const isDir = (type: number) => type === 0;
+const isMenu = (type: number) => type === 1;
+const isButton = (type: number) => type === 2;
 
 export const searchFormSchema: FormSchema[] = [
   // {
@@ -172,11 +172,11 @@ export const formSchema: FormSchema[] = [
     labelWidth: 150,
     component: 'RadioButtonGroup',
     helpMessage: ['The first level menu must be Catalog'],
-    defaultValue: 'catalog',
+    defaultValue: 0,
     componentProps: {
       options: [
-        { label: 'Catalog', value: 'catalog' },
-        { label: 'Page', value: 'page' },
+        { label: 'Catalog', value: 0 },
+        { label: 'Page', value: 1 },
         // { label: '按鈕', value: 'button' },
       ],
     },
@@ -189,14 +189,14 @@ export const formSchema: FormSchema[] = [
     labelWidth: 150,
     required: true,
   },
-  {
-    field: 'alias',
-    label: 'Dispaly Name',
-    component: 'Input',
-    helpMessage: ['Display text in the left menu'],
-    required: true,
-    labelWidth: 150,
-  },
+  // {
+  //   field: 'alias',
+  //   label: 'Dispaly Name',
+  //   component: 'Input',
+  //   helpMessage: ['Display text in the left menu'],
+  //   required: true,
+  //   labelWidth: 150,
+  // },
   {
     field: 'parentMenu',
     label: 'Parent Menu',
@@ -204,20 +204,21 @@ export const formSchema: FormSchema[] = [
     defaultValue: '',
     component: 'TreeSelect',
     componentProps: {
+      // resultField: 'items',
       fieldNames: {
-        label: 'title',
+        label: 'menuName',
         key: 'id',
         value: 'id',
       },
       getPopupContainer: () => document.body,
     },
     // required: ({ values }) => {
-    //   return values.type !== 'catalog';
+    //   return values.type !== 0;
     // },
   },
 
   {
-    field: 'orderNo',
+    field: 'sortNo',
     label: 'Order',
     component: 'InputNumber',
     helpMessage: ['Maximum length is 5'],
@@ -254,7 +255,7 @@ export const formSchema: FormSchema[] = [
     component: 'IconPicker',
     ifShow: ({ values }) => !isButton(values.type),
     required: ({ values }) => {
-      return values.type === 'catalog';
+      return values.type === 0;
     },
     componentProps: {
       // disabled: true,
@@ -314,7 +315,7 @@ export const formSchema: FormSchema[] = [
     helpMessage: ['PascalCase naming'],
     ifShow: ({ values }) => isMenu(values.type),
     dynamicDisabled: ({ values }) => {
-      return values.type === 'page' && values.isExt === 1 ? true : false;
+      return values.type === 1 && values.isExt === 1 ? true : false;
     },
     rules: [
       {
@@ -345,7 +346,7 @@ export const formSchema: FormSchema[] = [
     componentProps: ({ formModel }) => {
       return {
         onchange: () => {
-          if (formModel.type === 'page' && formModel.component === 'LAYOUT') {
+          if (formModel.type === 1 && formModel.component === 'LAYOUT') {
             // hack
             createMessage.warning('LAYOUT is a reserved word for catalog and cannot be set here');
             formModel.component = '';
@@ -354,17 +355,17 @@ export const formSchema: FormSchema[] = [
       };
     },
   },
-  {
-    field: 'permission',
-    label: 'Permission',
-    labelWidth: 150,
-    helpMessage: ['Capitalize'],
-    component: 'Input',
-    ifShow: ({ values }) => !isDir(values.type),
-    componentProps: {
-      disabled: true,
-    },
-  },
+  // {
+  //   field: 'permission',
+  //   label: 'Permission',
+  //   labelWidth: 150,
+  //   helpMessage: ['Capitalize'],
+  //   component: 'Input',
+  //   ifShow: ({ values }) => !isDir(values.type),
+  //   componentProps: {
+  //     disabled: true,
+  //   },
+  // },
   {
     field: 'status',
     label: 'Status',
@@ -419,65 +420,65 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => !isButton(values.type),
   },
 
-  {
-    field: 'isCache',
-    label: 'Cache',
-    labelWidth: 150,
-    component: 'RadioButtonGroup',
-    defaultValue: 0,
-    componentProps: ({ formModel }) => {
-      return {
-        options: [
-          { label: 'No', value: 0 },
-          { label: 'Yes', value: 1 },
-        ],
-        onchange: () => {
-          if (formModel.isCache !== 1) {
-            formModel.cacheName = '';
-          }
-        },
-      };
-    },
-    ifShow: ({ values }) => isMenu(values.type),
-  },
-  {
-    field: 'cacheName',
-    label: 'Cache Name',
-    component: 'Input',
-    helpMessage: ['PascalCase naming'],
-    labelWidth: 150,
-    ifShow: ({ values }) => values.isCache === 1,
-    required: ({ values }) => {
-      return values.isCache === 1;
-    },
-    rules: [
-      {
-        // @ts-ignore
-        validator: async (rule, value) => {
-          const pattern = /^[A-Z][a-zA-Z]*$/;
-          console.log(pattern.test(value));
-          if (value && !pattern.test(value)) {
-            return Promise.reject('PascalCase naming');
-          }
-          return Promise.resolve();
-        },
-        trigger: 'change',
-      },
-    ],
-  },
-  {
-    field: 'isShow',
-    label: 'Show',
-    component: 'RadioButtonGroup',
-    defaultValue: 1,
-    componentProps: {
-      options: [
-        { label: 'No', value: 0 },
-        { label: 'Yes', value: 1 },
-      ],
-    },
-    ifShow: ({ values }) => isButton(values.type),
-  },
+  // {
+  //   field: 'isCache',
+  //   label: 'Cache',
+  //   labelWidth: 150,
+  //   component: 'RadioButtonGroup',
+  //   defaultValue: 0,
+  //   componentProps: ({ formModel }) => {
+  //     return {
+  //       options: [
+  //         { label: 'No', value: 0 },
+  //         { label: 'Yes', value: 1 },
+  //       ],
+  //       onchange: () => {
+  //         if (formModel.isCache !== 1) {
+  //           formModel.cacheName = '';
+  //         }
+  //       },
+  //     };
+  //   },
+  //   ifShow: ({ values }) => isMenu(values.type),
+  // },
+  // {
+  //   field: 'cacheName',
+  //   label: 'Cache Name',
+  //   component: 'Input',
+  //   helpMessage: ['PascalCase naming'],
+  //   labelWidth: 150,
+  //   ifShow: ({ values }) => values.isCache === 1,
+  //   required: ({ values }) => {
+  //     return values.isCache === 1;
+  //   },
+  //   rules: [
+  //     {
+  //       // @ts-ignore
+  //       validator: async (rule, value) => {
+  //         const pattern = /^[A-Z][a-zA-Z]*$/;
+  //         console.log(pattern.test(value));
+  //         if (value && !pattern.test(value)) {
+  //           return Promise.reject('PascalCase naming');
+  //         }
+  //         return Promise.resolve();
+  //       },
+  //       trigger: 'change',
+  //     },
+  //   ],
+  // },
+  // {
+  //   field: 'isShow',
+  //   label: 'Show',
+  //   component: 'RadioButtonGroup',
+  //   defaultValue: 1,
+  //   componentProps: {
+  //     options: [
+  //       { label: 'No', value: 0 },
+  //       { label: 'Yes', value: 1 },
+  //     ],
+  //   },
+  //   ifShow: ({ values }) => isButton(values.type),
+  // },
 ];
 
 export const vxeTableColumns: VxeGridPropTypes.Columns = [
