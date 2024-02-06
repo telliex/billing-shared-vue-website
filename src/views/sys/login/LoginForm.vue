@@ -150,6 +150,8 @@
         mode: 'none', //不要默認的錯誤提示
       });
 
+      console.log('userInfo=========:', userInfo);
+
       if (userInfo) {
         const localeStore = useLocaleStoreWithOut();
         if (rememberMe.value) {

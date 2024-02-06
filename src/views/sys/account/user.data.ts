@@ -185,12 +185,31 @@ export const accountFormSchema: FormSchema[] = [
   //   },
   // },
   {
+    field: 'resetPwd',
+    component: 'Switch',
+    label: 'Reset Password',
+    colProps: {
+      span: 8,
+    },
+    ifShow: ({ values }) => {
+      return values.id ? true : false;
+    },
+  },
+  {
     field: 'pwd',
     label: 'Password',
     component: 'InputPassword',
-    required: true,
-    // ifShow: false,
+    helpMessage: [
+      'English letters in uppercase and lowercase + numbers + special symbols, at least eight characters. Please note that there is a difference in uppercase and lowercase letters.',
+    ],
+    required: ({ values }) => {
+      return values.id && values.resetPwd === true ? true : false;
+    },
+    ifShow: ({ values }) => {
+      return values.resetPwd === true || !values.id ? true : false;
+    },
   },
+
   {
     field: 'rolesArray',
     label: 'Role',
@@ -284,6 +303,14 @@ export const accountFormSchema: FormSchema[] = [
             console.log('Value cannot be empty');
             return Promise.reject('Value cannot be empty');
           }
+
+          const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          const checkMail = regex.test(value);
+
+          if (!checkMail) {
+            return Promise.reject('Please enter a valid email');
+          }
+
           return Promise.resolve();
           // return new Promise((resolve, reject) => {
           //   isUserExist(value)

@@ -7,17 +7,17 @@ export interface NavListItem extends ItemAdditionInfo {
   id: string;
   type: string;
   menuName: string;
-  alias: string;
+  // alias: string;
   description: string;
-  permission: string;
+  // permission: string;
   component: string;
   componentName: string;
   routePath: string;
   sortNo: number;
   icon: string;
   parentMenu: string;
-  iExt: number;
-  isShow: number;
+  isExt: number;
+  // isShow: number;
   status: number;
 }
 

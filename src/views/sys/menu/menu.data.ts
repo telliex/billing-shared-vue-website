@@ -133,7 +133,7 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-const isDir = (type: number) => type === 0;
+// const isDir = (type: number) => type === 0;
 const isMenu = (type: number) => type === 1;
 const isButton = (type: number) => type === 2;
 
@@ -204,7 +204,9 @@ export const formSchema: FormSchema[] = [
     defaultValue: '',
     component: 'TreeSelect',
     componentProps: {
-      // resultField: 'items',
+      showSearch: true,
+
+      placeholder: 'Please select',
       fieldNames: {
         label: 'menuName',
         key: 'id',
@@ -546,13 +548,13 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     align: 'left',
     slots: { default: 'icon' },
   },
-  {
-    title: 'Permission',
-    width: 200,
-    field: 'permission',
-    showOverflow: 'tooltip',
-    align: 'left',
-  },
+  // {
+  //   title: 'Permission',
+  //   width: 200,
+  //   field: 'permission',
+  //   showOverflow: 'tooltip',
+  //   align: 'left',
+  // },
   {
     title: 'Component Name',
     width: 200,
@@ -567,13 +569,13 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     showOverflow: 'tooltip',
     align: 'left',
   },
-  // {
-  //   title: 'Order',
-  //   width: 80,
-  //   field: 'orderNo',
-  //   showOverflow: 'tooltip',
-  //   align: 'center',
-  // },
+  {
+    title: 'Order',
+    width: 80,
+    field: 'sortNo',
+    showOverflow: 'tooltip',
+    align: 'center',
+  },
   {
     title: 'Creator',
     width: 160,

@@ -164,12 +164,7 @@
         total: 'total',
       },
       ajax: {
-        query: async ({ page, sorts, filters, form }) => {
-          console.log('page:', form);
-          console.log('sorts:', sorts);
-          console.log('filters:', filters);
-          console.log('form:', form);
-
+        query: async ({ page, sorts, form }) => {
           const queryParams: any = Object.assign({}, form);
           // deal with sort
           const firstSort = sorts[0];
@@ -194,7 +189,6 @@
           tablePage.total = result[0].total;
           tablePage.currentPage = page.currentPage;
           tablePage.pageSize = page.pageSize;
-          console.log('tablePage.total:', tablePage.total);
           return {
             trace_id: Guid.newGuid().toString(),
             total_pages: 1,
@@ -243,12 +237,6 @@
           confirm: handleDelete.bind(null, record),
         },
       },
-      // {
-      //   label: '',
-      //   tooltip: 'password reset',
-      //   icon: 'ant-design:lock-outlined',
-      //   onClick: handleResetPassword.bind(null, record),
-      // },
     ];
     return actions;
   };
@@ -273,10 +261,6 @@
       // reload();
       triggerProxy('query');
     });
-  }
-
-  function handleResetPassword(record: Recordable) {
-    console.log('handleResetPassword:', record);
   }
 
   // Create item

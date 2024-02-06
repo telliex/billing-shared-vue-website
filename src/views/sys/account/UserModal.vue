@@ -108,30 +108,46 @@
           }
 
           let isUser = await isUserExist({
-            displayName: values.displayName,
             email: values.email,
           });
 
-          if (!isUser) {
-            createMessage.error('User name already exists');
-            return;
+          console.log('isUser:', isUser[0]);
+
+          if (isUser[0]) {
+            if (!unref(isUpdate)) {
+              createMessage.error('User name already exists');
+              return;
+            } else {
+              if (isUser[0].id !== rowId.value) {
+                createMessage.error('User name already exists');
+                return;
+              }
+            }
           }
 
-          values.password = await stringToHSA265(values.password);
+          if (unref(isUpdate) && !values.resetPwd) {
+            values.password = null;
+          } else {
+            if (!validatePassword(values.password)) {
+              console.log('The new password is not in the correct format');
+              createMessage.error('The new password is not in the correct format');
+              return;
+            }
+            values.password = await stringToHSA265(values.password);
+          }
+
           values.roles = [];
           values.rolesArray.forEach((item: any) => {
             item.id = item.value;
             item.roleName = item.label;
-            values.roles.push({
-              roleName: item.roleName,
-              value: item.value,
-            });
+            values.roles.push(item.value);
           });
           // TODO: replace with deptId
           let template = {
             displayName: '',
             avatar: null,
             password: null,
+            resetPwd: false,
             remark: '',
             status: 1,
             sex: null,
@@ -144,7 +160,7 @@
             roles: [],
           };
 
-          if (isUser) {
+          if (isUser[0]) {
             if (!unref(isUpdate)) {
               let result = Object.assign(template, values);
               console.log('resultnew:', result);
@@ -164,6 +180,18 @@
       }
       function openFnWrapLoading() {
         openWrapLoading();
+      }
+      function validatePassword(password) {
+        // 正則表達式解釋：
+        // ^ 代表開始
+        // (?=.*[a-z]) 代表至少有一個小寫字母
+        // (?=.*[A-Z]) 代表至少有一個大寫字母
+        // (?=.*\d) 代表至少有一個數字
+        // (?=.*[@$!%*?&]) 代表至少有一個特殊字符，可以根據需要添加或刪除特殊字符
+        // .{8,} 代表至少8個任意字符
+        // $ 代表結束
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+        return regex.test(password);
       }
       return {
         registerModal,

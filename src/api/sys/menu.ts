@@ -75,24 +75,86 @@ export const getDynamicNavList = () =>
           const resObj = JSON.parse(data);
           console.log('======dynamic menu resObj=======', resObj);
 
-          // if (isArray(resObj)) {
-          //   processItems(resObj);
-          //   return correctReturn(resObj);
-          // } else {
-          //   return errorReturn(resObj);
-          // }
+          const modifiedObj: any[] = [];
+          resObj.results[0].items.forEach((item) => {
+            modifiedObj.push({
+              id: item.id,
+              type: item.type === 0 ? 'catalog' : item.type === 1 ? 'page' : 'button',
+              path: item.routePath,
+              title: item.menuName,
+              name: item.menuName,
+              status: item.status,
+              isExit: item.isExt,
+              redirect: null,
+              parentMenu: item.parentMenu,
+              caseSensitive: true,
+              component: item.component,
+              componentName: item.componentName,
+              meta: {
+                hideMenu: false,
+                title: item.menuName,
+                hideChildrenInMenu: false,
+                icon: item.icon,
+                ignoreKeepAlive: true,
+                orderNo: item.sortNo,
+              },
+              children: [],
+            });
+          });
+          console.log('88888888:', modifiedObj);
+          const res = buildNestedStructure(modifiedObj);
+          console.log('menu tree data from API:', res);
+          resObj.results[0].items = [
+            ...res,
+            {
+              id: '323ef5b1-e92e-467d-bef2-fc8e86eb3a04',
+              type: 'catalog',
+              path: '/home',
+              name: 'Home',
+              redirect: '/home/index',
+              isExt: 0,
+              parentMenu: '',
+              caseSensitive: true,
+              component: 'LAYOUT',
+              componentName: 'Home',
+              meta: {
+                hideMenu: true,
+                title: 'Home',
+                hideChildrenInMenu: true,
+                icon: 'bx:bx-home',
+                orderNo: 100,
+              },
+              children: [
+                {
+                  id: 'b4c5d583-310d-4c27-b0b2-62303eab613d',
+                  type: 'page',
+                  path: 'index',
+                  name: 'HomePage',
+                  component: '/frontpage/index',
+                  parentMenu: '323ef5b1-e92e-467d-bef2-fc8e86eb3a04',
+                  meta: {
+                    currentActiveMenu: '/home',
+                    hideMenu: true,
+                    hideBreadcrumb: true,
+                    title: 'Home',
+                    icon: 'ri:home-4-line',
+                  },
+                },
+              ],
+            },
+          ];
           return resObj;
         },
       ],
     },
-    // {
-    //   apiUrl: '/sys-api',
-    //   retryRequest: {
-    //     isOpenRetry: false,
-    //     count: 1,
-    //     waitTime: 3000,
-    //   },
-    // },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
   );
 
 export const getNavWholeTreeNode = (params: FilterItems) =>

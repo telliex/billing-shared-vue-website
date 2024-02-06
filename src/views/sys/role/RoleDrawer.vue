@@ -84,7 +84,6 @@
         resetFields();
         if (unref(isUpdate)) {
           openFnWrapLoading();
-          console.log('record.value8888888888，', record.value);
           if (record.value) {
             if (record.value.menus.length === 0) {
               record.value.menuPermissionArray = [];
@@ -105,7 +104,6 @@
       async function handleSubmit() {
         try {
           const values = await validate();
-          console.log('values5555555', values);
 
           let roleList = await getRoleListByPage({
             roleName: null,
@@ -122,18 +120,14 @@
             status: 1,
           });
 
-          console.log('menuList', menuList[0].items);
           menuList[0].items.forEach((item) => {
             menuPermissionArray.forEach((item2) => {
               if (item.id === item2) {
-                tempArray.push({
-                  menuName: item.menuName,
-                  value: item.id,
-                });
+                tempArray.push(item.id);
               }
             });
           });
-          console.log('tempArray111111:', tempArray);
+
           values.menus = tempArray;
 
           let template = {
@@ -151,8 +145,7 @@
               createMessage.error('The role name already exists');
               return false;
             }
-            let result = Object.assign(template, values);
-            console.log('create result========:', result);
+            // let result = Object.assign(template, values);
             await createRoleItem({
               roleName: values.roleName,
               remark: values.remark,

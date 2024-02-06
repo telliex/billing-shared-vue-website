@@ -45,8 +45,6 @@
   import { useDrawer } from '/@/components/Drawer';
   import { Guid } from 'js-guid/dist/guid';
 
-  import { BasicResult } from '/@/api/model/baseModel';
-  import { RoleListItem } from '/@/api/model/sysModel';
   const tablePage = reactive({
     total: 0,
     currentPage: 1,
@@ -165,12 +163,7 @@
         total: 'total',
       },
       ajax: {
-        query: async ({ page, sorts, filters, form }) => {
-          console.log('page:', form);
-          console.log('sorts:', sorts);
-          console.log('filters:', filters);
-          console.log('form:', form);
-
+        query: async ({ page, sorts, form }) => {
           const queryParams: any = Object.assign({}, form);
           // deal with sort
           const firstSort = sorts[0];
@@ -186,11 +179,9 @@
             status: form.status,
             roleName: form.displayName,
           });
-          console.log('role list results =========:', result);
           tablePage.total = result[0].total;
           tablePage.currentPage = page.currentPage;
           tablePage.pageSize = page.pageSize;
-          console.log('tablePage.total:', tablePage.total);
           return {
             trace_id: Guid.newGuid().toString(),
             total_pages: 1,

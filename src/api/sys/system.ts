@@ -47,6 +47,7 @@ enum Api {
   DeptList = '/system/department',
   UserList = '/system/user',
   IsUserExist = '/system/user/exist',
+  IsUserEmailExist = '/system/user/isUserEmailExist',
   ChangePassword = '/system/user/changePassword',
 }
 
@@ -611,6 +612,32 @@ export const removeDeptItem = (body: any) =>
  * @description: User
  */
 // check user if exist
+export const isUserEmailExist = (params: any) => {
+  return defHttp.get<UserItem>(
+    {
+      url: `/api${API_CONFIG.VERSION}${Api.IsUserEmailExist}`,
+      data: {},
+      params: params,
+      headers: apiTransDataForHeader(),
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          console.log('========isUserExist=========:', resObj);
+          return resObj;
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
+  );
+};
+
 export const isUserExist = (params: any) => {
   return defHttp.get<UserItem>(
     {

@@ -88,17 +88,17 @@ export default [
       return resultSuccess(createFakeRoleList());
     },
   },
-  {
-    url: '/basic-api/api/v1.0/system/role',
-    method: 'get',
-    response: ({ body }) => {
-      const { username, password } = body;
-      console.log('username:', username);
-      console.log('password:', password);
+  // {
+  //   url: '/basic-api/api/v1.0/system/role',
+  //   method: 'get',
+  //   response: ({ body }) => {
+  //     const { username, password } = body;
+  //     console.log('username:', username);
+  //     console.log('password:', password);
 
-      return resultSuccess(createFakeRoleList());
-    },
-  },
+  //     return resultSuccess(createFakeRoleList());
+  //   },
+  // },
   {
     url: '/basic-api/api/v1.0/system/department',
     method: 'get',

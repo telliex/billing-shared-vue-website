@@ -52,14 +52,6 @@
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
-        console.log('data========:', data);
-
-        let treeData = await getNavTreeNodeOnlyCatalog({
-          status: 1,
-        });
-
-        console.log('treeData========:', treeData);
-        console.log('data.record========:', data.record);
         // put here to avoid the display required warning
         resetFields();
         if (unref(isUpdate)) {
@@ -74,12 +66,20 @@
         //   treeData = treeData.filter((item) => item.title !== data.record.alias);
         // }
 
-        // updateSchema({
-        //   field: 'parentMenu',
-        //   componentProps: () => {
-        //     return {};
-        //   },
-        // });
+        updateSchema({
+          field: 'parentMenu',
+          component: 'ApiTreeSelect',
+          componentProps: {
+            api: async () => {
+              const results = await getNavTreeNodeOnlyCatalog({
+                status: 1,
+              });
+              return new Promise((resolve) => {
+                resolve(results[0].items);
+              });
+            },
+          },
+        });
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
@@ -119,28 +119,18 @@
             }
           }
           let template = {
-            id: '',
-            type: '',
+            type: 0,
             menuName: '',
-            alias: '',
             description: '',
-            permission: '',
             component: '',
             componentName: '',
             parentMenu: '',
             routePath: '',
-            orderNo: 0,
+            sortNo: 0,
             icon: '',
             parentId: '',
-            iExt: 0,
-            isCache: 0,
-            cacheName: '',
-            isShow: 0,
+            isExt: 0,
             status: 1,
-            addMaster: 0,
-            addTime: '',
-            changeMaster: 0,
-            changeTime: '',
           };
 
           if (!unref(isUpdate)) {
