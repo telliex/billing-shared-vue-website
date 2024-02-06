@@ -35,6 +35,7 @@ ARG A_S3_JSON
 ARG A_API_POWERBI_LAMBDA
 ARG A_S3_REPORT
 ARG A_S3_ACCOUNT_REPORT
+ARG A_S3_ECV_REPORT
 
 ENV ENV $A_ENV
 ENV REGION us-west-2
@@ -52,6 +53,7 @@ ENV API_POWERBI_LAMBDA $A_API_POWERBI_LAMBDA
 ENV S3_REPORT billing-dev-sync-data-test
 ENV S3_ACCOUNT_REPORT billing-dev-accounting-report
 ENV S3_INVOICE_REPORT billing-dev-bill-invoice
+ENV S3_ECV_REPORT billing-dev-sync-data
 
 # ENV ENV dev
 # ENV REGION us-west-2
