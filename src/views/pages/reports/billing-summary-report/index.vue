@@ -55,7 +55,7 @@
   });
   let tableName = ref(t('report.summeryReport.tableAreaTitle')); //[for need to modify area]
   let reportType = ref('billing_summary_hk'); // [M] report type & S3 prefix folder name,
-  let s3Bucket = import.meta.env.VITE_GLOB_S3_REPORT; // [M] S3 bucket name
+  let s3Bucket = import.meta.env.VITE_GLOB_S3_ECV_REPORT; // [M] S3 bucket name
 
   let formData = reactive<SearchItems>({
     ReportType: reportType.value,
