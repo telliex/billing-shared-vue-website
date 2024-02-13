@@ -82,6 +82,7 @@ export function apiTransDataForHeader() {
     'User-Id': who,
     'Time-Zone': timeZon,
     Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
+    'X-Access-Token': userStore.getToken ? `${userStore.getToken}` : '',
     'Trace-Id': Guid.newGuid().toString(),
     'X-Api-Key': apiKey,
   };

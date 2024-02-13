@@ -291,8 +291,12 @@
     // deal with
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
-      logoutApi();
-      JWTlogoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
       return false;
     }
 
@@ -300,8 +304,12 @@
     if (checkTimeout) {
       await writeFinalActiveTime();
     } else {
-      logoutApi();
-      JWTlogoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
       return false;
     }
     const result = props.childFormValue(values);
@@ -338,8 +346,13 @@
     // deal with
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
-      logoutApi();
-      JWTlogoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
+
       return false;
     }
 
@@ -347,8 +360,13 @@
     if (checkTimeout) {
       await writeFinalActiveTime();
     } else {
-      logoutApi();
-      JWTlogoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
+
       return false;
     }
 

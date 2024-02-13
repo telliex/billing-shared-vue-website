@@ -15,7 +15,7 @@ import {
 import { getAuthCache, isSHA256Format, setAuthCache, stringToHSA265 } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 // import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
-import { loginApi, logoutApi, JWTLoginApi, JWTlogoutApi } from '/@/api/sys/user';
+import { loginApi, logoutApi, JWTLoginApi, JWTlogoutApi, JWTRefreshApi } from '/@/api/sys/user';
 // import { getBillUserInfo } from '/@/api/sys/system';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
@@ -146,12 +146,13 @@ export const useUserStore = defineStore('user', {
         }
 
         const token = await JWTLoginApi({ email: loginParams.username });
+        console.log('99999999999666666:', token);
         ls.set('USER_TOKEN_OBJECT_KEY__', token[0]);
         console.log('token obj =====:', token[0]);
         const { apiToken } = token[0];
         // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(apiToken);
-        console.log('888888:', loginParams);
+
         const data = await loginApi(loginParams, mode);
         console.log('login data:', data);
 
@@ -246,6 +247,17 @@ export const useUserStore = defineStore('user', {
       // ls.set('TEMP_USER_BILLING_INFO_KEY__', null);
 
       goLogin && router.push(PageEnum.BASE_LOGIN);
+    },
+    /**
+     * @description: refreshToken
+     */
+    async refreshToken() {
+      const token = await JWTRefreshApi();
+      ls.set('USER_TOKEN_OBJECT_KEY__', token[0]);
+      const { apiToken } = token[0];
+      // 2、設置 token，並存儲本地緩存。 save token
+      this.setToken(apiToken);
+      return token ? true : false;
     },
 
     /**

@@ -46,7 +46,7 @@ export const JWTLoginApi = (body: JWTLoginApiObject, mode: ErrorMessageMode = 'm
           const resObj = JSON.parse(data);
           resObj.results[0].apiToken = headers['x-access-token'];
           resObj.results[0].apiTokenRefresh = headers['x-refresh-token'];
-
+          resObj.results[0].time = new Date().getTime();
           return resObj;
         },
       ],
@@ -77,10 +77,12 @@ export const JWTRefreshApi = () => {
         'X-Refresh-Token': ls.get('USER_TOKEN_OBJECT_KEY__').apiTokenRefresh,
       },
       transformResponse: [
-        function (data) {
+        function (data, headers = {}) {
           const resObj = JSON.parse(data);
           console.log('jwt refresh:', resObj);
-
+          resObj.results[0].apiToken = headers['x-access-token'];
+          resObj.results[0].apiTokenRefresh = ls.get('USER_TOKEN_OBJECT_KEY__').apiTokenRefresh;
+          resObj.results[0].time = new Date().getTime();
           return resObj;
         },
       ],
@@ -136,6 +138,15 @@ export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal')
       url: `/api${API_CONFIG.VERSION}${Api.Login}`,
       data: body,
       headers: apiTransDataForHeader(),
+      // headers: {
+      //   'Content-Type': 'application/json',
+      //   'User-Id': '5519695a-5397-475a-9925-da817107bcfd',
+      //   'Time-Zone': 'UTC+0',
+      //   Authorization:
+      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlY3YtYmlsbGluZyIsInN1YiI6InRlbGxpZXguY2hpdUBlY2xvdWR2YWxsZXkuY29tIiwiYXVkIjoiRUNWIEJpbGxpbmcgTW9kdWxlIiwiZXhwIjoxNzA3MjM2NTE0LCJpYXQiOjE3MDcyMzQ3MTQsImp0aSI6Ijg3NmUyZWZhLTgzODItNDczYi05ZGNiLTI1MTI4MjI2NzRjOCIsIm91dCI6IjMyZjk5OWEyYTM2ZTRmNTU5Y2YxYTgyZjMyN2RmZjc5IiwibmJmIjoxNzA3MjM0NzE0fQ.-5KLaDu1og-qsyncaX7LVzEb-gZdgHBGp_U-Dd7oS5I',
+      //   'Trace-Id': '98c701ce-584d-4c20-9a61-a24a270c5f6c',
+      //   'X-Api-Key': '484CD16940B64F878DC9CCE2E79EA08E',
+      // },
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);

@@ -129,6 +129,7 @@ export type DeptListGetResultModel = DeptItem[];
 export interface UserItem extends ItemAdditionInfo {
   id: string;
   displayName: string;
+  password: string;
   avatar: string;
   apiToken: string;
   sex: string;

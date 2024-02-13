@@ -38,7 +38,6 @@ export async function stringToHSA265(password: string) {
   const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
 
   // 现在 `hashedPassword` 变量中包含了密码的 SHA-256 哈希值
-  console.log('Hashed Password:', hashedPassword);
   return hashedPassword;
   // return passwordHashHex;
 }

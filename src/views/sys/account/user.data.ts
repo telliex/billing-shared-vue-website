@@ -65,6 +65,11 @@ export const columns: BasicColumn[] = [
     dataIndex: 'remark',
   },
   {
+    title: 'Password',
+    dataIndex: 'password',
+    // ifShow: false,
+  },
+  {
     title: 'Creator',
     dataIndex: 'addMasterName',
     width: 160,
@@ -459,6 +464,7 @@ export const vxeTableColumns: VxeGridPropTypes.Columns = [
     showOverflow: 'tooltip',
     align: 'center',
   },
+
   {
     title: 'Creator',
     width: 160,

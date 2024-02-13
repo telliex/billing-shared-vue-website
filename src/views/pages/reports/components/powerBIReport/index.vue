@@ -176,8 +176,13 @@
     // deal with
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
-      logoutApi();
-      JWTlogoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
+
       return;
     }
 
@@ -185,8 +190,13 @@
     if (checkTimeout) {
       await writeFinalActiveTime();
     } else {
-      logoutApi();
-      JWTlogoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
+
       return;
     }
 

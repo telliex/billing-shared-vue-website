@@ -78,7 +78,7 @@
         if (unref(isUpdate)) {
           openFnWrapLoading();
           rowId.value = data.record.id;
-          data.record['password'] = '';
+          // data.record['password'] = '';
           await setFieldsValue({
             ...data.record,
           });
@@ -101,7 +101,6 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          console.log('values:', values);
           if (!values) {
             createMessage.error('Required fields are missing！');
             return;
@@ -110,8 +109,6 @@
           let isUser = await isUserExist({
             email: values.email,
           });
-
-          console.log('isUser:', isUser[0]);
 
           if (isUser[0]) {
             if (!unref(isUpdate)) {
@@ -126,14 +123,20 @@
           }
 
           if (unref(isUpdate) && !values.resetPwd) {
-            values.password = null;
+            values.pwd = null;
           } else {
-            if (!validatePassword(values.password)) {
+            let encryptPwd = await stringToHSA265(values.pwd);
+
+            if (record.value && encryptPwd === record.value.password) {
+              createMessage.error('The new password is not the same as original password');
+              return;
+            }
+            if (!validatePassword(values.pwd)) {
               console.log('The new password is not in the correct format');
               createMessage.error('The new password is not in the correct format');
               return;
             }
-            values.password = await stringToHSA265(values.password);
+            values.password = encryptPwd;
           }
 
           values.roles = [];
