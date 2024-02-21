@@ -7,7 +7,7 @@ import { createLocalStorage } from '/@/utils/cache';
 
 const ls = createLocalStorage();
 
-const IDLE_TIMEOUT = 0.1 * 60 * 60 * 1000; // 3小时转换为毫秒
+const IDLE_TIMEOUT = 3 * 60 * 60 * 1000; // 3小时转换为毫秒
 const JWT_TIMEOUT = 24 * 60 * 60 * 1000; // 24小时转换为毫秒
 const JWT_REFRESH_TIMEOUT = 30 * 60 * 1000; // 30分钟转换为毫秒
 let getJWTStatus = false;

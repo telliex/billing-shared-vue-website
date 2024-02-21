@@ -146,9 +146,9 @@ export const useUserStore = defineStore('user', {
         }
 
         const token = await JWTLoginApi({ email: loginParams.username });
-        console.log('99999999999666666:', token);
+
         ls.set('USER_TOKEN_OBJECT_KEY__', token[0]);
-        console.log('token obj =====:', token[0]);
+        console.log('===== token from JWT =====:', token[0]);
         const { apiToken } = token[0];
         // 2、設置 token，並存儲本地緩存。 save token
         this.setToken(apiToken);

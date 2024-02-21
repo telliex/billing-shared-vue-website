@@ -4,9 +4,6 @@ import dayjs from 'dayjs';
 import moment from 'moment';
 import projectSetting from '/@/settings/projectSetting';
 
-import { createLocalStorage } from '/@/utils/cache';
-const ls = createLocalStorage();
-
 export function buildNestedStructure(data: any[]) {
   const map: any = {}; // 用來快速查找 id 對應的物件
   const result: any[] = []; // 最終的結果
@@ -81,8 +78,8 @@ export function apiTransDataForHeader() {
     'Content-Type': 'application/json',
     'User-Id': who,
     'Time-Zone': timeZon,
-    Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
-    'X-Access-Token': userStore.getToken ? `${userStore.getToken}` : '',
+    Authorization: userStore.getToken ? `${userStore.getToken}` : '',
+    // 'X-Access-Token': userStore.getToken ? `Bearer ${userStore.getToken}` : '',
     'Trace-Id': Guid.newGuid().toString(),
     'X-Api-Key': apiKey,
   };
