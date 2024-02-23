@@ -255,6 +255,7 @@ export const formSchema: FormSchema[] = [
     label: 'Icon',
     labelWidth: 150,
     component: 'IconPicker',
+    defaultValue: null,
     ifShow: ({ values }) => !isButton(values.type),
     required: ({ values }) => {
       return values.type === 0;

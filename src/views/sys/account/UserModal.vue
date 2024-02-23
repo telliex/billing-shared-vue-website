@@ -109,14 +109,15 @@
           let isUser = await isUserExist({
             email: values.email,
           });
+          console.log('8888888:', isUser);
 
           if (isUser[0]) {
             if (!unref(isUpdate)) {
-              createMessage.error('User name already exists');
+              createMessage.error('The E-mail already exists');
               return;
             } else {
               if (isUser[0].id !== rowId.value) {
-                createMessage.error('User name already exists');
+                createMessage.error('The E-mail already exists');
                 return;
               }
             }
@@ -163,7 +164,7 @@
             roles: [],
           };
 
-          if (isUser[0]) {
+          if (!isUser[0] || isUser[0].id === rowId.value) {
             if (!unref(isUpdate)) {
               let result = Object.assign(template, values);
               console.log('resultnew:', result);

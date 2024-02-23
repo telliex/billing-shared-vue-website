@@ -33,7 +33,6 @@
     VxeBasicTable,
     VxeGridInstance,
     VxeGridListeners,
-    // VxePagerEvents,
     VxeTableEvents,
   } from '/@/components/VxeTable';
   import { PageWrapper } from '/@/components/Page';
@@ -66,12 +65,7 @@
       console.log('数据代理保存事件');
     },
   };
-  // const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
-  //   console.log('zzzzzz:', currentPage, pageSize);
-  //   tablePage.currentPage = currentPage;
-  //   tablePage.pageSize = pageSize;
-  //   findList();
-  // };
+
   const collaposeChange = (event) => {
     if (event.target.nodeName === 'svg') {
       collapseStatus.value = !collapseStatus.value;
@@ -81,14 +75,6 @@
       }
     }
   };
-
-  // const findList = () => {
-  //   gridOptions.loading = true;
-  //   setTimeout(() => {
-  //     gridOptions.loading = false;
-  //     tablePage.total = 10;
-  //   }, 300);
-  // };
 
   const gridOptions = reactive<BasicTableProps>({
     id: 'VxeTable',
@@ -171,13 +157,12 @@
             queryParams.sort = firstSort.field;
             queryParams.order = firstSort.order;
           }
-
           let result = await getRoleListByPage({
             currentPage: page.currentPage || 1,
             pageSize: page.pageSize || 10,
             sortBy: 'asc',
             status: form.status,
-            roleName: form.displayName,
+            roleName: form.roleName,
           });
           tablePage.total = result[0].total;
           tablePage.currentPage = page.currentPage;
@@ -269,11 +254,14 @@
     });
   }
 
-  function handleSuccess() {
+  function handleSuccess({ isUpdate }) {
     // triggerProxy('query');
-    setTimeout(() => {
-      window.location.reload();
-    }, 200);
+    triggerProxy('query');
+    // if (!isUpdate) {
+    //   setTimeout(() => {
+    //     window.location.reload();
+    //   }, 200);
+    // }
   }
 </script>
 <style lang="less" scoped></style>

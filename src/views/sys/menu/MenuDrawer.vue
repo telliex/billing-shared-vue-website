@@ -93,6 +93,10 @@
             values.parentMenu = '';
           }
 
+          if (!values.icon) {
+            values.icon = '';
+          }
+
           // avoid the path warning
           if (values.isExt === 0) {
             // non-external link

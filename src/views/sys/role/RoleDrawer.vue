@@ -165,7 +165,7 @@
             await updateRoleItem(result);
           }
           closeDrawer();
-          emit('success');
+          emit('success', { isUpdate: unref(isUpdate) });
         } finally {
           setDrawerProps({ confirmLoading: false });
         }

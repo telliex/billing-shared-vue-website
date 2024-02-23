@@ -270,16 +270,17 @@
     });
   }
 
-  function handleSuccess({ isUpdate }) {
-    if (isUpdate) {
-      // 演示不刷新表格直接更新內部數據。
-      // 注意：updateTableDataRecord要求表格的rowKey屬性為string並且存在於每一行的record的keys中
-      // const result = updateTableDataRecord(values.id, values);
-    }
+  function handleSuccess() {
+    // if (isUpdate) {
+    //   // 演示不刷新表格直接更新內部數據。
+    //   // 注意：updateTableDataRecord要求表格的rowKey屬性為string並且存在於每一行的record的keys中
+    //   // const result = updateTableDataRecord(values.id, values);
+    // } else {
+    //   setTimeout(() => {
+    //     window.location.reload();
+    //   }, 1000);
+    // }
     triggerProxy('query');
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
   }
 
   // function handleSelect(deptId = '') {
