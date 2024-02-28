@@ -21,9 +21,7 @@ import {
 } from './model/systemModel';
 
 import { API_CONFIG } from '/@/settings/apiSetting';
-import { apiTransDataForHeader, correctReturn, errorReturn } from '/@/utils/tools';
-import { isArray } from 'xe-utils';
-import { Guid } from 'js-guid';
+import { apiTransDataForHeader } from '/@/utils/tools';
 import { createLocalStorage } from '/@/utils/cache';
 const ls = createLocalStorage();
 
@@ -389,7 +387,6 @@ export const getRoleListByPage = (params: RolePageParams) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('888888888:', resObj);
           return resObj;
         },
       ],
