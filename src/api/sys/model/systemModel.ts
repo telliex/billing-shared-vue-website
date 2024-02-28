@@ -1,13 +1,6 @@
 import { BasicPageParams, BasicFetchResult } from '/@/api/model/baseModel';
 
-interface ItemAdditionInfo {
-  addMaster: number;
-  addMasterName: string;
-  addTime: string;
-  changeMaster: number;
-  changeMasterName: string;
-  changeTime: string;
-}
+import { ItemAdditionInfo } from '/@/api/sys/model/normalModel';
 
 export interface GetDictionaryModel {
   trace_id: string;
@@ -23,26 +16,26 @@ export interface RoleInfo {
   value: string;
 }
 
-export interface GetUserInfoModel {
-  roles: RoleInfo[];
-  // 用户id
-  userId: string | number;
-  // 用户名
-  username: string;
-  // 真實名字
-  realName: string;
-  // 頭像
-  avatar: string;
-  // 介紹
-  remark?: string;
-  // 系統
-  system?: string;
-  // 公司
-  company?: string;
-  password?: string;
-  token?: string;
-  homePath?: string;
-}
+// export interface GetUserInfoModel {
+//   roles: RoleInfo[];
+//   // 用户id
+//   userId: string | number;
+//   // 用户名
+//   username: string;
+//   // 真實名字
+//   realName: string;
+//   // 頭像
+//   avatar: string;
+//   // 介紹
+//   remark?: string;
+//   // 系統
+//   system?: string;
+//   // 公司
+//   company?: string;
+//   password?: string;
+//   token?: string;
+//   homePath?: string;
+// }
 
 export interface GetBillingUserInfoModel {
   roles: RoleInfo[];
@@ -96,24 +89,18 @@ export interface GetBillCodeValueBackModel {
 export interface RoleListItem extends ItemAdditionInfo {
   id: string;
   roleName: string;
-  roleValue: string;
   status: number;
-  orderNo: number;
+  sortNo: number;
   remark: string;
-  menuPermission: string;
-  menuPermissionArray: Array<string>;
-  // addMaster: number;
-  // addTime: string;
-  // changeMaster: number;
-  // changeTime: string;
+  menus: any[];
+  menuPermissionArray: string[];
 }
 
-export type RoleParams = {
+export type RolePageParams = BasicPageParams & {
   roleName?: string | null;
   status?: number | null;
+  sortBy?: string;
 };
-
-export type RolePageParams = BasicPageParams & RoleParams;
 
 export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
 
@@ -122,7 +109,9 @@ export type RoleListGetResultModel = RoleListItem[];
 // == Department ==
 export interface DeptItem extends ItemAdditionInfo {
   id: string;
-  orderNo: string;
+  parentDept: string;
+  deptName: string;
+  sortNo: string;
   remark: string;
   status: number;
 }
@@ -131,24 +120,35 @@ export type DeptPageParams = BasicPageParams & {
   deptName?: string | null;
   status?: number | null;
 };
-export type DeptListModel = BasicFetchResult<DeptItem>;
+
+export type DeptPageListGetResultModel = BasicFetchResult<DeptItem>;
+
+export type DeptListGetResultModel = DeptItem[];
 
 // == User ==
 export interface UserItem extends ItemAdditionInfo {
   id: string;
-  userName: string;
-  realName: string;
-  nickname: string;
+  displayName: string;
+  password: string;
+  avatar: string;
+  apiToken: string;
+  sex: string;
+  birthday: string;
+  tel: string;
+  address: string;
+  country: string;
   email: string;
   remark: string;
-  roles: string;
+  roles: any[];
   status: number;
 }
 
 export type UserPageParams = BasicPageParams & {
-  userName?: string;
-  status?: string;
-  dept?: string;
+  displayName: string;
+  status: number;
+  sortBy?: string;
 };
 
-export type UserListModel = BasicFetchResult<UserItem>;
+export type UserPageListGetResultModel = BasicFetchResult<UserItem>;
+
+export type UserListGetResultModel = UserItem[];

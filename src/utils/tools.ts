@@ -3,6 +3,7 @@ import { useUserStore } from '/@/store/modules/user';
 import dayjs from 'dayjs';
 import moment from 'moment';
 import projectSetting from '/@/settings/projectSetting';
+
 export function buildNestedStructure(data: any[]) {
   const map: any = {}; // 用來快速查找 id 對應的物件
   const result: any[] = []; // 最終的結果
@@ -59,7 +60,9 @@ export function buildMenuNestedStructure(data: any[]) {
 
 export function apiTransDataForHeader() {
   const userStore = useUserStore();
-  const who = userStore.getUserInfo?.userId;
+  const who = userStore.getUserInfo?.id || '';
+  // get x-api-key
+  const apiKey = import.meta.env.VITE_GLOB_API_KEY;
 
   const timeTemp = dayjs().utcOffset();
   let timeZon = '';
@@ -72,13 +75,17 @@ export function apiTransDataForHeader() {
   }
 
   return {
+    'Content-Type': 'application/json',
     'User-Id': who,
     'Time-Zone': timeZon,
-    Authorization: userStore.getToken ? `Bearer ${userStore.getToken}` : '',
+    Authorization: userStore.getToken ? `${userStore.getToken}` : '',
+    'X-Access-Token': userStore.getToken ? `Bearer ${userStore.getToken}` : '',
+    'Trace-Id': Guid.newGuid().toString(),
+    'X-Api-Key': apiKey,
   };
 }
 
-export function correntReturn(obj: any) {
+export function correctReturn(obj: any) {
   return {
     trace_id: Guid.newGuid().toString(),
     total_pages: 1,
@@ -121,4 +128,18 @@ export function checkLoginTimeout(user: any) {
   } else {
     return true;
   }
+}
+
+export function checkLogin3MonthsTimeout(givenTimeString: string) {
+  // 使用給定的時間字串創建 moment 對象
+  const givenTime = moment(givenTimeString);
+
+  // 獲取當前時間3個月前的日期
+  const threeMonthsAgo = moment().subtract(3, 'months');
+
+  // 判斷給定的時間是否超過3個月
+  const isOverThreeMonths = givenTime.isBefore(threeMonthsAgo);
+
+  console.log(isOverThreeMonths); // 如果給定的時間超過3個月，將輸出 true；否則輸出 false
+  return isOverThreeMonths;
 }

@@ -42,7 +42,7 @@
   import { dateUtil } from '/@/utils/dateUtil';
   import axios from 'axios';
   import { checkLoginTimeout } from '/@/utils/tools';
-  import { logoutApi } from '/@/api/sys/user';
+  import { logoutApi, JWTlogoutApi } from '/@/api/sys/user';
   import { useLoading } from '/@/components/Loading';
   const { t } = useI18n();
 
@@ -291,7 +291,12 @@
     // deal with
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
-      logoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
       return false;
     }
 
@@ -299,7 +304,12 @@
     if (checkTimeout) {
       await writeFinalActiveTime();
     } else {
-      logoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
       return false;
     }
     const result = props.childFormValue(values);
@@ -336,7 +346,13 @@
     // deal with
     let UserInfo = await getFinalActiveTime();
     if (!UserInfo || UserInfo.length === 0) {
-      logoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
+
       return false;
     }
 
@@ -344,7 +360,13 @@
     if (checkTimeout) {
       await writeFinalActiveTime();
     } else {
-      logoutApi();
+      try {
+        await logoutApi();
+        await JWTlogoutApi();
+      } catch {
+        console.log('註銷 Token 失敗');
+      }
+
       return false;
     }
 

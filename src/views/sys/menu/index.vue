@@ -42,6 +42,7 @@
   import MenuDrawer from './MenuDrawer.vue';
   import ButtonsDrawer from './ButtonsDrawer.vue';
   import { useDrawer } from '/@/components/Drawer';
+  import { Guid } from 'js-guid/dist/guid';
   // import { Guid } from 'js-guid/dist/guid';
   // const tablePage = reactive({
   //   total: 0,
@@ -164,10 +165,10 @@
       autoLoad: true,
       sort: false, // 启用排序代理，当点击排序时会自动触发 query 行为
       filter: false, // 启用筛选代理，当点击筛选时会自动触发 query 行为
-      props: {
-        result: 'results',
-        // total: 'total',
-      },
+      // props: {
+      //   result: 'results.items',
+      //   total: 'total',
+      // },
       ajax: {
         query: async ({ sorts, filters, form }) => {
           console.log('page:', form);
@@ -175,47 +176,19 @@
           console.log('filters:', filters);
           console.log('form:', form);
 
-          // const queryParams: any = Object.assign({}, form);
-          // deal with sort
-          // const firstSort = sorts[0];
-          // if (firstSort) {
-          //   queryParams.sort = firstSort.field;
-          //   queryParams.order = firstSort.order;
-          // }
-
           let result = await getNavList({
-            menuName: null,
-            alias: null,
-            status: form.status === undefined ? null : form.status,
+            status: form.status === undefined || form.status === null ? null : form.status,
           });
 
-          result.forEach((item) => {
+          result[0].items.forEach((item) => {
             if (item.parentMenu === '') {
               item.parentMenu = null;
             }
           });
 
-          console.log('9999aaaa:', result);
-          // let tempResult = result.slice(
-          //   (page.currentPage - 1) * page.pageSize,
-          //   page.currentPage * page.pageSize,
-          // );
-          // tablePage.total = result.length;
-          // tablePage.currentPage = page.currentPage;
-          // tablePage.pageSize = page.pageSize;
+          console.log('menu list data :', result);
 
-          return result;
-          // return {
-          //   trace_id: Guid.newGuid().toString(),
-          //   total_pages: 1,
-          //   current_page: 1,
-          //   results: result,
-          //   status: 1000,
-          //   msg: 'success',
-          //   requested_time: '',
-          //   responsed_time: '',
-          //   total: result.length,
-          // };
+          return result[0].items;
         },
         // queryAll: async ({ form }) => {
         //   return await getRoleListByPage({

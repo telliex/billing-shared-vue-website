@@ -13,7 +13,8 @@
     />
   </div>
 </template>
-<script lang="ts" setup name="Costbyproduct">  //[for need to modify area]
+<script lang="ts" setup name="Costbyproduct">
+  //[for need to modify area]
   import { ref, reactive } from 'vue';
   import BasicReport from '../components/basicReport/index.vue';
   import { getFormSchema } from './formData';
@@ -73,7 +74,7 @@
     let S3ReportClass = reportType.value;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
-    let fileMonth = dayjs(values.YearMonth).format('YYYYMM').toString();// [for need to modify area]
+    let fileMonth = dayjs(values.YearMonth).format('YYYYMM').toString(); // [for need to modify area]
     let S3FileName = `${S3ReportClass}_${fileMonth}.csv`; // [for need to modify area]
     objectKeyString.value = `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`;
     return objectKeyString.value;

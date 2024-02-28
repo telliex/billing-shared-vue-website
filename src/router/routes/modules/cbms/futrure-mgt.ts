@@ -79,7 +79,7 @@ const iframe: AppRouteModule[] = [
       {
         path: 'contract_list',
         name: 'listCustomer',
-        component: () => import('/@/views/pages/contract/ListContract.vue'),
+        component: () => import('/@/views/pages/contract/index.vue'),
         meta: {
           title: t('routes.demo.mgt.billContractList'),
           hideMenu: false,

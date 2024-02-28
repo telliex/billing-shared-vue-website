@@ -15,8 +15,8 @@ import {
 import { getAuthCache, isSHA256Format, setAuthCache, stringToHSA265 } from '/@/utils/auth';
 import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
 // import { logoutApi, getUserInfo, loginApi } from '/@/api/sys/user';
-import { loginApi, logoutApi } from '/@/api/sys/user';
-import { getBillUserInfo } from '/@/api/sys/system';
+import { loginApi, logoutApi, JWTLoginApi, JWTlogoutApi, JWTRefreshApi } from '/@/api/sys/user';
+// import { getBillUserInfo } from '/@/api/sys/system';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -26,7 +26,11 @@ import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 import { createLocalStorage } from '/@/utils/cache';
-import { Guid } from 'js-guid';
+import { useLoginState, LoginStateEnum } from '/@/views/sys/login/useLogin';
+import { checkLogin3MonthsTimeout } from '/@/utils/tools';
+
+const { setLoginState } = useLoginState();
+// import { Guid } from 'js-guid';
 
 const ls = createLocalStorage();
 interface UserState {
@@ -140,13 +144,32 @@ export const useUserStore = defineStore('user', {
         if (!isSHA256Format(loginParams.password)) {
           loginParams.password = await stringToHSA265(loginParams.password);
         }
-        const data = await loginApi(loginParams, mode);
-        const { token } = data;
-        ls.set('TEMP_USER_INFO_KEY__', data); // leave out call getUserInfo();
-        ls.set('TEMP_USER_ID_KEY__', data.userId);
+
+        const token = await JWTLoginApi({ email: loginParams.username });
+
+        ls.set('USER_TOKEN_OBJECT_KEY__', token[0]);
+        console.log('===== token from JWT =====:', token[0]);
+        const { apiToken } = token[0];
         // 2、設置 token，並存儲本地緩存。 save token
-        this.setToken(token);
-        return this.afterLoginAction(goHome);
+        this.setToken(apiToken);
+
+        const data = await loginApi(loginParams, mode);
+        console.log('login data:', data);
+
+        ls.set('TEMP_USER_ID_KEY__', data[0].items[0].id);
+
+        //let checkPasswordLimit =
+        if (
+          data[0].items[0].isInitPassowrd === true ||
+          checkLogin3MonthsTimeout(data[0].items[0].passwordTime)
+        ) {
+          setLoginState(LoginStateEnum.SET_PASSWORD);
+
+          return null;
+        } else {
+          ls.set('TEMP_USER_INFO_KEY__', data[0].items[0]); // leave out call getUserInfo();
+          return this.afterLoginAction(goHome);
+        }
       } catch (error) {
         return Promise.reject(error);
       }
@@ -156,7 +179,7 @@ export const useUserStore = defineStore('user', {
       if (!this.getToken) return null;
       // 3、獲取用户信息
       const userInfo = await this.getUserInfoAction();
-
+      console.log('get user info:', userInfo);
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
         console.log('sessionTimeout');
@@ -182,18 +205,18 @@ export const useUserStore = defineStore('user', {
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
 
-      const userBillingInfo = await getBillUserInfo({
-        trace_id: Guid.newGuid().toString(),
-        id: ls.get('TEMP_USER_ID_KEY__'),
-      });
-      console.log('Billing_user_info:', userBillingInfo);
-      ls.set('TEMP_USER_BILLING_INFO_KEY__', userBillingInfo);
+      // const userBillingInfo = await getBillUserInfo({
+      //   trace_id: Guid.newGuid().toString(),
+      //   id: ls.get('TEMP_USER_ID_KEY__'),
+      // });
+      // console.log('Billing_user_info:', userBillingInfo);
+      // ls.set('TEMP_USER_BILLING_INFO_KEY__', userBillingInfo);
 
       const userInfo = ls.get('TEMP_USER_INFO_KEY__');
 
       const { roles = [] } = userInfo;
       if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        const roleList = roles.map((item) => item.roleName);
         this.setRoleList(roleList);
       } else {
         userInfo.roles = [];
@@ -209,6 +232,7 @@ export const useUserStore = defineStore('user', {
       if (this.getToken) {
         try {
           await logoutApi();
+          await JWTlogoutApi();
         } catch {
           console.log('註銷 Token 失敗');
         }
@@ -220,10 +244,20 @@ export const useUserStore = defineStore('user', {
 
       ls.set('TEMP_USER_ID_KEY__', null);
       ls.set('TEMP_USER_INFO_KEY__', null);
-      ls.set('TEMP_USER_INFO_KEY__', null);
-      ls.set('TEMP_USER_BILLING_INFO_KEY__', null);
+      // ls.set('TEMP_USER_BILLING_INFO_KEY__', null);
 
       goLogin && router.push(PageEnum.BASE_LOGIN);
+    },
+    /**
+     * @description: refreshToken
+     */
+    async refreshToken() {
+      const token = await JWTRefreshApi();
+      ls.set('USER_TOKEN_OBJECT_KEY__', token[0]);
+      const { apiToken } = token[0];
+      // 2、設置 token，並存儲本地緩存。 save token
+      this.setToken(apiToken);
+      return token ? true : false;
     },
 
     /**

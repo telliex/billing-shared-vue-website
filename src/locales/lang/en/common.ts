@@ -11,6 +11,7 @@ export default {
   customText: 'Download',
   inputText: 'Please enter',
   chooseText: 'Please choose',
+  setPasswordText: 'Set Password',
 
   redo: 'Refresh',
   back: 'Back',

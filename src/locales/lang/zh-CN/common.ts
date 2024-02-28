@@ -11,6 +11,7 @@ export default {
   customText: '下载',
   inputText: '请输入',
   chooseText: '请选择',
+  setPasswordText: '设置密码',
 
   redo: '刷新',
   back: '返回',
