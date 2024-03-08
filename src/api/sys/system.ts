@@ -117,31 +117,23 @@ export const GetS3TargetUrl = (body: any) =>
     {
       url: `/aws${API_CONFIG.VERSION}${Api.GetS3TargetUrlValue}`,
       data: body,
+      headers: apiTransDataForHeader(),
+      // responseType: 'arraybuffer',
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
           if (resObj.status === 1000 || resObj.status === 1001) {
             return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
+              ...resObj,
               results: [resObj.results],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
+              msg: 'Success',
             };
           } else {
             return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
+              ...resObj,
               results: [],
-              status: 9999,
               msg: 'No data !!',
-              requested_time: '',
-              responsed_time: '',
             };
           }
         },
@@ -163,6 +155,7 @@ export const GetUserPermissionRoleList = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionRoleListValue}`,
       data: body,
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -207,6 +200,7 @@ export const GetUserPermissionGetRoleScope = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionGetRoleScopeValue}`,
       data: body,
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -251,8 +245,10 @@ export const GetUserPermission = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionValue}`,
       data: body,
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
+          console.log('ggggggggggg:', data);
           // Do whatever you want to transform the data
           if (data.length) {
             return {
@@ -758,8 +754,6 @@ export const createUserItem = (body: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('1111111:', resObj);
-
           return resObj;
         },
       ],

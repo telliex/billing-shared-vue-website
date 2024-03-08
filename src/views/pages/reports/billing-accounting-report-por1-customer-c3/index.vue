@@ -70,9 +70,12 @@
   }
   function handleChildFormValue(values: SearchItems) {
     let S3ReportClass = reportType.value;
-    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth).format('YYYYMM').toString()}_30_0_migration_por1.csv`; // [for need to modify area]
+    let S3FileName = `${S3ReportClass}_${dayjs(values.YearMonth)
+      .format('YYYYMM')
+      .toString()}_30_0_migration_por1.csv`; // [for need to modify area]
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
+    formData.YearMonth = `${S3Year}-${S3Month}`;
     objectKeyString.value = `ym=${S3Year}${S3Month}/leadger_country=${S3ReportClass}/report_type=0/${S3FileName}`;
     return objectKeyString.value;
   }

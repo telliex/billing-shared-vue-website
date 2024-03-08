@@ -160,6 +160,18 @@ export const accountFormSchema: FormSchema[] = [
     },
   },
   {
+    label: 'MGT Number',
+    field: 'mgtNumber',
+    component: 'Input',
+    required: true,
+    componentProps: ({ formModel }) => {
+      return {
+        disabled: formModel.id ? true : false,
+        placeholder: 'Please enter MGT number',
+      };
+    },
+  },
+  {
     label: 'Birthday',
     field: 'birthday',
     component: 'DatePicker',

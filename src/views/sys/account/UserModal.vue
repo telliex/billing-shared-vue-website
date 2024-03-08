@@ -109,7 +109,6 @@
           let isUser = await isUserExist({
             email: values.email,
           });
-          console.log('8888888:', isUser);
 
           if (isUser[0]) {
             if (!unref(isUpdate)) {
@@ -153,6 +152,7 @@
             password: null,
             resetPwd: false,
             remark: '',
+            mgtNumber: null,
             status: 1,
             sex: null,
             birthday: null,

@@ -156,7 +156,7 @@ export const useUserStore = defineStore('user', {
         const data = await loginApi(loginParams, mode);
         console.log('login data:', data);
 
-        ls.set('TEMP_USER_ID_KEY__', data[0].items[0].id);
+        ls.set('TEMP_USER_ID_KEY__', data[0].items[0].mgtNumber);
 
         //let checkPasswordLimit =
         if (

@@ -48,13 +48,12 @@
   const { createMessage } = useMessage();
   import { useLoading } from '/@/components/Loading';
   import axios from 'axios';
-  import {
-    getFinalActiveTime,
-    logoutApi,
-    writeFinalActiveTime,
-    JWTlogoutApi,
-  } from '/@/api/sys/user';
-  import { checkLoginTimeout } from '/@/utils/tools';
+  // import {
+  //   getFinalActiveTime,
+  //   logoutApi,
+  //   writeFinalActiveTime,
+  //   JWTlogoutApi,
+  // } from '/@/api/sys/user';
 
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
@@ -174,31 +173,31 @@
     }
 
     // deal with
-    let UserInfo = await getFinalActiveTime();
-    if (!UserInfo || UserInfo.length === 0) {
-      try {
-        await logoutApi();
-        await JWTlogoutApi();
-      } catch {
-        console.log('註銷 Token 失敗');
-      }
+    // let UserInfo = await getFinalActiveTime();
+    // if (!UserInfo || UserInfo.length === 0) {
+    //   try {
+    //     await logoutApi();
+    //     await JWTlogoutApi();
+    //   } catch {
+    //     console.log('註銷 Token 失敗');
+    //   }
 
-      return;
-    }
+    //   return;
+    // }
 
-    let checkTimeout = checkLoginTimeout(UserInfo[0]);
-    if (checkTimeout) {
-      await writeFinalActiveTime();
-    } else {
-      try {
-        await logoutApi();
-        await JWTlogoutApi();
-      } catch {
-        console.log('註銷 Token 失敗');
-      }
+    // let checkTimeout = checkLoginTimeout(UserInfo[0]);
+    // if (checkTimeout) {
+    //   await writeFinalActiveTime();
+    // } else {
+    //   try {
+    //     await logoutApi();
+    //     await JWTlogoutApi();
+    //   } catch {
+    //     console.log('註銷 Token 失敗');
+    //   }
 
-      return;
-    }
+    //   return;
+    // }
 
     // let filterValueResult = await GetPowerBIFilterValue({
     //   userId: currentUserId,
