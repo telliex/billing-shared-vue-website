@@ -81,7 +81,7 @@
   let targetColumn = ref(props.targetColumn);
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName.value}__container`;
-  let currentUserId = ls.get('TEMP_USER_ID_KEY__');
+  let currentUserId = ls.get('TEMP_MGT_ID_KEY__');
   // Flag which specifies whether to use phase embedding or not
   const phasedEmbeddingFlag = false;
 

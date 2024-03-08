@@ -45,7 +45,7 @@ export function useIdleLogout() {
   }
 
   async function checkJWTTime() {
-    if (ls.get('TEMP_USER_ID_KEY__')) {
+    if (ls.get('TEMP_MGT_ID_KEY__')) {
       const now = new Date().getTime();
       // const lastActivity = ls.get('USER_TOKEN_OBJECT_KEY__').exp;
       const lastJWTActivity = ls.get('USER_TOKEN_OBJECT_KEY__').time;
@@ -69,7 +69,7 @@ export function useIdleLogout() {
   }
 
   function resetIdleTimer() {
-    if (ls.get('TEMP_USER_ID_KEY__')) {
+    if (ls.get('TEMP_MGT_ID_KEY__')) {
       clearTimeout(timeoutId);
       updateUserLastActivity();
       timeoutId = setTimeout(logoutUser, IDLE_TIMEOUT);

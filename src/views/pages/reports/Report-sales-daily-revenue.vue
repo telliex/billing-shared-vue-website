@@ -72,7 +72,7 @@
   let currentPageTableNameKey = 'POWERBI_DAILYREVENUEREPORT_TABLENAME'; // need to change
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName}__container`;
-  let currentUserId = ls.get('TEMP_USER_ID_KEY__');
+  let currentUserId = ls.get('TEMP_MGT_ID_KEY__');
   // Flag which specifies whether to use phase embedding or not
   const phasedEmbeddingFlag = false;
 

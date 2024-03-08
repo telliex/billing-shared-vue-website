@@ -701,7 +701,7 @@ export const getUserList = (params: UserPageParams) => {
 
 export const changePassword = (body: any) => {
   const header = apiTransDataForHeader();
-  const userId = ls.get('TEMP_USER_ID_KEY__');
+  const userId = ls.get('TEMP_MGT_ID_KEY__');
 
   header['User-Id'] = userId; // 5519695a-5397-475a-9925-da817107bcfd
   return defHttp.patch<UserItem>(

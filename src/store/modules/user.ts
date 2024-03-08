@@ -156,7 +156,7 @@ export const useUserStore = defineStore('user', {
         const data = await loginApi(loginParams, mode);
         console.log('login data:', data);
 
-        ls.set('TEMP_USER_ID_KEY__', data[0].items[0].mgtNumber);
+        ls.set('TEMP_MGT_ID_KEY__', data[0].items[0].mgtNumber);
 
         //let checkPasswordLimit =
         if (
@@ -207,7 +207,7 @@ export const useUserStore = defineStore('user', {
 
       // const userBillingInfo = await getBillUserInfo({
       //   trace_id: Guid.newGuid().toString(),
-      //   id: ls.get('TEMP_USER_ID_KEY__'),
+      //   id: ls.get('TEMP_MGT_ID_KEY__'),
       // });
       // console.log('Billing_user_info:', userBillingInfo);
       // ls.set('TEMP_USER_BILLING_INFO_KEY__', userBillingInfo);
@@ -242,7 +242,7 @@ export const useUserStore = defineStore('user', {
       this.setSessionTimeout(false);
       this.setUserInfo(null);
 
-      ls.set('TEMP_USER_ID_KEY__', null);
+      ls.set('TEMP_MGT_ID_KEY__', null);
       ls.set('TEMP_USER_INFO_KEY__', null);
       // ls.set('TEMP_USER_BILLING_INFO_KEY__', null);
 
