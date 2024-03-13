@@ -408,7 +408,9 @@
           const downloadUrl = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = downloadUrl;
-          a.download = `${props.formData['ReportType']}-${props.formData['YearMonth']}.pdf`;
+          a.download = `${props.formData['ReportType']}-${
+            props.formData['YearMonth']
+          }.${props.objectKeyString.split('.').pop()}`;
           document.body.appendChild(a);
           a.click();
           URL.revokeObjectURL(downloadUrl); // 釋放 URL 對象
