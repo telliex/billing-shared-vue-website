@@ -67,7 +67,6 @@
     },
   };
   // const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
-  //   console.log('zzzzzz:', currentPage, pageSize);
   //   tablePage.currentPage = currentPage;
   //   tablePage.pageSize = pageSize;
   //   findList();

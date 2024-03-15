@@ -14,8 +14,6 @@ export const countryOptionsListApi = (params?: selectParams) => {
     transformResponse: [
       function (data) {
         const resObj = JSON.parse(data);
-
-        console.log('1111111resObj:', resObj);
         return resObj;
       },
     ],

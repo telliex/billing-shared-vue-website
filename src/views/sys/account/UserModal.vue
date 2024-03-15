@@ -138,13 +138,18 @@
             }
             values.password = encryptPwd;
           }
-
+          console.log('values=========:', values);
           values.roles = [];
-          values.rolesArray.forEach((item: any) => {
-            item.id = item.value;
-            item.roleName = item.label;
-            values.roles.push(item.value);
-          });
+          if (values.rolesArray) {
+            values.rolesArray.forEach((item: any) => {
+              item.id = item.value;
+              item.roleName = item.label;
+              values.roles.push(item.value);
+            });
+          } else {
+            values.rolesArray = [];
+          }
+
           // TODO: replace with deptId
           let template = {
             displayName: '',
@@ -167,8 +172,6 @@
           if (!isUser[0] || isUser[0].id === rowId.value) {
             if (!unref(isUpdate)) {
               let result = Object.assign(template, values);
-              console.log('resultnew:', result);
-
               await createUserItem(result);
             } else {
               console.log('resultold:', Object.assign(template, record.value, values));

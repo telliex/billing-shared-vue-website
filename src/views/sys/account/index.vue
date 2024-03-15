@@ -67,12 +67,6 @@
       console.log('数据代理保存事件');
     },
   };
-  // const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
-  //   console.log('zzzzzz:', currentPage, pageSize);
-  //   tablePage.currentPage = currentPage;
-  //   tablePage.pageSize = pageSize;
-  //   findList();
-  // };
   const collaposeChange = (event) => {
     if (event.target.nodeName === 'svg') {
       collapseStatus.value = !collapseStatus.value;

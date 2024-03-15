@@ -88,7 +88,6 @@ export function downloadByUrl({
       return true;
     }
   }
-  console.log('dddddddddddd');
   if (url.indexOf('?') === -1) {
     url += '?download';
   }

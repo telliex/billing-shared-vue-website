@@ -101,7 +101,6 @@ export const getDynamicNavList = () =>
               children: [],
             });
           });
-          console.log('88888888:', modifiedObj);
           const res = buildNestedStructure(modifiedObj);
           console.log('menu tree data from API:', res);
           resObj.results[0].items = [

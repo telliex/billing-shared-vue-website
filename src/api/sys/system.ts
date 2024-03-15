@@ -248,7 +248,6 @@ export const GetUserPermission = (body: any) =>
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
-          console.log('ggggggggggg:', data);
           // Do whatever you want to transform the data
           if (data.length) {
             return {
@@ -701,7 +700,7 @@ export const getUserList = (params: UserPageParams) => {
 
 export const changePassword = (body: any) => {
   const header = apiTransDataForHeader();
-  const userId = ls.get('TEMP_MGT_ID_KEY__');
+  const userId = ls.get('TEMP_USER_INFO_KEY__').id;
 
   header['User-Id'] = userId; // 5519695a-5397-475a-9925-da817107bcfd
   return defHttp.patch<UserItem>(

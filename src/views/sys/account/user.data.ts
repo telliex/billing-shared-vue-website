@@ -279,9 +279,7 @@ export const accountFormSchema: FormSchema[] = [
         // more details see /src/components/Form/src/components/ApiSelect.vue
         api: countryOptionsListApi,
         // api: async (para) => {
-        //   console.log('aaaaa', para);
         //   const temp = await countryOptionsListApi(para);
-        //   console.log('88888888:', temp);
         //   return new Promise((resolve) => {
         //     resolve(temp);
         //   });
