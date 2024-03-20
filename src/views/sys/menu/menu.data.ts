@@ -235,8 +235,6 @@ export const formSchema: FormSchema[] = [
         // @ts-ignore
         validator: async (rule, value) => {
           const pattern = /^[0-9-]*$/;
-          console.log(pattern.test(value));
-
           if (!value) {
             return Promise.reject('Required');
           }
@@ -288,16 +286,18 @@ export const formSchema: FormSchema[] = [
         {
           required: true,
           validator: async (rule, value) => {
-            console.log(rule);
+            if (!value) {
+              return Promise.reject('Required');
+            }
             if (values.isExt === 1) {
               const pattern = /^(https?):\/\/[^\s/$.?#].[^\s]*$/i;
-              console.log(pattern.test(value));
+
               if (value && !pattern.test(value)) {
                 return Promise.reject('Value does not match http/https rules');
               }
             } else {
               const pattern = /^[a-zA-Z0-9\/_-]*$/;
-              console.log(pattern.test(value));
+
               if (value && !pattern.test(value)) {
                 return Promise.reject('Value does not match routing rules');
               }
@@ -320,13 +320,16 @@ export const formSchema: FormSchema[] = [
     dynamicDisabled: ({ values }) => {
       return values.type === 1 && values.isExt === 1 ? true : false;
     },
+    required: true,
     rules: [
       {
         required: true,
         // @ts-ignore
         validator: async (rule, value) => {
           const pattern = /^[A-Z][a-zA-Z0-9]*$/;
-          console.log(pattern.test(value));
+          if (!value) {
+            return Promise.reject('Required');
+          }
           if (value && !pattern.test(value)) {
             return Promise.reject('PascalCase naming');
           }

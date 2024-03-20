@@ -72,6 +72,8 @@
 
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
+
+        let modifiedTreeNode: string[] = [];
         // 需要在setFieldsValue之前先填充treeData，否則Tree組件可能會報key not exist警告
         if (unref(treeData).length === 0) {
           let res = (await getNavWholeTreeNode({
@@ -79,6 +81,8 @@
           })) as any as TreeItem[];
           treeData.value = res[0].items;
         }
+
+        console.log('record.value on enter =======:', record.value);
 
         // put here to avoid the display required warning
         resetFields();
@@ -88,7 +92,26 @@
             if (record.value.menus.length === 0) {
               record.value.menuPermissionArray = [];
             } else {
-              record.value.menuPermissionArray = record.value.menus.map((item) => item.value);
+              let res = (await getNavWholeTreeNode({
+                status: 1,
+              })) as any as TreeItem[];
+
+              modifiedTreeNode = findLeafNodes(res[0].items);
+              console.log('filter Tree node===== :', modifiedTreeNode);
+              console.log('record.value.menus:', record.value.menus);
+              console.log(
+                'record.value.menus - replace:',
+                record.value.menus
+                  .filter((item) => modifiedTreeNode.includes(item.value))
+                  .map((item) => item.value),
+              );
+              record.value.menuPermissionArray = record.value.menus
+                .filter((item) => modifiedTreeNode.includes(item.value))
+                .map((item) => item.value);
+              console.log(
+                'target:',
+                record.value.menus.map((item) => item.value),
+              );
             }
           }
 
@@ -100,6 +123,23 @@
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
+
+      function findLeafNodes(data) {
+        let leafNodes = [];
+
+        function traverse(nodes) {
+          for (let node of nodes) {
+            if (node.children.length === 0) {
+              leafNodes.push(node.id); // Add the id of the node with no children
+            } else {
+              traverse(node.children); // Recursively search for leaf nodes
+            }
+          }
+        }
+
+        traverse(data);
+        return leafNodes;
+      }
 
       async function handleSubmit() {
         try {
@@ -114,12 +154,14 @@
           });
 
           let menuPermissionArray = values.menuPermissionArray ? values.menuPermissionArray : [];
+          console.log('menuPermissionArray=========:', menuPermissionArray);
+
           let tempArray: any[] = [];
           setDrawerProps({ confirmLoading: true });
           let menuList: any = await getNavList({
             status: 1,
           });
-
+          console.log('menuList===========:', menuList);
           menuList[0].items.forEach((item) => {
             menuPermissionArray.forEach((item2) => {
               if (item.id === item2) {
