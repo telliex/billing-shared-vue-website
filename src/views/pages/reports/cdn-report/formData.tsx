@@ -6,7 +6,7 @@ export function getFormSchema(): FormSchema[] {
   return [
     {
       field: 'ReportType',
-      component: 'Select',
+      component: 'Select', 
       label: `${t('report.cdnReport.searchAreaReportTypeLavel')}:`,
       show: false,
       componentProps: {
@@ -23,13 +23,13 @@ export function getFormSchema(): FormSchema[] {
       },
     },
     {
-      field: 'YearMonth',
+      field: 'Date',
       component: 'DatePicker',
       label: `${t('report.cdnReport.searchAreaYYYYMMLavel')}:`,
       labelWidth: 100,
       required: true,
       componentProps: {
-        picker: 'month',
+        picker: 'date',
       },
       colProps: {
         span: 6,
