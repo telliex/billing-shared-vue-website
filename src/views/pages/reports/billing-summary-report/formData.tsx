@@ -23,13 +23,13 @@ export function getFormSchema(): FormSchema[] {
       },
     },
     {
-      field: 'YearMonth',
+      field: 'Date',
       component: 'DatePicker',
       label: `${t('report.summeryReport.searchAreaYYYYMMLavel')}:`,
       labelWidth: 100,
       required: true,
       componentProps: {
-        picker: 'month',
+        picker: 'date',
       },
       colProps: {
         span: 6,

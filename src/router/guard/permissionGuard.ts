@@ -96,7 +96,7 @@ export function createPermissionGuard(router: Router) {
     const routes = await permissionStore.buildRoutesAction();
     console.log('routes:', routes);
     routes.forEach((route) => {
-      console.log(route);
+      // console.log(route);
 
       let temp: any = {};
       if (!route.id) {
@@ -113,7 +113,6 @@ export function createPermissionGuard(router: Router) {
           temp.redirect = route.redirect;
         }
       }
-
       router.addRoute(temp as unknown as RouteRecordRaw);
     });
 
