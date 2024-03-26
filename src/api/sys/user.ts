@@ -13,6 +13,7 @@ const ls = createLocalStorage();
 
 enum Api {
   Login = '/auth/login',
+  LoginTransition = '/system/user/mgt',
   Logout = '/auth/logout',
   JWTLogin = '/jwt/login',
   JWTLogout = '/jwt/logout',
@@ -102,12 +103,16 @@ export const JWTRefreshApi = () => {
 /**
  * @description: Get JWT token
  */
-export const JWTlogoutApi = () => {
+export const JWTlogoutApi = (token = '') => {
+  const headersObj = token
+    ? { ...apiTransDataForHeader(), 'X-Access-Token': `${token}` }
+    : { ...apiTransDataForHeader() };
+
   return defHttp.get(
     {
       url: `/api${API_CONFIG.VERSION}${Api.JWTLogout}`,
       // data: body,
-      headers: apiTransDataForHeader(),
+      headers: headersObj,
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -167,6 +172,43 @@ export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal')
   );
 };
 
+export const loginApiTransition = (mgtId) => {
+  const myToken = ls.get('USER_TOKEN_TEMP_KEY__').apiToken;
+  return defHttp.get(
+    {
+      url: `/api${API_CONFIG.VERSION}${Api.LoginTransition}/${mgtId}`,
+      headers: {
+        ...apiTransDataForHeader(),
+        Authorization: `Bearer ${myToken}`,
+      },
+
+      // headers: {
+      //   'Content-Type': 'application/json',
+      //   'User-Id': '5519695a-5397-475a-9925-da817107bcfd',
+      //   'Time-Zone': 'UTC+0',
+      //   Authorization:
+      //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlY3YtYmlsbGluZyIsInN1YiI6InRlbGxpZXguY2hpdUBlY2xvdWR2YWxsZXkuY29tIiwiYXVkIjoiRUNWIEJpbGxpbmcgTW9kdWxlIiwiZXhwIjoxNzA3MjM2NTE0LCJpYXQiOjE3MDcyMzQ3MTQsImp0aSI6Ijg3NmUyZWZhLTgzODItNDczYi05ZGNiLTI1MTI4MjI2NzRjOCIsIm91dCI6IjMyZjk5OWEyYTM2ZTRmNTU5Y2YxYTgyZjMyN2RmZjc5IiwibmJmIjoxNzA3MjM0NzE0fQ.-5KLaDu1og-qsyncaX7LVzEb-gZdgHBGp_U-Dd7oS5I',
+      //   'Trace-Id': '98c701ce-584d-4c20-9a61-a24a270c5f6c',
+      //   'X-Api-Key': '484CD16940B64F878DC9CCE2E79EA08E',
+      // },
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          console.log('api login transition========:', resObj);
+          return resObj;
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
+  );
+};
 /**
  * @description: user logout api
  */
