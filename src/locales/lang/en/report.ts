@@ -241,4 +241,100 @@ export default {
     searchAreaReportTypeOption: 'M0100 pdf',
     searchAreaYYYYMMLavel: 'Date', // Date
   },
+  cn07CustomReport: {
+    tableAreaTitle: 'CN07 Billing Check Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'CN07 Billing Check Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  zyxelCustiomizedReport: {
+    tableAreaTitle: 'Zyxel Custiomized Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'Zyxel Custiomized Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  zyxelCustiomizedAfterDropReport: {
+    tableAreaTitle: 'Zyxel Custiomized After Drop Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'Zyxel Custiomized After Drop Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  mySapuraEnergyReport: {
+    tableAreaTitle: 'MY Sapura Energy Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'MY Sapura Energy Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  sgDigitalMyanmarMoneySpReport: {
+    tableAreaTitle: 'SG Digital Myanmar Money SP Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'SG Digital Myanmar Money SP Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  myGhlSpReport: {
+    tableAreaTitle: 'MY GHL SP Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'MY GHL SP Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  c0000266S3ppaReport: {
+    tableAreaTitle: 'C0000266 S3PPA Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'C0000266 S3PPA Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  monthlyCdnReport: {
+    tableAreaTitle: 'Monthly CDN Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Monthly CDN Report',
+    searchAreaYYYYMMLavel: 'date', // date
+  },
+  monthlyRevenueReport: {
+    tableAreaTitle: 'Monthly Revenue Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'Monthly Revenue Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  c0000338SpCustomizedReport: {
+    tableAreaTitle: 'C0000338 SP Customized Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'C0000338 SP Customized Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  linked789943651249SpCustomizedReport: {
+    tableAreaTitle: 'Linked 789943651249 SP Customized Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'Linked 789943651249 SP Customized Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  ch198SpCustomizedReport: {
+    tableAreaTitle: 'CH198 SP Customized Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'CH198 SP Customized Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  cnnDtoReport: {
+    tableAreaTitle: 'CNN DTO Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'CNN DTO Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  cnnBigSpReport: {
+    tableAreaTitle: 'CNE BIG SP Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'CNE BIG SP Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  cneYostarEsFeeReport: {
+    tableAreaTitle: 'CNE Yostar ES Fee Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'CNE Yostar ES Fee Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  hk91SpUtilizationReport: {
+    tableAreaTitle: 'hk91 SP utilization Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'hk91 SP utilization Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
 };

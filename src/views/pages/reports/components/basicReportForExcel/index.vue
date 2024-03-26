@@ -393,7 +393,7 @@
     const S3FileName = `${S3ReportClass}_${fileDate}.csv`;
 
     objectKeyString.value = `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`;
-
+    console.log(objectKeyString.value);
     return objectKeyString.value;
   }
 </script>

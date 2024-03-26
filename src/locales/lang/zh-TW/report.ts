@@ -31,7 +31,7 @@ export default {
     searchAreaReportTypeOption: '特調成本',
     searchAreaYYYYMMLavel: '月份',
   },
-  cdnReport: {
+  CDNReport: {
     tableAreaTitle: 'CDN報表',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: 'CDN',
@@ -240,5 +240,101 @@ export default {
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'M0100 pdf',
     searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  cn07CustomReport: {
+    tableAreaTitle: '客製化報表-CNN對帳報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-CNN對帳報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  zyxelCustiomizedReport: {
+    tableAreaTitle: '客製化報表-兆勤特調前對帳報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-兆勤特調前對帳報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  zyxelCustiomizedAfterDropReport: {
+    tableAreaTitle: '客製化報表-兆勤特調後對帳報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-兆勤特調後對帳報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  mySapuraEnergyReport: {
+    tableAreaTitle: '客製化報表-MY Sapura Energy Berhad SP報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-MY Sapura Energy Berhad SP報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  sgDigitalMyanmarMoneySpReport: {
+    tableAreaTitle: '客製化報表-SG Digital Myanmar Money SP報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-SG Digital Myanmar Money SP報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  myGhlSpReport: {
+    tableAreaTitle: '客製化報表-MY GHL SP報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-MY GHL SP報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  c0000266S3ppaReport: {
+    tableAreaTitle: '客製化報表-Linked 627778910172 S3 PPA影響數',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-Linked 627778910172 S3 PPA影響數',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  monthlyCdnReport: {
+    tableAreaTitle: 'MGT 每月CDN報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: 'MGT 每月CDN報表',
+    searchAreaYYYYMMLavel: '日期', // date
+  },
+  monthlyRevenueReport: {
+    tableAreaTitle: 'MGT 每月營收報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: 'MGT 每月營收報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  c0000338SpCustomizedReport: {
+    tableAreaTitle: '客製化報表-緯創SP分潤報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-緯創SP分潤報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  linked789943651249SpCustomizedReport: {
+    tableAreaTitle: '客製化報表-綠峰SP分潤報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-綠峰SP分潤報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  ch198SpCustomizedReport: {
+    tableAreaTitle: '客製化報表-樂雲CH198 SP報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-樂雲CH198 SP報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  cnnDtoReport: {
+    tableAreaTitle: '客製化報表-CNN DTO報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-CNN DTO報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  cnnBigSpReport: {
+    tableAreaTitle: '客製化報表-CNEBIG SP報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-CNEBIG SP報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  cneYostarEsFeeReport: {
+    tableAreaTitle: '客製化報表-CNEYostar ES fee 報表',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-CNEYostar ES fee 報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  hk91SpUtilizationReport: {
+    tableAreaTitle: '客製化報表-hk91-sp-用量分布-by account',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: '客製化報表-hk91-sp-用量分布-by account',
+    searchAreaYYYYMMLavel: '日期', // Date
   },
 };
