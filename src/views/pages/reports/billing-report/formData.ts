@@ -25,14 +25,21 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
   const getReportInfo = ({
     tableName,
     reportType, // folder name
-    s3Bucket = 'VITE_GLOB_S3_REPORT', // s3 bucket
-    bucketRegion = 'VITE_GLOB_S3_REGION' // s3 region
+    s3BucketEnv = 'VITE_GLOB_S3_REPORT', // s3 bucket
+    bucketRegionEnv = 'VITE_GLOB_S3_REGION' // s3 region
   }): ReportInfo => {
+    
+    // S3_ECV_REPORT for ecr accoount to fetch ecv file
+    // other according to company name
+    const newReportType = s3BucketEnv === 'VITE_GLOB_S3_ECV_REPORT'
+     ? `ecv_${reportType}`
+     : `${import.meta.env.VITE_GLOB_COMPANY.toLowerCase()}_${reportType}`;
+
     return {
       tableName: `${t(tableName)}`,
-      reportType,
-      s3Bucket: import.meta.env[s3Bucket],
-      bucketRegion: import.meta.env[bucketRegion]
+      reportType: newReportType,
+      s3Bucket: import.meta.env[s3BucketEnv],
+      bucketRegion: import.meta.env[bucketRegionEnv]
     }
   };
 
@@ -77,6 +84,15 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
         getDateComponentInfo('report.cn07CustomReport.searchAreaYYYYMMLavel')
       ],
     },
+    "cns-billing-check-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.cnsCustomReport.tableAreaTitle',
+        reportType: 'cns_customized_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.cnsCustomReport.searchAreaYYYYMMLavel')
+      ],
+    },
     "zyxel-custiomized-report": {
       reportInfo: getReportInfo({
         tableName: 'report.zyxelCustiomizedReport.tableAreaTitle',
@@ -95,6 +111,15 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
         getDateComponentInfo('report.zyxelCustiomizedAfterDropReport.searchAreaYYYYMMLavel')
       ],
     },
+    "materials-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.materialsReport.tableAreaTitle',
+        reportType: 'materials_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.materialsReport.searchAreaYYYYMMLavel')
+      ],
+    },
     "my-sapura-energy-report": {
       reportInfo: getReportInfo({
         tableName: 'report.mySapuraEnergyReport.tableAreaTitle',
@@ -102,6 +127,15 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
       }),
       schemas: [
         getDateComponentInfo('report.mySapuraEnergyReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "vn-sp-customized-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.vnSpCustomizedReport.tableAreaTitle',
+        reportType: 'vn_sp_customized_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.vnSpCustomizedReport.searchAreaYYYYMMLavel')
       ],
     },
     "sg-digital-myanmar-money-sp-report": {
@@ -212,6 +246,33 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
         getDateComponentInfo('report.hk91SpUtilizationReport.searchAreaYYYYMMLavel')
       ],
     },
+    "shield-reclassification-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.shieldReclassificationReport.tableAreaTitle',
+        reportType: 'shield_reclassification_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.shieldReclassificationReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "cost-revenue-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.costRevenueReport.tableAreaTitle',
+        reportType: 'cost_revenue_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.costRevenueReport.tableAreaTitle')
+      ],
+    },
+    "billing-summary-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.billingSummaryReport.tableAreaTitle',
+        reportType: 'billing_summary_hk'
+      }),
+      schemas: [
+        getDateComponentInfo('report.billingSummaryReport.searchAreaYYYYMMLavel')
+      ],
+    }
   };
   // --------- end of report relative setting ---------
 

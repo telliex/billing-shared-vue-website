@@ -1,3 +1,5 @@
+const company = import.meta.env.VITE_GLOB_COMPANY;
+
 export default {
   searchAreaTitle: '查询栏位',
   queryText: '查询',
@@ -240,6 +242,12 @@ export default {
     searchAreaReportTypeOption: '客制化报表-CNN对帐报表',
     searchAreaYYYYMMLavel: '日期', // Date
   },
+  cnsCustomReport: {
+    tableAreaTitle: `客制化报表-CNS对帐报表-${company}`,
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: `客制化报表-CNS对帐报表-${company}`,
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
   zyxelCustiomizedReport: {
     tableAreaTitle: '客制化报表-兆勤特调前对帐报表',
     searchAreaReportTypeLavel: '报表种类',
@@ -250,6 +258,18 @@ export default {
     tableAreaTitle: '客制化报表-兆勤特调前对帐报表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: '客制化报表-兆勤特调後对帐报表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  materialsReport: {
+    tableAreaTitle: `物料主档-${company}`,
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: `物料主档-${company}`,
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  vnSpCustomizedReport: {
+    tableAreaTitle: `客制化报表-VN SP报表-${company}`,
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: `客制化报表-VN SP报表-${company}`,
     searchAreaYYYYMMLavel: '日期', // Date
   },
   mySapuraEnergyReport: {
@@ -330,4 +350,23 @@ export default {
     searchAreaReportTypeOption: '客制化报表-hk91-sp-用量分布-by account',
     searchAreaYYYYMMLavel: '日期', // Date
   },
+  shieldReclassificationReport: {
+    tableAreaTitle: 'Shield产品收费对象',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: 'Shield产品收费对象',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  costRevenueReport: {
+    tableAreaTitle: 'Cost Revenue Report',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: 'Cost Revenue Report',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  //
+  billingSummaryReport: {
+    tableAreaTitle: 'Billing Summary Report',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: 'Billing Summary Report',
+    searchAreaYYYYMMLavel: '日期', // Date
+  }
 };

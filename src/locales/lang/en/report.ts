@@ -1,10 +1,5 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2023-05-29 03:12:11
- * @LastEditors: Telliex
- * @LastEditTime: 2023-05-29 21:23:31
- */
+const company = import.meta.env.VITE_GLOB_COMPANY;
+
 export default {
   searchAreaTitle: 'Filter by',
   queryText: 'Search',
@@ -247,6 +242,12 @@ export default {
     searchAreaReportTypeOption: 'CN07 Billing Check Report',
     searchAreaYYYYMMLavel: 'Date', // Date
   },
+  cnsCustomReport: {
+    tableAreaTitle: `${company} Billing Check Report`,
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: `${company} Billing Check Report`,
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
   zyxelCustiomizedReport: {
     tableAreaTitle: 'Zyxel Custiomized Report',
     searchAreaReportTypeLavel: 'Report Type',
@@ -259,10 +260,22 @@ export default {
     searchAreaReportTypeOption: 'Zyxel Custiomized After Drop Report',
     searchAreaYYYYMMLavel: 'Date', // Date
   },
+  materialsReport: {
+    tableAreaTitle: `${company} Materials Report`,
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: `${company} Materials Report`,
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
   mySapuraEnergyReport: {
     tableAreaTitle: 'MY Sapura Energy Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'MY Sapura Energy Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  vnSpCustomizedReport: {
+    tableAreaTitle: `${company} VN SP Customized Report`,
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: `${company} VN SP Customized Report`,
     searchAreaYYYYMMLavel: 'Date', // Date
   },
   sgDigitalMyanmarMoneySpReport: {
@@ -336,5 +349,24 @@ export default {
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'hk91 SP utilization Report',
     searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  shieldReclassificationReport: {
+    tableAreaTitle: 'Shield reclassification Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'Shield reclassification Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  costRevenueReport: {
+    tableAreaTitle: 'Cost Revenue Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'Cost Revenue Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  //
+  billingSummaryReport: {
+    tableAreaTitle: 'Billing Summary Report',
+    searchAreaReportTypeLavel: 'Repot Type',
+    searchAreaReportTypeOption: 'Billing Summary',
+    searchAreaYYYYMMLavel: 'Date', // date
   },
 };

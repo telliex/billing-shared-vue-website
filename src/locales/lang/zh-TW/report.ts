@@ -1,10 +1,5 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2023-05-10 03:42:33
- * @LastEditors: Telliex.Chiu Telliex.Chiu@ecliudvalle.com.tw
- * @LastEditTime: 2023-08-02 20:54:07
- */
+const company = import.meta.env.VITE_GLOB_COMPANY;
+
 export default {
   searchAreaTitle: '查詢欄位',
   queryText: '查詢',
@@ -247,6 +242,12 @@ export default {
     searchAreaReportTypeOption: '客製化報表-CNN對帳報表',
     searchAreaYYYYMMLavel: '日期', // Date
   },
+  cnsCustomReport: {
+    tableAreaTitle: `客製化報表-CNS對帳報表-${company}`,
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: `客製化報表-CNS對帳報表-${company}`,
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
   zyxelCustiomizedReport: {
     tableAreaTitle: '客製化報表-兆勤特調前對帳報表',
     searchAreaReportTypeLavel: '報表種類',
@@ -259,10 +260,22 @@ export default {
     searchAreaReportTypeOption: '客製化報表-兆勤特調後對帳報表',
     searchAreaYYYYMMLavel: '日期', // Date
   },
+  materialsReport: {
+    tableAreaTitle: `物料主檔-${company}`,
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: `物料主檔-${company}`,
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
   mySapuraEnergyReport: {
     tableAreaTitle: '客製化報表-MY Sapura Energy Berhad SP報表',
     searchAreaReportTypeLavel: '報表種類',
     searchAreaReportTypeOption: '客製化報表-MY Sapura Energy Berhad SP報表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  vnSpCustomizedReport: {
+    tableAreaTitle: `客製化報表-VN SP報表-${company}`,
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: `客製化報表-VN SP報表-${company}`,
     searchAreaYYYYMMLavel: '日期', // Date
   },
   sgDigitalMyanmarMoneySpReport: {
@@ -337,4 +350,23 @@ export default {
     searchAreaReportTypeOption: '客製化報表-hk91-sp-用量分布-by account',
     searchAreaYYYYMMLavel: '日期', // Date
   },
+  shieldReclassificationReport: {
+    tableAreaTitle: 'Shield產品收費對象',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: 'Shield產品收費對象',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  costRevenueReport: {
+    tableAreaTitle: 'Cost Revenue Report',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: 'Cost Revenue Report',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  //
+  billingSummaryReport: {
+    tableAreaTitle: 'Billing Summary Report',
+    searchAreaReportTypeLavel: '報表種類',
+    searchAreaReportTypeOption: 'Billing Summary Report',
+    searchAreaYYYYMMLavel: '日期', // Date
+  }
 };
