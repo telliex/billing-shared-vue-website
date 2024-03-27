@@ -93,22 +93,22 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
         getDateComponentInfo('report.cnsCustomReport.searchAreaYYYYMMLavel')
       ],
     },
-    "zyxel-custiomized-report": {
+    "zyxel-report-before-billing-adjustment": {
       reportInfo: getReportInfo({
-        tableName: 'report.zyxelCustiomizedReport.tableAreaTitle',
+        tableName: 'report.zyxelReportBeforeBillingAdjustment.tableAreaTitle',
         reportType: 'zyxel_customized_report'
       }),
       schemas: [
-        getDateComponentInfo('report.zyxelCustiomizedReport.searchAreaYYYYMMLavel')
+        getDateComponentInfo('report.zyxelReportBeforeBillingAdjustment.searchAreaYYYYMMLavel')
       ],
     },
-    "zyxel-custiomized-after-drop-report": {
+    "zyxel-report-after-billing-adjustment": {
       reportInfo: getReportInfo({
-        tableName: 'report.zyxelCustiomizedAfterDropReport.tableAreaTitle',
-        reportType: 'zyxel_customized_after_drop_report'
+        tableName: 'report.zyxelReportAfterBillingAdjustment.tableAreaTitle',
+        reportType: 'zyxel_customized_after_dop_report'
       }),
       schemas: [
-        getDateComponentInfo('report.zyxelCustiomizedAfterDropReport.searchAreaYYYYMMLavel')
+        getDateComponentInfo('report.zyxelReportAfterBillingAdjustment.searchAreaYYYYMMLavel')
       ],
     },
     "materials-report": {
@@ -123,7 +123,7 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
     "my-sapura-energy-report": {
       reportInfo: getReportInfo({
         tableName: 'report.mySapuraEnergyReport.tableAreaTitle',
-        reportType: 'sapura_sp_report'
+        reportType: 'sapura_sp_customized_report'
       }),
       schemas: [
         getDateComponentInfo('report.mySapuraEnergyReport.searchAreaYYYYMMLavel')
@@ -246,6 +246,24 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
         getDateComponentInfo('report.hk91SpUtilizationReport.searchAreaYYYYMMLavel')
       ],
     },
+    "sg-cag-sp-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.sgCagSpReport.tableAreaTitle',
+        reportType: 'cag_sp_customized_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.sgCagSpReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "eui-awsbu-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.euiAwsbuReport.tableAreaTitle',
+        reportType: 'eui_report_awsbu_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.euiAwsbuReport.searchAreaYYYYMMLavel')
+      ],
+    },
     "shield-reclassification-report": {
       reportInfo: getReportInfo({
         tableName: 'report.shieldReclassificationReport.tableAreaTitle',
@@ -267,10 +285,102 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
     "billing-summary-report": {
       reportInfo: getReportInfo({
         tableName: 'report.billingSummaryReport.tableAreaTitle',
-        reportType: 'billing_summary_hk'
+        reportType: 'billing_summary_hk',
+        s3BucketEnv: 'VITE_GLOB_S3_ECV_REPORT'
       }),
       schemas: [
         getDateComponentInfo('report.billingSummaryReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "special-modification-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.specialModificationReport.tableAreaTitle',
+        reportType: 'special_modifications_data'
+      }),
+      schemas: [
+        getDateComponentInfo('report.specialModificationReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "sap-cno-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.sapCnoReport.tableAreaTitle',
+        reportType: 'sap_cno_contrast_table'
+      }),
+      schemas: [
+        getDateComponentInfo('report.sapCnoReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "linkedaccount-entity-difference-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.linkedaccountEntitydifferenceReport.tableAreaTitle',
+        reportType: 'linkedaccount_entity_differences_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.linkedaccountEntitydifferenceReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "billing-invoice-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.billingInvoiceReport.tableAreaTitle',
+        reportType: 'billing_invoice_report_hk'
+      }),
+      schemas: [
+        getDateComponentInfo('report.billingInvoiceReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "billing-list-ecr-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.billingListEcrReport.tableAreaTitle',
+        reportType: 'billing_list_for_ecloudrover',
+        s3BucketEnv: 'VITE_GLOB_S3_ECV_REPORT'
+      }),
+      schemas: [
+        getDateComponentInfo('report.billingListEcrReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "billing-costbylinkedaccount-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.billingCostbylinkedReport.tableAreaTitle',
+        reportType: 'billing_costbylinked_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.billingCostbylinkedReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "billing-costbyproduct-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.billingCostbyproductReport.tableAreaTitle',
+        reportType: 'billing_costbyproduct_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.billingCostbyproductReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "billing-invoice-contrast-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.billingInvoiceContrastReport.tableAreaTitle',
+        reportType: 'invoice_contrast_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.billingInvoiceContrastReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "billing-taxnbycno-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.billingTaxbycnoReport.tableAreaTitle',
+        reportType: 'tax_by_cno'
+      }),
+      schemas: [
+        getDateComponentInfo('report.billingTaxbycnoReport.searchAreaYYYYMMLavel')
+      ],
+    },
+    "billing-cost-allocate-report": {
+      reportInfo: getReportInfo({
+        tableName: 'report.billingCostAllocateReport.tableAreaTitle',
+        reportType: 'billing_cost_allocate_report'
+      }),
+      schemas: [
+        getDateComponentInfo('report.billingCostAllocateReport.searchAreaYYYYMMLavel')
       ],
     }
   };

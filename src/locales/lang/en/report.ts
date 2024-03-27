@@ -32,23 +32,23 @@ export default {
     searchAreaReportTypeOption: 'CDN',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  specialReport: {
+  specialModificationReport: {
     tableAreaTitle: 'Special Modification Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Special Modification',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
-  sapcnoReport: {
+  sapCnoReport: {
     tableAreaTitle: 'Sap Cno Contrast Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Sap Cno Contrast',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
-  diffReport: {
+  linkedaccountEntitydifferenceReport: {
     tableAreaTitle: 'Linkedaccount Entity Difference Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Linkedaccount Entity Difference',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
   summeryReport: {
     tableAreaTitle: 'Billing Summary Report',
@@ -56,29 +56,29 @@ export default {
     searchAreaReportTypeOption: 'Billing Summary',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  invoiceReport: {
+  billingInvoiceReport: {
     tableAreaTitle: 'Billing Invoice Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing Invoice',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
-  billingReport: {
+  billingListEcrReport: {
     tableAreaTitle: 'Billing List Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing List',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
-  costbylinkedReport: {
+  billingCostbylinkedReport: {
     tableAreaTitle: 'Cost By Linkedaccount Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Cost By Linkedaccount',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
-  costbyproductReport: {
+  billingCostbyproductReport: {
     tableAreaTitle: 'Cost By Product Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Cost By Product',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
   internaloporcr: {
     tableAreaTitle: 'Internal OPOR CR',
@@ -200,23 +200,23 @@ export default {
     searchAreaReportTypeOption: 'Billing RI Usage C3',
     searchAreaYYYYMMLavel: 'Month', // Month
   },
-  invoicecontrastReport: {
+  billingInvoiceContrastReport: {
     tableAreaTitle: 'Invoice Contrast Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Invoice Contrast Report',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
-  taxbycnoReport: {
+  billingTaxbycnoReport: {
     tableAreaTitle: 'Tax by CNO Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Tax by CNO Report',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
-  costallocateReport: {
+  billingCostAllocateReport: {
     tableAreaTitle: 'Cost allocate Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Cost allocate Report',
-    searchAreaYYYYMMLavel: 'Month', // Month
+    searchAreaYYYYMMLavel: 'Date', // date
   },
   creditownerReportaccountant: {
     tableAreaTitle: 'Credit Owner Report for Accountant',
@@ -248,16 +248,16 @@ export default {
     searchAreaReportTypeOption: `${company} Billing Check Report`,
     searchAreaYYYYMMLavel: 'Date', // Date
   },
-  zyxelCustiomizedReport: {
-    tableAreaTitle: 'Zyxel Custiomized Report',
+  zyxelReportBeforeBillingAdjustment: {
+    tableAreaTitle: 'Zyxel Report Before Billing Adjustment',
     searchAreaReportTypeLavel: 'Report Type',
-    searchAreaReportTypeOption: 'Zyxel Custiomized Report',
+    searchAreaReportTypeOption: 'Zyxel Report Before Billing Adjustment',
     searchAreaYYYYMMLavel: 'Date', // Date
   },
-  zyxelCustiomizedAfterDropReport: {
-    tableAreaTitle: 'Zyxel Custiomized After Drop Report',
+  zyxelReportAfterBillingAdjustment: {
+    tableAreaTitle: 'Zyxel Report After Billing Adjustment',
     searchAreaReportTypeLavel: 'Report Type',
-    searchAreaReportTypeOption: 'Zyxel Custiomized After Drop Report',
+    searchAreaReportTypeOption: 'Zyxel Report After Billing Adjustment',
     searchAreaYYYYMMLavel: 'Date', // Date
   },
   materialsReport: {
@@ -348,6 +348,18 @@ export default {
     tableAreaTitle: 'hk91 SP utilization Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'hk91 SP utilization Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  sgCagSpReport: {
+    tableAreaTitle: 'SG CAG SP Report',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'SG CAG SP Report',
+    searchAreaYYYYMMLavel: 'Date', // Date
+  },
+  euiAwsbuReport: {
+    tableAreaTitle: 'EUI (End User Information) Report For AWS BU',
+    searchAreaReportTypeLavel: 'Report Type',
+    searchAreaReportTypeOption: 'EUI (End User Information) Report For AWS BU',
     searchAreaYYYYMMLavel: 'Date', // Date
   },
   shieldReclassificationReport: {

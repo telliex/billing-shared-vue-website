@@ -24,6 +24,7 @@ main_process() {
     S3_ECV_REPORT_URL=${15}  
     API_KEY=${16}
     JWT_API_URL=${17}
+    COMPANY=${18}
 
     ENV_TEMPLATE_NAME=".env.template"
     NEGIEX_CONFIG_TEMPLATE="default.template.conf"
@@ -48,9 +49,10 @@ main_process() {
     echo "oS3_ECV_REPORT_URL:$S3_ECV_REPORT_URL"
     echo "oAPI_KEY:$API_KEY"
     echo "oJWT_API_URL:$JWT_API_URL"
+    echo "oCOMPANY:$COMPANY"
     echo '-------------------------'
 
-    cat $ENV_TEMPLATE_NAME | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{CBMS_URL}}|'$CBMS_URL'|g' | sed -e 's|{{OLD_MGT_URL}}|'$OLD_MGT_URL'|g' | sed -e 's|{{CRS_URL}}|'$CRS_URL'|g' | sed -e 's|{{S3_REGION_URL}}|'$S3_REGION_URL'|g' | sed -e 's|{{S3_JSON_URL}}|'$S3_JSON_URL'|g' | sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g' | sed -e 's|{{SYS_API_URL}}|'$SYS_API_URL'|g' | sed -e 's|{{POWERBI_LAMBDA_API_URL}}|'$POWERBI_LAMBDA_API_URL'|g' | sed -e 's|{{S3_REPORT_URL}}|'$S3_REPORT_URL'|g' | sed -e 's|{{S3_ACCOUNT_REPORT_URL}}|'$S3_ACCOUNT_REPORT_URL'|g' | sed -e 's|{{S3_INVOICE_REPORT_URL}}|'$S3_INVOICE_REPORT_URL'|g' | sed -e 's|{{S3_ECV_REPORT_URL}}|'$S3_ECV_REPORT_URL'|g' | sed -e 's|{{JWT_API_URL}}|'$JWT_API_URL'|g' | sed -e 's|{{API_KEY}}|'$API_KEY'|g' >| "$TARGET_ENV_FILE_NAME"
+    cat $ENV_TEMPLATE_NAME | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{CBMS_URL}}|'$CBMS_URL'|g' | sed -e 's|{{OLD_MGT_URL}}|'$OLD_MGT_URL'|g' | sed -e 's|{{CRS_URL}}|'$CRS_URL'|g' | sed -e 's|{{S3_REGION_URL}}|'$S3_REGION_URL'|g' | sed -e 's|{{S3_JSON_URL}}|'$S3_JSON_URL'|g' | sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g' | sed -e 's|{{SYS_API_URL}}|'$SYS_API_URL'|g' | sed -e 's|{{POWERBI_LAMBDA_API_URL}}|'$POWERBI_LAMBDA_API_URL'|g' | sed -e 's|{{S3_REPORT_URL}}|'$S3_REPORT_URL'|g' | sed -e 's|{{S3_ACCOUNT_REPORT_URL}}|'$S3_ACCOUNT_REPORT_URL'|g' | sed -e 's|{{S3_INVOICE_REPORT_URL}}|'$S3_INVOICE_REPORT_URL'|g' | sed -e 's|{{S3_ECV_REPORT_URL}}|'$S3_ECV_REPORT_URL'|g' | sed -e 's|{{JWT_API_URL}}|'$JWT_API_URL'|g' | sed -e 's|{{API_KEY}}|'$API_KEY'|g' | sed -e 's|{{COMPANY}}|'$COMPANY'|g' >| "$TARGET_ENV_FILE_NAME"
     cat $NEGIEX_CONFIG_TEMPLATE | sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | sed -e 's|{{SYS_API_URL}}|'$SYS_API_URL'|g' | sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g' | sed -e 's|{{JWT_API_URL}}|'$JWT_API_URL'|g'  >| "$NEGIEX_CONFIG_TARGET"
 }
 

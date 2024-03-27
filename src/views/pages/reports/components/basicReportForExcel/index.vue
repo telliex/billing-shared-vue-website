@@ -311,7 +311,6 @@
     openWrapLoading();
 
     const result = await childFormValue(values);
-
     // createMessage.success('click search,values:' + JSON.stringify(values));
     let S3Location = await GetS3TargetUrl({
       trace_id: Guid.newGuid().toString(),
@@ -335,6 +334,7 @@
           return response.blob();
         })
         .then((blob) => {
+          console.log(blob)
           // 此時的 blob 就是你需要的 PDF 文件的 Blob 對象
           // 你可以進行後續操作，比如創建一個用於下載的 URL
           const downloadUrl = URL.createObjectURL(blob);

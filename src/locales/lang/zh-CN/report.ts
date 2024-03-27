@@ -32,23 +32,23 @@ export default {
     searchAreaReportTypeOption: 'CDN',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  specialReport: {
+  specialModificationReport: {
     tableAreaTitle: '特殊事项调整报表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: '特殊事项调整',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
-  sapcnoReport: {
+  sapCnoReport: {
     tableAreaTitle: 'SAP_CNO对照表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: 'SAP_CNO对照',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
-  diffReport: {
+  linkedaccountEntitydifferenceReport: {
     tableAreaTitle: '帐号转绑清单报表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: '帐号转绑清单',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
   summeryReport: {
     tableAreaTitle: 'Billing Summary Report',
@@ -56,29 +56,29 @@ export default {
     searchAreaReportTypeOption: 'Billing Summary',
     searchAreaYYYYMMLavel: '月份', // Month
   },
-  invoiceReport: {
+  billingInvoiceReport: {
     tableAreaTitle: 'Billing Invoice Report',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: 'Billing Invoice',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
-  billingReport: {
+  billingListEcrReport: {
     tableAreaTitle: 'Billing List Report',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: 'Billing List',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
-  costbylinkedReport: {
+  billingCostbylinkedReport: {
     tableAreaTitle: 'Cost By Linkedaccount Report',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: 'Cost By Linkedaccount',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
-  costbyproductReport: {
+  billingCostbyproductReport: {
     tableAreaTitle: 'Cost By Product Report',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: 'Cost By Product',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
   internaloporcr: {
     tableAreaTitle: 'CR內部帐本OPOR',
@@ -200,23 +200,23 @@ export default {
     searchAreaReportTypeOption: 'Billing RI Usage C3',
     searchAreaYYYYMMLavel: '月份', // Month
   }, 
-  invoicecontrastReport: {
+  billingInvoiceContrastReport: {
     tableAreaTitle: '帐单发票对照表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: '帐单发票对照表',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
-  taxbycnoReport: {
+  billingTaxbycnoReport: {
     tableAreaTitle: 'Local Billing税额资料报表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: 'Local Billing税额资料报表',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
-  costallocateReport: {
+  billingCostAllocateReport: {
     tableAreaTitle: '测试帐号成本报表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: '测试帐号成本报表',
-    searchAreaYYYYMMLavel: '月份', // Month
+    searchAreaYYYYMMLavel: '日期', // date
   },
   creditownerReportaccountant: {
     tableAreaTitle: 'Credit Owner Report for Accountant',
@@ -248,13 +248,13 @@ export default {
     searchAreaReportTypeOption: `客制化报表-CNS对帐报表-${company}`,
     searchAreaYYYYMMLavel: '日期', // Date
   },
-  zyxelCustiomizedReport: {
+  zyxelReportBeforeBillingAdjustment: {
     tableAreaTitle: '客制化报表-兆勤特调前对帐报表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: '客制化报表-兆勤特调後对帐报表',
     searchAreaYYYYMMLavel: '日期', // Date
   },
-  zyxelCustiomizedAfterDropReport: {
+  zyxelReportAfterBillingAdjustment: {
     tableAreaTitle: '客制化报表-兆勤特调前对帐报表',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: '客制化报表-兆勤特调後对帐报表',
@@ -348,6 +348,18 @@ export default {
     tableAreaTitle: '客制化报表-hk91-sp-用量分布-by account',
     searchAreaReportTypeLavel: '报表种类',
     searchAreaReportTypeOption: '客制化报表-hk91-sp-用量分布-by account',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  sgCagSpReport: {
+    tableAreaTitle: '客制化报表-SG CAG SP报表',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: '客制化报表-SG CAG SP报表',
+    searchAreaYYYYMMLavel: '日期', // Date
+  },
+  euiAwsbuReport: {
+    tableAreaTitle: 'EUI (End User Information) Report For AWS BU',
+    searchAreaReportTypeLavel: '报表种类',
+    searchAreaReportTypeOption: 'EUI (End User Information) Report For AWS BU',
     searchAreaYYYYMMLavel: '日期', // Date
   },
   shieldReclassificationReport: {
