@@ -16,9 +16,7 @@
         }}</Tag>
       </template>
       <template #roles="{ row }">
-        <Tag v-for="item in row.rolesString ? JSON.parse(row.rolesString) : []" :key="item.key">{{
-          item.label
-        }}</Tag>
+        <Tag v-for="item in row.roles ? row.roles : []" :key="item.value">{{ item.roleName }}</Tag>
       </template>
       <template #folding_group>
         <CollapseContainer title="Filter By" @click="collaposeChange" />
@@ -69,14 +67,7 @@
       console.log('数据代理保存事件');
     },
   };
-  // const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
-  //   console.log('zzzzzz:', currentPage, pageSize);
-  //   tablePage.currentPage = currentPage;
-  //   tablePage.pageSize = pageSize;
-  //   findList();
-  // };
   const collaposeChange = (event) => {
-    console.log('9999999:', event.target.nodeName);
     if (event.target.nodeName === 'svg') {
       collapseStatus.value = !collapseStatus.value;
       console.log('collapseStatus.value click:', collapseStatus.value);
@@ -167,12 +158,7 @@
         total: 'total',
       },
       ajax: {
-        query: async ({ page, sorts, filters, form }) => {
-          console.log('page:', form);
-          console.log('sorts:', sorts);
-          console.log('filters:', filters);
-          console.log('form:', form);
-
+        query: async ({ page, sorts, form }) => {
           const queryParams: any = Object.assign({}, form);
           // deal with sort
           const firstSort = sorts[0];
@@ -182,29 +168,31 @@
           }
 
           let result = await getUserList({
-            page: page.currentPage,
+            currentPage: page.currentPage || 1,
             pageSize: page.pageSize || 10,
-            ...form,
+            sortBy: 'asc',
+            status: form.status,
+            displayName: form.displayName,
           });
-          console.log('result:', result);
-          let tempResult = result.slice(
-            (page.currentPage - 1) * page.pageSize,
-            page.currentPage * page.pageSize,
-          );
-          tablePage.total = result.length;
+          console.log('user list results =========:', result);
+          // TODO remove fake pagination
+          // let tempResult = result.items.slice(
+          //   (page.currentPage - 1) * page.pageSize,
+          //   page.currentPage * page.pageSize,
+          // );
+          tablePage.total = result[0].total;
           tablePage.currentPage = page.currentPage;
           tablePage.pageSize = page.pageSize;
-          console.log('tablePage.total:', tablePage.total);
           return {
             trace_id: Guid.newGuid().toString(),
             total_pages: 1,
             current_page: 1,
-            results: tempResult,
+            results: result[0].items,
             status: 1000,
             msg: 'success',
             requested_time: '',
             responsed_time: '',
-            total: result.length,
+            total: result[0].total,
           };
         },
         // queryAll: async ({ form }) => {
@@ -276,16 +264,17 @@
     });
   }
 
-  function handleSuccess({ isUpdate }) {
-    if (isUpdate) {
-      // 演示不刷新表格直接更新內部數據。
-      // 注意：updateTableDataRecord要求表格的rowKey屬性為string並且存在於每一行的record的keys中
-      // const result = updateTableDataRecord(values.id, values);
-    }
+  function handleSuccess() {
+    // if (isUpdate) {
+    //   // 演示不刷新表格直接更新內部數據。
+    //   // 注意：updateTableDataRecord要求表格的rowKey屬性為string並且存在於每一行的record的keys中
+    //   // const result = updateTableDataRecord(values.id, values);
+    // } else {
+    //   setTimeout(() => {
+    //     window.location.reload();
+    //   }, 1000);
+    // }
     triggerProxy('query');
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
   }
 
   // function handleSelect(deptId = '') {

@@ -13,11 +13,13 @@
           <BasicTree
             v-model:value="model[field]"
             :treeData="treeData"
-            :fieldNames="{ title: 'title', key: 'id' }"
+            :fieldNames="{ children: 'children', title: 'menuName', key: 'id' }"
             checkable
+            defaultExpandAll
             :height="300"
             toolbar
-            title="Permissions"
+            title="Menu Permissions"
+            ref="treeRef"
           />
         </template>
       </BasicForm>
@@ -29,11 +31,11 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { BasicTree, TreeItem } from '/@/components/Tree';
+  import { BasicTree, TreeItem, TreeActionType } from '/@/components/Tree';
   import { createRoleItem, getRoleListByPage, updateRoleItem } from '/@/api/sys/system';
-  import { getNavTreeListWithButton } from '/@/api/sys/menu';
-  import { RoleListItem } from '/@/api/sys/model/systemModel';
   import { getNavList } from '/@/api/sys/menu';
+  import { RoleListItem } from '/@/api/sys/model/systemModel';
+  import { getNavWholeTreeNode } from '/@/api/sys/menu';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useLoading } from '/@/components/Loading';
 
@@ -53,6 +55,8 @@
         showActionButtonGroup: false,
       });
 
+      const treeRef = ref<Nullable<TreeActionType>>(null);
+
       // loading module
       const wrapEl = ref<ElRef>(null);
       const [openWrapLoading, closeWrapLoading] = useLoading({
@@ -68,32 +72,45 @@
 
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
+
+        let modifiedTreeNode: string[] = [];
         // 需要在setFieldsValue之前先填充treeData，否則Tree組件可能會報key not exist警告
         if (unref(treeData).length === 0) {
-          treeData.value = (await getNavTreeListWithButton({
+          let res = (await getNavWholeTreeNode({
             status: 1,
-            menuName: null,
-            alias: null,
           })) as any as TreeItem[];
+          treeData.value = res[0].items;
         }
+
+        console.log('record.value on enter =======:', record.value);
+
         // put here to avoid the display required warning
         resetFields();
         if (unref(isUpdate)) {
           openFnWrapLoading();
           if (record.value) {
-            let menuList: any = await getNavList({
-              menuName: null,
-              alias: null,
-              status: 1,
-            });
-            let menuIdList = menuList.map((item) => item.id);
-            record.value.menuPermissionArray = record.value.menuPermissionArray
-              ? record.value.menuPermissionArray
-              : [];
+            if (record.value.menus.length === 0) {
+              record.value.menuPermissionArray = [];
+            } else {
+              let res = (await getNavWholeTreeNode({
+                status: 1,
+              })) as any as TreeItem[];
 
-            if (record.value.menuPermissionArray.length !== 0) {
-              record.value.menuPermissionArray = record.value.menuPermissionArray.filter((item) =>
-                menuIdList.includes(item),
+              modifiedTreeNode = findLeafNodes(res[0].items);
+              console.log('filter Tree node===== :', modifiedTreeNode);
+              console.log('record.value.menus:', record.value.menus);
+              console.log(
+                'record.value.menus - replace:',
+                record.value.menus
+                  .filter((item) => modifiedTreeNode.includes(item.value))
+                  .map((item) => item.value),
+              );
+              record.value.menuPermissionArray = record.value.menus
+                .filter((item) => modifiedTreeNode.includes(item.value))
+                .map((item) => item.value);
+              console.log(
+                'target:',
+                record.value.menus.map((item) => item.value),
               );
             }
           }
@@ -107,102 +124,90 @@
 
       const getTitle = computed(() => (!unref(isUpdate) ? 'Create' : 'Update'));
 
+      function findLeafNodes(data) {
+        let leafNodes = [];
+
+        function traverse(nodes) {
+          for (let node of nodes) {
+            if (node.children.length === 0) {
+              leafNodes.push(node.id); // Add the id of the node with no children
+            } else {
+              traverse(node.children); // Recursively search for leaf nodes
+            }
+          }
+        }
+
+        traverse(data);
+        return leafNodes;
+      }
+
       async function handleSubmit() {
         try {
           const values = await validate();
-          setDrawerProps({ confirmLoading: true });
-          // let menuList: any = await getNavList({
-          //   menuName: null,
-          //   alias: null,
-          //   status: 1,
-          // });
-          // let menuIdList = menuList.map((item) => item.id);
-          // // TODO custom api
-          // // transform values
-          // values.menuPermissionArray = values.menuPermissionArray ? values.menuPermissionArray : [];
-
-          // if (values.menuPermissionArray.length !== 0) {
-          //   values.menuPermissionArray = values.menuPermissionArray.filter((item) =>
-          //     menuIdList.includes(item),
-          //   );
-          // }
-          values.menuPermissionArray = !values.menuPermissionArray
-            ? []
-            : values.menuPermissionArray;
-
-          values.menuPermission = values.menuPermissionArray.length
-            ? values.menuPermissionArray.join(',')
-            : '';
-          values.orderNo = Number(values.orderNo);
-
-          let template = {
-            id: '',
-            roleName: '',
-            roleValue: '',
-            orderNo: 0,
-            remark: '',
-            menuPermission: '',
-            menuPermissionArray: [],
-            status: 1,
-            addMaster: 0,
-            addTime: '',
-            changeMaster: 0,
-            changeTime: '',
-          };
 
           let roleList = await getRoleListByPage({
             roleName: null,
             status: null,
-            page: null,
+            currentPage: null,
             pageSize: null,
+            sortBy: 'ace',
           });
-          let msg = 'The data already exists';
-          if (!unref(isUpdate)) {
-            let result = Object.assign(template, values);
 
-            let checkRepeat = false;
-            roleList.forEach((item) => {
-              if (item.id !== result.id && item.roleValue === result.roleValue) {
-                checkRepeat = true;
-                msg = 'Role Value already exists';
-              }
-              if (item.id !== result.id && item.roleName === result.roleName) {
-                checkRepeat = true;
-                msg = 'Role Name already exists';
+          let menuPermissionArray = values.menuPermissionArray ? values.menuPermissionArray : [];
+          console.log('menuPermissionArray=========:', menuPermissionArray);
+
+          let tempArray: any[] = [];
+          setDrawerProps({ confirmLoading: true });
+          let menuList: any = await getNavList({
+            status: 1,
+          });
+          console.log('menuList===========:', menuList);
+          menuList[0].items.forEach((item) => {
+            menuPermissionArray.forEach((item2) => {
+              if (item.id === item2) {
+                tempArray.push(item.id);
               }
             });
+          });
 
-            if (!checkRepeat) {
-              await createRoleItem(result);
-            } else {
-              createMessage.error(msg);
+          values.menus = tempArray;
+
+          let template = {
+            roleName: '',
+            remark: '',
+            menus: [],
+            status: 1,
+          };
+
+          if (!unref(isUpdate)) {
+            let checkRoleName = roleList[0].items.filter(
+              (item) => item.roleName === values.roleName,
+            );
+            if (checkRoleName.length !== 0) {
+              createMessage.error('The role name already exists');
               return false;
             }
+            // let result = Object.assign(template, values);
+            await createRoleItem({
+              roleName: values.roleName,
+              remark: values.remark,
+              menus: values.menus,
+              status: values.status,
+            });
           } else {
             let result = Object.assign(template, record.value, values);
 
-            let checkRepeat = false;
-
-            roleList.forEach((item) => {
-              if (item.id !== result.id && item.roleValue === result.roleValue) {
-                checkRepeat = true;
-                msg = 'Role Value already exists';
-              }
+            roleList[0].items.forEach((item) => {
               if (item.id !== result.id && item.roleName === result.roleName) {
-                checkRepeat = true;
-                msg = 'Role Name already exists';
+                createMessage.error('Role Name already exists');
+                return false;
               }
             });
-
-            if (!checkRepeat) {
-              await updateRoleItem(result);
-            } else {
-              createMessage.error(msg);
-              return false;
-            }
+            console.log('update result========:', result);
+            await updateRoleItem(result);
           }
           closeDrawer();
-          emit('success');
+          emit('success', { isUpdate: unref(isUpdate) });
         } finally {
           setDrawerProps({ confirmLoading: false });
         }
@@ -211,7 +216,16 @@
       function openFnWrapLoading() {
         openWrapLoading();
       }
+
+      function getTree() {
+        const tree = unref(treeRef);
+        if (!tree) {
+          throw new Error('tree is null!');
+        }
+        return tree;
+      }
       return {
+        getTree,
         registerDrawer,
         registerForm,
         getTitle,
@@ -219,6 +233,7 @@
         treeData,
         openFnWrapLoading,
         wrapEl,
+        treeRef,
       };
     },
   });

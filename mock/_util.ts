@@ -1,10 +1,3 @@
-/*
- * @Description:
- * @Anthor: Telliex
- * @Date: 2023-02-08 02:03:21
- * @LastEditors: Telliex
- * @LastEditTime: 2023-05-02 00:37:08
- */
 // Interface data format used to return a unified format
 import { ResultEnum } from '/@/enums/httpEnum';
 import { Guid } from 'js-guid';
@@ -18,45 +11,68 @@ import { Guid } from 'js-guid';
 //   };
 // }
 
-export function resultSuccess<T = Recordable>(results: T, { msg = 'ok' } = {}) {
+export function resultSuccess<T = any>(items: T[], { msg = 'ok' } = {}) {
   return {
     trace_id: Guid.newGuid().toString(), // add by Telliex
-    total_pages: 1, // add by Telliex
-    current_page: 1, // add by Telliex
-    code: ResultEnum.SUCCESS,
-    results,
+    total_pages: null, // add by Telliex
+    current_page: null, // add by Telliex
+    // code: ResultEnum.SUCCESS,
+    results: {
+      total: null,
+      currentPage: null,
+      pageSize: null,
+      items: items,
+    },
     msg, // add by Telliex
-    type: 'success',
+    // type: 'success',
     status: 1000, // add by Telliex
+    requested_time: '2023-12-14T08:30:50.120Z',
+    responsed_time: '2023-12-14T08:32:50.120Z',
   };
 }
 
 export function resultPageSuccess<T = any>(
   page: number,
   pageSize: number,
-  list: T[],
+  items: T[],
   { msg = 'ok' } = {},
 ) {
-  const pageData = pagination(page, pageSize, list);
+  // const pageData = pagination(page, pageSize, list);
 
   return {
-    ...resultSuccess({
-      items: pageData,
-      total: list.length,
-    }),
-    msg,
+    trace_id: Guid.newGuid().toString(), // add by Telliex
+    total_pages: null, // add by Telliex
+    current_page: page, // add by Telliex
+    // code: ResultEnum.SUCCESS,
+    results: {
+      total: null,
+      currentPage: page,
+      pageSize: pageSize,
+      items: items,
+    },
+    msg, // add by Telliex
+    // type: 'success',
+    status: 1000, // add by Telliex
+    requested_time: '2023-12-14T08:30:50.120Z',
+    responsed_time: '2023-12-14T08:32:50.120Z',
   };
 }
 
 export function resultError(
-  msg = 'Request failed',
-  { code = ResultEnum.ERROR, results = null } = {},
+  items = null,
+  { code = ResultEnum.ERROR, msg = 'Request failed' } = {},
 ) {
   return {
-    code,
-    results,
-    msg,
-    type: 'error',
+    trace_id: Guid.newGuid().toString(), // add by Telliex
+    total_pages: null, // add by Telliex
+    current_page: null, // add by Telliex
+    // code: ResultEnum.SUCCESS,
+    results: items,
+    msg, // add by Telliex
+    // type: 'success',
+    status: code, // add by Telliex
+    requested_time: '2023-12-14T08:30:50.120Z',
+    responsed_time: '2023-12-14T08:32:50.120Z',
   };
 }
 

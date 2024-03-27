@@ -11,6 +11,7 @@
   import { AppProvider } from '/@/components/Application';
   import { useTitle } from '/@/hooks/web/useTitle';
   import { useLocale } from '/@/locales/useLocale';
+  import { useIdleLogout } from '/@/utils/useIdleLogout';
 
   import 'dayjs/locale/zh-tw';
   // support Multi-language
@@ -18,4 +19,6 @@
 
   // Listening to page changes and dynamically changing site titles
   useTitle();
+
+  useIdleLogout();
 </script>

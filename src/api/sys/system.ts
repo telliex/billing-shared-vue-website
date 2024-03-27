@@ -14,15 +14,16 @@ import {
   // RoleParams,
   DeptPageParams,
   DeptItem,
-  DeptListModel,
+  DeptPageListGetResultModel,
   UserPageParams,
   UserItem,
-  // UserListModel,
+  UserPageListGetResultModel,
 } from './model/systemModel';
 
-import { apiTransDataForHeader, correntReturn, errorReturn } from '/@/utils/tools';
-import { isArray } from 'xe-utils';
-import { Guid } from 'js-guid';
+import { API_CONFIG } from '/@/settings/apiSetting';
+import { apiTransDataForHeader } from '/@/utils/tools';
+import { createLocalStorage } from '/@/utils/cache';
+const ls = createLocalStorage();
 
 enum Api {
   GetUserOwnMenu = '/admin/get-menu-query',
@@ -44,14 +45,15 @@ enum Api {
   DeptList = '/system/department',
   UserList = '/system/user',
   IsUserExist = '/system/user/exist',
+  IsUserEmailExist = '/system/user/isUserEmailExist',
+  ChangePassword = '/system/user/changePassword',
 }
 
-const version = '/v1.0';
-
+// =====/elu-api=====
 export const GetDictionaryItems = (data: GetDictionaryModel) =>
   defHttp.post(
     {
-      url: '/parameter' + version + Api.GetDictionary,
+      url: `/parameter${API_CONFIG.VERSION}${Api.GetDictionary}`,
       data,
       headers: apiTransDataForHeader(),
     },
@@ -63,7 +65,7 @@ export const GetDictionaryItems = (data: GetDictionaryModel) =>
 export const getBillUserInfo = (data: any) =>
   defHttp.post(
     {
-      url: version + Api.GetBillUserInfo,
+      url: `${API_CONFIG.VERSION}${Api.GetBillUserInfo}`,
       data,
       headers: apiTransDataForHeader(),
     },
@@ -79,7 +81,7 @@ export const getBillUserInfo = (data: any) =>
 export const GetParameterStoreFromAWS = (data: GetParameterStoreFromAWSModel) =>
   defHttp.post<GetParameterStoreBackAWSModel[]>(
     {
-      url: '/aws' + version + Api.GetParameterStoreFromAWS,
+      url: `/aws${API_CONFIG.VERSION}${Api.GetParameterStoreFromAWS}`,
       data,
       headers: apiTransDataForHeader(),
     },
@@ -96,7 +98,7 @@ export const GetParameterStoreFromAWS = (data: GetParameterStoreFromAWSModel) =>
 export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
   defHttp.post<GetBillCodeValueBackModel[]>(
     {
-      url: '/parameter' + version + Api.GetBillCodeValue,
+      url: `/parameter${API_CONFIG.VERSION}${Api.GetBillCodeValue}`,
       data,
       headers: apiTransDataForHeader(),
     },
@@ -113,33 +115,25 @@ export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
 export const GetS3TargetUrl = (body: any) =>
   defHttp.post(
     {
-      url: '/aws' + version + Api.GetS3TargetUrlValue,
+      url: `/aws${API_CONFIG.VERSION}${Api.GetS3TargetUrlValue}`,
       data: body,
+      headers: apiTransDataForHeader(),
+      // responseType: 'arraybuffer',
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
           if (resObj.status === 1000 || resObj.status === 1001) {
             return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
+              ...resObj,
               results: [resObj.results],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: '',
+              msg: 'Success',
             };
           } else {
             return {
-              trace_id: '',
-              total_pages: 0,
-              current_page: 0,
+              ...resObj,
               results: [],
-              status: 9999,
               msg: 'No data !!',
-              requested_time: '',
-              responsed_time: '',
             };
           }
         },
@@ -155,11 +149,13 @@ export const GetS3TargetUrl = (body: any) =>
     },
   );
 
+// =====/permission-api=====
 export const GetUserPermissionRoleList = (body: any) =>
   defHttp.get(
     {
-      url: '/api' + version + Api.GetUserPermissionRoleListValue,
+      url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionRoleListValue}`,
       data: body,
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -202,8 +198,9 @@ export const GetUserPermissionRoleList = (body: any) =>
 export const GetUserPermissionGetRoleScope = (body: any) =>
   defHttp.post(
     {
-      url: '/api' + version + Api.GetUserPermissionGetRoleScopeValue,
+      url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionGetRoleScopeValue}`,
       data: body,
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -246,8 +243,9 @@ export const GetUserPermissionGetRoleScope = (body: any) =>
 export const GetUserPermission = (body: any) =>
   defHttp.post(
     {
-      url: '/api' + version + Api.GetUserPermissionValue,
+      url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionValue}`,
       data: body,
+      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -328,6 +326,8 @@ export const GetUserPermission = (body: any) =>
 //     },
 //   );
 
+// =====/sys-api=====
+
 /**
  * @description: Role
  */
@@ -335,30 +335,20 @@ export const GetUserPermission = (body: any) =>
 export const getAllRoleList = (params: RolePageParams) => {
   return defHttp.get<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RoleList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.RoleList}`,
       data: {},
       params: {
         roleName: params.roleName,
         status: params.status,
-        page: params.page || 1,
-        pageSize: params.pageSize || 10,
+        currentPage: null,
+        pageSize: null,
       },
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          // let role permission string to array
-          // resObj.forEach((item) => {
-          //   item.roleValueOject = {
-          //     value: item.id,
-          //     label: item.roleName,
-          //   };
-          // });
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          console.log('========role resObj from API=========:', resObj);
+          return resObj;
         },
       ],
     },
@@ -377,29 +367,22 @@ export const getAllRoleList = (params: RolePageParams) => {
  * @description: table Role list
  */
 export const getRoleListByPage = (params: RolePageParams) => {
-  return defHttp.get(
+  return defHttp.get<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RoleList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.RoleList}`,
       data: {},
       params: {
-        roleName: params.roleName,
+        roleName: params.roleName || null,
         status: params.status,
-        page: params.page || 1,
+        currentPage: params.currentPage || 1,
         pageSize: params.pageSize || 10,
+        sortBy: params.sortBy || 'ace',
       },
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            resObj.forEach((item) => {
-              item.menuPermissionArray = item.menuPermission ? item.menuPermission.split(',') : [];
-            });
-
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -417,17 +400,13 @@ export const getRoleListByPage = (params: RolePageParams) => {
 export const setRoleStatus = (id: string, body: any) => {
   return defHttp.patch<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RoleStatus}/${id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.RoleStatus}/${id}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -445,17 +424,13 @@ export const setRoleStatus = (id: string, body: any) => {
 export const removeRoleItem = (body: any) =>
   defHttp.delete<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RoleList}/${body.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.RoleList}/${body.id}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -471,18 +446,13 @@ export const removeRoleItem = (body: any) =>
 export const updateRoleItem = (body: any) =>
   defHttp.patch<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RoleList}/${body.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.RoleList}/${body.id}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -499,18 +469,13 @@ export const updateRoleItem = (body: any) =>
 export const createRoleItem = (body: any) => {
   return defHttp.post<RolePageListGetResultModel>(
     {
-      url: `/api${version}${Api.RoleList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.RoleList}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -529,14 +494,14 @@ export const createRoleItem = (body: any) => {
  * @description: Department
  */
 export const getDeptList = (params: DeptPageParams) => {
-  return defHttp.get<DeptListModel>(
+  return defHttp.get<DeptPageListGetResultModel>(
     {
-      url: `/api${version}${Api.DeptList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.DeptList}`,
       data: {},
       params: {
         deptName: params.deptName,
         status: params.status,
-        page: params.page,
+        currentPage: params.currentPage,
         pageSize: params.pageSize,
       },
       headers: apiTransDataForHeader(),
@@ -544,40 +509,37 @@ export const getDeptList = (params: DeptPageParams) => {
         function (data) {
           const resObj = JSON.parse(data);
           // let role permission string to array
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          // if (isArray(resObj)) {
+          //   return correctReturn(resObj);
+          // } else {
+          //   return errorReturn(resObj);
+          // }
+          return resObj;
         },
       ],
     },
-    {
-      apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
-    },
+    // TODO: recover here
+    // {
+    //   apiUrl: '/sys-api',
+    //   retryRequest: {
+    //     isOpenRetry: false,
+    //     count: 1,
+    //     waitTime: 3000,
+    //   },
+    // },
   );
 };
 
 export const createDeptItem = (body: any) => {
   return defHttp.post<DeptItem>(
     {
-      url: `/api${version}${Api.DeptList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.DeptList}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -595,18 +557,13 @@ export const createDeptItem = (body: any) => {
 export const updateDeptItem = (body: any) =>
   defHttp.patch<DeptItem>(
     {
-      url: `/api${version}${Api.DeptList}/${body.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.DeptList}/${body.id}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -623,17 +580,13 @@ export const updateDeptItem = (body: any) =>
 export const removeDeptItem = (body: any) =>
   defHttp.delete<DeptItem>(
     {
-      url: `/api${version}${Api.DeptList}/${body.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.DeptList}/${body.id}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -651,40 +604,44 @@ export const removeDeptItem = (body: any) =>
  * @description: User
  */
 // check user if exist
-export const isUserExist = (params: any) => {
+export const isUserEmailExist = (params: any) => {
   return defHttp.get<UserItem>(
     {
-      url: `/api${version}${Api.IsUserExist}`,
+      url: `/api${API_CONFIG.VERSION}${Api.IsUserEmailExist}`,
       data: {},
       params: params,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('000000:', resObj);
-          if (!resObj) {
-            return {
-              trace_id: Guid.newGuid().toString(),
-              total_pages: 1,
-              current_page: 1,
-              results: [],
-              status: 1000,
-              msg: 'success',
-              requested_time: '',
-              responsed_time: new Date(),
-            };
-          } else {
-            return {
-              trace_id: Guid.newGuid().toString(),
-              total_pages: 1,
-              current_page: 1,
-              results: null,
-              status: 1000,
-              msg: '帳號已存在',
-              requested_time: '',
-              responsed_time: new Date(),
-            };
-          }
+          console.log('========isUserExist=========:', resObj);
+          return resObj;
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
+  );
+};
+
+export const isUserExist = (params: any) => {
+  return defHttp.get<UserItem>(
+    {
+      url: `/api${API_CONFIG.VERSION}${Api.IsUserExist}`,
+      data: {},
+      params: params,
+      headers: apiTransDataForHeader(),
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          console.log('========isUserExist=========:', resObj);
+          return resObj;
         },
       ],
     },
@@ -700,31 +657,62 @@ export const isUserExist = (params: any) => {
 };
 
 export const getUserList = (params: UserPageParams) => {
-  return defHttp.get(
+  return defHttp.get<UserPageListGetResultModel>(
     {
-      url: `/api${version}${Api.UserList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.UserList}`,
       data: {},
       params: {
-        userName: params.userName,
+        displayName: params.displayName || null,
         status: params.status,
-        dept: params.dept,
-        page: params.page,
-        pageSize: params.pageSize,
+        currentPage: params.currentPage || 1,
+        pageSize: params.pageSize || 10,
+        sortBy: params.sortBy || 'ace',
       },
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
+          console.log('========user=========:', resObj);
           // let role permission string to array
 
-          if (isArray(resObj)) {
-            resObj.forEach(
-              (item) => (item.roles = item.rolesString ? item.rolesString.split(',') : []),
-            );
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          // if (isArray(resObj)) {
+          //   resObj.forEach(
+          //     (item) => (item.roles = item.rolesString ? item.rolesString.split(',') : []),
+          //   );
+          //   return correctReturn(resObj);
+          // } else {
+          //   return errorReturn(resObj);
+          // }
+          return resObj;
+        },
+      ],
+    },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
+  );
+};
+
+export const changePassword = (body: any) => {
+  const header = apiTransDataForHeader();
+  const userId = ls.get('TEMP_USER_INFO_KEY__').id;
+
+  header['User-Id'] = userId; // 5519695a-5397-475a-9925-da817107bcfd
+  return defHttp.patch<UserItem>(
+    {
+      url: `/api${API_CONFIG.VERSION}${Api.ChangePassword}/${userId}`,
+      data: body,
+      headers: header,
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+          console.log('change password:', resObj);
+          return resObj;
         },
       ],
     },
@@ -742,17 +730,13 @@ export const getUserList = (params: UserPageParams) => {
 export const removeUserItem = (body: any) =>
   defHttp.delete<UserItem>(
     {
-      url: `/api${version}${Api.UserList}/${body.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.UserList}/${body.id}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -763,18 +747,13 @@ export const removeUserItem = (body: any) =>
 export const createUserItem = (body: any) => {
   return defHttp.post<UserItem>(
     {
-      url: `/api${version}${Api.UserList}`,
+      url: `/api${API_CONFIG.VERSION}${Api.UserList}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },
@@ -792,18 +771,14 @@ export const createUserItem = (body: any) => {
 export const updateUserItem = (body: any) =>
   defHttp.patch<UserItem>(
     {
-      url: `/api${version}${Api.UserList}/${body.id}`,
+      url: `/api${API_CONFIG.VERSION}${Api.UserList}/${body.id}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
 
-          if (isArray(resObj)) {
-            return correntReturn(resObj);
-          } else {
-            return errorReturn(resObj);
-          }
+          return resObj;
         },
       ],
     },

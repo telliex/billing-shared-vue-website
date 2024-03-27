@@ -33,7 +33,6 @@
     VxeBasicTable,
     VxeGridInstance,
     VxeGridListeners,
-    // VxePagerEvents,
     VxeTableEvents,
   } from '/@/components/VxeTable';
   import { PageWrapper } from '/@/components/Page';
@@ -44,6 +43,7 @@
   import RoleDrawer from './RoleDrawer.vue';
   import { useDrawer } from '/@/components/Drawer';
   import { Guid } from 'js-guid/dist/guid';
+
   const tablePage = reactive({
     total: 0,
     currentPage: 1,
@@ -65,14 +65,8 @@
       console.log('数据代理保存事件');
     },
   };
-  // const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
-  //   console.log('zzzzzz:', currentPage, pageSize);
-  //   tablePage.currentPage = currentPage;
-  //   tablePage.pageSize = pageSize;
-  //   findList();
-  // };
+
   const collaposeChange = (event) => {
-    console.log('9999999:', event.target.nodeName);
     if (event.target.nodeName === 'svg') {
       collapseStatus.value = !collapseStatus.value;
       console.log('collapseStatus.value click:', collapseStatus.value);
@@ -81,14 +75,6 @@
       }
     }
   };
-
-  // const findList = () => {
-  //   gridOptions.loading = true;
-  //   setTimeout(() => {
-  //     gridOptions.loading = false;
-  //     tablePage.total = 10;
-  //   }, 300);
-  // };
 
   const gridOptions = reactive<BasicTableProps>({
     id: 'VxeTable',
@@ -163,12 +149,7 @@
         total: 'total',
       },
       ajax: {
-        query: async ({ page, sorts, filters, form }) => {
-          console.log('page:', form);
-          console.log('sorts:', sorts);
-          console.log('filters:', filters);
-          console.log('form:', form);
-
+        query: async ({ page, sorts, form }) => {
           const queryParams: any = Object.assign({}, form);
           // deal with sort
           const firstSort = sorts[0];
@@ -176,30 +157,26 @@
             queryParams.sort = firstSort.field;
             queryParams.order = firstSort.order;
           }
-
           let result = await getRoleListByPage({
-            page: page.currentPage,
+            currentPage: page.currentPage || 1,
             pageSize: page.pageSize || 10,
-            ...form,
+            sortBy: 'asc',
+            status: form.status,
+            roleName: form.roleName,
           });
-          let tempResult = result.slice(
-            (page.currentPage - 1) * page.pageSize,
-            page.currentPage * page.pageSize,
-          );
-          tablePage.total = result.length;
+          tablePage.total = result[0].total;
           tablePage.currentPage = page.currentPage;
           tablePage.pageSize = page.pageSize;
-          console.log('tablePage.total:', tablePage.total);
           return {
             trace_id: Guid.newGuid().toString(),
             total_pages: 1,
             current_page: 1,
-            results: tempResult,
+            results: result[0].items,
             status: 1000,
             msg: 'success',
             requested_time: '',
             responsed_time: '',
-            total: result.length,
+            total: result[0].total,
           };
         },
         // queryAll: async ({ form }) => {
@@ -251,7 +228,6 @@
 
   // Edit item
   function handleEdit(record: Recordable) {
-    console.log('aaaaaa');
     openDrawer(true, {
       record,
       isUpdate: true,
@@ -278,11 +254,14 @@
     });
   }
 
-  function handleSuccess() {
+  function handleSuccess({ isUpdate }) {
     // triggerProxy('query');
-    setTimeout(() => {
-      window.location.reload();
-    }, 200);
+    triggerProxy('query');
+    // if (!isUpdate) {
+    //   setTimeout(() => {
+    //     window.location.reload();
+    //   }, 200);
+    // }
   }
 </script>
 <style lang="less" scoped></style>

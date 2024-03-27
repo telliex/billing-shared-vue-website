@@ -71,6 +71,7 @@ export function downloadByUrl({
     console.error('Your browser does not support download!');
     return false;
   }
+
   if (isChrome || isSafari) {
     const link = document.createElement('a');
     link.href = url;

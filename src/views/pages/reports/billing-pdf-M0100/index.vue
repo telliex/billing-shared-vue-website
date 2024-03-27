@@ -73,7 +73,8 @@
     let S3ReportClass = reportType.value;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
-    let fileMonth = dayjs(values.YearMonth).format('YYYYMM').toString(); 
+    formData.YearMonth = `${S3Year}-${S3Month}`;
+    let fileMonth = dayjs(values.YearMonth).format('YYYYMM').toString();
     let S3FileName = `${fileMonth}-${S3ReportClass}-861-00000100-1.pdf`; // [for need to modify area] // [for need to modify area]
     objectKeyString.value = `bill_invoice_raw/bill_invoice_output_desc_${fileMonth}/${S3FileName}`;
     return objectKeyString.value;

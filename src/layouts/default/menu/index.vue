@@ -114,7 +114,6 @@
       // [Ctrl + click] to open in a new tab
       function handleKeyDown() {
         if (!ctrlPressed.value) {
-          console.log('handleKeyDown');
           ctrlPressed.value = true;
         }
       }
@@ -123,7 +122,6 @@
       function handleKeyUp() {
         if (ctrlPressed.value) {
           ctrlPressed.value = false;
-          console.log('handleKeyUp');
         }
       }
 

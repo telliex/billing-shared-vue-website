@@ -17,7 +17,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { createNavItem, getNavTreeListOnlyCatalog, updateNavItem } from '/@/api/sys/menu';
+  import { createNavItem, getNavTreeNodeOnlyCatalog, updateNavItem } from '/@/api/sys/menu';
   import { NavListItem } from '/@/api/sys/model/menuModel';
   import { useLoading } from '/@/components/Loading';
 
@@ -52,12 +52,6 @@
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
         record.value = data?.record || null;
-
-        let treeData = await getNavTreeListOnlyCatalog({
-          status: 1,
-          alias: null,
-          menuName: null,
-        });
         // put here to avoid the display required warning
         resetFields();
         if (unref(isUpdate)) {
@@ -68,13 +62,23 @@
           closeWrapLoading();
         }
 
-        if (data.record && data.record.type === 'catalog') {
-          treeData = treeData.filter((item) => item.title !== data.record.alias);
-        }
+        // if (data.record && data.record.type === 'catalog') {
+        //   treeData = treeData.filter((item) => item.title !== data.record.alias);
+        // }
 
         updateSchema({
           field: 'parentMenu',
-          componentProps: { treeData },
+          component: 'ApiTreeSelect',
+          componentProps: {
+            api: async () => {
+              const results = await getNavTreeNodeOnlyCatalog({
+                status: 1,
+              });
+              return new Promise((resolve) => {
+                resolve(results[0].items);
+              });
+            },
+          },
         });
       });
 
@@ -89,17 +93,21 @@
             values.parentMenu = '';
           }
 
+          if (!values.icon) {
+            values.icon = '';
+          }
+
           // avoid the path warning
           if (values.isExt === 0) {
             // non-external link
-            if (values.type === 'catalog') {
+            if (values.type === 0) {
               values.routePath = '/' + values.routePath.replace(/^\/+|\/+$/g, '');
             } else {
               values.routePath = values.routePath.replace(/^\/+|\/+$/g, '');
             }
           }
 
-          if (values.type === 'catalog') {
+          if (values.type === 0) {
             if (values.isExt === 1) {
               values.component = 'IFrame';
               values.componentName = 'IFrame';
@@ -115,28 +123,18 @@
             }
           }
           let template = {
-            id: '',
-            type: '',
+            type: 0,
             menuName: '',
-            alias: '',
             description: '',
-            permission: '',
             component: '',
             componentName: '',
             parentMenu: '',
             routePath: '',
-            orderNo: 0,
+            sortNo: 0,
             icon: '',
             parentId: '',
-            iExt: 0,
-            isCache: 0,
-            cacheName: '',
-            isShow: 0,
+            isExt: 0,
             status: 1,
-            addMaster: 0,
-            addTime: '',
-            changeMaster: 0,
-            changeTime: '',
           };
 
           if (!unref(isUpdate)) {

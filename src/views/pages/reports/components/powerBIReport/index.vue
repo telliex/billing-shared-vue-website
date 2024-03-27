@@ -48,8 +48,12 @@
   const { createMessage } = useMessage();
   import { useLoading } from '/@/components/Loading';
   import axios from 'axios';
-  import { getFinalActiveTime, logoutApi, writeFinalActiveTime } from '/@/api/sys/user';
-  import { checkLoginTimeout } from '/@/utils/tools';
+  // import {
+  //   getFinalActiveTime,
+  //   logoutApi,
+  //   writeFinalActiveTime,
+  //   JWTlogoutApi,
+  // } from '/@/api/sys/user';
 
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
@@ -77,7 +81,7 @@
   let targetColumn = ref(props.targetColumn);
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName.value}__container`;
-  let currentUserId = ls.get('TEMP_USER_ID_KEY__');
+  let currentUserId = ls.get('TEMP_MGT_ID_KEY__');
   // Flag which specifies whether to use phase embedding or not
   const phasedEmbeddingFlag = false;
 
@@ -169,19 +173,31 @@
     }
 
     // deal with
-    let UserInfo = await getFinalActiveTime();
-    if (!UserInfo || UserInfo.length === 0) {
-      logoutApi();
-      return;
-    }
+    // let UserInfo = await getFinalActiveTime();
+    // if (!UserInfo || UserInfo.length === 0) {
+    //   try {
+    //     await logoutApi();
+    //     await JWTlogoutApi();
+    //   } catch {
+    //     console.log('註銷 Token 失敗');
+    //   }
 
-    let checkTimeout = checkLoginTimeout(UserInfo[0]);
-    if (checkTimeout) {
-      await writeFinalActiveTime();
-    } else {
-      logoutApi();
-      return;
-    }
+    //   return;
+    // }
+
+    // let checkTimeout = checkLoginTimeout(UserInfo[0]);
+    // if (checkTimeout) {
+    //   await writeFinalActiveTime();
+    // } else {
+    //   try {
+    //     await logoutApi();
+    //     await JWTlogoutApi();
+    //   } catch {
+    //     console.log('註銷 Token 失敗');
+    //   }
+
+    //   return;
+    // }
 
     // let filterValueResult = await GetPowerBIFilterValue({
     //   userId: currentUserId,

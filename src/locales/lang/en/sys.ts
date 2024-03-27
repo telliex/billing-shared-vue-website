@@ -66,13 +66,14 @@ export default {
     placeholder: 'Please enter the lock screen password or user password',
   },
   login: {
-    backSignIn: 'Back sign in',
+    backSignIn: 'Back Sign In',
     mobileSignInFormTitle: 'Mobile sign in',
     qrSignInFormTitle: 'Qr code sign in',
     signInFormTitle: 'Sign in',
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',
-
+    setFormContent: `If you log in for the first time or use a password that has been used for more than 3 months,
+    you need to change the password again.English letters in uppercase and lowercase + numbers + special symbols, at least eight characters. Please note that there is a difference in uppercase and lowercase letters.`,
     signInTitle: 'Metrics Analysis and Reporting System',
     signInDesc: 'Enter your personal details and get started!',
     policy: 'I agree to the xxx Privacy Policy',
@@ -82,6 +83,7 @@ export default {
     registerButton: 'Sign up',
     rememberMe: 'Remember me',
     forgetPassword: 'Forget Password?',
+    setPassword: 'Set Password',
     otherSignIn: 'Sign in with',
 
     // notify
@@ -97,8 +99,11 @@ export default {
     diffPwd: 'The two passwords are inconsistent',
 
     company: 'Company',
-    userName: 'Username',
+    userName: 'User Email',
     password: 'Password',
+    oldPassword: 'Old password',
+    newPassword: 'New password',
+    checkPassword: 'Check password',
     confirmPassword: 'Confirm Password',
     email: 'Email',
     smsCode: 'SMS code',

@@ -37,7 +37,6 @@ export const upLoad2S3 = (body: any) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          console.log('resObj7777777', resObj);
 
           if (resObj.status === 1000 || resObj.status === 1001) {
             return {

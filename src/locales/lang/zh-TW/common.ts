@@ -11,6 +11,7 @@ export default {
   customText: '下載',
   inputText: '請輸入',
   chooseText: '請選擇',
+  setPasswordText: '設置密碼',
 
   redo: '刷新',
   back: '返回',

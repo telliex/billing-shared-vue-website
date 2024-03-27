@@ -35,6 +35,10 @@ ARG A_S3_JSON
 ARG A_API_POWERBI_LAMBDA
 ARG A_S3_REPORT
 ARG A_S3_ACCOUNT_REPORT
+ARG A_S3_INVOICE_REPORT
+ARG A_S3_ECV_REPORT
+ARG A_API_KEY
+ARG A_API_JWT
 
 ENV ENV $A_ENV
 ENV REGION us-west-2
@@ -52,14 +56,9 @@ ENV API_POWERBI_LAMBDA $A_API_POWERBI_LAMBDA
 ENV S3_REPORT billing-dev-sync-data-test
 ENV S3_ACCOUNT_REPORT billing-dev-accounting-report
 ENV S3_INVOICE_REPORT billing-dev-bill-invoice
-
-# ENV ENV dev
-# ENV REGION us-west-2
-# ENV API_MGT_REPORT http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3007
-# ENV API_MGT_PERMISSION http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3002
-# ENV API_MGT_ELU http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3006
-# ENV OLD_MGT http://mgt-dev.ecv-billing-center.com
-# ENV CRS http://dataplatform-dev.ecv-billing-center.com
+ENV S3_ECV_REPORT billing-dev-sync-data
+ENV API_KEY $A_API_KEY
+ENV API_JWT $A_API_JWT
 
 # 開啟監聽端口，以便外部流量可以到達 Nginx
 EXPOSE 80

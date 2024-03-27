@@ -14,6 +14,7 @@
 
   const getFormTitle = computed(() => {
     const titleObj = {
+      [LoginStateEnum.SET_PASSWORD]: t('sys.login.setFormTitle'),
       [LoginStateEnum.RESET_PASSWORD]: t('sys.login.forgetFormTitle'),
       [LoginStateEnum.LOGIN]: t('sys.login.signInFormTitle'),
       [LoginStateEnum.REGISTER]: t('sys.login.signUpFormTitle'),

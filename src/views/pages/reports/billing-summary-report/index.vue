@@ -13,7 +13,8 @@
     />
   </div>
 </template>
-<script lang="ts" setup name="SummeryReport">  //[for need to modify area]
+<script lang="ts" setup name="SummeryReport">
+  //[for need to modify area]
   import { ref, reactive } from 'vue';
   import BasicReport from '../components/basicReport/index.vue';
   import { getFormSchema } from './formData';
@@ -55,7 +56,7 @@
   });
   let tableName = ref(t('report.summeryReport.tableAreaTitle')); //[for need to modify area]
   let reportType = ref('billing_summary_hk'); // [M] report type & S3 prefix folder name,
-  let s3Bucket = import.meta.env.VITE_GLOB_S3_REPORT; // [M] S3 bucket name
+  let s3Bucket = import.meta.env.VITE_GLOB_S3_ECV_REPORT; // [M] S3 bucket name
 
   let formData = reactive<SearchItems>({
     ReportType: reportType.value,
@@ -73,7 +74,8 @@
     let S3ReportClass = reportType.value;
     let S3Month = dayjs(values.YearMonth).format('MM').toString();
     let S3Year = dayjs(values.YearMonth).format('YYYY').toString();
-    let fileMonth = dayjs(values.YearMonth).format('YYYYMM').toString();// [for need to modify area]
+    formData.YearMonth = `${S3Year}-${S3Month}`;
+    let fileMonth = dayjs(values.YearMonth).format('YYYYMM').toString(); // [for need to modify area]
     let S3FileName = `${S3ReportClass}_${fileMonth}.csv`; // [for need to modify area]
     objectKeyString.value = `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`;
     return objectKeyString.value;

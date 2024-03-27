@@ -26,7 +26,7 @@
 <script lang="ts" setup name="BasicReport">
   import { ref, reactive, onMounted } from 'vue';
   import { GetS3TargetUrl } from '/@/api/sys/system';
-  import { getFinalActiveTime, writeFinalActiveTime } from '/@/api/sys/user';
+  // import { getFinalActiveTime, writeFinalActiveTime } from '/@/api/sys/user';
   import { Guid } from 'js-guid';
   import { CollapseContainer } from '/@/components/Container';
   import { BasicForm, useForm, FormSchema } from '/@/components/Form/index';
@@ -41,8 +41,8 @@
   import * as XLSX from 'xlsx';
   import { dateUtil } from '/@/utils/dateUtil';
   import axios from 'axios';
-  import { checkLoginTimeout } from '/@/utils/tools';
-  import { logoutApi } from '/@/api/sys/user';
+  // import { checkLoginTimeout } from '/@/utils/tools';
+  // import { logoutApi, JWTlogoutApi } from '/@/api/sys/user';
   import { useLoading } from '/@/components/Loading';
   const { t } = useI18n();
 
@@ -289,19 +289,29 @@
   async function handleSearchSubmit(values: any) {
     openWrapLoading();
     // deal with
-    let UserInfo = await getFinalActiveTime();
-    if (!UserInfo || UserInfo.length === 0) {
-      logoutApi();
-      return false;
-    }
+    // let UserInfo = await getFinalActiveTime();
+    // if (!UserInfo || UserInfo.length === 0) {
+    //   try {
+    //     await logoutApi();
+    //     await JWTlogoutApi();
+    //   } catch {
+    //     console.log('註銷 Token 失敗');
+    //   }
+    //   return false;
+    // }
 
-    let checkTimeout = checkLoginTimeout(UserInfo[0]);
-    if (checkTimeout) {
-      await writeFinalActiveTime();
-    } else {
-      logoutApi();
-      return false;
-    }
+    // let checkTimeout = checkLoginTimeout(UserInfo[0]);
+    // if (checkTimeout) {
+    //   await writeFinalActiveTime();
+    // } else {
+    //   try {
+    //     await logoutApi();
+    //     await JWTlogoutApi();
+    //   } catch {
+    //     console.log('註銷 Token 失敗');
+    //   }
+    //   return false;
+    // }
     const result = props.childFormValue(values);
     let S3Location = await GetS3TargetUrl({
       trace_id: Guid.newGuid().toString(),
@@ -334,19 +344,31 @@
   async function handleSearchCustom(values: any) {
     openWrapLoading();
     // deal with
-    let UserInfo = await getFinalActiveTime();
-    if (!UserInfo || UserInfo.length === 0) {
-      logoutApi();
-      return false;
-    }
+    // let UserInfo = await getFinalActiveTime();
+    // if (!UserInfo || UserInfo.length === 0) {
+    //   try {
+    //     await logoutApi();
+    //     await JWTlogoutApi();
+    //   } catch {
+    //     console.log('註銷 Token 失敗');
+    //   }
 
-    let checkTimeout = checkLoginTimeout(UserInfo[0]);
-    if (checkTimeout) {
-      await writeFinalActiveTime();
-    } else {
-      logoutApi();
-      return false;
-    }
+    //   return false;
+    // }
+
+    // let checkTimeout = checkLoginTimeout(UserInfo[0]);
+    // if (checkTimeout) {
+    //   await writeFinalActiveTime();
+    // } else {
+    //   try {
+    //     await logoutApi();
+    //     await JWTlogoutApi();
+    //   } catch {
+    //     console.log('註銷 Token 失敗');
+    //   }
+
+    //   return false;
+    // }
 
     const result = props.childFormValue(values);
 
@@ -364,10 +386,39 @@
 
     // download file & read file
     if (S3Location) {
-      await downloadByUrl({
-        url: S3Location[0],
-        target: '_self',
-      });
+      // await downloadByUrl({
+      //   url: S3Location[0],
+      //   target: '_self',
+      //   fileName: 'default.pdf',
+      // });
+
+      fetch(S3Location[0])
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('網絡響應不是 ok 狀態');
+          }
+          // 將響應體轉換為 Blob
+          return response.blob();
+        })
+        .then((blob) => {
+          // 此時的 blob 就是你需要的 PDF 文件的 Blob 對象
+          console.log(blob);
+
+          // 你可以進行後續操作，比如創建一個用於下載的 URL
+          const downloadUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = downloadUrl;
+          a.download = `${props.formData['ReportType']}-${
+            props.formData['YearMonth']
+          }.${props.objectKeyString.split('.').pop()}`;
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(downloadUrl); // 釋放 URL 對象
+          document.body.removeChild(a);
+        })
+        .catch((error) => {
+          console.error('獲取 PDF 失敗:', error);
+        });
 
       closeWrapLoading();
     } else {

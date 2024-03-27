@@ -14,6 +14,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, computed, unref } from 'vue';
+  import { stringToHSA265 } from '/@/utils/auth';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './user.data';
@@ -58,8 +59,17 @@
         record.value = data?.record || null;
 
         if (record.value) {
-          data.record['rolesArray'] = data.record['rolesString']
-            ? JSON.parse(data.record['rolesString'])
+          data.record['rolesArray'] = data.record['roles']
+            ? data.record['roles'].map((item: any) => {
+                return {
+                  roleName: item.roleName,
+                  value: item.value,
+                  originLabel: item.roleName,
+                  id: item.value,
+                  key: item.value,
+                  label: item.roleName,
+                };
+              })
             : [];
         }
 
@@ -68,23 +78,18 @@
         if (unref(isUpdate)) {
           openFnWrapLoading();
           rowId.value = data.record.id;
+          // data.record['password'] = '';
           await setFieldsValue({
             ...data.record,
           });
           closeWrapLoading();
         }
 
-        // const treeData = await getDeptList({
-        //   deptName: null,
-        //   status: null,
-        //   page: null,
-        //   pageSize: null,
-        // });
         updateSchema([
-          {
-            field: 'pwd',
-            show: !unref(isUpdate),
-          },
+          // {
+          //   field: 'pwd',
+          //   show: !unref(isUpdate),
+          // },
           // {
           //   field: 'dept',
           //   componentProps: { treeData },
@@ -96,47 +101,77 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-
           if (!values) {
             createMessage.error('Required fields are missing！');
             return;
           }
 
           let isUser = await isUserExist({
-            id: rowId.value,
-            userName: values.userName,
+            email: values.email,
           });
 
-          if (!isUser) {
-            createMessage.error('User name already exists');
-            return;
+          if (isUser[0]) {
+            if (!unref(isUpdate)) {
+              createMessage.error('The E-mail already exists');
+              return;
+            } else {
+              if (isUser[0].id !== rowId.value) {
+                createMessage.error('The E-mail already exists');
+                return;
+              }
+            }
           }
-          values.rolesArray = values.rolesArray.map(({ ['option']: _, ...rest }) => rest);
-          values.rolesString = JSON.stringify(values.rolesArray);
+
+          if (unref(isUpdate) && !values.resetPwd) {
+            values.pwd = null;
+          } else {
+            let encryptPwd = await stringToHSA265(values.pwd);
+
+            if (record.value && encryptPwd === record.value.password) {
+              createMessage.error('The new password is not the same as original password');
+              return;
+            }
+            if (!validatePassword(values.pwd)) {
+              console.log('The new password is not in the correct format');
+              createMessage.error('The new password is not in the correct format');
+              return;
+            }
+            values.password = encryptPwd;
+          }
+          console.log('values=========:', values);
+          values.roles = [];
+          if (values.rolesArray) {
+            values.rolesArray.forEach((item: any) => {
+              item.id = item.value;
+              item.roleName = item.label;
+              values.roles.push(item.value);
+            });
+          } else {
+            values.rolesArray = [];
+          }
 
           // TODO: replace with deptId
           let template = {
-            id: '',
-            dept: '80af73a3-972d-4ec0-8e1b-35235f3cb531',
-            userName: '',
-            realName: '',
-            nickname: '',
-            password: `default`,
-            email: '',
+            displayName: '',
+            avatar: null,
+            password: null,
+            resetPwd: false,
             remark: '',
-            rolesString: '',
-            roles: [],
+            mgtNumber: null,
             status: 1,
-            addMaster: 0,
-            addTime: '',
-            changeMaster: 0,
-            changeTime: '',
+            sex: null,
+            birthday: null,
+            tel: null,
+            mobile: null,
+            email: null,
+            address: null,
+            country: null,
+            roles: [],
           };
 
-          if (isUser) {
+          if (!isUser[0] || isUser[0].id === rowId.value) {
             if (!unref(isUpdate)) {
               let result = Object.assign(template, values);
-              console.log('resultnew:', result);
               await createUserItem(result);
             } else {
               console.log('resultold:', Object.assign(template, record.value, values));
@@ -153,7 +188,26 @@
       function openFnWrapLoading() {
         openWrapLoading();
       }
-      return { registerModal, registerForm, getTitle, handleSubmit, wrapEl, openFnWrapLoading };
+      function validatePassword(password) {
+        // 正則表達式解釋：
+        // ^ 代表開始
+        // (?=.*[a-z]) 代表至少有一個小寫字母
+        // (?=.*[A-Z]) 代表至少有一個大寫字母
+        // (?=.*\d) 代表至少有一個數字
+        // (?=.*[@$!%*?&]) 代表至少有一個特殊字符，可以根據需要添加或刪除特殊字符
+        // .{8,} 代表至少8個任意字符
+        // $ 代表結束
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+        return regex.test(password);
+      }
+      return {
+        registerModal,
+        registerForm,
+        getTitle,
+        handleSubmit,
+        wrapEl,
+        openFnWrapLoading,
+      };
     },
   });
 </script>
