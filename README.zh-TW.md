@@ -43,11 +43,12 @@ ECV Dadaplatform Admin 是一個數據平臺。使用了最新的`vue3`,`vite2`,
 
 ```bash
 // CBMS
-git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
+[x] git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
 
-// CRS
-git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
-```
+// MARS
+[x] git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
+
+// New
 
 - 安裝依賴
 
@@ -56,7 +57,7 @@ git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-
 cd billing-mgt-eterne
 yarn install
 
-// CRS
+// MARS
 cd data-platform-front-end
 yarn install
 
