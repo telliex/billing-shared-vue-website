@@ -164,7 +164,6 @@
         if (rememberMe.value) {
           localeStore.setLoginInfo({
             username: data.account,
-            // password: await stringToHSA265(data.password),
             password: data.password,
             remeberMe: rememberMe.value,
           });
@@ -203,15 +202,16 @@
       document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''),
     );
 
-    const system = import.meta.env.VITE_GLOB_SYSTEM;
+    const system = import.meta.env.VITE_GLOB_APP_TITLE;
+    console.log('system111111:', system);
 
-    if (system === 'mars') {
+    if (system === 'MARS') {
       const localeStore = useLocaleStoreWithOut();
       let loginInput = localeStore.getLogin;
       formData.account = loginInput.username;
       formData.password = loginInput.password;
       rememberMe.value = loginInput.remeberMe;
-    } else if (system === 'mgt') {
+    } else if (system === 'CBMS') {
       redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
 
       // if (
@@ -224,26 +224,18 @@
       //   }, 5000);
       //   return;
       // }
-      console.log('=======mgt');
 
-      ///const parsed = queryString.parse(window.location.hash.substring(1).split('?')[1]);
+      // const parsed = queryString.parse(window.location.hash.substring(1).split('?')[1]);
 
       const queryParams = new URLSearchParams(window.location.search.replace(/\//, ''));
-      const user = queryParams.get('user'); // 获取'user'的值
+      const user = queryParams.get('user');
+      const hash = window.location.hash.substring(1);
 
-      console.log('2222222:', user);
-      // 从URL的hash部分获取查询字符串
-      const hash = window.location.hash.substring(1); // 移除开头的'#'
+      const queryString = hash.split('?')[1];
 
-      // 从hash中分割查询参数字符串
-      const queryString = hash.split('?')[1]; // 获取查询参数字符串
-
-      // 使用URLSearchParams解析查询参数
       const queryParamsPath = new URLSearchParams(queryString);
 
-      // 获取'redirect'查询参数的值
       const redirectPath = queryParamsPath.get('redirect');
-      console.log('33333333:', redirectPath);
       // if (!parsed.mgtId) {
       //   createMessage.error('跳轉路徑參數錯誤，請重新登入 MGT 平台 !!');
       //   setTimeout(() => {
