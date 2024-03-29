@@ -279,7 +279,7 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
         reportType: 'cost_revenue_report'
       }),
       schemas: [
-        getDateComponentInfo('report.costRevenueReport.tableAreaTitle')
+        getDateComponentInfo('report.costRevenueReport.searchAreaYYYYMMLavel')
       ],
     },
     "billing-summary-report": {
