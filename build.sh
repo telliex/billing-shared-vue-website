@@ -10,7 +10,7 @@ main_process() {
     REPORT_API_URL=$1
     ELU_API_URL=$2
     OLD_MGT_URL=$3
-    CRS_URL=$4
+    MARS_URL=$4
     CBMS_URL=$5
     ENV="$(echo ${6} | tr '[:upper:]' '[:lower:]')"
     S3_REGION_URL=$7
@@ -38,7 +38,7 @@ main_process() {
     echo "oREPORT_API_URL:$REPORT_API_URL"
     echo "oELU_API_URL:$ELU_API_URL"
     echo "oOLD_MGT_URL:$OLD_MGT_URL"
-    echo "oCRS_URL:$CRS_URL"
+    echo "oMARS_URL:$MARS_URL"
     echo "oCBMS_URL:$CBMS_URL"
     echo "oENV:$ENV"
     echo "oS3_REGION_URL:$S3_REGION_URL"
@@ -64,7 +64,7 @@ main_process() {
     sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | \
     sed -e 's|{{CBMS_URL}}|'$CBMS_URL'|g' | \
     sed -e 's|{{OLD_MGT_URL}}|'$OLD_MGT_URL'|g' | \
-    sed -e 's|{{CRS_URL}}|'$CRS_URL'|g' | \
+    sed -e 's|{{MARS_URL}}|'$MARS_URL'|g' | \
     sed -e 's|{{S3_REGION_URL}}|'$S3_REGION_URL'|g' | \
     sed -e 's|{{S3_JSON_URL}}|'$S3_JSON_URL'|g' | \
     sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g' | \

@@ -5,7 +5,7 @@ echo "----------====目前環境 start====------------"
 echo "API_MGT_REPORT:${API_MGT_REPORT}"
 echo "API_MGT_ELU:${API_MGT_ELU}"
 echo "OLD_MGT:${OLD_MGT}"
-echo "CRS:${CRS}"
+echo "MARS:${MARS}"
 echo "CBMS:${CBMS}"
 echo "ENV:${ENV}"
 echo "S3_REGION:${S3_REGION}"
@@ -26,7 +26,12 @@ echo "COMPANY:${COMPANY}"
 echo "----------====目前環境 end====------------"
 
 
-bash build.sh ${API_MGT_REPORT} ${API_MGT_ELU} ${OLD_MGT} ${CRS} ${CBMS} ${ENV} ${S3_REGION} ${S3_JSON} ${API_MGT_PERMISSION} ${API_SYS} ${API_POWERBI_LAMBDA} ${S3_REPORT} ${S3_ACCOUNT_REPORT} ${S3_INVOICE_REPORT} ${S3_ECV_REPORT} ${API_KEY} ${API_JWT} ${API_MGT_CONTRACT} ${APP_TITLE} ${PLATFORM} ${APP_TITLE} ${PLATFORM} ${COMPANY}
+bash build.sh ${API_MGT_REPORT} ${API_MGT_ELU} ${OLD_MGT} ${MARS} ${CBMS} ${ENV} \
+${S3_REGION} ${S3_JSON} ${API_MGT_PERMISSION} ${API_SYS} ${API_POWERBI_LAMBDA} \
+${S3_REPORT} ${S3_ACCOUNT_REPORT} ${S3_INVOICE_REPORT} ${S3_ECV_REPORT} \
+${API_KEY} ${API_JWT} ${API_MGT_CONTRACT} ${APP_TITLE} ${PLATFORM} \
+${APP_TITLE} ${PLATFORM} ${COMPANY}
+
 pnpm build:${ENV}
 cp -r dist/* ../usr/share/nginx/html 
 cp -r default.conf ../etc/nginx/conf.d/default.conf 

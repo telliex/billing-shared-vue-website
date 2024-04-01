@@ -4,7 +4,7 @@
 
 ## Introduction
 
-ECV management Admin is a data platform. Using the latest `vue3`, `vite2`, `TypeScript` and other mainstream technology development. The CBMS & CRS use it.
+ECV management Admin is a data platform. Using the latest `vue3`, `vite2`, `TypeScript` and other mainstream technology development. The CBMS & MARS use it.
 
 ## Feature
 
