@@ -37,6 +37,7 @@ export interface RouteItem {
 }
 
 export type NavParams = {
+  id?: string | null;
   roleName?: string | null;
   status?: number | null;
 };
@@ -44,7 +45,6 @@ export type NavParams = {
 /**
  * @description: Get menu return value
  */
-// export type getMenuListResultModel = RouteItem[];
 export type getNavListResultModel = RouteItem[];
 export type NavListResultModel = BasicFetchResult<NavListItem>;
 

@@ -21,44 +21,26 @@ COPY package*.json ./
 RUN npm install -g pnpm && pnpm install
 COPY . .
 
-ARG A_ENV
-ARG A_API_MGT_REPORT
-ARG A_API_MGT_PERMISSION
-ARG A_API_MGT_ELU
-ARG A_API_SYS
-ARG A_OLD_MGT
-ARG A_CRS
-ARG A_CBMS
-ARG A_COMPANY
-ARG A_S3_REGION
-ARG A_S3_JSON
-ARG A_API_POWERBI_LAMBDA
-ARG A_S3_REPORT
-ARG A_S3_ACCOUNT_REPORT
-ARG A_S3_INVOICE_REPORT
-ARG A_S3_ECV_REPORT
-ARG A_API_KEY
-ARG A_API_JWT
-
-ENV ENV $A_ENV
+ENV ENV dev
 ENV REGION us-west-2
-ENV API_MGT_REPORT $A_API_MGT_REPORT
-ENV API_MGT_PERMISSION $A_API_MGT_PERMISSION
-ENV API_MGT_ELU $A_API_MGT_ELU
-ENV API_SYS $A_API_SYS
-ENV OLD_MGT $A_OLD_MGT
-ENV CRS $A_CRS
-ENV CBMS $A_CBMS
+ENV API_MGT_REPORT http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3008
+ENV API_MGT_PERMISSION http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3002
+ENV API_MGT_ELU http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3006
+ENV API_SYS http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3008
+ENV OLD_MGT http://mgt-dev.ecv-billing-center.com
+ENV MARS http://mars-dev.ecv-billing-center.com
+ENV CBMS http://cbms-dev.ecv-billing-center.com
 ENV COMPANY ECV
 ENV S3_REGION us-west-2
 ENV S3_JSON billing-dev-website-resource
-ENV API_POWERBI_LAMBDA $A_API_POWERBI_LAMBDA
+ENV API_POWERBI_LAMBDA https://rgoyovotjqogivdmoth4ut3dsm0jgyhl.lambda-url.us-west-2.on.aws/
 ENV S3_REPORT billing-dev-sync-data-test
 ENV S3_ACCOUNT_REPORT billing-dev-accounting-report
 ENV S3_INVOICE_REPORT billing-dev-bill-invoice
 ENV S3_ECV_REPORT billing-dev-sync-data
-ENV API_KEY $A_API_KEY
-ENV API_JWT $A_API_JWT
+ENV API_KEY 484CD16940B64F878DC9CCE2E79EA08E
+ENV API_JWT http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3010
+ENV API_MGT_CONTRACT http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3007
 
 # 開啟監聽端口，以便外部流量可以到達 Nginx
 EXPOSE 80

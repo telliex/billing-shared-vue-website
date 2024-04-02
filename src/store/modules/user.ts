@@ -155,10 +155,10 @@ export const useUserStore = defineStore('user', {
 
         const data = await loginApi(loginParams, mode);
         console.log('login data:', data);
+
         ls.set('TEMP_USER_INFO_KEY__', data[0].items[0]);
         ls.set('TEMP_MGT_ID_KEY__', data[0].items[0].mgtNumber);
 
-        //let checkPasswordLimit =
         if (
           data[0].items[0].isInitPassowrd === true ||
           checkLogin3MonthsTimeout(data[0].items[0].passwordTime)

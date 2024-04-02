@@ -4,7 +4,7 @@
 
 ## Introduction
 
-ECV management Admin is a data platform. Using the latest `vue3`, `vite2`, `TypeScript` and other mainstream technology development. The CBMS & CRS use it.
+ECV management Admin is a data platform. Using the latest `vue3`, `vite2`, `TypeScript` and other mainstream technology development. The CBMS & MARS use it.
 
 ## Feature
 
@@ -17,10 +17,6 @@ ECV management Admin is a data platform. Using the latest `vue3`, `vite2`, `Type
 - **Component** Multiple commonly used components are encapsulated twice
 
 ## Preview
-
-- [ECV-DataPlatform-admin](http://gather-demo.s3-website-us-west-2.amazonaws.com)
-
-Test account: billing /123456
 
 ## Documentation
 
@@ -43,10 +39,13 @@ Test account: billing /123456
 
 ```bash
 // CBMS
-git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
+[x] git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
 
-// CRS
-git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
+// MARS
+[x] git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
+
+// New
+
 
 ```
 
@@ -57,7 +56,7 @@ git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-
 cd billing-mgt-eterne
 yarn install
 
-// CRS
+// MARS
 cd data-platform-front-end
 yarn install
 

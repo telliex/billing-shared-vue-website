@@ -10,7 +10,7 @@
 
   import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
   import { ScrollContainer } from '/@/components/Container';
-
+  import { Icon } from '/@/components/Icon';
   import { useGo } from '/@/hooks/web/usePage';
   import { useSplitMenu } from './useLayoutMenu';
   import { openWindow } from '/@/utils';
@@ -40,7 +40,7 @@
     setup(props) {
       const go = useGo();
       const ctrlPressed = ref(false);
-
+      const system = import.meta.env.VITE_GLOB_APP_TITLE;
       const {
         getMenuMode,
         getMenuType,
@@ -124,6 +124,9 @@
           ctrlPressed.value = false;
         }
       }
+      function gotoMGT() {
+        window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL;
+      }
 
       function handleMenuClick(path: string) {
         // click menu item with ctrl button will open in a new tab
@@ -164,6 +167,12 @@
         if (!menus || !menus.length) return null;
         return !props.isHorizontal ? (
           <div>
+            {system === 'CBMS' && (
+              <a-button type="text" style="color:#fff" onclick={gotoMGT}>
+                <Icon icon="ion:arrow-undo-sharp" />
+                MGT
+              </a-button>
+            )}
             <SimpleMenu {...menuProps} isSplitMenu={unref(getSplit)} items={menus} />
           </div>
         ) : (

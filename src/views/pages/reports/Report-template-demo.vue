@@ -43,7 +43,6 @@
   import { RoleEnum } from '/@/enums/roleEnum';
   import { Authority } from '/@/components/Authority';
   import { usePermission } from '/@/hooks/web/usePermission';
-  // import { demoListApi } from '/@/api/demo/table';
   // import { defHttp } from '/@/utils/http/axios';
   // const formData = reactive<{
   //   type: string;
@@ -233,24 +232,11 @@
       });
       const [registerTable] = useTable({
         title: tableTitle,
-        // api: demoListApi,
         columns: tableColumns,
         dataSource: tableData,
-        // useSearchForm: false,
-        // formConfig: {
-        //   labelWidth: 100,
-        //   schemas: [...schemas],
-        // },
         showTableSetting: tableTools,
         tableSetting: { fullScreen: true },
         showIndexColumn: true,
-        // rowKey: 'id',
-      });
-
-      onMounted(() => {
-        // getFetch().then((res) => {
-        //   console.log(res);
-        // });
       });
 
       return {

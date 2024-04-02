@@ -255,13 +255,14 @@
   }
 
   function handleSuccess({ isUpdate }) {
+    createMessage.info('Reloading page to update the menu ! ');
     // triggerProxy('query');
     triggerProxy('query');
-    // if (!isUpdate) {
-    //   setTimeout(() => {
-    //     window.location.reload();
-    //   }, 200);
-    // }
+    if (isUpdate) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 200);
+    }
   }
 </script>
 <style lang="less" scoped></style>
