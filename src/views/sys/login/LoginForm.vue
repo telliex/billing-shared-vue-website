@@ -203,7 +203,7 @@
     );
 
     const system = import.meta.env.VITE_GLOB_APP_TITLE;
-    console.log('system111111:', system);
+    console.log('system=======:', system);
 
     if (system === 'MARS') {
       const localeStore = useLocaleStoreWithOut();
@@ -213,35 +213,38 @@
       rememberMe.value = loginInput.remeberMe;
     } else if (system === 'CBMS') {
       redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
-
-      // if (
-      //   document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
-      //   fromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
-      // ) {
-      //   createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
-      //   setTimeout(() => {
-      //     window.location.href = document.referrer;
-      //   }, 5000);
-      //   return;
-      // }
+      if (
+        document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
+        wonderFromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
+      ) {
+        createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
+        setTimeout(() => {
+          window.location.href = document.referrer;
+          window.location.href = wonderFromURL;
+        }, 5000);
+        return;
+      }
 
       // const parsed = queryString.parse(window.location.hash.substring(1).split('?')[1]);
 
       const queryParams = new URLSearchParams(window.location.search.replace(/\//, ''));
       const user = queryParams.get('user');
+      console.log('user:', user);
       const hash = window.location.hash.substring(1);
 
       const queryString = hash.split('?')[1];
 
       const queryParamsPath = new URLSearchParams(queryString);
+      console.log('queryParamsPath:', queryParamsPath);
 
       const redirectPath = queryParamsPath.get('redirect');
-      // if (!parsed.mgtId) {
-      //   createMessage.error('跳轉路徑參數錯誤，請重新登入 MGT 平台 !!');
-      //   setTimeout(() => {
-      //     window.location.href = document.referrer;
-      //   }, 5000);
-      // }
+      console.log('redirectPath:', redirectPath);
+      if (!user) {
+        createMessage.error('跳轉路徑參數錯誤，請重新登入 MGT 平台 !!');
+        setTimeout(() => {
+          window.location.href = document.referrer;
+        }, 5000);
+      }
       const token = await JWTLoginApi({ email: user + '@ecloudvalley.com' });
       ls.set('USER_TOKEN_TEMP_KEY__', token[0]);
       console.log('===== token from JWT =====:', token[0]);
@@ -250,9 +253,6 @@
       formData.account = data[0].items[0].email;
       formData.password = data[0].items[0].password;
       await JWTlogoutApi(token[0].apiToken);
-      // const token = await JWTLoginApi({ email: parsed.mgtId  });
-      // ls.set('USER_TOKEN_OBJECT_KEY__', token[0]);
-      // console.log('===== token from JWT =====:', token[0]);
 
       handleLogin();
     }
