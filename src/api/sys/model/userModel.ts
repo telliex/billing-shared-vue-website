@@ -37,4 +37,6 @@ export interface GetUserInfoModel {
   address: string;
   country: string;
   roles: any[];
+  mgtNumber: number;
+  billMasterRoleId: number;
 }

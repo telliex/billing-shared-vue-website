@@ -158,6 +158,7 @@ export const useUserStore = defineStore('user', {
 
         ls.set('TEMP_USER_INFO_KEY__', data[0].items[0]);
         ls.set('TEMP_MGT_ID_KEY__', data[0].items[0].mgtNumber);
+        ls.set('TEMP_USER_ROLE_ID', data[0].items[0].billMasterRoleId);
 
         if (
           data[0].items[0].isInitPassowrd === true ||
@@ -244,6 +245,7 @@ export const useUserStore = defineStore('user', {
 
       ls.set('TEMP_MGT_ID_KEY__', null);
       ls.set('TEMP_USER_INFO_KEY__', null);
+      ls.set('TEMP_USER_ROLE_ID', null);
       // ls.set('TEMP_USER_BILLING_INFO_KEY__', null);
 
       goLogin && router.push(PageEnum.BASE_LOGIN);

@@ -18,6 +18,7 @@ import {
   UserPageParams,
   UserItem,
   UserPageListGetResultModel,
+  UserRolePermissionModel,
 } from './model/systemModel';
 
 import { API_CONFIG } from '/@/settings/apiSetting';
@@ -36,6 +37,7 @@ enum Api {
   GetPowerBIEmbedInfoValue = '/billing-powerbi-get-embed-info',
   GetPowerBIEmbedDataValue = '/billing-powerbi-get-embed-data',
   GetUserPermissionValue = '/mgt-permission/get-user-permission-by-user',
+  GetRolePermissionValue = '/mgt-permission/get-role-permission-by-role',
   GetUserPermissionRoleListValue = '/mgt-permission/get-permission',
   // GetPowerBIFilterValueValue = '/billing-powerbi-get-filter-value',
   GetUserPermissionGetRoleScopeValue = '/mgt-permission/get-role-scope',
@@ -240,10 +242,55 @@ export const GetUserPermissionGetRoleScope = (body: any) =>
     },
   );
 
-export const GetUserPermission = (body: any) =>
-  defHttp.post(
+export const GetUserPermission = (body: { trace_id: string; BillMasterId: number }) =>
+  defHttp.post<UserRolePermissionModel[] | null>(
     {
       url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionValue}`,
+      data: body,
+      headers: apiTransDataForHeader(),
+      transformResponse: [
+        function (data) {
+          // Do whatever you want to transform the data
+          if (data.length) {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [JSON.parse(data)],
+              status: 1000,
+              msg: 'success',
+              requested_time: '',
+              responsed_time: '',
+            };
+          } else {
+            return {
+              trace_id: '',
+              total_pages: 0,
+              current_page: 0,
+              results: [],
+              status: 9999,
+              msg: data,
+              requested_time: '',
+              responsed_time: '',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/permission-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
+  );
+
+export const GetRolePermission = (body: { trace_id: string; roleId: number }) =>
+  defHttp.post<UserRolePermissionModel[] | null>(
+    {
+      url: `/api${API_CONFIG.VERSION}${Api.GetRolePermissionValue}`,
       data: body,
       headers: apiTransDataForHeader(),
       transformResponse: [
