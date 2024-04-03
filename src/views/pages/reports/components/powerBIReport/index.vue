@@ -139,6 +139,28 @@
   ) as Map<string, (event?: service.ICustomEvent<any>, embeddedEntity?: Embed) => void | null>;
 
   /**
+   * get current page permission id
+   * different report has different permission
+   */ 
+  async function getCurrentPagePermission() {
+    const param = {
+      trace_id: Guid.newGuid().toString(),
+      BillMasterId: 0,
+    };
+    const result = await GetUserPermissionRoleList(param);
+
+    if (!result) {
+      createMessage.error('Get permission fail !');
+      return;
+    }
+
+    const targetObj = result[0].data.find((item) => item.type === currentPageReportName.value);
+    currentPagePermissionId = targetObj.read.permissionId;
+
+    embedReport();
+  }
+
+  /**
    * Embeds report
    *
    * @returns Promise<void>
@@ -168,7 +190,6 @@
 
     if (!isOnPermission) {
       createMessage.error('You do not have permission to view this report !');
-      console.log('You do not have permission to view this report.');
       closeWrapLoading();
       return;
     }
@@ -391,6 +412,7 @@
         },
       ],
     });
+    console.log(tableName)
     if (!tableName) {
       createMessage.error('Failed to fetch PowerBI Parameter Data.');
       closeWrapLoading();
@@ -431,18 +453,19 @@
   }
 
   onMounted(async () => {
-    GetUserPermissionRoleList({
-      trace_id: Guid.newGuid().toString(),
-      BillMasterId: currentUserId,
-    }).then((res) => {
-      res[0].data.forEach((item) => {
-        if (item.type === currentPageReportName.value) {
-          currentPagePermissionId = item.read.permissionId;
-          console.log('currentPagePermissionId:', currentPagePermissionId);
-        }
-      });
-      embedReport();
-    });
+    await getCurrentPagePermission();
+    // GetUserPermissionRoleList({
+    //   trace_id: Guid.newGuid().toString(),
+    //   BillMasterId: currentUserId,
+    // }).then((res) => {
+    //   res[0].data.forEach((item) => {
+    //     if (item.type === currentPageReportName.value) {
+    //       currentPagePermissionId = item.read.permissionId;
+    //       console.log('currentPagePermissionId:', currentPagePermissionId);
+    //     }
+    //   });
+    //   embedReport();
+    // });
   });
 </script>
 <style lang="less">
