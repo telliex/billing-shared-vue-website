@@ -300,7 +300,7 @@ export default {
     tableAreaTitle: 'Monthly CDN Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Monthly CDN Report',
-    searchAreaYYYYMMLavel: 'date', // date
+    searchAreaYYYYMMLavel: 'Date', // date
   },
   monthlyRevenueReport: {
     tableAreaTitle: 'Monthly Revenue Report',
