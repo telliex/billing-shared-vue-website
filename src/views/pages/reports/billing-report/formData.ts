@@ -69,6 +69,7 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
       colProps: {
         span: 6,
       },
+      required: true,
     }
   };
   
@@ -165,22 +166,13 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
         getDateComponentInfo('report.c0000266S3ppaReport.searchAreaYYYYMMLavel')
       ],
     },
-    "monthly-cdn-report": {
+    "cdn-report": {
       reportInfo: getReportInfo({
         tableName: 'report.monthlyCdnReport.tableAreaTitle',
         reportType: 'mgt_cdn_report'
       }),
       schemas: [
         getDateComponentInfo('report.monthlyCdnReport.searchAreaYYYYMMLavel')
-      ],
-    },
-    "monthly-revenue-report": {
-      reportInfo: getReportInfo({
-        tableName: 'report.monthlyRevenueReport.tableAreaTitle',
-        reportType: 'mgt_revenue_report'
-      }),
-      schemas: [
-        getDateComponentInfo('report.monthlyRevenueReport.searchAreaYYYYMMLavel')
       ],
     },
     "c0000338-sp-customized-report": {
