@@ -18,7 +18,6 @@
       >
         <template #localSearch="{ model, field }">
           <ApiSelect
-            :api="optionsListApi"
             showSearch
             v-model:value="model[field]"
             optionFilterProp="label"
@@ -87,7 +86,7 @@
   import { useModal } from '/@/components/Modal';
   import { getBasicColumns, getBasicData } from './tableData';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { optionsListApi } from '/@/api/demo/select';
+  // import { optionsListApi } from '/@/api/demo/select';
   import { cloneDeep } from 'lodash-es';
 
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -288,7 +287,7 @@
           console.log('values', values);
           createMessage.success('click search,values:' + JSON.stringify(values));
         },
-        optionsListApi,
+        // optionsListApi,
         optionsA,
         optionsB,
         valueSelectA,
