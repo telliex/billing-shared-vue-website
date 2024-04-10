@@ -41,6 +41,7 @@ ENV S3_ECV_REPORT billing-dev-sync-data
 ENV API_KEY 484CD16940B64F878DC9CCE2E79EA08E
 ENV API_JWT http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3010
 ENV API_MGT_CONTRACT http://internal-billing-dev-api-alb-1953497531.us-west-2.elb.amazonaws.com:3007
+ENV PLATFORM MARS
 
 # 開啟監聽端口，以便外部流量可以到達 Nginx
 EXPOSE 80
