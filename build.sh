@@ -21,12 +21,12 @@ main_process() {
     S3_REPORT_URL=${12}
     S3_ACCOUNT_REPORT_URL=${13}
     S3_INVOICE_REPORT_URL=${14}
-    S3_ECV_REPORT_URL=${15}  
+    S3_ECV_REPORT_URL=${15}
     API_KEY=${16}
     JWT_API_URL=${17}
     CONTRACT_API_URL=${18}
     APP_TITLE=${19}
-    PLATFORM=${20} 
+    PLATFORM=${20}
     COMPANY=${21}
 
     ENV_TEMPLATE_NAME=".env.template"
@@ -82,7 +82,7 @@ main_process() {
 
     cat $NEGIEX_CONFIG_TEMPLATE | \
     sed -e 's|{{CONTRACT_API_URL}}|'$CONTRACT_API_URL'|g' | \
-    sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | \ 
+    sed -e 's|{{REPORT_API_URL}}|'$REPORT_API_URL'|g' | \
     sed -e 's|{{ELU_API_URL}}|'$ELU_API_URL'|g' | \
     sed -e 's|{{SYS_API_URL}}|'$SYS_API_URL'|g' | \
     sed -e 's|{{PERMISSION_API_URL}}|'$PERMISSION_API_URL'|g' | \

@@ -29,8 +29,8 @@ echo "----------====目前環境 end====------------"
 bash build.sh ${API_MGT_REPORT} ${API_MGT_ELU} ${OLD_MGT} ${MARS} ${CBMS} ${ENV} \
 ${S3_REGION} ${S3_JSON} ${API_MGT_PERMISSION} ${API_SYS} ${API_POWERBI_LAMBDA} \
 ${S3_REPORT} ${S3_ACCOUNT_REPORT} ${S3_INVOICE_REPORT} ${S3_ECV_REPORT} \
-${API_KEY} ${API_JWT} ${API_MGT_CONTRACT} ${APP_TITLE} ${PLATFORM} \
-${APP_TITLE} ${PLATFORM} ${COMPANY}
+${API_KEY} ${API_JWT} ${API_MGT_CONTRACT} ${APP_TITLE} ${PLATFORM} ${COMPANY} \
+
 
 pnpm build:${ENV}
 cp -r dist/* ../usr/share/nginx/html 
