@@ -7,7 +7,7 @@
     :targetColumn="targetColumn"
   />
 </template>
-<script lang="ts" setup name="SalesMonthlyRevenue">
+<script lang="ts" setup name="SalesCDNRevenue">
   import PowerBIReport from './components/powerBIReport/index.vue';
   const currentPageReportName = 'sales_cdn_revenue'; // need to change
   const currentPageReportIdKey = 'POWERBI_CDN_REPORTId'; // need to change

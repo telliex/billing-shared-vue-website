@@ -141,7 +141,7 @@
   /**
    * get current page permission id
    * different report has different permission
-   */ 
+   */
   async function getCurrentPagePermission() {
     const param = {
       trace_id: Guid.newGuid().toString(),
@@ -177,7 +177,7 @@
     const rolePermissionResult = await GetRolePermission({
       trace_id: Guid.newGuid().toString(),
       roleId: currentRoleId,
-    })
+    });
 
     if (!userPermissionResult || !rolePermissionResult) {
       createMessage.error('Get permission fail !');
@@ -186,7 +186,9 @@
     }
 
     // check the page if the user has permission to view this report
-    const isOnPermission = checkReadPermission(userPermissionResult, currentPagePermissionId) || checkReadPermission(rolePermissionResult, currentPagePermissionId);
+    const isOnPermission =
+      checkReadPermission(userPermissionResult, currentPagePermissionId) ||
+      checkReadPermission(rolePermissionResult, currentPagePermissionId);
 
     if (!isOnPermission) {
       createMessage.error('You do not have permission to view this report !');
@@ -247,7 +249,6 @@
     if (!tempRes) {
       return;
     }
-
     filterValueResult[0] = tempRes.data;
 
     if (!filterValueResult[0]?.ok) {
@@ -412,7 +413,7 @@
         },
       ],
     });
-    console.log(tableName)
+    console.log(tableName);
     if (!tableName) {
       createMessage.error('Failed to fetch PowerBI Parameter Data.');
       closeWrapLoading();
@@ -454,18 +455,6 @@
 
   onMounted(async () => {
     await getCurrentPagePermission();
-    // GetUserPermissionRoleList({
-    //   trace_id: Guid.newGuid().toString(),
-    //   BillMasterId: currentUserId,
-    // }).then((res) => {
-    //   res[0].data.forEach((item) => {
-    //     if (item.type === currentPageReportName.value) {
-    //       currentPagePermissionId = item.read.permissionId;
-    //       console.log('currentPagePermissionId:', currentPagePermissionId);
-    //     }
-    //   });
-    //   embedReport();
-    // });
   });
 </script>
 <style lang="less">
