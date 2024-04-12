@@ -3,6 +3,7 @@ import { useUserStore } from '/@/store/modules/user';
 import dayjs from 'dayjs';
 import moment from 'moment';
 import projectSetting from '/@/settings/projectSetting';
+import { AxiosRequestHeaders } from 'axios';
 
 export function buildNestedStructure(data: any[]) {
   const map: any = {}; // 用來快速查找 id 對應的物件
@@ -58,7 +59,7 @@ export function buildMenuNestedStructure(data: any[]) {
   return result;
 }
 
-export function apiTransDataForHeader() {
+export function apiTransDataForHeader(opt?: AxiosRequestHeaders) {
   const userStore = useUserStore();
   const who = userStore.getUserInfo?.id || '';
   // get x-api-key
@@ -82,6 +83,7 @@ export function apiTransDataForHeader() {
     'X-Access-Token': userStore.getToken ? `${userStore.getToken}` : '',
     'Trace-Id': Guid.newGuid().toString(),
     'X-Api-Key': apiKey,
+    ...opt,
   };
 }
 

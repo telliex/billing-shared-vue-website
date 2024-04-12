@@ -69,7 +69,6 @@ export const getDynamicNavList = () =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.GetDynamicNavList}`,
       data: {},
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -148,11 +147,6 @@ export const getDynamicNavList = () =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -164,7 +158,6 @@ export const getNavWholeTreeNode = (params: FilterItems) =>
       params: {
         status: params.status,
       },
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -178,11 +171,6 @@ export const getNavWholeTreeNode = (params: FilterItems) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -194,7 +182,6 @@ export const getNavTreeNodeOnlyCatalog = (params: FilterItems) =>
       params: {
         status: params.status,
       },
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -210,11 +197,6 @@ export const getNavTreeNodeOnlyCatalog = (params: FilterItems) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -231,7 +213,6 @@ export const getNavList = (params: FilterItems) =>
       params: {
         status: params.status,
       },
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -244,11 +225,6 @@ export const getNavList = (params: FilterItems) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -258,15 +234,9 @@ export const getNavItem = (params: NavParams) => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.MenuList}/${params.id}`,
       data: params,
-      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -276,7 +246,6 @@ export const removeNavItem = (params: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.MenuList}/${params.id}`,
       data: params,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -286,11 +255,6 @@ export const removeNavItem = (params: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -299,7 +263,6 @@ export const updateNavItem = (params: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.MenuList}/${params.id}`,
       data: params,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -309,11 +272,6 @@ export const updateNavItem = (params: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -322,7 +280,6 @@ export const createNavItem = (body: any) => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.MenuList}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -333,11 +290,6 @@ export const createNavItem = (body: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -351,7 +303,6 @@ export const getButtonList = (params: FilterButtonItems) =>
         belongMenuId: params.belongMenuId,
         status: params.status,
       },
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -361,11 +312,6 @@ export const getButtonList = (params: FilterButtonItems) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -374,7 +320,6 @@ export const updateButtonItem = (params: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.ButtonsList}/${params.id}`,
       data: params,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -384,11 +329,6 @@ export const updateButtonItem = (params: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -397,7 +337,6 @@ export const createButtonItem = (body: any) => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.ButtonsList}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -407,11 +346,6 @@ export const createButtonItem = (body: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -421,7 +355,6 @@ export const removeButtonItem = (params: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.ButtonsList}/${params.id}`,
       data: params,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -431,10 +364,5 @@ export const removeButtonItem = (params: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );

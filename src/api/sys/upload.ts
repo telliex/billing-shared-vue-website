@@ -66,11 +66,6 @@ export const upLoad2S3 = (body: any) => {
     },
     {
       apiUrl: '/elu-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };

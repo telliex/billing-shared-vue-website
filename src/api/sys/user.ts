@@ -5,8 +5,7 @@ import { API_CONFIG } from '/@/settings/apiSetting';
 
 // import { ErrorMessageMode } from '/#/axios';
 import { ErrorMessageMode } from '/#/axios';
-import { apiTransDataForHeader, correctReturn, errorReturn } from '/@/utils/tools';
-import { isArray } from 'xe-utils';
+import { apiTransDataForHeader } from '/@/utils/tools';
 
 import { createLocalStorage } from '/@/utils/cache';
 const ls = createLocalStorage();
@@ -40,7 +39,6 @@ export const JWTLoginApi = (body: JWTLoginApiObject, mode: ErrorMessageMode = 'm
     {
       url: `/api${API_CONFIG.VERSION}${Api.JWTLogin}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data, headers = {}) {
           const resObj = JSON.parse(data);
@@ -55,11 +53,6 @@ export const JWTLoginApi = (body: JWTLoginApiObject, mode: ErrorMessageMode = 'm
     {
       errorMessageMode: mode,
       apiUrl: '/jwt-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -72,10 +65,9 @@ export const JWTRefreshApi = () => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.JWTRefresh}`,
       // data: body,
-      headers: {
-        ...apiTransDataForHeader(),
+      headers: apiTransDataForHeader({
         'X-Refresh-Token': ls.get('USER_TOKEN_OBJECT_KEY__').apiTokenRefresh,
-      },
+      }),
       transformResponse: [
         function (data, headers = {}) {
           const resObj = JSON.parse(data);
@@ -90,11 +82,6 @@ export const JWTRefreshApi = () => {
 
     {
       apiUrl: '/jwt-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -106,8 +93,6 @@ export const JWTlogoutApi = () => {
   return defHttp.get(
     {
       url: `/api${API_CONFIG.VERSION}${Api.JWTLogout}`,
-      // data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -120,11 +105,6 @@ export const JWTlogoutApi = () => {
 
     {
       apiUrl: '/jwt-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -137,7 +117,6 @@ export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal')
     {
       url: `/api${API_CONFIG.VERSION}${Api.Login}`,
       data: body,
-      headers: apiTransDataForHeader(),
       // headers: {
       //   'Content-Type': 'application/json',
       //   'User-Id': '5519695a-5397-475a-9925-da817107bcfd',
@@ -158,11 +137,6 @@ export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal')
     {
       errorMessageMode: mode,
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -175,7 +149,6 @@ export const logoutApi = () =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.Logout}`,
       // data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           console.log('=========logout======');
@@ -202,11 +175,6 @@ export const logoutApi = () =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -220,7 +188,6 @@ export const logoutApi = () =>
 export function getPermCode() {
   return defHttp.get({
     url: `${Api.GetPermCode}`,
-    headers: apiTransDataForHeader(),
     transformResponse: [
       function (data) {
         const resObj = JSON.parse(data);
@@ -247,16 +214,7 @@ export function getPermCode() {
 // }
 
 export function testRetry() {
-  return defHttp.get(
-    { url: Api.TestRetry },
-    {
-      retryRequest: {
-        isOpenRetry: true,
-        count: 5,
-        waitTime: 1000,
-      },
-    },
-  );
+  return defHttp.get({ url: Api.TestRetry });
 }
 
 /**

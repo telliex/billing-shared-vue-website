@@ -8,4 +8,4 @@ enum Api {
  * @description: Get sample options value
  */
 export const treeOptionsListApi = (params?: Recordable) =>
-  defHttp.get<Recordable[]>({ url: Api.TREE_OPTIONS_LIST, params });
+  defHttp.get<Recordable[]>({ url: Api.TREE_OPTIONS_LIST, params, headers: {} });
