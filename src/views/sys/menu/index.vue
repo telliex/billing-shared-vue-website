@@ -42,7 +42,6 @@
   import MenuDrawer from './MenuDrawer.vue';
   import ButtonsDrawer from './ButtonsDrawer.vue';
   import { useDrawer } from '/@/components/Drawer';
-  import { Guid } from 'js-guid/dist/guid';
   // import { Guid } from 'js-guid/dist/guid';
   // const tablePage = reactive({
   //   total: 0,
@@ -66,11 +65,6 @@
       console.log('数据代理保存事件');
     },
   };
-  // const handlePageChange: VxePagerEvents.PageChange = ({ currentPage, pageSize }) => {
-  //   tablePage.currentPage = currentPage;
-  //   tablePage.pageSize = pageSize;
-  //   findList();
-  // };
   const collaposeChange = (event) => {
     if (event.target.nodeName === 'svg') {
       collapseStatus.value = !collapseStatus.value;
@@ -80,14 +74,6 @@
       }
     }
   };
-
-  // const findList = () => {
-  //   gridOptions.loading = true;
-  //   setTimeout(() => {
-  //     gridOptions.loading = false;
-  //     tablePage.total = 10;
-  //   }, 300);
-  // };
 
   const gridOptions = reactive<BasicTableProps>({
     id: 'VxeTable',
@@ -120,13 +106,6 @@
     // },
     pagerConfig: {
       enabled: false, // hide pager
-      // background: true,
-      // layouts: ['Total', 'Number', 'Sizes'],
-      // currentPage: tablePage.currentPage,
-      // pageSize: tablePage.pageSize,
-      // pageSizes: [10, 50, 80, 100],
-      // total: tablePage.total,
-      // autoHidden: false,
     },
     toolbarConfig: {
       className: 'toolbar',
@@ -291,10 +270,5 @@
       window.location.reload();
     }, 200);
   }
-
-  // function onFetchSuccess() {
-  //   // 演示默認展開所有表項
-  //   nextTick(expandAll);
-  // }
 </script>
 <style lang="less" scoped></style>

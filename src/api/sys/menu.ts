@@ -9,14 +9,7 @@ import {
 
 import { API_CONFIG } from '/@/settings/apiSetting';
 
-import {
-  buildNestedStructure,
-  buildMenuNestedStructure,
-  apiTransDataForHeader,
-  correctReturn,
-  errorReturn,
-} from '/@/utils/tools';
-import { isArray } from 'xe-utils';
+import { buildNestedStructure, apiTransDataForHeader } from '/@/utils/tools';
 
 enum Api {
   GetDynamicNavList = '/system/menu/dynamicNav',

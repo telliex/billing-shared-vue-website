@@ -92,20 +92,27 @@
 
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { loginApi, logoutApi, JWTLoginApi, JWTlogoutApi, JWTRefreshApi } from '/@/api/sys/user';
 
   import { useUserStore } from '/@/store/modules/user';
   import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
   import { useDesign } from '/@/hooks/web/useDesign';
+
+  import { loginApiTransition } from '/@/api/sys/user';
+  import queryString from 'query-string';
   // import { stringToHSA265 } from '/@/utils/auth';
+  import { createLocalStorage } from '/@/utils/cache';
+  const ls = createLocalStorage();
   const { getLoginState } = useLoginState();
   const ACol = Col;
   const ARow = Row;
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
-  const { notification, createErrorModal } = useMessage();
+  const { notification, createErrorModal, createMessage } = useMessage();
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
+  let redirectUrl = ref<string | null>('');
 
   const { getFormRules } = useFormRules();
   const formRef = ref();
@@ -157,7 +164,6 @@
         if (rememberMe.value) {
           localeStore.setLoginInfo({
             username: data.account,
-            // password: await stringToHSA265(data.password),
             password: data.password,
             remeberMe: rememberMe.value,
           });
@@ -188,10 +194,67 @@
   }
 
   onMounted(async () => {
-    const localeStore = useLocaleStoreWithOut();
-    let loginInput = localeStore.getLogin;
-    formData.account = loginInput.username;
-    formData.password = loginInput.password;
-    rememberMe.value = loginInput.remeberMe;
+    // http://cbms-dev.ecv-billing-center.com/?user=144/#/login?redirect=/eterne/contract_list
+    const wonderFromURL = import.meta.env.VITE_GLOB_OLD_MGT_URL;
+    console.log('wonderFromURL:', wonderFromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''));
+    console.log(
+      'document.referrer:',
+      document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''),
+    );
+
+    const system = import.meta.env.VITE_GLOB_APP_TITLE;
+    console.log('system=======:', system);
+
+    if (system === 'MARS') {
+      const localeStore = useLocaleStoreWithOut();
+      let loginInput = localeStore.getLogin;
+      formData.account = loginInput.username;
+      formData.password = loginInput.password;
+      rememberMe.value = loginInput.remeberMe;
+    } else if (system === 'CBMS') {
+      redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
+      if (
+        document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
+        wonderFromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
+      ) {
+        createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
+        setTimeout(() => {
+          window.location.href = document.referrer;
+          window.location.href = wonderFromURL;
+        }, 5000);
+        return;
+      }
+
+      // const parsed = queryString.parse(window.location.hash.substring(1).split('?')[1]);
+
+      const queryParams = new URLSearchParams(window.location.search.replace(/\//, ''));
+      const user = queryParams.get('user');
+      console.log('user:', user);
+      const hash = window.location.hash.substring(1);
+
+      const queryString = hash.split('?')[1];
+
+      const queryParamsPath = new URLSearchParams(queryString);
+      console.log('queryParamsPath:', queryParamsPath);
+
+      const redirectPath = queryParamsPath.get('redirect');
+      console.log('redirectPath:', redirectPath);
+      if (!user) {
+        createMessage.error('跳轉路徑參數錯誤，請重新登入 MGT 平台 !!');
+        setTimeout(() => {
+          window.location.href = document.referrer;
+        }, 5000);
+      }
+      const token = await JWTLoginApi({ email: user + '@ecloudvalley.com' });
+      ls.set('USER_TOKEN_TEMP_KEY__', token[0]);
+      console.log('===== token from JWT =====:', token[0]);
+      const data = await loginApiTransition(user);
+
+      formData.account = data[0].items[0].email;
+      formData.password = data[0].items[0].password;
+      await JWTlogoutApi(token[0].apiToken);
+
+      handleLogin();
+    }
   });
 </script>

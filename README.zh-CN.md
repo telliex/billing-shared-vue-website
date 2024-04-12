@@ -18,10 +18,6 @@ ECV Dadaplatform Admin 是一个数据平台。使用了最新的`vue3`,`vite2`,
 
 ## 预览
 
-- [ECV-DataPlatform-admin](http://gather-demo.s3-website-us-west-2.amazonaws.com)
-
-测试帐号: billing/123456
-
 ## 文档
 
 [文档地址](https://ecv-atlas.atlassian.net/wiki/spaces/ActivoIntership/pages/1331593279/Gatherer)
@@ -43,11 +39,12 @@ ECV Dadaplatform Admin 是一个数据平台。使用了最新的`vue3`,`vite2`,
 
 ```bash
 // CBMS
-git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
+[x] git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/billing-mgt-eterne
 
-// CRS
-git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
-```
+// MARS
+[x] git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-front-end
+
+// New
 
 - 安装依赖
 
@@ -56,7 +53,7 @@ git clone https://git-codecommit.us-west-2.amazonaws.com/v1/repos/data-platform-
 cd billing-mgt-eterne
 yarn install
 
-// CRS
+// MARS
 cd data-platform-front-end
 yarn install
 

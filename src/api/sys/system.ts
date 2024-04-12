@@ -285,47 +285,6 @@ export const GetUserPermission = (body: any) =>
     },
   );
 
-// export const GetPowerBIFilterValue = (params: any) =>
-//   defHttp.post(
-//     {
-//       url: Api.GetPowerBIFilterValueValue,
-//       data: params,
-//       transformResponse: [
-//         function (data) {
-//           // Do whatever you want to transform the data
-//           console.log('------------');
-//           console.log(data);
-//           if (data) {
-//             return {
-//               trace_id: '',
-//               total_pages: 0,
-//               current_page: 0,
-//               results: [JSON.parse(data)],
-//               status: 1000,
-//               msg: 'success',
-//               requested_time: '',
-//               responsed_time: '',
-//             };
-//           } else {
-//             return {
-//               trace_id: '',
-//               total_pages: 0,
-//               current_page: 0,
-//               results: [],
-//               status: 9999,
-//               msg: data,
-//               requested_time: '',
-//               responsed_time: '',
-//             };
-//           }
-//         },
-//       ],
-//     },
-//     {
-//       apiUrl: '/power-bi',
-//     },
-//   );
-
 // =====/sys-api=====
 
 /**
@@ -508,25 +467,18 @@ export const getDeptList = (params: DeptPageParams) => {
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
-          // let role permission string to array
-          // if (isArray(resObj)) {
-          //   return correctReturn(resObj);
-          // } else {
-          //   return errorReturn(resObj);
-          // }
           return resObj;
         },
       ],
     },
-    // TODO: recover here
-    // {
-    //   apiUrl: '/sys-api',
-    //   retryRequest: {
-    //     isOpenRetry: false,
-    //     count: 1,
-    //     waitTime: 3000,
-    //   },
-    // },
+    {
+      apiUrl: '/sys-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
+    },
   );
 };
 
@@ -673,16 +625,6 @@ export const getUserList = (params: UserPageParams) => {
         function (data) {
           const resObj = JSON.parse(data);
           console.log('========user=========:', resObj);
-          // let role permission string to array
-
-          // if (isArray(resObj)) {
-          //   resObj.forEach(
-          //     (item) => (item.roles = item.rolesString ? item.rolesString.split(',') : []),
-          //   );
-          //   return correctReturn(resObj);
-          // } else {
-          //   return errorReturn(resObj);
-          // }
           return resObj;
         },
       ],
