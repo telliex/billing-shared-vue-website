@@ -11,6 +11,7 @@ export const countryOptionsListApi = (params?: selectParams) => {
   return defHttp.get<DropDownOptionsItem[]>({
     url: Api.DROP_DOWN_OPTIONS_LIST,
     params,
+    headers: {},
     transformResponse: [
       function (data) {
         const resObj = JSON.parse(data);

@@ -40,7 +40,6 @@ export const JWTLoginApi = (body: JWTLoginApiObject, mode: ErrorMessageMode = 'm
     {
       url: `/api${API_CONFIG.VERSION}${Api.JWTLogin}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data, headers = {}) {
           const resObj = JSON.parse(data);
@@ -55,11 +54,6 @@ export const JWTLoginApi = (body: JWTLoginApiObject, mode: ErrorMessageMode = 'm
     {
       errorMessageMode: mode,
       apiUrl: '/jwt-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -72,10 +66,9 @@ export const JWTRefreshApi = () => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.JWTRefresh}`,
       // data: body,
-      headers: {
-        ...apiTransDataForHeader(),
+      headers: apiTransDataForHeader({
         'X-Refresh-Token': ls.get('USER_TOKEN_OBJECT_KEY__').apiTokenRefresh,
-      },
+      }),
       transformResponse: [
         function (data, headers = {}) {
           const resObj = JSON.parse(data);
@@ -90,11 +83,6 @@ export const JWTRefreshApi = () => {
 
     {
       apiUrl: '/jwt-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -124,11 +112,6 @@ export const JWTlogoutApi = (token = '') => {
 
     {
       apiUrl: '/jwt-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -141,7 +124,6 @@ export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal')
     {
       url: `/api${API_CONFIG.VERSION}${Api.Login}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -153,11 +135,6 @@ export const loginApi = (body: LoginApiObject, mode: ErrorMessageMode = 'modal')
     {
       errorMessageMode: mode,
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -196,7 +173,6 @@ export const logoutApi = () =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.Logout}`,
       // data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           console.log('=========logout======');
@@ -207,11 +183,6 @@ export const logoutApi = () =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -222,7 +193,6 @@ export const logoutApi = () =>
 export function getPermCode() {
   return defHttp.get({
     url: `${Api.GetPermCode}`,
-    headers: apiTransDataForHeader(),
     transformResponse: [
       function (data) {
         const resObj = JSON.parse(data);
@@ -233,14 +203,5 @@ export function getPermCode() {
 }
 
 export function testRetry() {
-  return defHttp.get(
-    { url: Api.TestRetry },
-    {
-      retryRequest: {
-        isOpenRetry: true,
-        count: 5,
-        waitTime: 1000,
-      },
-    },
-  );
+  return defHttp.get({ url: Api.TestRetry });
 }

@@ -57,7 +57,6 @@ export const GetDictionaryItems = (data: GetDictionaryModel) =>
     {
       url: `/parameter${API_CONFIG.VERSION}${Api.GetDictionary}`,
       data,
-      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/elu-api',
@@ -69,15 +68,9 @@ export const getBillUserInfo = (data: any) =>
     {
       url: `${API_CONFIG.VERSION}${Api.GetBillUserInfo}`,
       data,
-      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/elu-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 export const GetParameterStoreFromAWS = (data: GetParameterStoreFromAWSModel) =>
@@ -85,15 +78,9 @@ export const GetParameterStoreFromAWS = (data: GetParameterStoreFromAWSModel) =>
     {
       url: `/aws${API_CONFIG.VERSION}${Api.GetParameterStoreFromAWS}`,
       data,
-      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/elu-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -102,15 +89,9 @@ export const GetBillCodeValue = (data: GetBillCodeValueModel) =>
     {
       url: `/parameter${API_CONFIG.VERSION}${Api.GetBillCodeValue}`,
       data,
-      headers: apiTransDataForHeader(),
     },
     {
       apiUrl: '/elu-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -119,7 +100,6 @@ export const GetS3TargetUrl = (body: any) =>
     {
       url: `/aws${API_CONFIG.VERSION}${Api.GetS3TargetUrlValue}`,
       data: body,
-      headers: apiTransDataForHeader(),
       // responseType: 'arraybuffer',
       transformResponse: [
         function (data) {
@@ -143,11 +123,6 @@ export const GetS3TargetUrl = (body: any) =>
     },
     {
       apiUrl: '/elu-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -157,7 +132,6 @@ export const GetUserPermissionRoleList = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionRoleListValue}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -189,11 +163,6 @@ export const GetUserPermissionRoleList = (body: any) =>
     },
     {
       apiUrl: '/permission-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -202,7 +171,6 @@ export const GetUserPermissionGetRoleScope = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionGetRoleScopeValue}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -234,11 +202,6 @@ export const GetUserPermissionGetRoleScope = (body: any) =>
     },
     {
       apiUrl: '/permission-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -247,7 +210,6 @@ export const GetUserPermission = (body: { trace_id: string; BillMasterId: number
     {
       url: `/api${API_CONFIG.VERSION}${Api.GetUserPermissionValue}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           // Do whatever you want to transform the data
@@ -279,11 +241,6 @@ export const GetUserPermission = (body: { trace_id: string; BillMasterId: number
     },
     {
       apiUrl: '/permission-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -349,7 +306,6 @@ export const getAllRoleList = (params: RolePageParams) => {
         currentPage: null,
         pageSize: null,
       },
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -360,11 +316,6 @@ export const getAllRoleList = (params: RolePageParams) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -384,7 +335,6 @@ export const getRoleListByPage = (params: RolePageParams) => {
         pageSize: params.pageSize || 10,
         sortBy: params.sortBy || 'ace',
       },
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -394,11 +344,6 @@ export const getRoleListByPage = (params: RolePageParams) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -408,7 +353,6 @@ export const setRoleStatus = (id: string, body: any) => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.RoleStatus}/${id}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -418,11 +362,6 @@ export const setRoleStatus = (id: string, body: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -432,7 +371,6 @@ export const removeRoleItem = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.RoleList}/${body.id}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -442,11 +380,6 @@ export const removeRoleItem = (body: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 export const updateRoleItem = (body: any) =>
@@ -454,7 +387,6 @@ export const updateRoleItem = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.RoleList}/${body.id}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -464,11 +396,6 @@ export const updateRoleItem = (body: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -477,7 +404,6 @@ export const createRoleItem = (body: any) => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.RoleList}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -487,11 +413,6 @@ export const createRoleItem = (body: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -510,7 +431,6 @@ export const getDeptList = (params: DeptPageParams) => {
         currentPage: params.currentPage,
         pageSize: params.pageSize,
       },
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -534,7 +454,6 @@ export const createDeptItem = (body: any) => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.DeptList}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -544,11 +463,6 @@ export const createDeptItem = (body: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -558,7 +472,6 @@ export const updateDeptItem = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.DeptList}/${body.id}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -568,11 +481,6 @@ export const updateDeptItem = (body: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -581,7 +489,6 @@ export const removeDeptItem = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.DeptList}/${body.id}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -591,11 +498,6 @@ export const removeDeptItem = (body: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 
@@ -609,7 +511,6 @@ export const isUserEmailExist = (params: any) => {
       url: `/api${API_CONFIG.VERSION}${Api.IsUserEmailExist}`,
       data: {},
       params: params,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -620,11 +521,6 @@ export const isUserEmailExist = (params: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -635,7 +531,6 @@ export const isUserExist = (params: any) => {
       url: `/api${API_CONFIG.VERSION}${Api.IsUserExist}`,
       data: {},
       params: params,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -646,11 +541,6 @@ export const isUserExist = (params: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -667,7 +557,6 @@ export const getUserList = (params: UserPageParams) => {
         pageSize: params.pageSize || 10,
         sortBy: params.sortBy || 'ace',
       },
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -678,25 +567,20 @@ export const getUserList = (params: UserPageParams) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
 
 export const changePassword = (body: any) => {
-  const header = apiTransDataForHeader();
   const userId = ls.get('TEMP_USER_INFO_KEY__').id;
 
-  header['User-Id'] = userId; // 5519695a-5397-475a-9925-da817107bcfd
   return defHttp.patch<UserItem>(
     {
       url: `/api${API_CONFIG.VERSION}${Api.ChangePassword}/${userId}`,
       data: body,
-      headers: header,
+      headers: apiTransDataForHeader({
+        'User-Id': userId,
+      }),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -707,11 +591,6 @@ export const changePassword = (body: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -721,7 +600,6 @@ export const removeUserItem = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.UserList}/${body.id}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -738,7 +616,6 @@ export const createUserItem = (body: any) => {
     {
       url: `/api${API_CONFIG.VERSION}${Api.UserList}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -748,11 +625,6 @@ export const createUserItem = (body: any) => {
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );
 };
@@ -762,7 +634,6 @@ export const updateUserItem = (body: any) =>
     {
       url: `/api${API_CONFIG.VERSION}${Api.UserList}/${body.id}`,
       data: body,
-      headers: apiTransDataForHeader(),
       transformResponse: [
         function (data) {
           const resObj = JSON.parse(data);
@@ -773,10 +644,5 @@ export const updateUserItem = (body: any) =>
     },
     {
       apiUrl: '/sys-api',
-      retryRequest: {
-        isOpenRetry: false,
-        count: 1,
-        waitTime: 3000,
-      },
     },
   );

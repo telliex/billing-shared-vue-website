@@ -19,4 +19,5 @@ export const getDict = (trace_id: string) =>
   defHttp.post<GetDictResultModel>({
     url: version + Api.Dictionary,
     params: { trace_id },
+    headers: {},
   });
