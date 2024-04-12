@@ -39,21 +39,19 @@
   import {
     GetDictionaryItems,
     GetUserPermission,
+    GetRolePermission,
     GetUserPermissionRoleList,
     // GetPowerBIFilterValue,
   } from '/@/api/sys/system';
   import { PowerBIReportEmbed } from 'powerbi-client-vue-js';
   import { createLocalStorage } from '/@/utils/cache';
+  import { useReportUtils } from '/@/utils/report';
   import { useMessage } from '/@/hooks/web/useMessage';
   const { createMessage } = useMessage();
   import { useLoading } from '/@/components/Loading';
   import axios from 'axios';
-  // import {
-  //   getFinalActiveTime,
-  //   logoutApi,
-  //   writeFinalActiveTime,
-  //   JWTlogoutApi,
-  // } from '/@/api/sys/user';
+
+  const { checkReadPermission } = useReportUtils();
 
   const wrapEl = ref<ElRef>(null);
   const [openWrapLoading, closeWrapLoading] = useLoading({
@@ -73,7 +71,7 @@
   }>();
 
   const ls = createLocalStorage();
-  let currentPagePermissionId = null;
+  let currentPagePermissionId = 0;
   let currentPageReportName = ref(props.currentPageReportName);
   let currentPageReportIdKey = ref(props.currentPageReportIdKey);
   let currentPageTableNameKey = ref(props.currentPageTableNameKey);
@@ -81,7 +79,8 @@
   let targetColumn = ref(props.targetColumn);
   // CSS Class to be passed to the wrapper
   const reportClass = `${currentPageReportName.value}__container`;
-  let currentUserId = ls.get('TEMP_MGT_ID_KEY__');
+  const currentUserId: number = ls.get('TEMP_MGT_ID_KEY__');
+  const currentRoleId: number = ls.get('TEMP_USER_ROLE_ID');
   // Flag which specifies whether to use phase embedding or not
   const phasedEmbeddingFlag = false;
 
@@ -140,6 +139,28 @@
   ) as Map<string, (event?: service.ICustomEvent<any>, embeddedEntity?: Embed) => void | null>;
 
   /**
+   * get current page permission id
+   * different report has different permission
+   */
+  async function getCurrentPagePermission() {
+    const param = {
+      trace_id: Guid.newGuid().toString(),
+      BillMasterId: 0,
+    };
+    const result = await GetUserPermissionRoleList(param);
+
+    if (!result) {
+      createMessage.error('Get permission fail !');
+      return;
+    }
+
+    const targetObj = result[0].data.find((item) => item.type === currentPageReportName.value);
+    currentPagePermissionId = targetObj.read.permissionId;
+
+    embedReport();
+  }
+
+  /**
    * Embeds report
    *
    * @returns Promise<void>
@@ -148,26 +169,29 @@
     openWrapLoading();
 
     // get user permission list
-    let permissionResult = await GetUserPermission({
+    const userPermissionResult = await GetUserPermission({
       trace_id: Guid.newGuid().toString(),
       BillMasterId: currentUserId,
     });
+    // get role permission list
+    const rolePermissionResult = await GetRolePermission({
+      trace_id: Guid.newGuid().toString(),
+      roleId: currentRoleId,
+    });
 
-    if (!permissionResult) {
+    if (!userPermissionResult || !rolePermissionResult) {
       createMessage.error('Get permission fail !');
-      console.log('Get permission fail.');
       closeWrapLoading();
       return;
     }
 
     // check the page if the user has permission to view this report
-    let isOnPermission = permissionResult[0].data.find(
-      (item: any) => item.read.permissionId === currentPagePermissionId && item.read.status === 1,
-    );
+    const isOnPermission =
+      checkReadPermission(userPermissionResult, currentPagePermissionId) ||
+      checkReadPermission(rolePermissionResult, currentPagePermissionId);
 
     if (!isOnPermission) {
       createMessage.error('You do not have permission to view this report !');
-      console.log('You do not have permission to view this report.');
       closeWrapLoading();
       return;
     }
@@ -225,7 +249,6 @@
     if (!tempRes) {
       return;
     }
-
     filterValueResult[0] = tempRes.data;
 
     if (!filterValueResult[0]?.ok) {
@@ -390,6 +413,7 @@
         },
       ],
     });
+    console.log(tableName);
     if (!tableName) {
       createMessage.error('Failed to fetch PowerBI Parameter Data.');
       closeWrapLoading();
@@ -430,18 +454,7 @@
   }
 
   onMounted(async () => {
-    GetUserPermissionRoleList({
-      trace_id: Guid.newGuid().toString(),
-      BillMasterId: currentUserId,
-    }).then((res) => {
-      res[0].data.forEach((item) => {
-        if (item.type === currentPageReportName.value) {
-          currentPagePermissionId = item.read.permissionId;
-          console.log('currentPagePermissionId:', currentPagePermissionId);
-        }
-      });
-      embedReport();
-    });
+    await getCurrentPagePermission();
   });
 </script>
 <style lang="less">

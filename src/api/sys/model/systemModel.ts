@@ -152,3 +152,18 @@ export type UserPageParams = BasicPageParams & {
 export type UserPageListGetResultModel = BasicFetchResult<UserItem>;
 
 export type UserListGetResultModel = UserItem[];
+
+export type PermissionAction = 'read' | 'create' | 'delete' | 'update';
+export type PermissionItem = {
+  permissionId: number;
+  id: number;
+  status: number;
+};
+export type UserRolePermissionItem = {
+  [key in PermissionAction]: PermissionItem;
+} & { type: string }
+export interface UserRolePermissionModel {
+  status: number;
+  msg: string;
+  data: UserRolePermissionItem[]
+};
