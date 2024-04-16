@@ -9,19 +9,18 @@
       />
     </CollapseContainer>
     <BasicTable
-      :title="formData.Date + tableName"
+      :title="formData.YearMonth + tableName"
       v-for="(table, index) in tableListRef"
       :key="index"
       :columns="table.columns"
       :dataSource="table.dataSource"
-    >
-    </BasicTable>
+    />
   </div>
 </template>
 <script lang="ts" setup name="BasicReportForExcel">
   import { ref, reactive } from 'vue';
   import { useI18n } from '/@/hooks/web/useI18n';
-  import { GetS3TargetUrl, GetDictionaryItems } from '/@/api/sys/system';
+  import { getS3LatestFileUrl } from '/@/api/sys/system';
   import { Guid } from 'js-guid';
   import { CollapseContainer } from '/@/components/Container';
   import { BasicForm, useForm, FormSchema } from '/@/components/Form/index';
@@ -70,10 +69,10 @@
       iconSize: number;
     };
   }
-  
+
   interface SearchItems {
     ReportType: string;
-    Date: string;
+    YearMonth: string;
   }
 
   const props = defineProps<{
@@ -111,9 +110,9 @@
 
   const formData = reactive<SearchItems>({
     ReportType: props.reportType,
-    Date: '',
+    YearMonth: '',
   });
-  
+
   const tableListRef = ref<
     {
       title: string;
@@ -279,7 +278,7 @@
   async function handleSearchSubmit(values: any) {
     openWrapLoading();
     const result = await childFormValue(values);
-    let S3Location = await GetS3TargetUrl({
+    let S3Location = await getS3LatestFileUrl({
       trace_id: Guid.newGuid().toString(),
       bucket_region: props.bucketRegion,
       bucket_name: props.s3Bucket,
@@ -312,7 +311,7 @@
 
     const result = await childFormValue(values);
     // createMessage.success('click search,values:' + JSON.stringify(values));
-    let S3Location = await GetS3TargetUrl({
+    const S3Location = await getS3LatestFileUrl({
       trace_id: Guid.newGuid().toString(),
       bucket_region: props.bucketRegion,
       bucket_name: props.s3Bucket,
@@ -320,7 +319,6 @@
       duration: '10',
     }).catch((err) => {
       console.log(err);
-      // createMessage.warning('該條件下未有資料！');
     });
 
     // download file & read file
@@ -334,15 +332,13 @@
           return response.blob();
         })
         .then((blob) => {
-          console.log(blob)
           // 此時的 blob 就是你需要的 PDF 文件的 Blob 對象
           // 你可以進行後續操作，比如創建一個用於下載的 URL
           const downloadUrl = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = downloadUrl;
-          a.download = `${formData['ReportType']}-${
-            formData['Date']
-          }.${objectKeyString.value.split('.').pop()}`;
+          // const fileName = objectKeyString.value.split('.').pop();
+          a.download = `${formData['ReportType']}-${formData['YearMonth']}.csv`;
           document.body.appendChild(a);
           a.click();
           URL.revokeObjectURL(downloadUrl); // 釋放 URL 對象
@@ -358,42 +354,46 @@
     }
   }
 
-  async function getFinRoundDate() {
-    const response = await GetDictionaryItems({
-      trace_id: Guid.newGuid().toString(),
-      request_items: [
-        {
-          item_type: 'DateTimeJudgement',
-          item_key: 'FinRoundDate',
-          item_key2: '',
-        },
-      ],
-    });
+  // async function getFinRoundDate() {
+  //   const response = await GetDictionaryItems({
+  //     trace_id: Guid.newGuid().toString(),
+  //     request_items: [
+  //       {
+  //         item_type: 'DateTimeJudgement',
+  //         item_key: 'FinRoundDate',
+  //         item_key2: '',
+  //       },
+  //     ],
+  //   });
 
-    // Assuming the response is in the format { item_value: 'someDate' }
-    return parseInt(response[0].response_items[0].itemValue); // Parse to integer assuming it's a numeric date
-}
+  //   // Assuming the response is in the format { item_value: 'someDate' }
+  //   return parseInt(response[0].response_items[0].itemValue); // Parse to integer assuming it's a numeric date
+  // }
 
   function handleSearchReset() {
     formData.ReportType = props.reportType;
-    formData.Date = '';
+    formData.YearMonth = '';
   }
 
   async function childFormValue(values: SearchItems) {
-    const finrounddate = await getFinRoundDate();
+    // const finrounddate = await getFinRoundDate();
 
     const S3ReportClass = props.reportType;
-    
-    const S3Date = dayjs(values.Date).format('DD');
-    const S3Month = parseInt(S3Date) <= finrounddate ? dayjs(values.Date).subtract(1, 'month').format('MM') : dayjs(values.Date).format('MM');
-    const S3Year = dayjs(values.Date).format('YYYY');
 
-    const fileDate = dayjs(values.Date).format('YYYYMMDD');
-    formData.Date = fileDate;
-    const S3FileName = `${S3ReportClass}_${fileDate}.csv`;
+    // const S3Date = dayjs(values.Date).format('DD');
 
-    objectKeyString.value = `sync_report/${S3ReportClass}/${S3Year}${S3Month}/${S3FileName}`;
-    console.log(objectKeyString.value);
+    const S3Month = dayjs(values.YearMonth).format('MM');
+    // parseInt(S3Date) <= finrounddate
+    // ? dayjs(values.Date).subtract(1, 'month').format('MM')
+    // : dayjs(values.Date).format('MM');
+    const S3Year = dayjs(values.YearMonth).format('YYYY');
+
+    const fileDate = dayjs(values.YearMonth).format('YYYYMM');
+    formData.YearMonth = fileDate;
+    // const S3FileName = `${S3ReportClass}_${fileDate}.csv`;
+
+    objectKeyString.value = `sync_report/${S3ReportClass}/${S3Year}${S3Month}`;
+    // console.log(objectKeyString.value);
     return objectKeyString.value;
   }
 </script>
