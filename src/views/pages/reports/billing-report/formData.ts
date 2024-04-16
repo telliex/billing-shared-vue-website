@@ -18,7 +18,7 @@ type PropsOptions = {
 type UseFormSchema = {
   reportInfo: ReportInfo;
   schemas: FormSchema[];
-}
+};
 
 export const useFormSchema = (routeName: string): UseFormSchema => {
   // get report info
@@ -26,28 +26,27 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
     tableName,
     reportType, // folder name
     s3BucketEnv = 'VITE_GLOB_S3_REPORT', // s3 bucket
-    bucketRegionEnv = 'VITE_GLOB_S3_REGION' // s3 region
+    bucketRegionEnv = 'VITE_GLOB_S3_REGION', // s3 region
   }): ReportInfo => {
-    
     // S3_ECV_REPORT for ecr accoount to fetch ecv file
     // other according to company name
-    const newReportType = s3BucketEnv === 'VITE_GLOB_S3_ECV_REPORT'
-     ? `ecv_${reportType}`
-     : `${import.meta.env.VITE_GLOB_COMPANY.toLowerCase()}_${reportType}`;
+    const newReportType =
+      s3BucketEnv === 'VITE_GLOB_S3_ECV_REPORT'
+        ? `ecv_${reportType}`
+        : `${import.meta.env.VITE_GLOB_COMPANY.toLowerCase()}_${reportType}`;
 
     return {
       tableName: `${t(tableName)}`,
       reportType: newReportType,
       s3Bucket: import.meta.env[s3BucketEnv],
-      bucketRegion: import.meta.env[bucketRegionEnv]
-    }
+      bucketRegion: import.meta.env[bucketRegionEnv],
+    };
   };
-
   // get component info
   const getReportTypeComponentInfo = (label: string, propsOptions: PropsOptions): FormSchema => {
     return {
       field: 'ReportType',
-      component: 'Select', 
+      component: 'Select',
       label: `${t(label)}:`,
       componentProps: {
         options: [propsOptions],
@@ -55,7 +54,7 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
       colProps: {
         span: 6,
       },
-    }
+    };
   };
   const getDateComponentInfo = (label: string): FormSchema => {
     return {
@@ -70,316 +69,275 @@ export const useFormSchema = (routeName: string): UseFormSchema => {
         span: 6,
       },
       required: true,
-    }
+    };
   };
-  
+  const getMonthComponentInfo = (label: string): FormSchema => {
+    return {
+      field: 'YearMonth',
+      component: 'DatePicker',
+      label: `${t(label)}:`,
+      labelWidth: 100,
+      componentProps: {
+        picker: 'month',
+      },
+      colProps: {
+        span: 6,
+      },
+      required: true,
+    };
+  };
+
   // **create report relative setting here**
   // routename: [] -> get need component info in array
   const allReportList: Record<string, UseFormSchema> = {
-    "cn07-billing-check-report": {
+    'cn07-billing-check-report': {
       reportInfo: getReportInfo({
         tableName: 'report.cn07CustomReport.tableAreaTitle',
-        reportType: 'cn07_customized_report'
+        reportType: 'cn07_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.cn07CustomReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.cn07CustomReport.searchAreaYYYYMMLavel')],
     },
-    "cns-billing-check-report": {
+    'cns-billing-check-report': {
       reportInfo: getReportInfo({
         tableName: 'report.cnsCustomReport.tableAreaTitle',
-        reportType: 'cns_customized_report'
+        reportType: 'cns_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.cnsCustomReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.cnsCustomReport.searchAreaYYYYMMLavel')],
     },
-    "zyxel-report-before-billing-adjustment": {
+    'zyxel-report-before-billing-adjustment': {
       reportInfo: getReportInfo({
         tableName: 'report.zyxelReportBeforeBillingAdjustment.tableAreaTitle',
-        reportType: 'zyxel_customized_report'
+        reportType: 'zyxel_customized_report',
       }),
       schemas: [
-        getDateComponentInfo('report.zyxelReportBeforeBillingAdjustment.searchAreaYYYYMMLavel')
+        getMonthComponentInfo('report.zyxelReportBeforeBillingAdjustment.searchAreaYYYYMMLavel'),
       ],
     },
-    "zyxel-report-after-billing-adjustment": {
+    'zyxel-report-after-billing-adjustment': {
       reportInfo: getReportInfo({
         tableName: 'report.zyxelReportAfterBillingAdjustment.tableAreaTitle',
-        reportType: 'zyxel_customized_after_dop_report'
+        reportType: 'zyxel_customized_after_dop_report',
       }),
       schemas: [
-        getDateComponentInfo('report.zyxelReportAfterBillingAdjustment.searchAreaYYYYMMLavel')
+        getMonthComponentInfo('report.zyxelReportAfterBillingAdjustment.searchAreaYYYYMMLavel'),
       ],
     },
-    "materials-report": {
+    'materials-report': {
       reportInfo: getReportInfo({
         tableName: 'report.materialsReport.tableAreaTitle',
-        reportType: 'materials_report'
+        reportType: 'materials_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.materialsReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.materialsReport.searchAreaYYYYMMLavel')],
     },
-    "my-sapura-energy-report": {
+    'my-sapura-energy-report': {
       reportInfo: getReportInfo({
         tableName: 'report.mySapuraEnergyReport.tableAreaTitle',
-        reportType: 'sapura_sp_customized_report'
+        reportType: 'sapura_sp_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.mySapuraEnergyReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.mySapuraEnergyReport.searchAreaYYYYMMLavel')],
     },
-    "vn-sp-customized-report": {
+    'vn-sp-customized-report': {
       reportInfo: getReportInfo({
         tableName: 'report.vnSpCustomizedReport.tableAreaTitle',
-        reportType: 'vn_sp_customized_report'
+        reportType: 'vn_sp_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.vnSpCustomizedReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.vnSpCustomizedReport.searchAreaYYYYMMLavel')],
     },
-    "sg-digital-myanmar-money-sp-report": {
+    'sg-digital-myanmar-money-sp-report': {
       reportInfo: getReportInfo({
         tableName: 'report.sgDigitalMyanmarMoneySpReport.tableAreaTitle',
-        reportType: 'myanmar_sp_customized_report'
+        reportType: 'myanmar_sp_customized_report',
       }),
       schemas: [
-        getDateComponentInfo('report.sgDigitalMyanmarMoneySpReport.searchAreaYYYYMMLavel')
+        getMonthComponentInfo('report.sgDigitalMyanmarMoneySpReport.searchAreaYYYYMMLavel'),
       ],
     },
-    "my-ghl-sp-report": {
+    'my-ghl-sp-report': {
       reportInfo: getReportInfo({
         tableName: 'report.myGhlSpReport.tableAreaTitle',
-        reportType: 'ghl_sp_customized_report'
+        reportType: 'ghl_sp_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.myGhlSpReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.myGhlSpReport.searchAreaYYYYMMLavel')],
     },
-    "c0000266-s3ppa-report": {
+    'c0000266-s3ppa-report': {
       reportInfo: getReportInfo({
         tableName: 'report.c0000266S3ppaReport.tableAreaTitle',
-        reportType: 'c0000266_s3ppa_customized_report'
+        reportType: 'c0000266_s3ppa_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.c0000266S3ppaReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.c0000266S3ppaReport.searchAreaYYYYMMLavel')],
     },
-    "cdn-report": {
+    'cdn-report': {
       reportInfo: getReportInfo({
         tableName: 'report.monthlyCdnReport.tableAreaTitle',
-        reportType: 'mgt_cdn_report'
+        reportType: 'mgt_cdn_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.monthlyCdnReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.monthlyCdnReport.searchAreaYYYYMMLavel')],
     },
-    "c0000338-sp-customized-report": {
+    'c0000338-sp-customized-report': {
       reportInfo: getReportInfo({
         tableName: 'report.c0000338SpCustomizedReport.tableAreaTitle',
-        reportType: 'c0000338_sp_customized_report'
+        reportType: 'c0000338_sp_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.c0000338SpCustomizedReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.c0000338SpCustomizedReport.searchAreaYYYYMMLavel')],
     },
-    "linked-789943651249-sp-customized-report": {
+    'linked-789943651249-sp-customized-report': {
       reportInfo: getReportInfo({
         tableName: 'report.linked789943651249SpCustomizedReport.tableAreaTitle',
-        reportType: 'ch424_789943651249_sp_customized_report'
+        reportType: 'ch424_789943651249_sp_customized_report',
       }),
       schemas: [
-        getDateComponentInfo('report.linked789943651249SpCustomizedReport.searchAreaYYYYMMLavel')
+        getMonthComponentInfo('report.linked789943651249SpCustomizedReport.searchAreaYYYYMMLavel'),
       ],
     },
-    "ch198-sp-customized-report": {
+    'ch198-sp-customized-report': {
       reportInfo: getReportInfo({
         tableName: 'report.ch198SpCustomizedReport.tableAreaTitle',
-        reportType: 'ch198_leyun_sp_customized_report'
+        reportType: 'ch198_leyun_sp_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.ch198SpCustomizedReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.ch198SpCustomizedReport.searchAreaYYYYMMLavel')],
     },
-    "cnn-dto-report": {
+    'cnn-dto-report': {
       reportInfo: getReportInfo({
         tableName: 'report.cnnDtoReport.tableAreaTitle',
-        reportType: 'cnn_dto_customized_report'
+        reportType: 'cnn_dto_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.cnnDtoReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.cnnDtoReport.searchAreaYYYYMMLavel')],
     },
-    "cnn-big-sp-report": {
+    'cnn-big-sp-report': {
       reportInfo: getReportInfo({
         tableName: 'report.cnnBigSpReport.tableAreaTitle',
-        reportType: 'cne_big_sp_customized_report'
+        reportType: 'cne_big_sp_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.cnnBigSpReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.cnnBigSpReport.searchAreaYYYYMMLavel')],
     },
-    "cne-yostar-es-fee-report": {
+    'cne-yostar-es-fee-report': {
       reportInfo: getReportInfo({
         tableName: 'report.cneYostarEsFeeReport.tableAreaTitle',
-        reportType: 'cne_youstar_es_fee_customized_report'
+        reportType: 'cne_youstar_es_fee_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.cneYostarEsFeeReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.cneYostarEsFeeReport.searchAreaYYYYMMLavel')],
     },
-    "hk91-sp-utilization-report": {
+    'hk91-sp-utilization-report': {
       reportInfo: getReportInfo({
         tableName: 'report.hk91SpUtilizationReport.tableAreaTitle',
-        reportType: 'hk91_sp_utilization_customized_report'
+        reportType: 'hk91_sp_utilization_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.hk91SpUtilizationReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.hk91SpUtilizationReport.searchAreaYYYYMMLavel')],
     },
-    "sg-cag-sp-report": {
+    'sg-cag-sp-report': {
       reportInfo: getReportInfo({
         tableName: 'report.sgCagSpReport.tableAreaTitle',
-        reportType: 'cag_sp_customized_report'
+        reportType: 'cag_sp_customized_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.sgCagSpReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.sgCagSpReport.searchAreaYYYYMMLavel')],
     },
-    "eui-awsbu-report": {
+    'eui-awsbu-report': {
       reportInfo: getReportInfo({
         tableName: 'report.euiAwsbuReport.tableAreaTitle',
-        reportType: 'eui_report_awsbu_report'
+        reportType: 'eui_report_awsbu_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.euiAwsbuReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.euiAwsbuReport.searchAreaYYYYMMLavel')],
     },
-    "shield-reclassification-report": {
+    'shield-reclassification-report': {
       reportInfo: getReportInfo({
         tableName: 'report.shieldReclassificationReport.tableAreaTitle',
-        reportType: 'shield_reclassification_report'
+        reportType: 'shield_reclassification_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.shieldReclassificationReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.shieldReclassificationReport.searchAreaYYYYMMLavel')],
     },
-    "cost-revenue-report": {
+    'cost-revenue-report': {
       reportInfo: getReportInfo({
         tableName: 'report.costRevenueReport.tableAreaTitle',
-        reportType: 'cost_revenue_report'
+        reportType: 'cost_revenue_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.costRevenueReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.costRevenueReport.searchAreaYYYYMMLavel')],
     },
-    "billing-summary-report": {
+    'billing-summary-report': {
       reportInfo: getReportInfo({
         tableName: 'report.billingSummaryReport.tableAreaTitle',
         reportType: 'billing_summary_hk',
-        s3BucketEnv: 'VITE_GLOB_S3_ECV_REPORT'
+        s3BucketEnv: 'VITE_GLOB_S3_ECV_REPORT',
       }),
-      schemas: [
-        getDateComponentInfo('report.billingSummaryReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.billingSummaryReport.searchAreaYYYYMMLavel')],
     },
-    "special-modification-report": {
+    'special-modification-report': {
       reportInfo: getReportInfo({
         tableName: 'report.specialModificationReport.tableAreaTitle',
-        reportType: 'special_modifications_data'
+        reportType: 'special_modifications_data',
       }),
-      schemas: [
-        getDateComponentInfo('report.specialModificationReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.specialModificationReport.searchAreaYYYYMMLavel')],
     },
-    "sap-cno-report": {
+    'sap-cno-report': {
       reportInfo: getReportInfo({
         tableName: 'report.sapCnoReport.tableAreaTitle',
-        reportType: 'sap_cno_contrast_table'
+        reportType: 'sap_cno_contrast_table',
       }),
-      schemas: [
-        getDateComponentInfo('report.sapCnoReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.sapCnoReport.searchAreaYYYYMMLavel')],
     },
-    "linkedaccount-entity-difference-report": {
+    'linkedaccount-entity-difference-report': {
       reportInfo: getReportInfo({
         tableName: 'report.linkedaccountEntitydifferenceReport.tableAreaTitle',
-        reportType: 'linkedaccount_entity_differences_report'
+        reportType: 'linkedaccount_entity_differences_report',
       }),
       schemas: [
-        getDateComponentInfo('report.linkedaccountEntitydifferenceReport.searchAreaYYYYMMLavel')
+        getMonthComponentInfo('report.linkedaccountEntitydifferenceReport.searchAreaYYYYMMLavel'),
       ],
     },
-    "billing-invoice-report": {
+    'billing-invoice-report': {
       reportInfo: getReportInfo({
         tableName: 'report.billingInvoiceReport.tableAreaTitle',
-        reportType: 'billing_invoice_report_hk'
+        reportType: 'billing_invoice_report_hk',
       }),
-      schemas: [
-        getDateComponentInfo('report.billingInvoiceReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.billingInvoiceReport.searchAreaYYYYMMLavel')],
     },
-    "billing-list-ecr-report": {
+    'billing-list-ecr-report': {
       reportInfo: getReportInfo({
         tableName: 'report.billingListEcrReport.tableAreaTitle',
         reportType: 'billing_list_for_ecloudrover',
-        s3BucketEnv: 'VITE_GLOB_S3_ECV_REPORT'
+        s3BucketEnv: 'VITE_GLOB_S3_ECV_REPORT',
       }),
-      schemas: [
-        getDateComponentInfo('report.billingListEcrReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.billingListEcrReport.searchAreaYYYYMMLavel')],
     },
-    "billing-costbylinkedaccount-report": {
+    'billing-costbylinkedaccount-report': {
       reportInfo: getReportInfo({
         tableName: 'report.billingCostbylinkedReport.tableAreaTitle',
-        reportType: 'billing_costbylinked_report'
+        reportType: 'billing_costbylinked_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.billingCostbylinkedReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.billingCostbylinkedReport.searchAreaYYYYMMLavel')],
     },
-    "billing-costbyproduct-report": {
+    'billing-costbyproduct-report': {
       reportInfo: getReportInfo({
         tableName: 'report.billingCostbyproductReport.tableAreaTitle',
-        reportType: 'billing_costbyproduct_report'
+        reportType: 'billing_costbyproduct_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.billingCostbyproductReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.billingCostbyproductReport.searchAreaYYYYMMLavel')],
     },
-    "billing-invoice-contrast-report": {
+    'billing-invoice-contrast-report': {
       reportInfo: getReportInfo({
         tableName: 'report.billingInvoiceContrastReport.tableAreaTitle',
-        reportType: 'invoice_contrast_report'
+        reportType: 'invoice_contrast_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.billingInvoiceContrastReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.billingInvoiceContrastReport.searchAreaYYYYMMLavel')],
     },
-    "billing-taxnbycno-report": {
+    'billing-taxnbycno-report': {
       reportInfo: getReportInfo({
         tableName: 'report.billingTaxbycnoReport.tableAreaTitle',
-        reportType: 'tax_by_cno'
+        reportType: 'tax_by_cno',
       }),
-      schemas: [
-        getDateComponentInfo('report.billingTaxbycnoReport.searchAreaYYYYMMLavel')
-      ],
+      schemas: [getMonthComponentInfo('report.billingTaxbycnoReport.searchAreaYYYYMMLavel')],
     },
-    "billing-cost-allocate-report": {
+    'billing-cost-allocate-report': {
       reportInfo: getReportInfo({
         tableName: 'report.billingCostAllocateReport.tableAreaTitle',
-        reportType: 'billing_cost_allocate_report'
+        reportType: 'billing_cost_allocate_report',
       }),
-      schemas: [
-        getDateComponentInfo('report.billingCostAllocateReport.searchAreaYYYYMMLavel')
-      ],
-    }
+      schemas: [getMonthComponentInfo('report.billingCostAllocateReport.searchAreaYYYYMMLavel')],
+    },
   };
   // --------- end of report relative setting ---------
 
   return {
     reportInfo: allReportList[routeName].reportInfo,
-    schemas: allReportList[routeName].schemas
-  }
+    schemas: allReportList[routeName].schemas,
+  };
 };

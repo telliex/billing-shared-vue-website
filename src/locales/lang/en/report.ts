@@ -36,19 +36,19 @@ export default {
     tableAreaTitle: 'Special Modification Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Special Modification',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   sapCnoReport: {
     tableAreaTitle: 'Sap Cno Contrast Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Sap Cno Contrast',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   linkedaccountEntitydifferenceReport: {
     tableAreaTitle: 'Linkedaccount Entity Difference Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Linkedaccount Entity Difference',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   summeryReport: {
     tableAreaTitle: 'Billing Summary Report',
@@ -60,25 +60,25 @@ export default {
     tableAreaTitle: 'Billing Invoice Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing Invoice',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   billingListEcrReport: {
     tableAreaTitle: 'Billing List Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing List',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   billingCostbylinkedReport: {
     tableAreaTitle: 'Cost By Linkedaccount Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Cost By Linkedaccount',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   billingCostbyproductReport: {
     tableAreaTitle: 'Cost By Product Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Cost By Product',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   internaloporcr: {
     tableAreaTitle: 'Internal OPOR CR',
@@ -204,181 +204,181 @@ export default {
     tableAreaTitle: 'Invoice Contrast Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Invoice Contrast Report',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   billingTaxbycnoReport: {
     tableAreaTitle: 'Tax by CNO Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Tax by CNO Report',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   billingCostAllocateReport: {
     tableAreaTitle: 'Cost allocate Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Cost allocate Report',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   creditownerReportaccountant: {
     tableAreaTitle: 'Credit Owner Report for Accountant',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Credit Owner Report for Accountant',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   creditownerReportsales: {
     tableAreaTitle: 'Credit Owner Report for Sales',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Credit Owner Report for Sales',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   mpdf: {
     tableAreaTitle: 'M0100 pdf',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'M0100 pdf',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   cn07CustomReport: {
     tableAreaTitle: 'CN07 Billing Check Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'CN07 Billing Check Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   cnsCustomReport: {
     tableAreaTitle: `${company} Billing Check Report`,
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: `${company} Billing Check Report`,
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   zyxelReportBeforeBillingAdjustment: {
     tableAreaTitle: 'Zyxel Report Before Billing Adjustment',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'Zyxel Report Before Billing Adjustment',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   zyxelReportAfterBillingAdjustment: {
     tableAreaTitle: 'Zyxel Report After Billing Adjustment',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'Zyxel Report After Billing Adjustment',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   materialsReport: {
     tableAreaTitle: `${company} Materials Report`,
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: `${company} Materials Report`,
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   mySapuraEnergyReport: {
     tableAreaTitle: 'MY Sapura Energy Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'MY Sapura Energy Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   vnSpCustomizedReport: {
     tableAreaTitle: `${company} VN SP Customized Report`,
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: `${company} VN SP Customized Report`,
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   sgDigitalMyanmarMoneySpReport: {
     tableAreaTitle: 'SG Digital Myanmar Money SP Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'SG Digital Myanmar Money SP Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   myGhlSpReport: {
     tableAreaTitle: 'MY GHL SP Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'MY GHL SP Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   c0000266S3ppaReport: {
     tableAreaTitle: 'C0000266 S3PPA Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'C0000266 S3PPA Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   monthlyCdnReport: {
     tableAreaTitle: 'Monthly CDN Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Monthly CDN Report',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   monthlyRevenueReport: {
     tableAreaTitle: 'Monthly Revenue Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'Monthly Revenue Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   c0000338SpCustomizedReport: {
     tableAreaTitle: 'C0000338 SP Customized Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'C0000338 SP Customized Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   linked789943651249SpCustomizedReport: {
     tableAreaTitle: 'Linked 789943651249 SP Customized Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'Linked 789943651249 SP Customized Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   ch198SpCustomizedReport: {
     tableAreaTitle: 'CH198 SP Customized Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'CH198 SP Customized Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   cnnDtoReport: {
     tableAreaTitle: 'CNN DTO Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'CNN DTO Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   cnnBigSpReport: {
     tableAreaTitle: 'CNE BIG SP Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'CNE BIG SP Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   cneYostarEsFeeReport: {
     tableAreaTitle: 'CNE Yostar ES Fee Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'CNE Yostar ES Fee Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   hk91SpUtilizationReport: {
     tableAreaTitle: 'hk91 SP utilization Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'hk91 SP utilization Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   sgCagSpReport: {
     tableAreaTitle: 'SG CAG SP Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'SG CAG SP Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   euiAwsbuReport: {
     tableAreaTitle: 'EUI (End User Information) Report For AWS BU',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'EUI (End User Information) Report For AWS BU',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   shieldReclassificationReport: {
     tableAreaTitle: 'Shield reclassification Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'Shield reclassification Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   costRevenueReport: {
     tableAreaTitle: 'Cost Revenue Report',
     searchAreaReportTypeLavel: 'Report Type',
     searchAreaReportTypeOption: 'Cost Revenue Report',
-    searchAreaYYYYMMLavel: 'Date', // Date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
   //
   billingSummaryReport: {
     tableAreaTitle: 'Billing Summary Report',
     searchAreaReportTypeLavel: 'Repot Type',
     searchAreaReportTypeOption: 'Billing Summary',
-    searchAreaYYYYMMLavel: 'Date', // date
+    searchAreaYYYYMMLavel: 'Month', // Month
   },
 };
