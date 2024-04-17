@@ -28,6 +28,7 @@ import { h } from 'vue';
 import { createLocalStorage } from '/@/utils/cache';
 import { useLoginState, LoginStateEnum } from '/@/views/sys/login/useLogin';
 import { checkLogin3MonthsTimeout } from '/@/utils/tools';
+import { openWindow } from '/@/utils';
 
 const { setLoginState } = useLoginState();
 // import { Guid } from 'js-guid';
@@ -245,8 +246,17 @@ export const useUserStore = defineStore('user', {
       ls.set('TEMP_MGT_ID_KEY__', null);
       ls.set('TEMP_USER_INFO_KEY__', null);
       // ls.set('TEMP_USER_BILLING_INFO_KEY__', null);
+      const system = import.meta.env.VITE_GLOB_APP_TITLE;
+      console.log('system=======:', system);
 
-      goLogin && router.push(PageEnum.BASE_LOGIN);
+      if (system === 'MARS') {
+        goLogin && router.push(PageEnum.BASE_LOGIN);
+      } else {
+        window.location.href = window.location.origin;
+        setTimeout(() => {
+          window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL;
+        }, 3000);
+      }
     },
     /**
      * @description: refreshToken

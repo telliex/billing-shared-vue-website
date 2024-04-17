@@ -104,7 +104,7 @@ export const deleteContract = (body: DeleteContractSendModel) =>
 export const createContract = (body: any) =>
   defHttp.post(
     {
-      url: `${API_CONFIG.VERSION}${Api.ContractDelete}`,
+      url: `${API_CONFIG.VERSION}${Api.ContractCreate}`,
       data: body,
       headers: { ...apiTransDataForHeader(), 'User-Id': ls.get('TEMP_MGT_ID_KEY__') },
       transformResponse: [

@@ -219,7 +219,7 @@
       ) {
         createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
         setTimeout(() => {
-          window.location.href = document.referrer;
+          // window.location.href = document.referrer;
           window.location.href = wonderFromURL;
         }, 5000);
         return;
@@ -244,6 +244,7 @@
         setTimeout(() => {
           window.location.href = document.referrer;
         }, 5000);
+        return;
       }
       const token = await JWTLoginApi({ email: user + '@ecloudvalley.com' });
       ls.set('USER_TOKEN_TEMP_KEY__', token[0]);

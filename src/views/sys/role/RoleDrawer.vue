@@ -144,7 +144,6 @@
       async function handleSubmit() {
         try {
           const values = await validate();
-
           let roleList = await getRoleListByPage({
             roleName: null,
             status: null,
@@ -162,15 +161,21 @@
             status: 1,
           });
           console.log('menuList===========:', menuList);
+          let tempParents: string[] = [];
           menuList[0].items.forEach((item) => {
             menuPermissionArray.forEach((item2) => {
               if (item.id === item2) {
                 tempArray.push(item.id);
               }
+
+              if (item.id === item2 && item.parentMenu !== '') {
+                tempParents.push(item.parentMenu);
+              }
             });
           });
 
-          values.menus = tempArray;
+          // values.menus = tempArray;
+          values.menus = [...new Set([...tempArray, ...tempParents])];
 
           let template = {
             roleName: '',
@@ -203,6 +208,7 @@
                 return false;
               }
             });
+
             console.log('update result========:', result);
             await updateRoleItem(result);
           }
