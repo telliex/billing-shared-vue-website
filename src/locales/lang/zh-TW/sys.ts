@@ -1,10 +1,4 @@
-/*
- * @Description:S
- * @Anthor: Telliex
- * @Date: 2022-10-03 02:49:24
- * @LastEditors: Telliex
- * @LastEditTime: 2023-04-26 05:36:28
- */
+const system = import.meta.env.VITE_GLOB_APP_TITLE;
 export default {
   api: {
     operationSuccess: '操作成功',
@@ -75,7 +69,10 @@ export default {
     forgetFormTitle: '重置密碼',
     setFormContent:
       '第一次登入或是已使用超過3個月的密碼，需重新修改密碼。英文字母大小寫+數字+特殊符號，至少八字元，請注意大小寫有區別。',
-    signInTitle: 'Metrics Analysis and Reporting System',
+    signInTitle:
+      system === 'MARS'
+        ? 'Metrics Analysis and Reporting System'
+        : 'Company Billing Managment System',
     signInDesc: '登入開始使用！',
     policy: '我同意xxx隱私政策',
     scanSign: `掃碼後點擊"確認"，即可完成登錄`,

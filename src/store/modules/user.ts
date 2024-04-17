@@ -254,8 +254,8 @@ export const useUserStore = defineStore('user', {
       } else {
         window.location.href = window.location.origin;
         setTimeout(() => {
-          window.location.href = import.meta.env.VITE_GLOB_OLD_MGT_URL;
-        }, 3000);
+          window.location.href = `${import.meta.env.VITE_GLOB_OLD_MGT_URL}/index.php?logout`;
+        }, 1000);
       }
     },
     /**

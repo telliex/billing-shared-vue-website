@@ -194,7 +194,7 @@
   }
 
   onMounted(async () => {
-    // http://cbms-dev.ecv-billing-center.com/?user=144/#/login?redirect=/eterne/contract_list
+    // http://cbms-dev.ecv-billing-center.com/?user=144/#/login?redirect=/contract
     const wonderFromURL = import.meta.env.VITE_GLOB_OLD_MGT_URL;
     console.log('wonderFromURL:', wonderFromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''));
     console.log(
