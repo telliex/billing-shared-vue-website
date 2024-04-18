@@ -194,7 +194,7 @@
   }
 
   onMounted(async () => {
-    // http://cbms-dev.ecv-billing-center.com/?user=144/#/login?redirect=/eterne/contract_list
+    // http://cbms-dev.ecv-billing-center.com/?user=144/#/login?redirect=/contract
     const wonderFromURL = import.meta.env.VITE_GLOB_OLD_MGT_URL;
     console.log('wonderFromURL:', wonderFromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''));
     console.log(
@@ -219,7 +219,7 @@
       ) {
         createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
         setTimeout(() => {
-          window.location.href = document.referrer;
+          // window.location.href = document.referrer;
           window.location.href = wonderFromURL;
         }, 5000);
         return;
@@ -244,6 +244,7 @@
         setTimeout(() => {
           window.location.href = document.referrer;
         }, 5000);
+        return;
       }
       const token = await JWTLoginApi({ email: user + '@ecloudvalley.com' });
       ls.set('USER_TOKEN_TEMP_KEY__', token[0]);

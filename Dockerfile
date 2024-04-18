@@ -12,13 +12,13 @@ RUN apt-get update && \
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs nginx
-
+    
 # 將 Nginx 預設設定檔案刪除
 RUN rm /etc/nginx/sites-enabled/default
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install -g pnpm && pnpm install
+RUN npm install -g pnpm@8 && pnpm install
 COPY . .
 
 ENV ENV dev

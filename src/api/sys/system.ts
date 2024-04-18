@@ -33,6 +33,7 @@ enum Api {
   GetBillCodeValue = '/get-billcode-list',
   GetDictionary = '/get-dict-value', // get dictionary
   GetS3TargetUrlValue = '/get-download-url',
+  GetS3LatestFileUrlValue = '/get-latest-file-download-url',
   GetPowerBIAccessTokenValue = '/billing-powerbi-get-access-token',
   GetPowerBIEmbedInfoValue = '/billing-powerbi-get-embed-info',
   GetPowerBIEmbedDataValue = '/billing-powerbi-get-embed-data',
@@ -123,6 +124,42 @@ export const GetS3TargetUrl = (body: any) =>
     },
     {
       apiUrl: '/elu-api',
+    },
+  );
+
+export const getS3LatestFileUrl = (body: any) =>
+  defHttp.post(
+    {
+      url: `/aws${API_CONFIG.VERSION}${Api.GetS3LatestFileUrlValue}`,
+      data: body,
+      headers: apiTransDataForHeader(),
+      transformResponse: [
+        function (data) {
+          const resObj = JSON.parse(data);
+
+          if (resObj.status === 1000 || resObj.status === 1001) {
+            return {
+              ...resObj,
+              results: [resObj.results],
+              msg: 'Success',
+            };
+          } else {
+            return {
+              ...resObj,
+              results: [],
+              msg: 'No data !!',
+            };
+          }
+        },
+      ],
+    },
+    {
+      apiUrl: '/elu-api',
+      retryRequest: {
+        isOpenRetry: false,
+        count: 1,
+        waitTime: 3000,
+      },
     },
   );
 
