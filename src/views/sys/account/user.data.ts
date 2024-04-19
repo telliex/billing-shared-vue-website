@@ -76,6 +76,13 @@ export const accountFormSchema: FormSchema[] = [
     ifShow: ({ values }) => {
       return values.id ? true : false;
     },
+    componentProps: ({ formModel }) => {
+      return {
+        onChange: () => {
+          formModel.pwd = '';
+        },
+      };
+    },
   },
   {
     field: 'pwd',

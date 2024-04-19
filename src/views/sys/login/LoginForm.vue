@@ -109,7 +109,7 @@
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
-  const { notification, createErrorModal, createMessage } = useMessage();
+  const { notification, createErrorModal, createMessage, createConfirm } = useMessage();
   const { prefixCls } = useDesign('login');
   const userStore = useUserStore();
   let redirectUrl = ref<string | null>('');
@@ -193,9 +193,32 @@
     }
   }
 
+  function handleConfirm(type: 'warning' | 'error' | 'success' | 'info', url: string) {
+    createConfirm({
+      iconType: type,
+      title: 'Error',
+      content: 'There was a problem when the page jumped, please jump again.',
+      onOk: async () => {
+        const protocol = window.location.protocol; // 取得當前頁面的協議 (http: 或 https:)
+        console.log('handleConfirm-protocol:', protocol);
+        console.log('handleConfirm:', url);
+        console.log(`${protocol}//${url}`);
+        window.location.href = `${protocol}//${url}`;
+      },
+      okCancel: false,
+    });
+  }
+
+  function extractHostname(url) {
+    console.log('url:', url);
+    let parsedUrl = new URL(url);
+    return parsedUrl.hostname; // 這將返回域名
+  }
+
   onMounted(async () => {
     // http://cbms-dev.ecv-billing-center.com/?user=144/#/login?redirect=/contract
     const wonderFromURL = import.meta.env.VITE_GLOB_OLD_MGT_URL;
+    // handleConfirm('error', extractHostname(wonderFromURL));
     console.log('wonderFromURL:', wonderFromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, ''));
     console.log(
       'document.referrer:',
@@ -212,19 +235,49 @@
       formData.password = loginInput.password;
       rememberMe.value = loginInput.remeberMe;
     } else if (system === 'CBMS') {
+      // console.log('document.referrer:', extractHostname(document.referrer));
+      // console.log(
+      //   'document.VITE_GLOB_CBMS_URL:',
+      //   extractHostname(import.meta.env.VITE_GLOB_CBMS_URL),
+      // );
+      // if (
+      //   extractHostname(document.referrer) === extractHostname(import.meta.env.VITE_GLOB_CBMS_URL)
+      // ) {
+      //   const protocol = window.location.protocol; // 取得當前頁面的協議 (http: 或 https:)
+      //   console.log('protocol:', protocol);
+
+      //   console.log(
+      //     'VITE_GLOB_OLD_MGT_URL:',
+      //     extractHostname(import.meta.env.VITE_GLOB_OLD_MGT_URL),
+      //   );
+      //   let host = extractHostname(import.meta.env.VITE_GLOB_OLD_MGT_URL);
+
+      //   console.log(`${protocol}//${host}/index.php?logout`);
+      //   // window.location.href = `${protocol}//${host}/index.php?logout`;
+      //   // return;
+      // }
+
       redirectUrl.value = window.location.hash.split('redirect=')[1] || null;
       if (
         document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') !==
         wonderFromURL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
       ) {
-        createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
+        // createMessage.error('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
+        console.log('跳轉來源路徑錯誤，請重新登入 MGT 平台 !!');
         setTimeout(() => {
           // window.location.href = document.referrer;
-          window.location.href = wonderFromURL;
-        }, 5000);
+          handleConfirm('error', extractHostname(wonderFromURL));
+        }, 3000);
+
         return;
       }
 
+      // if (
+      //   document.referrer.replace(/(^\w+:|^)\/\//, '').replace(/\//, '') ===
+      //   import.meta.env.VITE_GLOB_CBMS_URL.replace(/(^\w+:|^)\/\//, '').replace(/\//, '')
+      // ) {
+      //   console.log('logout');
+      // }
       // const parsed = queryString.parse(window.location.hash.substring(1).split('?')[1]);
 
       const queryParams = new URLSearchParams(window.location.search.replace(/\//, ''));
@@ -240,12 +293,16 @@
       const redirectPath = queryParamsPath.get('redirect');
       console.log('redirectPath:', redirectPath);
       if (!user) {
-        createMessage.error('跳轉路徑參數錯誤，請重新登入 MGT 平台 !!');
+        // createMessage.error('跳轉路徑參數錯誤，請重新登入 MGT 平台 !!');
+        console.log('跳轉路徑參數錯誤，請重新登入 MGT 平台 !!');
+        // timer && clearTimeout(timer);
         setTimeout(() => {
-          window.location.href = document.referrer;
-        }, 5000);
+          handleConfirm('error', extractHostname(wonderFromURL));
+        }, 3000);
+
         return;
       }
+
       const token = await JWTLoginApi({ email: user + '@ecloudvalley.com' });
       ls.set('USER_TOKEN_TEMP_KEY__', token[0]);
       console.log('===== token from JWT =====:', token[0]);

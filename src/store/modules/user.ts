@@ -249,13 +249,26 @@ export const useUserStore = defineStore('user', {
       const system = import.meta.env.VITE_GLOB_APP_TITLE;
       console.log('system=======:', system);
 
+      function extractHostname(url) {
+        const parsedUrl = new URL(url);
+        return parsedUrl.hostname; // 這將返回域名
+      }
+
       if (system === 'MARS') {
         goLogin && router.push(PageEnum.BASE_LOGIN);
       } else {
-        window.location.href = window.location.origin;
+        const protocol = window.location.protocol; // 取得當前頁面的協議 (http: 或 https:)
+        console.log('protocol:', protocol);
+
+        console.log(
+          'VITE_GLOB_OLD_MGT_URL:',
+          extractHostname(import.meta.env.VITE_GLOB_OLD_MGT_URL),
+        );
+        const host = extractHostname(import.meta.env.VITE_GLOB_OLD_MGT_URL);
+
         setTimeout(() => {
-          window.location.href = `${import.meta.env.VITE_GLOB_OLD_MGT_URL}/index.php?logout`;
-        }, 1000);
+          window.location.href = `${protocol}//${host}/index.php?logout`;
+        }, 3000);
       }
     },
     /**
