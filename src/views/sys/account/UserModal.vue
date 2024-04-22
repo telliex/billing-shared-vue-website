@@ -74,6 +74,7 @@
         }
 
         resetFields();
+
         rowId.value = '';
         if (unref(isUpdate)) {
           openFnWrapLoading();
@@ -83,6 +84,23 @@
             ...data.record,
           });
           closeWrapLoading();
+        } else {
+          await setFieldsValue({
+            address: null,
+            avatar: '',
+            birthday: null,
+            country: null,
+            displayName: null,
+            email: null,
+            mgtNumber: null,
+            mobile: null,
+            password: null,
+            remark: null,
+            roles: [],
+            rolesArray: [],
+            sex: null,
+            tel: null,
+          });
         }
 
         updateSchema([
